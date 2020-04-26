@@ -69,8 +69,8 @@ def get_df_dW_K(k, hw_eV, Zs):  # BOOK
         if beta_p < 0:  # seems to be important
             beta_p += np.pi
 
-        num = 256*E*(Qp + kH2**2/3 + 1/3)*np.exp(-2*beta_p/kH)
-        den = Zs**4 * c.Ry**2 * ((Qp - kH2 + 1)**2 + 4*kH2**2)**3 * (1 - np.exp(-2*np.pi/kH))
+        num = 256*E*(Qp + kH2**2 / 3 + 1/3)*np.exp(-2*beta_p/kH)
+        den = Zs**4 * c.Ry**2 * ((Qp - kH2 + 1)**2 + 4*kH2)**3 * (1 - np.exp(-2*np.pi/kH))
 
     else:
         y = -(-kH2)**(-1/2) * np.log((Qp + 1 - kH2 + 2*(-kH2)**(1/2))/(Qp + 1 - kH2 - 2*(-kH2)**(1/2)))
@@ -80,10 +80,9 @@ def get_df_dW_K(k, hw_eV, Zs):  # BOOK
     return num / den
 
 
-#%%
-EE = np.linspace(400, 1200, 10)  # eV
-# EE = [1000]
-kk = np.linspace(0.01, 10000, 10000)  # inv A
+#%% test GOS for C K-shell
+EE = np.linspace(300, 1200, 50)  # eV
+kk = np.linspace(0.01, 100, 500)  # inv A
 FF = np.zeros((len(EE), len(kk)))
 
 fig = plt.figure(dpi=300)
@@ -91,17 +90,24 @@ ax = fig.add_subplot(111, projection='3d')
 
 for i, Ei in enumerate(EE):
     for j, ki in enumerate(kk):
-        FF[i, j] = get_df_dW_K(ki*1e+8, Ei, c.Zs_C) / c.eV * 1e-3
+        FF[i, j] = get_df_dW_K(ki*1e+8, Ei, c.Zs_C) * c.eV * 1e+3
 
-    ax.plot(np.log((kk*c.a0)**2), np.ones(len(kk))*EE[i], FF[i, :])
+    ax.plot(np.ones(len(kk))*EE[i], np.log((kk*1e+8*c.a0)**2), FF[i, :])
 
+ax.view_init(30, 30)
 plt.grid()
-# plt.xlim(0, 20)
-# plt.ylim(0, 0.18)
-ax.set_xlabel('X')
-ax.set_ylabel('Y')
-ax.set_zlabel('Z')
+ax.set_xlabel('E, eV')
+ax.set_ylabel('ln(ka$_0$)')
+ax.set_zlabel('df/dW * 10$^3$, eV$^{-1}$')
 plt.show()
+
+plt.savefig('GOS.png', dpi=300)
+
+#%%
+for angle in range(0, 360):
+    ax.view_init(30, angle)
+    plt.draw()
+    plt.pause(1)
 
 
 # %%
