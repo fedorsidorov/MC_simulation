@@ -1,13 +1,17 @@
 # %% Import
+import importlib
+
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import integrate
-import importlib
+
 import constants as c
+import grid as g
 import utilities as u
+
 u = importlib.reload(u)
 c = importlib.reload(c)
-
+g = importlib.reload(g)
 
 # %% parameters
 PMMA_params = [  # [hwi, hgi, Ai] from devera2011.pdf
@@ -22,17 +26,13 @@ inv_A = 1e+8  # cm^-1
 
 # %% Lindhard and Mermin functions
 def get_eps_L(q, hw_eV_complex, Epl_eV):  # gamma is energy!
-
     n = (Epl_eV * c.eV / c.hbar) ** 2 * c.m / (4 * np.pi * c.e ** 2)
-
     kF = (3 * np.pi ** 2 * n) ** (1 / 3)
     vF = c.hbar * kF / c.m
     qF = c.hbar * kF
     EF = c.m * vF ** 2 / 2
-
     z = q / (2 * qF)
     x = hw_eV_complex * c.eV / EF
-
     chi_2 = c.e ** 2 / (np.pi * c.hbar * vF)
 
     def f(xx, zz):
@@ -53,7 +53,7 @@ def get_eps_M(q, hw_eV_complex, E_pl_eV):
           (get_eps_L(q, hw_eV_complex, E_pl_eV) - 1)
 
     den = 1 + (1j * gamma / hw_r) * (get_eps_L(q, hw_eV_complex, E_pl_eV) - 1) / (
-                get_eps_L(q, 1e-100 + 1e-100j, E_pl_eV) - 1)
+            get_eps_L(q, 1e-100 + 1e-100j, E_pl_eV) - 1)
 
     return 1 + num / den
 
@@ -154,27 +154,38 @@ def get_PMMA_OLF_D(hw_eV, params_hw_hg_A):
 
     for line in params_hw_hg_A:
         E_pl_eV, hg_eV, A = line
-        PMMA_OLF_D += A * E_pl_eV ** 2 * hg_eV * hw / ((E_pl_eV ** 2 - hw_eV ** 2) ** 2 + (hg_eV * hw_eV) ** 2)
+        PMMA_OLF_D += A * E_pl_eV ** 2 * hg_eV * hw_eV / ((E_pl_eV ** 2 - hw_eV ** 2) ** 2 + (hg_eV * hw_eV) ** 2)
 
     return PMMA_OLF_D
 
 
 # %% test PMMA OLF - OK
-EE = np.linspace(1, 100, 100)
+# EE = np.linspace(1, 100, 100)
+EE = g.EE
 OLF_M = np.zeros(len(EE))
 OLF_D = np.zeros(len(EE))
 
 for i, E in enumerate(EE):
-    OLF_M[i] = get_PMMA_ELF(5e-3 * inv_A * c.hbar, E, PMMA_params, kind='M')
+    OLF_M[i] = get_PMMA_ELF(5e-2 * inv_A * c.hbar, E, PMMA_params, kind='M')
     OLF_D[i] = get_PMMA_OLF_D(E, PMMA_params)
 
 plt.figure(dpi=300)
-plt.plot(EE, OLF_M, '*')
-plt.plot(EE, OLF_D)
+plt.loglog(EE, OLF_M, '*', label='Mermin')
+plt.loglog(EE, OLF_D, label='Drude')
 
 ritsko = np.loadtxt('data/Dapor/Ritsko_dashed.txt')
-plt.plot(ritsko[:, 0], ritsko[:, 1], '.', label='Ritsko')
-plt.show()
+plt.loglog(ritsko[:, 0], ritsko[:, 1], '.', label='Ritsko')
+
+plt.xlim(1, 1e+4)
+plt.ylim(1e-5, 1e+1)
+plt.xlabel('E, eV')
+plt.ylabel('PMMA OLF')
+# plt.title('k = 5*10$^{-3}$ $\AA^{-1}$')
+plt.title('k = 5*10$^{-2}$ $\AA^{-1}$')
+plt.grid()
+plt.legend()
+# plt.show()
+plt.savefig('PMMA_OLF_low_E_5e-2.png', dpi=300)
 
 # %% test PMMA ELF - OK
 EE = np.linspace(1, 80, 100)
