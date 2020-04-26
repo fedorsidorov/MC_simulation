@@ -1,110 +1,145 @@
+import importlib
+import matplotlib.pyplot as plt
 import numpy as np
 from scipy import integrate
+from mpl_toolkits.mplot3d import Axes3D
+import constants as c
+import grid as g
+import utilities as u
 
-# import my_constants as mc
+u = importlib.reload(u)
+c = importlib.reload(c)
+g = importlib.reload(g)
 
-# mc = importlib.reload(mc)
-
-# os.chdir(os.path.join(mc.sim_folder, 'E_loss', 'GOS'))
 
 # %%
-m_CGS = 9.109383701e-28  ## g
-e_CGS = 4.803204673e-10  ## sm^3/2 * g^1/2* s^-1
-eV_CGS = 1.602176620e-12  ## erg
-h_bar_CGS = 1.054571817e-27  ## erg * s
-a0_CGS = 5.292e-9  ## cm
-Ry_CGS = 13.605693 * eV_CGS
+def get_df_dW_1s(k, hw_eV, Zs):
+    n = 1  # K shell
 
+    Q_0 = c.hbar ** 2 * k ** 2 / (2 * c.m)
+    W_0 = hw_eV * c.eV
 
-def get_df_dw_1s(k, w, Zs):
-    n = 1  ## 1s
-
-    Q_0 = h_bar_CGS ** 2 * k ** 2 / (2 * m_CGS)
-    W_0 = h_bar_CGS * w
-
-    Q = Q_0 / (Zs ** 2 * Ry_CGS)
-    W = W_0 / (Zs ** 2 * Ry_CGS)
+    Q = Q_0 / (Zs ** 2 * c.Ry)
+    W = W_0 / (Zs ** 2 * c.Ry)
 
     k2 = W - 1 / n ** 2
 
-    def A(Q, W):
+    def A(QQ, WW):
 
         if k2 > 0:
-
             kappa = np.sqrt(k2)
-
             fC = (1 - np.exp(-2 * np.pi / kappa)) ** (-1)
 
-            return 2 ** 5 * (2 / n) ** 3 * W * np.exp(
+            return 2 ** 5 * (2 / n) ** 3 * WW * np.exp(
                 -2 / kappa * np.arctan(
-                    2 * kappa / n / (Q - W + 2 / n ** 2)
+                    2 * kappa / n / (QQ - WW + 2 / n ** 2)
                 )
             ) * fC
 
         else:
-
-            return 2 ** 5 * (2 / n) ** 3 * W * np.exp(
+            return 2 ** 5 * (2 / n) ** 3 * WW * np.exp(
                 -1 / np.sqrt(-k2) * np.log(
-                    (Q - W + 2 / n ** 2 + 2 * np.sqrt(-k2) / n) / (Q - W + 2 / n ** 2 - 2 * np.sqrt(-k2) / n)
+                    (QQ - WW + 2 / n ** 2 + 2 * np.sqrt(-k2) / n) / (QQ - WW + 2 / n ** 2 - 2 * np.sqrt(-k2) / n)
                 )
             )
 
-    def B(Q, W):
+    def B(QQ, WW):
+        return ((QQ - WW) ** 2 + (2 / n) ** 2 * QQ) ** (-2 * (n + 1))
 
-        return ((Q - W) ** 2 + (2 / n) ** 2 * Q) ** (-2 * (n + 1))
-
-    def C(Q, W):
-
-        return Q + W / 3
+    def C(QQ, WW):
+        return QQ + WW / 3
 
     df_dW = A(Q, W) * B(Q, W) * C(Q, W)
 
-    df_dW_0 = 1 / (Zs ** 2 * Ry_CGS) * df_dW
+    df_dW_0 = 1 / (Zs ** 2 * c.Ry) * df_dW
 
     return df_dW_0
 
 
-def get_PMMA_ELG_GOS(q, hw_eV):
-    w = hw_eV * eV_CGS / h_bar_CGS
-    k = q / h_bar_CGS
+def get_df_dW_K(k, hw_eV, Zs):  # BOOK
+    E = hw_eV*c.eV
+    Qp = (k*c.a0/Zs)**2
+    kH2 = hw_eV*c.eV / (Zs**2 * c.Ry) - 1
 
-    C_alpha = mc.N_C_MMA
-    O_alpha = mc.N_O_MMA
+    if kH2 > 0:
+        kH = np.sqrt(kH2)
+        tan_beta_p = 2*kH / (Qp - kH2 + 1)
+        beta_p = np.arctan(tan_beta_p)
 
-    C_Zs = 5.7
-    O_Zs = 7.7
+        if beta_p < 0:  # seems to be important
+            beta_p += np.pi
 
-    PMMA_ELF_GOS = 2 * np.pi ** 2 * mc.n_MMA / w * \
-                   C_alpha * get_df_dw_1s(k, w, C_Zs) * \
-                   O_alpha * get_df_dw_1s(k, w, O_Zs)
+        num = 256*E*(Qp + kH2**2/3 + 1/3)*np.exp(-2*beta_p/kH)
+        den = Zs**4 * c.Ry**2 * ((Qp - kH2 + 1)**2 + 4*kH2**2)**3 * (1 - np.exp(-2*np.pi/kH))
 
-    return PMMA_ELF_GOS
+    else:
+        y = -(-kH2)**(-1/2) * np.log((Qp + 1 - kH2 + 2*(-kH2)**(1/2))/(Qp + 1 - kH2 - 2*(-kH2)**(1/2)))
+        num = 256*E*(Qp + kH2/3 + 1/3)*np.exp(y)
+        den = Zs**4 * c.Ry**2 * ((Qp - kH2 + 1)**2 + 4*kH2)**3
+
+    return num / den
 
 
-def get_PMMA_DIIMFP_GOS(E_eV, hw_eV, exchange=False):
-    if hw_eV > E_eV:
-        return 0
+#%%
+EE = np.linspace(400, 1200, 10)  # eV
+# EE = [1000]
+kk = np.linspace(0.01, 10000, 10000)  # inv A
+FF = np.zeros((len(EE), len(kk)))
 
-    E = E_eV * eV_CGS
-    hw = hw_eV * eV_CGS
+fig = plt.figure(dpi=300)
+ax = fig.add_subplot(111, projection='3d')
 
-    def get_Y(k):
-        return get_PMMA_ELG_GOS(k * h_bar_CGS, hw_eV) / k
+for i, Ei in enumerate(EE):
+    for j, ki in enumerate(kk):
+        FF[i, j] = get_df_dW_K(ki*1e+8, Ei, c.Zs_C) / c.eV * 1e-3
 
-    kp = np.sqrt(2 * m_CGS / h_bar_CGS ** 2) * (np.sqrt(E) + np.sqrt(E - hw))
-    km = np.sqrt(2 * m_CGS / h_bar_CGS ** 2) * (np.sqrt(E) - np.sqrt(E - hw))
+    ax.plot(np.log((kk*c.a0)**2), np.ones(len(kk))*EE[i], FF[i, :])
 
-    integral = integrate.quad(get_Y, km, kp)[0]
-
-    return 1 / (np.pi * a0_CGS * E_eV) * integral  ## cm^-1 * eV^-1
+plt.grid()
+# plt.xlim(0, 20)
+# plt.ylim(0, 0.18)
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+plt.show()
 
 
 # %%
-data = np.load('Resources/DIIMFP_norm.npy')
-# data = np.load('Resources/DIIMFP_norm.npy')
+def get_PMMA_ELG_GOS(q, hw_eV):
+    w = hw_eV * c.eV / c.hbar
+    k = q / c.hbar
+
+    C_alpha, O_alpha = c.N_C_MMA, c.N_O_MMA
+    C_Zs, O_Zs = 5.7, 7.7
+
+    ELF = 2 * np.pi ** 2 * c.n_MMA / w * C_alpha * get_df_dw_1s(k, w, C_Zs) * O_alpha * get_df_dw_1s(k, w, O_Zs)
+
+    return ELF
 
 
+def get_PMMA_DIIMFP_GOS(E_eV, hw_eV):
+    if hw_eV > E_eV:
+        return 0
+
+    E = E_eV * c.eV
+    hw = hw_eV * c.eV
+
+    def get_Y(k):
+        return get_PMMA_ELG_GOS(k * c.hbar, hw_eV) / k
+
+    km, kp = u.get_km_kp(E, hw)
+    integral = integrate.quad(get_Y, km, kp)[0]
+
+    return 1 / (np.pi * c.a0 * E_eV) * integral  # cm^-1 * eV^-1
 
 
+# %% test optical PMMA ELF
+EE = g.EE
+OLF = np.zeros(len(EE))
 
+for i, Ei in enumerate(EE):
+    OLF[i] = get_PMMA_ELG_GOS(0, Ei)
 
+plt.figure(dpi=300)
+plt.loglog(EE, OLF)
+plt.show()

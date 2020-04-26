@@ -3,7 +3,6 @@ import scipy.constants as const
 
 
 #%% general
-pi = const.pi
 Na = const.N_A
 
 #%% electron
@@ -16,9 +15,11 @@ c = const.c * 1e+2
 #%% quantum physics
 eV = const.e * 1e+7
 hbar = const.hbar * 1e+7
-a0 = const.physical_constants['Bohr radius'][0]  # Bohr radius
+a0 = const.physical_constants['Bohr radius'][0] * 1e+2  # Bohr radius
 r0 = const.physical_constants['classical electron radius'][0] * 1e+2  # classical electron radius
 Ry = const.physical_constants['Rydberg constant times hc in eV'][0] * eV
+p_au = const.physical_constants['atomic unit of momentum'][0] * 1e+5
+E_au = const.physical_constants['atomic unit of energy'][0] * 1e+7
 
 #%% PMMA
 rho_PMMA = 1.19
@@ -32,8 +33,8 @@ m_MMA = u_MMA / Na
 M0 = u_MMA / Na
 
 K_occup = 2
-K_Ebind_C = 284.2  # devera2011.pdf
-K_Ebind_O = 543.1  # devera2011.pdf
+K_Ebind_C, K_Ebind_O = 284.2, 543.1  # devera2011.pdf
+Zs_C, Zs_O = 5.7, 7.7
 
 Wf_PMMA = 4.68  # dapor2015.pdf
 
@@ -46,7 +47,3 @@ n_Si = rho_Si * Na/u_Si
 #               plasm    3p     3s      2p      2s      1s
 Si_MuElec_Eb = [16.65, 6.52, 13.63, 107.98, 151.55, 1828.5]
 Si_MuElec_occup = [4, 2, 2, 6, 2, 2]
-
-
-
-
