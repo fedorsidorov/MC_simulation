@@ -1,6 +1,6 @@
 # %% Import
 import importlib
-
+from tqdm import tqdm
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import integrate
@@ -252,3 +252,4 @@ plt.plot(Dapor_DIIMFP[:, 0], Dapor_DIIMFP[:, 1], '.')
 plt.xlim(0, 100)
 plt.ylim(0, 0.008)
 plt.show()
+

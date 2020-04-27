@@ -3,7 +3,9 @@ import importlib
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import integrate
-
+from tqdm import tqdm
+from tqdm.auto import trange
+from mpl_toolkits.mplot3d import Axes3D
 import constants as c
 import grid as g
 import utilities as u
@@ -62,7 +64,7 @@ ax = fig.add_subplot(111, projection='3d')
 
 for i, Ei in enumerate(EE):
     for j, ki in enumerate(kk):
-        FF[i, j] = get_df_dW_K(ki * 1e+8, Ei, c.Zs_C) * c.eV * 1e+3
+        FF[i, j] = get_df_dW_K(ki * 1e+8, Ei, 'C') * c.eV * 1e+3
 
     ax.plot(np.ones(len(kk)) * EE[i], np.log((kk * 1e+8 * c.a0) ** 2), FF[i, :])
 
@@ -78,31 +80,38 @@ plt.show()
 
 
 # %% PMMA ELF
-def get_PMMA_ELG_GOS(k, hw_eV):
-    C_GOS = get_df_dW_K(k, hw_eV, 'C') * c.N_C_MMA
-    O_GOS = get_df_dW_K(k, hw_eV, 'O') * c.N_O_MMA
+def get_GOS_ELF(k, hw_eV, el):
+    factor = 2 * np.pi ** 2 * c.e ** 2 * c.hbar ** 2 * c.n_MMA / (c.m * hw_eV * c.eV)
+    C_GOS = factor * get_df_dW_K(k, hw_eV, 'C') * c.N_C_MMA
+    O_GOS = factor * get_df_dW_K(k, hw_eV, 'O') * c.N_O_MMA
 
-    ELF = 2 * np.pi ** 2 * c.e ** 2 * c.hbar ** 2 * c.n_MMA / (c.m * hw_eV * c.eV) * (C_GOS + O_GOS)
-
-    return ELF
+    if el == 'C':
+        return C_GOS
+    if el == 'O':
+        return O_GOS
+    if el == 'PMMA':
+        return C_GOS + O_GOS
+    else:
+        print('Specify atom type - C, O, PMMA')
+        return -1
 
 
 # %% test PMMA OLF
 EE = g.EE
-OLF = np.zeros(len(EE))
+OLF_PMMA = np.zeros(len(EE))
 
 for i, Ei in enumerate(EE):
-    OLF[i] = get_PMMA_ELG_GOS(1e-100, Ei)
+    OLF_PMMA[i] = get_GOS_ELF(1e-100, Ei, 'PMMA')
 
-# plt.figure(dpi=300)
-# plt.loglog(EE, OLF)
-# plt.show()
+plt.figure(dpi=300)
+plt.loglog(EE, OLF_PMMA)
+plt.show()
 
-np.save('Resources/GOS/_PMMA_GOS_OLF.npy', OLF)
+# np.save('Resources/GOS/PMMA_GOS_OLF_k=1e-100.npy', OLF)
 
 
 # %%
-def get_PMMA_DIIMFP_GOS(T_eV, hw_eV):
+def get_PMMA_DIIMFP_GOS(T_eV, hw_eV, el='PMMA'):
     if hw_eV > T_eV:
         return 0
 
@@ -110,7 +119,7 @@ def get_PMMA_DIIMFP_GOS(T_eV, hw_eV):
     hw = hw_eV * c.eV
 
     def get_Y(k):
-        return get_PMMA_ELG_GOS(k * c.hbar, hw_eV) / k
+        return get_GOS_ELF(k, hw_eV, el) / k
 
     km, kp = u.get_km_kp(T, hw)
     integral = integrate.quad(get_Y, km, kp)[0]
@@ -118,3 +127,58 @@ def get_PMMA_DIIMFP_GOS(T_eV, hw_eV):
     return 1 / (np.pi * c.a0 * T_eV) * integral  # cm^-1 * eV^-1
 
 
+def get_GOS_IIMFP(T_eV, el):
+    def get_Y(hw_eV):
+        return get_PMMA_DIIMFP_GOS(T_eV, hw_eV, el)
+    return integrate.quad(get_Y, 0, T_eV / 2)[0]
+
+
+# %%
+EE = g.EE
+
+DIIMFP_C = np.zeros((len(EE), len(EE)))
+DIIMFP_O = np.zeros((len(EE), len(EE)))
+IIMFP_C = np.zeros(len(EE))
+IIMFP_O = np.zeros(len(EE))
+
+for i in trange(len(EE), position=0):
+    E = EE[i]
+    IIMFP_C[i] = get_GOS_IIMFP(E, 'C')
+    IIMFP_O[i] = get_GOS_IIMFP(E, 'O')
+
+    for j, hw in enumerate(EE):
+        DIIMFP_C[i, j] = get_PMMA_DIIMFP_GOS(E, hw, 'C')
+        DIIMFP_O[i, j] = get_PMMA_DIIMFP_GOS(E, hw, 'O')
+
+IIMFP_PMMA = IIMFP_C + IIMFP_O
+DIIMFP_PMMA = DIIMFP_C + DIIMFP_O
+
+# %%
+np.save('Resources/GOS/DIIMFP_GOS_C.npy', DIIMFP_C)
+np.save('Resources/GOS/DIIMFP_GOS_O.npy', DIIMFP_O)
+np.save('Resources/GOS/DIIMFP_GOS_PMMA.npy', DIIMFP_PMMA)
+
+np.save('Resources/GOS/IIMFP_GOS_C.npy', IIMFP_C)
+np.save('Resources/GOS/IIMFP_GOS_O.npy', IIMFP_O)
+np.save('Resources/GOS/IIMFP_GOS_PMMA.npy', IIMFP_PMMA)
+
+
+# %%
+DIIMFP_C_norm = np.zeros((len(EE), len(EE)))
+DIIMFP_O_norm = np.zeros((len(EE), len(EE)))
+DIIMFP_PMMA_norm = np.zeros((len(EE), len(EE)))
+
+for i in range(len(EE)):
+    if not np.sum(DIIMFP_C[i, :]) == 0:
+        DIIMFP_C_norm[i, :] = DIIMFP_C[i, :] / np.sum(DIIMFP_C[i, :])
+
+    if not np.sum(DIIMFP_O[i, :]) == 0:
+        DIIMFP_O_norm[i, :] = DIIMFP_O[i, :] / np.sum(DIIMFP_O[i, :])
+
+    if not np.sum(DIIMFP_C[i, :]) == 0:
+        DIIMFP_PMMA_norm[i, :] = DIIMFP_PMMA[i, :] / np.sum(DIIMFP_PMMA[i, :])
+
+# %%
+np.save('Resources/GOS/DIIMFP_GOS_C_norm.npy', DIIMFP_C_norm)
+np.save('Resources/GOS/DIIMFP_GOS_O_norm.npy', DIIMFP_O_norm)
+np.save('Resources/GOS/DIIMFP_GOS_PMMA_norm.npy', DIIMFP_PMMA_norm)

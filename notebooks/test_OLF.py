@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import grid as g
 
 OLF_M = np.load('Resources/Mermin/PMMA_Mermin_OLF_k=5e-2.npy')
-OLF_G = np.load('Resources/GOS/PMMA_GOS_OLF.npy')
+OLF_G = np.load('Resources/GOS/PMMA_GOS_OLF_k=1e-100.npy')
 
 plt.figure(dpi=300)
 plt.loglog(g.EE, OLF_M, label='Mermin')

@@ -1,1 +1,23 @@
 /data/
+
+## elastic PMMA
+/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/PMMA/MMA_muffin_cs.npy
+/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/PMMA/MMA_muffin_diff_cs_plane_norm_cumulated.npy
+
+## elastic Si
+/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/Si/Si_muffin_cs.npy
+/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/Si/Si_muffin_diff_cs_plane_norm_cumulated.npy
+
+## GOS PMMA
+/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/DIIMFP_GOS_C.npy
+/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/DIIMFP_GOS_O.npy
+/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/DIIMFP_GOS_PMMA.npy
+/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/DIIMFP_GOS_PMMA_norm.npy
+/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/IIMFP_GOS_PMMA.npy
+
+## Mermin PMMA
+/Users/fedor/PycharmProjects/MC_simulation/Resources/Mermin/PMMA_Mermin_OLF_k=5e-2.npy
+
+
+
+

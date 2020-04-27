@@ -1,18 +1,17 @@
-#%%
+# %%
 import scipy.constants as const
 
-
-#%% general
+# %% general
 Na = const.N_A
 
-#%% electron
+# %% electron
 m = const.m_e * 1e+3
 e = const.e * 10 * const.c
 
-#%% relativity
+# %% relativity
 c = const.c * 1e+2
 
-#%% quantum physics
+# %% quantum physics
 eV = const.e * 1e+7
 hbar = const.hbar * 1e+7
 a0 = const.physical_constants['Bohr radius'][0] * 1e+2  # Bohr radius
@@ -21,14 +20,14 @@ Ry = const.physical_constants['Rydberg constant times hc in eV'][0] * eV
 p_au = const.physical_constants['atomic unit of momentum'][0] * 1e+5
 E_au = const.physical_constants['atomic unit of energy'][0] * 1e+7
 
-#%% PMMA
+# %% PMMA
 rho_PMMA = 1.19
 Z_H, u_H = 1, 1.008
 Z_C, u_C = 6, 12.0096
 Z_O, u_O = 8, 15.99903
 N_H_MMA, N_C_MMA, N_O_MMA = 8, 5, 2
-u_MMA = N_H_MMA*u_H + N_C_MMA*u_C + N_O_MMA*u_O
-n_MMA = rho_PMMA * Na/u_MMA
+u_MMA = N_H_MMA * u_H + N_C_MMA * u_C + N_O_MMA * u_O
+n_MMA = rho_PMMA * Na / u_MMA
 m_MMA = u_MMA / Na
 M0 = u_MMA / Na
 
@@ -38,11 +37,11 @@ Zs_C, Zs_O = 5.7, 7.7
 
 Wf_PMMA = 4.68  # dapor2015.pdf
 
-#%% Si
+# %% Si
 Z_Si = 14
 u_Si = 28.086
 rho_Si = 2.33
-n_Si = rho_Si * Na/u_Si
+n_Si = rho_Si * Na / u_Si
 
 #               plasm    3p     3s      2p      2s      1s
 Si_MuElec_Eb = [16.65, 6.52, 13.63, 107.98, 151.55, 1828.5]
