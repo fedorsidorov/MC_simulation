@@ -2,12 +2,9 @@ import importlib
 from collections import deque
 
 import numpy as np
-from numpy import random
-from numpy import matlib
 
-import constants as c
 import grid as g
-import utilities as u
+from SimClasses import utilities as u, constants as c
 
 c = importlib.reload(c)
 g = importlib.reload(g)
@@ -15,7 +12,7 @@ u = importlib.reload(u)
 
 
 class Electron:
-    x0 = np.mat([[0], [0], [1]])
+    x0 = np.mat([[0.], [0.], [1.]])
     history = deque()
 
     def __init__(self, e_id, parent_e_id, E, coords, O_matrix):
@@ -51,7 +48,7 @@ class Electron:
         return self.e_id
 
     def get_scattered_O_matrix(self, phi, theta):
-        W = np.mat([[np.cos(phi), np.sin(phi), 0],
+        W = np.mat([[np.cos(phi), np.sin(phi), 0.],
                     [-np.sin(phi) * np.cos(theta), np.cos(phi) * np.cos(theta), np.sin(theta)],
                     [np.sin(phi) * np.sin(theta), -np.cos(phi) * np.sin(theta), np.cos(theta)]])
         return np.matmul(W, self.O_matrix)
@@ -64,11 +61,12 @@ class Electron:
         return np.matmul(self.O_matrix.transpose(), self.x0)
 
     def get_E_cos2_theta(self):
-        cos_theta = np.dot(np.mat([[0], [0], [-1]]), self.get_flight_vector())
+        cos_theta = np.dot(np.mat([[0.], [0.], [-1.]]), self.get_flight_vector())
         return self.E * cos_theta**2
 
     def make_step(self, step_length):
-        self.coords += np.matmul(self.O_matrix.transpose(), self.x0) * step_length
+        add = np.matmul(self.O_matrix.transpose(), self.x0) * step_length
+        self.coords += add
 
     def write_state_to_history(self, layer_ind, proc_ind, hw, E_2nd):
         E_dep = hw - E_2nd
@@ -77,13 +75,13 @@ class Electron:
         self.history.append(history_line)
 
     def start(self, layer_ind):
-        history_line = [self.e_id, self.parent_e_id, layer_ind, -1,
-                        *list(self.coords), 0, 0, self.E]
+        history_line = [self.e_id, self.parent_e_id, layer_ind, -1.,
+                        *list(self.coords), 0., 0., self.E]
         self.history.append(history_line)
 
     def stop(self, layer_ind):
-        history_line = [self.e_id, self.parent_e_id, layer_ind, -1,
-                        *list(self.coords), self.E, 0, 0]
+        history_line = [self.e_id, self.parent_e_id, layer_ind, -1.,
+                        *list(self.coords), self.E, 0., 0.]
         self.history.append(history_line)
 
     def get_history(self):

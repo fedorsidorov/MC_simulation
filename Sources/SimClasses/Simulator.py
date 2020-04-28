@@ -3,12 +3,11 @@ import importlib
 from collections import deque
 
 import numpy as np
-from numpy import random
 from numpy import matlib
+import numpy.matlib
 
-import constants as c
 import grid as g
-import utilities as u
+from SimClasses import utilities as u, constants as c
 
 import SimClasses.Electron as Electron
 import SimClasses.Structure as Structure
@@ -26,19 +25,19 @@ class Simulator:
     electrons_deque = deque()
     total_history = deque()
 
-    def __init__(self, d_PMMA_nm, n_electrons, E0):
+    def __init__(self, d_PMMA_nm, n_electrons, E0_eV):
         self.d_PMMA_nm = d_PMMA_nm
         self.n_electrons = n_electrons
-        self.E0 = E0
+        self.E0 = E0_eV
 
     def prepare_e_deque(self):
         for i in range(self.n_electrons):
-            now_electron = Electron(
+            now_electron = Electron.Electron(
                 e_id=i,
                 parent_e_id=-1,
                 E=self.E0,
-                coords=np.mat([[0], [0], [1]]),
-                O_matrix=matlib.eye(3)
+                coords=np.mat([[0.], [0.], [0.]]),
+                O_matrix=numpy.matlib.eye(3)
             )
             self.electrons_deque.append(now_electron)
 
@@ -56,7 +55,7 @@ class Simulator:
 
             if proc_ind == struct.elastic_ind:  # elastic scattering
                 phi, theta = struct.get_elastic_scat_phi_theta(layer_ind, E_ind)
-                now_e.scatter_with_E_loss(phi, theta, 0)
+                now_e.scatter_with_E_loss(phi, theta, 0.)
                 hw = 0
 
             elif layer_ind == struct.PMMA_ind and proc_ind == struct.PMMA_ph_ind:  # PMMA phonons
@@ -92,7 +91,7 @@ class Simulator:
         now_e.stop(struct.get_layer_ind(now_e))
 
     def start_simulation(self):
-        struct = Structure(self.d_PMMA_nm)
+        struct = Structure.Structure(self.d_PMMA_nm)
 
         # the main simulation cycle
         while self.electrons_deque:

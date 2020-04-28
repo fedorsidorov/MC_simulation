@@ -3,12 +3,9 @@ import importlib
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import integrate
-from tqdm import tqdm
 from tqdm.auto import trange
-from mpl_toolkits.mplot3d import Axes3D
-import constants as c
 import grid as g
-import utilities as u
+from SimClasses import utilities as u, constants as c
 
 u = importlib.reload(u)
 c = importlib.reload(c)

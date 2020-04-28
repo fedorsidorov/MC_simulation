@@ -1,13 +1,11 @@
 # %% Import
 import importlib
-from tqdm import tqdm
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import integrate
 
-import constants as c
 import grid as g
-import utilities as u
+from SimClasses import utilities as u, constants as c
 
 u = importlib.reload(u)
 c = importlib.reload(c)
