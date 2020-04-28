@@ -1,3 +1,4 @@
+# %%
 import importlib
 from collections import deque
 
@@ -11,6 +12,7 @@ g = importlib.reload(g)
 u = importlib.reload(u)
 
 
+# %%
 class Electron:
     x0 = np.mat([[0.], [0.], [1.]])
     history = deque()
@@ -86,3 +88,8 @@ class Electron:
 
     def get_history(self):
         return np.asarray(self.history)
+
+
+#%%
+# now_electron = Electron(0, -1, 20000, np.mat([[0.], [0.], [0.]]), np.mat(np.eye(3)))
+DATA = np.load('history.npy', allow_pickle=True)

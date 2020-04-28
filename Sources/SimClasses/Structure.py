@@ -33,7 +33,7 @@ class Structure:
     @staticmethod
     def get_elastic_scat_phi_theta(layer_ind, E_ind):
         probs = a.structure_elastic_DIMFP[layer_ind][E_ind, :]
-        return random.choice(g.THETA_rad, p=probs)
+        return 2*np.pi*random.random(), random.choice(g.THETA_rad, p=probs)
 
     @staticmethod
     def get_E_cutoff(layer_ind):
@@ -69,7 +69,7 @@ class Structure:
     def get_ee_scat_phi_theta_hw_phi2_theta2(layer_ind, ss_ind, E, E_ind):
         phi = 2 * np.pi * random.random()
 
-        if layer_ind == a.Si_ind and ss_ind == 0:  # plasmon
+        if layer_ind == c.Si_ind and ss_ind == 0:  # plasmon
             hw = c.Si_MuElec_E_plasmon
             theta = np.arcsin(np.sqrt(hw / E))
             phi_2nd = 2 * np.pi * random.random()
