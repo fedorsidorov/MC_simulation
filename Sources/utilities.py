@@ -70,3 +70,22 @@ def get_cumulated_array(array):
         result[i] = np.sum(array[:i + 1])
 
     return result
+
+
+def norm_2d_array(array, axis):
+    result = np.zeros(np.shape(array))
+
+    for i in range(np.shape(array)[axis]):
+        if axis == 1:
+            if np.sum(array[i, :]) != 0:
+                result[i, :] = array[i, :] / np.sum(array[i, :])
+                continue
+        elif axis == 0:
+            if np.sum(array[:, i]) != 0:
+                result[:, i] = array[:, i] / np.sum(array[:, i])
+                continue
+        else:
+            print('Specify axis - 0 ro 1')
+            return -1
+
+    return result

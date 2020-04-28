@@ -6,12 +6,16 @@
       <w>deber</w>
       <w>devera</w>
       <w>diimfp</w>
+      <w>dimfp</w>
       <w>drude</w>
       <w>ebind</w>
       <w>elec</w>
       <w>electronvolts</w>
+      <w>elsepa</w>
       <w>hbar</w>
       <w>iimfp</w>
+      <w>imfp</w>
+      <w>inds</w>
       <w>leapman</w>
       <w>lindhard</w>
       <w>logx</w>
@@ -20,8 +24,11 @@
       <w>occup</w>
       <w>plasm</w>
       <w>pmma</w>
+      <w>polaron</w>
       <w>prec</w>
+      <w>probs</w>
       <w>ritsko</w>
+      <w>sigmadiff</w>
     </words>
   </dictionary>
 </component>

@@ -158,8 +158,8 @@ np.save('Resources/GOS/DIIMFP_GOS_C.npy', DIIMFP_C)
 np.save('Resources/GOS/DIIMFP_GOS_O.npy', DIIMFP_O)
 np.save('Resources/GOS/DIIMFP_GOS_PMMA.npy', DIIMFP_PMMA)
 
-np.save('Resources/GOS/IIMFP_GOS_C.npy', IIMFP_C)
-np.save('Resources/GOS/IIMFP_GOS_O.npy', IIMFP_O)
+np.save('Resources/GOS/C_GOS_IIMFP.npy', IIMFP_C)
+np.save('Resources/GOS/O_GOS_IIMFP.npy', IIMFP_O)
 np.save('Resources/GOS/IIMFP_GOS_PMMA.npy', IIMFP_PMMA)
 
 
@@ -179,6 +179,6 @@ for i in range(len(EE)):
         DIIMFP_PMMA_norm[i, :] = DIIMFP_PMMA[i, :] / np.sum(DIIMFP_PMMA[i, :])
 
 # %%
-np.save('Resources/GOS/DIIMFP_GOS_C_norm.npy', DIIMFP_C_norm)
-np.save('Resources/GOS/DIIMFP_GOS_O_norm.npy', DIIMFP_O_norm)
+np.save('Resources/GOS/C_GOS_DIIMFP_norm.npy', DIIMFP_C_norm)
+np.save('Resources/GOS/O_GOS_DIIMFP_norm.npy', DIIMFP_O_norm)
 np.save('Resources/GOS/DIIMFP_GOS_PMMA_norm.npy', DIIMFP_PMMA_norm)
