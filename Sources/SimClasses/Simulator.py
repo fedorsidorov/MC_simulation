@@ -20,18 +20,26 @@ Structure = importlib.reload(Structure)
 # %%
 class Simulator:
 
-    electrons_deque = deque()
-    total_history = deque()
+    # electrons_deque = deque()
+    # deque_id = deque()
+    # total_history = deque()
 
     def __init__(self, d_PMMA_nm, n_electrons, E0_eV):
         self.d_PMMA_nm = d_PMMA_nm
         self.n_electrons = n_electrons
         self.E0 = E0_eV
+        self.e_cnt = -1
+        self.electrons_deque = deque()
+        self.total_history = deque()
+
+    def get_new_e_id(self):
+        self.e_cnt += 1
+        return self.e_cnt
 
     def prepare_e_deque(self):
-        for i in range(self.n_electrons):
+        for _ in range(self.n_electrons):
             now_electron = Electron.Electron(
-                e_id=i,
+                e_id=self.get_new_e_id(),
                 parent_e_id=-1,
                 E=self.E0,
                 coords=np.mat([[0.], [0.], [0.]]),
@@ -41,6 +49,10 @@ class Simulator:
 
     def track_electron(self, now_e, struct):
         now_e.start(struct.get_layer_ind(now_e))
+
+        # if now_e.get_e_id() == 5:
+        #     print(now_e.get_e_id())
+        #     print('stop there')
 
         while True:
             layer_ind = struct.get_layer_ind(now_e)
@@ -78,15 +90,18 @@ class Simulator:
                 if hw > E_bind:  # secondary generation
                     E_2nd = hw - E_bind
                     e_2nd = Electron.Electron(
-                        e_id=len(self.electrons_deque),
+                        e_id=self.get_new_e_id(),
                         parent_e_id=now_e.get_e_id(),
                         E=E_2nd,
-                        coords=now_e.get_coords(),
+                        coords=now_e.get_coords_matrix(),
                         O_matrix=now_e.get_scattered_O_matrix(phi_2nd, theta_2nd)
                     )
                     self.electrons_deque.append(e_2nd)
-                now_e.scatter_with_E_loss(phi, theta, hw)
+
+                now_e.scatter_with_E_loss(phi, theta, hw)  # before or after???
+
             now_e.write_state_to_history(layer_ind, proc_ind, hw, E_2nd)
+
         now_e.stop(struct.get_layer_ind(now_e))
 
     def start_simulation(self):
@@ -99,13 +114,4 @@ class Simulator:
             self.total_history.append(now_e.get_history())
 
     def get_total_history(self):
-        return np.asarray(self.total_history)
-
-
-# %%
-sim = Simulator(100, 1, 500)
-
-sim.prepare_e_deque()
-sim.start_simulation()
-
-history = sim.get_total_history()
+        return np.vstack(self.total_history)

@@ -15,7 +15,6 @@ u = importlib.reload(u)
 # %%
 class Electron:
     x0 = np.mat([[0.], [0.], [1.]])
-    history = deque()
 
     def __init__(self, e_id, parent_e_id, E, coords, O_matrix):
         self.e_id = e_id
@@ -23,7 +22,7 @@ class Electron:
         self.E = E
         self.coords = coords
         self.O_matrix = O_matrix
-        self.history.append(coords)
+        self.history = deque()
 
     def set_E(self, value):
         self.E = value
@@ -34,8 +33,11 @@ class Electron:
     def get_E_ind(self):
         return np.argmin(np.abs(g.EE - self.E))
 
-    def get_coords(self):
+    def get_coords_matrix(self):
         return self.coords
+
+    def get_coords_list(self):
+        return self.coords[0, 0], self.coords[1, 0], self.coords[2, 0]
 
     def get_z(self):
         return self.coords[2]
@@ -73,23 +75,19 @@ class Electron:
     def write_state_to_history(self, layer_ind, proc_ind, hw, E_2nd):
         E_dep = hw - E_2nd
         history_line = [self.e_id, self.parent_e_id, layer_ind, proc_ind,
-                        *list(self.coords), E_dep, E_2nd, self.E]
+                        *self.get_coords_list(), E_dep, E_2nd, self.E]
         self.history.append(history_line)
 
     def start(self, layer_ind):
         history_line = [self.e_id, self.parent_e_id, layer_ind, -1.,
-                        *list(self.coords), 0., 0., self.E]
+                        *self.get_coords_list(), 0., 0., self.E]
         self.history.append(history_line)
 
     def stop(self, layer_ind):
         history_line = [self.e_id, self.parent_e_id, layer_ind, -1.,
-                        *list(self.coords), self.E, 0., 0.]
+                        *self.get_coords_list(), self.E, 0., 0.]
         self.history.append(history_line)
 
     def get_history(self):
-        return np.asarray(self.history)
-
-
-#%%
-# now_electron = Electron(0, -1, 20000, np.mat([[0.], [0.], [0.]]), np.mat(np.eye(3)))
-DATA = np.load('history.npy', allow_pickle=True)
+        history_array = np.asarray(self.history)
+        return np.asarray(history_array)

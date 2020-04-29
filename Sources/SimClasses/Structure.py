@@ -18,7 +18,7 @@ class Structure:
         self.d_PMMA_nm = d_PMMA_nm
 
     def get_layer_ind(self, electron):
-        return int(electron.get_coords()[2] > self.d_PMMA_nm)
+        return int(electron.get_coords_list()[2] > self.d_PMMA_nm)
 
     @staticmethod
     def get_mfp(layer_ind, E_ind):
