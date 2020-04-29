@@ -11,41 +11,6 @@ c = importlib.reload(c)
 g = importlib.reload(g)
 u = importlib.reload(u)
 
-# %%
-## PMMA           C,   O
-# MMA_core_Eb = [296, 538]
-# MMA_core_occ = [2, 2]
-#
-# N_val_MMA = 40
-#
-# N_H_MMA = 8
-# N_C_MMA = 5
-# N_O_MMA = 2
-#
-# n_MMA = mc.rho_PMMA * mc.Na / mc.u_MMA
-#
-# Si            1s,  2s,  2p
-# Si_core_Eb = [1844, 154, 104]
-# Si_core_occ = [2, 2, 6]
-#
-# Si             1s,  2s,  2p,    3s,      3p
-# Si_total_Eb = [1844, 154, 104, 13.46, 8.15]
-# Si_total_occ = [2, 2, 6, 2, 2]
-
-# Si_MuElec_Eb = [16.65, 6.52, 13.63, 107.98, 151.55, 1828.5]
-# Si_MuElec_occ = [4, 2, 2, 6, 2, 2]
-
-#  energyConstant.push_back(16.65*eV);
-#  energyConstant.push_back(6.52*eV);
-#  energyConstant.push_back(13.63*eV);
-#  energyConstant.push_back(107.98*eV);
-#  energyConstant.push_back(151.55*eV);
-#  energyConstant.push_back(1828.5*eV);
-
-# N_val_Si = 4
-#
-# n_Si = mc.rho_Si * mc.Na / mc.u_Si
-
 
 # %%
 def get_Gryzinski_DCS(Eb, E, hw):

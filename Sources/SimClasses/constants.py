@@ -50,6 +50,8 @@ Zs_C, Zs_O = 5.7, 7.7
 Wf_PMMA = 4.68  # dapor2015.pdf
 hw_phonon = 0.1  # dapor2015.pdf
 
+PMMA_E_cutoff = 1
+
 # %% Si
 Z_Si = 14
 u_Si = 28.086

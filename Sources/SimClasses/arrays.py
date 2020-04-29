@@ -15,7 +15,7 @@ PMMA_el_IMFP[:228] = PMMA_el_IMFP[228]  # no extrapolation
 PMMA_el_DIMFP_norm = np.load('Resources/ELSEPA/PMMA/MMA_muffin_DEMFP_plane_norm.npy')
 
 Si_el_IMFP = np.load('Resources/ELSEPA/Si/Si_muffin_u.npy')
-Si_el_IMFP[:228] = Si_el_IMFP[228]  # no extrapolation
+Si_el_IMFP[:278] = 0  # no life below plasmon energy!
 Si_el_DIMFP_norm = np.load('Resources/ELSEPA/Si/Si_muffin_diff_cs_plane_norm.npy')
 
 # electron-electron interaction
@@ -30,7 +30,7 @@ PMMA_val_DIMFP_norm = np.load('Resources/Mermin/DIIMFP_Mermin_PMMA_norm.npy')  #
 
 PMMA_ee_DIMFP_norm_3 = np.array((PMMA_val_DIMFP_norm, C_K_ee_DIMFP_norm, O_K_ee_DIMFP_norm))
 
-Si_ee_IMFP_6 = np.load('Resources/MuElec/Si_MuElec_IIMFP.npy')
+Si_ee_IMFP_6 = np.load('Resources/MuElec/Si_MuElec_IIMFP.npy')*1e-18*c.n_Si
 Si_ee_DIMFP_norm_6 = np.load('Resources/MuElec/Si_MuElec_DIIMFP_norm.npy')
 
 # electron-phonon interaction

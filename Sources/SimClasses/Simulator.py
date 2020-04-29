@@ -4,11 +4,10 @@ from collections import deque
 
 import numpy as np
 
-import grid as g
-from SimClasses import utilities as u, constants as c, arrays as a
-
 import SimClasses.Electron as Electron
 import SimClasses.Structure as Structure
+import grid as g
+from SimClasses import utilities as u, constants as c, arrays as a
 
 c = importlib.reload(c)
 g = importlib.reload(g)
@@ -44,7 +43,6 @@ class Simulator:
             self.electrons_deque.append(now_electron)
 
     def add_2nd_e(self, e_parent, phi_2nd, theta_2nd, E_2nd):
-        # E_2nd = hw - E_bind
         e_2nd = Electron.Electron(
             e_id=self.get_new_e_id(),
             parent_e_id=e_parent.get_e_id(),
@@ -61,7 +59,11 @@ class Simulator:
             layer_ind = struct.get_layer_ind(now_e)
             E_ind = now_e.get_E_ind()
 
-            if now_e.get_E() < struct.get_E_cutoff(layer_ind) or layer_ind == c.vacuum_ind:
+            # if now_e.get_E() < struct.get_E_cutoff(layer_ind) or layer_ind == c.vacuum_ind:
+            #     break
+            if layer_ind == c.PMMA_ind and g.EE[E_ind] < c.PMMA_E_cutoff or \
+                    layer_ind == c.Si_ind and g.EE[E_ind] < c.Si_MuElec_E_plasmon or \
+                    layer_ind == c.vacuum_ind:
                 break
 
             # first!!!
