@@ -14,11 +14,17 @@ u = importlib.reload(u)
 #%%
 class Structure:
 
-    def __init__(self, d_PMMA_nm):
-        self.d_PMMA_nm = d_PMMA_nm
+    def __init__(self, d_PMMA_cm):
+        self.d_PMMA_cm = d_PMMA_cm
 
     def get_layer_ind(self, electron):
-        return int(electron.get_coords_list()[2] > self.d_PMMA_nm)
+        now_z = electron.get_coords_list()[2]
+        if now_z >= self.d_PMMA_cm:
+            return 1
+        elif now_z >= 0:
+            return 0
+        else:
+            return -1
 
     @staticmethod
     def get_mfp(layer_ind, E_ind):

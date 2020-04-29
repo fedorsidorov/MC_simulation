@@ -63,6 +63,7 @@ Si_MuElec_occup = [4, 2, 2, 6, 2, 2]
 
 
 # %% simulation indexes
+vacuum_ind = 3
 PMMA_ind = 0
 Si_ind = 1
 

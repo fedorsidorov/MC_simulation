@@ -2,6 +2,7 @@ import numpy as np
 from scipy import interpolate
 
 from SimClasses import constants as c
+import grid as g
 
 
 # %% interpolation
@@ -71,3 +72,18 @@ def norm_2d_array(array):
             result[i, :] = array[i, :] / np.sum(array[i, :])
 
     return result
+
+
+def get_IEMFP_from_DEIMFP(DIEMFP):
+    IEMFP = np.zeros(g.EE)
+    for i, E in enumerate(g.EE):
+        IEMFP = np.trapz(DIEMFP[i, :], x=g.THETA_rad)
+    return IEMFP
+
+
+def get_IIMFP_from_DIIMFP(DIIMFP):
+    IIMFP = np.zeros(g.EE)
+    for i, E in enumerate(g.EE):
+        inds = np.where(g.EE < E)
+        IIMFP = np.trapz(DIIMFP[i, inds], x=g.EE[inds])
+    return IIMFP

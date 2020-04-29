@@ -11,9 +11,11 @@ u = importlib.reload(u)
 #%%
 # elastic interactions - OK
 PMMA_el_IMFP = np.load('Resources/ELSEPA/PMMA/PMMA_muffin_EIMFP.npy')
+PMMA_el_IMFP[:228] = PMMA_el_IMFP[228]  # no extrapolation
 PMMA_el_DIMFP_norm = np.load('Resources/ELSEPA/PMMA/MMA_muffin_DEMFP_plane_norm.npy')
 
 Si_el_IMFP = np.load('Resources/ELSEPA/Si/Si_muffin_u.npy')
+Si_el_IMFP[:228] = Si_el_IMFP[228]  # no extrapolation
 Si_el_DIMFP_norm = np.load('Resources/ELSEPA/Si/Si_muffin_diff_cs_plane_norm.npy')
 
 # electron-electron interaction

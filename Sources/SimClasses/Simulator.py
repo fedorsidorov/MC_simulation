@@ -20,10 +20,6 @@ Structure = importlib.reload(Structure)
 # %%
 class Simulator:
 
-    # electrons_deque = deque()
-    # deque_id = deque()
-    # total_history = deque()
-
     def __init__(self, d_PMMA_nm, n_electrons, E0_eV):
         self.d_PMMA_nm = d_PMMA_nm
         self.n_electrons = n_electrons
@@ -47,35 +43,39 @@ class Simulator:
             )
             self.electrons_deque.append(now_electron)
 
+    def add_2nd_e(self, e_parent, phi_2nd, theta_2nd, E_2nd):
+        # E_2nd = hw - E_bind
+        e_2nd = Electron.Electron(
+            e_id=self.get_new_e_id(),
+            parent_e_id=e_parent.get_e_id(),
+            E=E_2nd,
+            coords=e_parent.get_coords_matrix(),
+            O_matrix=e_parent.get_scattered_O_matrix(phi_2nd, theta_2nd)
+        )
+        self.electrons_deque.append(e_2nd)
+
     def track_electron(self, now_e, struct):
         now_e.start(struct.get_layer_ind(now_e))
-
-        # if now_e.get_e_id() == 5:
-        #     print(now_e.get_e_id())
-        #     print('stop there')
 
         while True:
             layer_ind = struct.get_layer_ind(now_e)
             E_ind = now_e.get_E_ind()
 
-            if now_e.get_E() < struct.get_E_cutoff(layer_ind):
+            if now_e.get_E() < struct.get_E_cutoff(layer_ind) or layer_ind == c.vacuum_ind:
                 break
 
-            mfp = struct.get_mfp(layer_ind, E_ind)
-            now_e.make_step(mfp)  # write new coordinates
+            # first!!!
+            now_e.make_step(struct.get_mfp(layer_ind, E_ind))  # write new coordinates
 
             proc_ind = struct.get_process_ind(layer_ind, E_ind)
             E_2nd = 0
 
             if proc_ind == c.elastic_ind:  # elastic scattering
                 phi, theta = struct.get_elastic_scat_phi_theta(layer_ind, E_ind)
-                now_e.scatter_with_E_loss(phi, theta, 0.)
                 hw = 0
 
             elif layer_ind == c.PMMA_ind and proc_ind == c.PMMA_ph_ind:  # PMMA phonons
-                phi, theta, W = struct.get_phonon_scat_phi_theta_W(now_e)
-                now_e.scatter_with_E_loss(phi, theta, W)
-                hw = W
+                phi, theta, hw = struct.get_phonon_scat_phi_theta_W(now_e)
 
             elif layer_ind == c.PMMA_ind and proc_ind == c.PMMA_pol_ind:  # PMMA polarons
                 break
@@ -84,28 +84,19 @@ class Simulator:
                 ss_ind = proc_ind - 1
                 phi, theta, hw, phi_2nd, theta_2nd = \
                     struct.get_ee_scat_phi_theta_hw_phi2_theta2(layer_ind, ss_ind, now_e.get_E(), E_ind)
-
                 E_bind = a.structure_E_bind[layer_ind][ss_ind]
 
                 if hw > E_bind:  # secondary generation
                     E_2nd = hw - E_bind
-                    e_2nd = Electron.Electron(
-                        e_id=self.get_new_e_id(),
-                        parent_e_id=now_e.get_e_id(),
-                        E=E_2nd,
-                        coords=now_e.get_coords_matrix(),
-                        O_matrix=now_e.get_scattered_O_matrix(phi_2nd, theta_2nd)
-                    )
-                    self.electrons_deque.append(e_2nd)
+                    self.add_2nd_e(now_e, phi_2nd, theta_2nd, E_2nd)
 
-                now_e.scatter_with_E_loss(phi, theta, hw)  # before or after???
-
+            now_e.scatter_with_E_loss(phi, theta, hw)
             now_e.write_state_to_history(layer_ind, proc_ind, hw, E_2nd)
 
         now_e.stop(struct.get_layer_ind(now_e))
 
     def start_simulation(self):
-        struct = Structure.Structure(self.d_PMMA_nm)
+        struct = Structure.Structure(self.d_PMMA_nm * 1e-7)
 
         # the main simulation cycle
         while self.electrons_deque:
@@ -114,4 +105,6 @@ class Simulator:
             self.total_history.append(now_e.get_history())
 
     def get_total_history(self):
-        return np.vstack(self.total_history)
+        history = np.vstack(self.total_history)
+        history[:, 4:7] *= 1e+7  # cm to nm
+        return np.vstack(history)
