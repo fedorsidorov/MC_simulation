@@ -5,7 +5,8 @@ import numpy as np
 from scipy import integrate
 from tqdm.auto import trange
 import grid as g
-from SimClasses import utilities as u, constants as c
+import constants as c
+import utilities as u
 
 u = importlib.reload(u)
 c = importlib.reload(c)

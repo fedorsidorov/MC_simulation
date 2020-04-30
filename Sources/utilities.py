@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import interpolate
 
-from SimClasses import constants as c
+import constants as c
 import grid as g
 
 

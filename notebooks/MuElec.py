@@ -3,7 +3,7 @@ import importlib
 import matplotlib.pyplot as plt
 import numpy as np
 import grid as grid
-from SimClasses import utilities as util
+import utilities as util
 
 grid = importlib.reload(grid)
 util = importlib.reload(util)

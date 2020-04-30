@@ -4,7 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import grid as grid
 import gryzinski as gryz
-from SimClasses import utilities as u, constants as c, arrays as a
+import constants as c
+import arrays as a
+import utilities as u
 
 a = importlib.reload(a)
 c = importlib.reload(c)

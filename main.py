@@ -2,7 +2,7 @@ import importlib
 
 import numpy as np
 
-import SimClasses.Simulator as Simulator
+import Simulator as Simulator
 
 Simulator = importlib.reload(Simulator)
 

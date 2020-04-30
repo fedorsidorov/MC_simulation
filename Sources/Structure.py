@@ -3,15 +3,17 @@ import importlib
 import numpy as np
 from numpy import random
 
+import arrays as a
+import constants as c
 import grid as g
-from SimClasses import utilities as u, constants as c, arrays as a
+import utilities as u
 
 c = importlib.reload(c)
 g = importlib.reload(g)
 u = importlib.reload(u)
 
 
-#%%
+# %%
 class Structure:
 
     def __init__(self, d_PMMA_cm):
@@ -20,11 +22,11 @@ class Structure:
     def get_layer_ind(self, electron):
         now_z = electron.get_coords_list()[2]
         if now_z >= self.d_PMMA_cm:
-            return 1
+            return c.Si_ind
         elif now_z >= 0:
-            return 0
+            return c.PMMA_ind
         else:
-            return -1
+            return c.vacuum_ind
 
     @staticmethod
     def get_mfp(layer_ind, E_ind):
@@ -34,12 +36,13 @@ class Structure:
     @staticmethod
     def get_process_ind(layer_ind, E_ind):
         inds = a.structure_proc_inds[layer_ind]
-        return random.choice(inds, p=a.structure_IMFP_norm[layer_ind][E_ind])
+        probs = a.structure_IMFP_norm[layer_ind][E_ind]
+        return random.choice(inds, p=probs)
 
     @staticmethod
     def get_elastic_scat_phi_theta(layer_ind, E_ind):
         probs = a.structure_elastic_DIMFP[layer_ind][E_ind, :]
-        return 2*np.pi*random.random(), random.choice(g.THETA_rad, p=probs)
+        return 2 * np.pi * random.random(), random.choice(g.THETA_rad, p=probs)
 
     @staticmethod
     def get_E_cutoff(layer_ind):

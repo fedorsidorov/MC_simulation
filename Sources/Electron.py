@@ -5,7 +5,8 @@ from collections import deque
 import numpy as np
 
 import grid as g
-from SimClasses import utilities as u, constants as c
+import constants as c
+import utilities as u
 
 c = importlib.reload(c)
 g = importlib.reload(g)
@@ -14,7 +15,6 @@ u = importlib.reload(u)
 
 # %%
 class Electron:
-    x0 = np.mat([[0.], [0.], [1.]])
 
     def __init__(self, e_id, parent_e_id, E, coords, O_matrix):
         self.e_id = e_id
@@ -23,6 +23,7 @@ class Electron:
         self.coords = coords
         self.O_matrix = O_matrix
         self.history = deque()
+        self.x0 = np.mat([[0.], [0.], [1.]])
 
     def set_E(self, value):
         self.E = value

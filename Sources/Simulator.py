@@ -3,11 +3,13 @@ import importlib
 from collections import deque
 
 import numpy as np
-
-import SimClasses.Electron as Electron
-import SimClasses.Structure as Structure
+import copy
+import Electron as Electron
+import Structure as Structure
+import arrays as a
+import constants as c
 import grid as g
-from SimClasses import utilities as u, constants as c, arrays as a
+import utilities as u
 
 c = importlib.reload(c)
 g = importlib.reload(g)
@@ -47,8 +49,8 @@ class Simulator:
             e_id=self.get_new_e_id(),
             parent_e_id=e_parent.get_e_id(),
             E=E_2nd,
-            coords=e_parent.get_coords_matrix(),
-            O_matrix=e_parent.get_scattered_O_matrix(phi_2nd, theta_2nd)
+            coords=copy.deepcopy(e_parent.get_coords_matrix()),
+            O_matrix=copy.deepcopy(e_parent.get_scattered_O_matrix(phi_2nd, theta_2nd))
         )
         self.electrons_deque.append(e_2nd)
 
@@ -59,22 +61,23 @@ class Simulator:
             layer_ind = struct.get_layer_ind(now_e)
             E_ind = now_e.get_E_ind()
 
-            # if now_e.get_E() < struct.get_E_cutoff(layer_ind) or layer_ind == c.vacuum_ind:
-            #     break
-            if layer_ind == c.PMMA_ind and g.EE[E_ind] < c.PMMA_E_cutoff or \
-                    layer_ind == c.Si_ind and g.EE[E_ind] < c.Si_MuElec_E_plasmon or \
-                    layer_ind == c.vacuum_ind:
+            if layer_ind == c.PMMA_ind and now_e.get_E() < c.PMMA_E_cutoff or \
+                    layer_ind == c.Si_ind and E_ind < c.Si_MuElec_E_ind_plasmon:
+                break
+
+            if layer_ind == c.vacuum_ind:
+                print('vacuum')
                 break
 
             # first!!!
             now_e.make_step(struct.get_mfp(layer_ind, E_ind))  # write new coordinates
 
             proc_ind = struct.get_process_ind(layer_ind, E_ind)
-            E_2nd = 0
+            E_2nd = 0.
 
             if proc_ind == c.elastic_ind:  # elastic scattering
                 phi, theta = struct.get_elastic_scat_phi_theta(layer_ind, E_ind)
-                hw = 0
+                hw = 0.
 
             elif layer_ind == c.PMMA_ind and proc_ind == c.PMMA_ph_ind:  # PMMA phonons
                 phi, theta, hw = struct.get_phonon_scat_phi_theta_W(now_e)
@@ -109,4 +112,4 @@ class Simulator:
     def get_total_history(self):
         history = np.vstack(self.total_history)
         history[:, 4:7] *= 1e+7  # cm to nm
-        return np.vstack(history)
+        return np.around(np.vstack(history), decimals=5)

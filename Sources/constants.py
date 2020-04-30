@@ -61,6 +61,7 @@ n_Si = rho_Si * Na / u_Si
 #               plasm    3p     3s      2p      2s      1s
 Si_MuElec_E_bind = [0, 6.52, 13.63, 107.98, 151.55, 1828.5]
 Si_MuElec_E_plasmon = 16.65
+Si_MuElec_E_ind_plasmon = 278
 Si_MuElec_occup = [4, 2, 2, 6, 2, 2]
 
 
