@@ -23,6 +23,7 @@
       <w>iimfp</w>
       <w>imfp</w>
       <w>inds</w>
+      <w>indxs</w>
       <w>leapman</w>
       <w>lindhard</w>
       <w>loglog</w>
@@ -41,7 +42,9 @@
       <w>probs</w>
       <w>ritsko</w>
       <w>scipy</w>
+      <w>shimizu</w>
       <w>sigmadiff</w>
+      <w>subshell</w>
     </words>
   </dictionary>
 </component>

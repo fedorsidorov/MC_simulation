@@ -9,3 +9,5 @@ p = importlib.reload(p)
 
 DATA = np.load('data/e_DATA/DATA_0.npy')
 p.plot_DATA(DATA, 500)
+
+# np.save('DATA_0.pdf')

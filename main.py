@@ -2,13 +2,13 @@ import importlib
 
 import numpy as np
 
-import Simulator as Simulator
+import MC_classes
 
-Simulator = importlib.reload(Simulator)
+MC_classes = importlib.reload(MC_classes)
 
 
 if __name__ == '__main__':
-    sim = Simulator.Simulator(500, 1, 10000)
+    sim = MC_classes.Simulator(500e-7, 1, 20000)
     sim.prepare_e_deque()
     sim.start_simulation()
 

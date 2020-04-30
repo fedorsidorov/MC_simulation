@@ -48,9 +48,9 @@ K_Ebind_C, K_Ebind_O = 284.2, 543.1  # devera2011.pdf
 Zs_C, Zs_O = 5.7, 7.7
 
 Wf_PMMA = 4.68  # dapor2015.pdf
-hw_phonon = 0.1  # dapor2015.pdf
+W_phonon = 0.1  # dapor2015.pdf
 
-PMMA_E_cutoff = 1
+# PMMA_E_cut_ind = 0
 
 # %% Si
 Z_Si = 14
@@ -61,15 +61,4 @@ n_Si = rho_Si * Na / u_Si
 #               plasm    3p     3s      2p      2s      1s
 Si_MuElec_E_bind = [0, 6.52, 13.63, 107.98, 151.55, 1828.5]
 Si_MuElec_E_plasmon = 16.65
-Si_MuElec_E_ind_plasmon = 278
 Si_MuElec_occup = [4, 2, 2, 6, 2, 2]
-
-
-# %% simulation indexes
-vacuum_ind = 3
-PMMA_ind = 0
-Si_ind = 1
-
-elastic_ind = 0
-PMMA_ph_ind = 4
-PMMA_pol_ind = 5
