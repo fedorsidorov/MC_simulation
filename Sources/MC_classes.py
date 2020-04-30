@@ -87,9 +87,8 @@ class Electron:
         if (z1 < self.d_PMMA) ^ (z2 < self.d_PMMA):  # interface crossing
             p1 = now_IMFP
             p2 = [IMFP_PMMA, IMFP_Si][1 - self.layer_ind]
-            delta_z_abs = np.abs(z2 - z1)
-            delta_z_to_PMMA_abs = np.abs(self.d_PMMA - z1)
-            d = np.linalg.norm(delta_r * delta_z_to_PMMA_abs / delta_z_abs)
+            scale = np.abs(self.d_PMMA - z1) / np.abs(z2 - z1)
+            d = np.linalg.norm(delta_r * scale)
 
             if u1 < (1 - np.exp(-p1 * d)):
                 delta_s = 1 / p1 * (-np.log(1 - u1))

@@ -25,6 +25,7 @@
       <w>inds</w>
       <w>indxs</w>
       <w>leapman</w>
+      <w>linalg</w>
       <w>lindhard</w>
       <w>loglog</w>
       <w>logx</w>
@@ -45,6 +46,7 @@
       <w>shimizu</w>
       <w>sigmadiff</w>
       <w>subshell</w>
+      <w>vect</w>
     </words>
   </dictionary>
 </component>
