@@ -3,7 +3,6 @@ import importlib
 from collections import deque
 
 import numpy as np
-from numpy import random
 
 import arrays
 import constants as const
@@ -77,6 +76,31 @@ class Electron:
         self.update_layer_ind()
         self.n_steps += 1
 
+    def make_step_with_interface(self, IMFP_PMMA, IMFP_Si):  # Dapor Springer book
+        now_IMFP = [IMFP_PMMA, IMFP_Si][self.layer_ind]
+        u1 = np.random.random()
+        now_free_path = -1 / now_IMFP * np.log(u1)
+        delta_r = np.matmul(self.O_matrix.transpose(), self.x0) * now_free_path
+        next_coords = self.coords + delta_r
+        z1, z2 = self.coords[2, 0], next_coords[2, 0]
+
+        if (z1 < self.d_PMMA) ^ (z2 < self.d_PMMA):  # interface crossing
+            p1 = now_IMFP
+            p2 = [IMFP_PMMA, IMFP_Si][1 - self.layer_ind]
+            delta_z_abs = np.abs(z2 - z1)
+            delta_z_to_PMMA_abs = np.abs(self.d_PMMA - z1)
+            d = np.linalg.norm(delta_r * delta_z_to_PMMA_abs / delta_z_abs)
+
+            if u1 < (1 - np.exp(-p1 * d)):
+                delta_s = 1 / p1 * (-np.log(1 - u1))
+            else:
+                delta_s = d + (1 / p2) * (-np.log(1 - u1) - p1 * d)
+
+            self.make_step(delta_s)
+
+        else:
+            self.make_step(now_free_path)
+
     def scatter_with_hw(self, phi, theta, hw):
         self.E -= hw
         self.update_E_ind()
@@ -142,29 +166,52 @@ class Structure:
         self.W_phonon = const.W_phonon
         self.Wf_PMMA = const.Wf_PMMA
 
-    def get_mfp(self, electron):
-        mfp = -1 / self.total_IMFP[electron.get_layer_ind()][electron.get_E_ind()] * np.log(random.random())
-        return mfp
+    def get_d_PMMA(self):
+        return self.d_PMMA
+
+    def get_ee_scat_phi_theta_hw_phi2_theta2(self, electron, subshell_ind):
+        phi = 2 * np.pi * np.random.random()
+
+        if electron.get_layer_ind == indxs.Si_ind and subshell_ind == indxs.sim_MuElec_plasmon_ind:  # plasmon
+            hw = const.Si_MuElec_E_plasmon
+            phi_2nd = 2 * np.pi * np.random.random()
+        else:
+            probs = self.ee_DIMFP_norm[electron.get_layer_ind()][subshell_ind, electron.get_E_ind(), :]
+            hw = np.random.choice(grid.EE, p=probs)
+            phi_2nd = phi + np.pi
+
+        theta = np.arcsin(np.sqrt(hw / electron.get_E()))
+        theta_2nd = np.pi * np.random.random()
+
+        return phi, theta, hw, phi_2nd, theta_2nd
+
+    def get_elastic_scat_phi_theta(self, electron):
+        probs = self.elastic_DIMFP[electron.get_layer_ind()][electron.get_E_ind(), :]
+        return 2 * np.pi * np.random.random(), np.random.choice(grid.THETA_rad, p=probs)
+
+    def get_free_path(self, electron):
+        free_path = -1 / self.total_IMFP[electron.get_layer_ind()][electron.get_E_ind()] * \
+                    np.log(np.random.random())
+        return free_path
+
+    def get_PMMA_Si_IMFP(self, electron):
+        return self.total_IMFP[0][electron.get_E_ind()], self.total_IMFP[1][electron.get_E_ind()]
+
+    def get_phonon_scat_phi_theta_W(self, electron):
+        W = self.W_phonon
+        phi = 2 * np.pi * np.random.random()
+        E = electron.get_E()
+        E_prime = E - W
+        B = (E + E_prime + 2 * np.sqrt(E * E_prime)) / (E + E_prime - 2 * np.sqrt(E * E_prime))
+        u5 = np.random.random()
+        cos_theta = (E + E_prime) / (2 * np.sqrt(E * E_prime)) * (1 - B ** u5) + B ** u5
+        theta = np.arccos(cos_theta)
+        return phi, theta, W
 
     def get_process_ind(self, electron):
         inds = self.proc_inds[electron.get_layer_ind()]
         probs = self.IMFP_norm[electron.get_layer_ind()][electron.get_E_ind()]
-        return random.choice(inds, p=probs)
-
-    def get_elastic_scat_phi_theta(self, electron):
-        probs = self.elastic_DIMFP[electron.get_layer_ind()][electron.get_E_ind(), :]
-        return 2 * np.pi * random.random(), random.choice(grid.THETA_rad, p=probs)
-
-    def get_phonon_scat_phi_theta_W(self, electron):
-        W = self.W_phonon
-        phi = 2 * np.pi * random.random()
-        E = electron.get_E()
-        E_prime = E - W
-        B = (E + E_prime + 2 * np.sqrt(E * E_prime)) / (E + E_prime - 2 * np.sqrt(E * E_prime))
-        u5 = random.random()
-        cos_theta = (E + E_prime) / (2 * np.sqrt(E * E_prime)) * (1 - B ** u5) + B ** u5
-        theta = np.arccos(cos_theta)
-        return phi, theta, W
+        return np.random.choice(inds, p=probs)
 
     def T_PMMA(self, electron):
         E_cos2_theta = electron.get_E_cos2_theta()
@@ -175,25 +222,6 @@ class Structure:
             return T_PMMA
         else:
             return 0.
-
-    def get_ee_scat_phi_theta_hw_phi2_theta2(self, electron, subshell_ind):
-        phi = 2 * np.pi * random.random()
-
-        if electron.get_layer_ind == indxs.Si_ind and subshell_ind == indxs.sim_MuElec_plasmon_ind:  # plasmon
-            hw = const.Si_MuElec_E_plasmon
-            phi_2nd = 2 * np.pi * random.random()
-        else:
-            probs = self.ee_DIMFP_norm[electron.get_layer_ind()][subshell_ind, electron.get_E_ind(), :]
-            hw = random.choice(grid.EE, p=probs)
-            phi_2nd = phi + np.pi
-
-        theta = np.arcsin(np.sqrt(hw / electron.get_E()))
-        theta_2nd = np.pi * random.random()
-
-        return phi, theta, hw, phi_2nd, theta_2nd
-
-    def get_d_PMMA(self):
-        return self.d_PMMA
 
 
 class Event:
@@ -270,6 +298,11 @@ class Simulator:
         self.e_cnt += 1
         return self.e_cnt
 
+    def get_total_history(self):
+        history = np.vstack(self.total_history)
+        history[:, 4:7] *= 1e+7  # cm to nm
+        return np.around(np.vstack(history), decimals=5)
+
     def prepare_e_deque(self):
         for _ in range(self.n_electrons):
             electron = Electron(
@@ -282,6 +315,14 @@ class Simulator:
             )
             self.electrons_deque.append(electron)
 
+    def start_simulation(self):
+        struct = Structure(self.d_PMMA)
+
+        while self.electrons_deque:
+            now_electron = self.electrons_deque.popleft()
+            self.track_electron(now_electron, struct)
+            self.total_history.append(now_electron.get_history())
+
     def track_electron(self, electron, structure):
         electron.start()
 
@@ -292,7 +333,8 @@ class Simulator:
                 electron.stop()
                 break
 
-            electron.make_step(structure.get_mfp(electron))  # shimizu1992.pdf
+            # electron.make_step(structure.get_free_path(electron))  # shimizu1992.pdf
+            electron.make_step_with_interface(*structure.get_PMMA_Si_IMFP(electron))  # shimizu1992.pdf
             electron.scatter_with_hw(*event.get_primary_phi_theta_hw())
             electron.write_state_to_history(*event.get_process_ind_hw_E2nd())
 
@@ -300,16 +342,3 @@ class Simulator:
                 new_electron = event.get_secondary_electron()
                 new_electron.set_e_id(self.get_new_e_id())
                 self.electrons_deque.append(new_electron)
-
-    def start_simulation(self):
-        struct = Structure(self.d_PMMA)
-
-        while self.electrons_deque:
-            now_electron = self.electrons_deque.popleft()
-            self.track_electron(now_electron, struct)
-            self.total_history.append(now_electron.get_history())
-
-    def get_total_history(self):
-        history = np.vstack(self.total_history)
-        history[:, 4:7] *= 1e+7  # cm to nm
-        return np.around(np.vstack(history), decimals=5)
