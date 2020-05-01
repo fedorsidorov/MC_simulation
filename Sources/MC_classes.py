@@ -1,7 +1,6 @@
 import copy
 import importlib
 from collections import deque
-
 import numpy as np
 
 import arrays
@@ -134,16 +133,18 @@ class Electron:
     def set_e_id(self, e_id):
         self.e_id = e_id
 
-    # def set_O_matrix(self, O_matrix):
-    #     self.O_matrix = O_matrix
-
     def start(self):
         self.update_layer_ind()
         self.update_E_ind()
         self.write_state_to_history(-1, 0, 0)
 
-    def stop(self):
-        self.write_state_to_history(-1, self.E, 0)
+    def stop(self, is_polaron):
+        hw = self.E
+        self.E = 0
+        if is_polaron:
+            self.write_state_to_history(indxs.sim_PMMA_polaron_ind, hw, 0)
+        else:
+            self.write_state_to_history(-1, hw, 0)
 
     def update_E_ind(self):
         self.E_ind = np.argmin(np.abs(grid.EE - self.E))
@@ -248,9 +249,12 @@ class Event:
         self.phi, self.theta, self.hw = 0., 0., 0.
         self.E_2nd = 0.
         self.secondary_electron = None
+        self.polaron = False
         self.stop = False
 
         if self.E_ind < structure.E_cutoff_ind[self.layer_ind]:
+            print('electron with e_id =', electron.get_e_id(), 'has energy below threshold, E_ind =',
+                  electron.get_E_ind())
             self.process_ind = -1
             self.stop = True
             return
@@ -258,6 +262,8 @@ class Event:
         self.process_ind = structure.get_process_ind(electron)
 
         if self.layer_ind == indxs.PMMA_ind and self.process_ind == indxs.sim_PMMA_polaron_ind:
+            print('polaron event for electron with e_id =', electron.get_e_id())
+            self.polaron = True
             self.stop = True
 
         elif self.process_ind == indxs.sim_elastic_ind:
@@ -294,6 +300,9 @@ class Event:
 
     def get_secondary_electron(self):
         return self.secondary_electron
+
+    def is_polaron(self):
+        return self.polaron
 
     def is_stop(self):
         return self.stop
@@ -345,10 +354,10 @@ class Simulator:
             event = Event(electron, structure)
 
             if event.is_stop():
-                electron.stop()
+                electron.stop(event.is_polaron())
+                print('electron with e_id =', electron.get_e_id(), 'is stopped')
                 break
 
-            # electron.make_step(structure.get_free_path(electron))  # shimizu1992.pdf
             electron.make_step_considering_interface(*structure.get_PMMA_Si_IMFP(electron))  # shimizu1992.pdf
             electron.scatter_with_hw(*event.get_primary_phi_theta_hw())
             electron.write_state_to_history(*event.get_process_ind_hw_E2nd())
@@ -357,3 +366,4 @@ class Simulator:
                 new_electron = event.get_secondary_electron()
                 new_electron.set_e_id(self.get_new_e_id())
                 self.electrons_deque.append(new_electron)
+                # self.electrons_deque.appendleft(new_electron)

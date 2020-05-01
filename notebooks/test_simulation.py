@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-# %%
 def plot_DATA(DATA, d_PMMA=0, E_cut=5):
     print('initial size =', len(DATA))
     DATA_cut = DATA[np.where(DATA[:, 9] > E_cut)]
@@ -26,13 +25,14 @@ def plot_DATA(DATA, d_PMMA=0, E_cut=5):
     plt.gca().set_aspect('equal', adjustable='box')
     plt.xlabel('x, nm')
     plt.ylabel('z, nm')
-    plt.xlim(-1, 1)
-    plt.ylim(-1, 1)
+    # plt.xlim(-50, 50)
+    # plt.ylim(0, 50)
     plt.gca().invert_yaxis()
     plt.grid()
     plt.show()
 
 
 now_DATA = np.load('data/e_DATA/DATA_0.npy')
-plot_DATA(now_DATA, 0, E_cut=0)
 
+# %%
+plot_DATA(now_DATA, 500, E_cut=0)
