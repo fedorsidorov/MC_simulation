@@ -2,7 +2,7 @@ import copy
 import importlib
 from collections import deque
 import numpy as np
-
+from tqdm import tqdm
 import arrays
 import constants as const
 import grid as grid
@@ -76,6 +76,9 @@ class Electron:
 
     def get_O_matrix(self):
         return self.O_matrix
+
+    def get_parent_e_id(self):
+        return self.parent_e_id
 
     def get_scattered_O_matrix(self, phi, theta):
         W = np.mat([[np.cos(phi), np.sin(phi), 0.],
@@ -198,7 +201,7 @@ class Structure:
     def get_ee_scat_phi_theta_hw_phi2_theta2(self, electron, subshell_ind):
         phi = 2 * np.pi * np.random.random()
 
-        if electron.get_layer_ind == indxs.Si_ind and subshell_ind == indxs.sim_MuElec_plasmon_ind:  # plasmon
+        if electron.get_layer_ind() == indxs.Si_ind and subshell_ind == indxs.sim_MuElec_plasmon_ind:
             hw = const.Si_MuElec_E_plasmon
             phi_2nd = 2 * np.pi * np.random.random()
         else:
@@ -253,8 +256,6 @@ class Event:
         self.stop = False
 
         if self.E_ind < structure.E_cutoff_ind[self.layer_ind]:
-            print('electron with e_id =', electron.get_e_id(), 'has energy below threshold, E_ind =',
-                  electron.get_E_ind())
             self.process_ind = -1
             self.stop = True
             return
@@ -262,7 +263,6 @@ class Event:
         self.process_ind = structure.get_process_ind(electron)
 
         if self.layer_ind == indxs.PMMA_ind and self.process_ind == indxs.sim_PMMA_polaron_ind:
-            print('polaron event for electron with e_id =', electron.get_e_id())
             self.polaron = True
             self.stop = True
 
@@ -278,7 +278,8 @@ class Event:
                 structure.get_ee_scat_phi_theta_hw_phi2_theta2(electron, subshell_ind)
             E_bind = structure.E_bind[self.layer_ind][subshell_ind]
 
-            if self.hw > E_bind:  # secondary generation
+            if self.hw > E_bind and not(self.layer_ind == indxs.Si_ind and
+                                        subshell_ind == indxs.sim_MuElec_plasmon_ind):  # secondary generation
                 self.E_2nd = self.hw - E_bind
                 self.secondary_electron = Electron(
                     e_id=-1,
@@ -341,11 +342,18 @@ class Simulator:
 
     def start_simulation(self):
         struct = Structure(self.d_PMMA)
+        progress_bar = tqdm(total=self.n_electrons, position=0)
 
         while self.electrons_deque:
             now_electron = self.electrons_deque.popleft()
+
+            if now_electron.get_parent_e_id() == -1:
+                progress_bar.update(1)
+
             self.track_electron(now_electron, struct)
             self.total_history.append(now_electron.get_history())
+
+        progress_bar.close()
 
     def track_electron(self, electron, structure):
         electron.start()
@@ -355,7 +363,6 @@ class Simulator:
 
             if event.is_stop():
                 electron.stop(event.is_polaron())
-                print('electron with e_id =', electron.get_e_id(), 'is stopped')
                 break
 
             electron.make_step_considering_interface(*structure.get_PMMA_Si_IMFP(electron))  # shimizu1992.pdf
@@ -365,5 +372,4 @@ class Simulator:
             if event.secondary_generated():
                 new_electron = event.get_secondary_electron()
                 new_electron.set_e_id(self.get_new_e_id())
-                self.electrons_deque.append(new_electron)
-                # self.electrons_deque.appendleft(new_electron)
+                self.electrons_deque.appendleft(new_electron)

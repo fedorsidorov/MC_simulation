@@ -33,6 +33,19 @@ def plot_DATA(DATA, d_PMMA=0, E_cut=5):
 
 
 now_DATA = np.load('data/e_DATA/DATA_0.npy')
+now_DATA_easy = np.load('data/e_DATA/DATA_0_easy.npy')
+# plot_DATA(now_DATA, 500, E_cut=0)
+
+# %%
+now_DATA_Pn = np.load('data/e_DATA/DATA_Pn_0.npy')
+ans = np.max(now_DATA[:, 0])
+bns = np.max(now_DATA_Pn[:, 0])
+
+a_inds = np.where(now_DATA[:, 0] == ans)[0]
+b_inds = np.where(now_DATA_Pn[:, 0] == bns)[0]
+
+cns = now_DATA[a_inds[0], :]
+dns = now_DATA_Pn[b_inds[0], :]
 
 # %%
 plot_DATA(now_DATA, 500, E_cut=0)
