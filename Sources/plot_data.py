@@ -3,15 +3,17 @@ import numpy as np
 
 
 # %%
-def plot_DATA(DATA, d_PMMA=0):
+def plot_DATA(DATA, d_PMMA=0, E_cut=5):
+    print('initial size =', len(DATA))
+    DATA_cut = DATA[np.where(DATA[:, 9] > E_cut)]
+    print('cut DATA size =', len(DATA_cut))
     fig, ax = plt.subplots(dpi=300)
 
-    for tn in range(int(np.max(DATA[:, 0]))):
-        if len(np.where(DATA[:, 0] == tn)[0]) == 0:
+    for tn in range(int(np.max(DATA_cut[:, 0]))):
+        if len(np.where(DATA_cut[:, 0] == tn)[0]) == 0:
             continue
-        beg = np.where(DATA[:, 0] == tn)[0][0]
-        end = np.where(DATA[:, 0] == tn)[0][-1] + 1
-        ax.plot(DATA[beg:end, 4], DATA[beg:end, 6])
+        now_DATA_cut = DATA_cut[np.where(DATA_cut[:, 0] == tn)]
+        ax.plot(now_DATA_cut[:, 4], now_DATA_cut[:, 6])
 
     if d_PMMA != 0:
         points = np.linspace(-d_PMMA * 2, d_PMMA * 2, 100)

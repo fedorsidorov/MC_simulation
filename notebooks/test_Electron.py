@@ -1,23 +1,14 @@
 # %%
 import importlib
-from collections import deque
 
 import numpy as np
 
-import Electron as Electron
-import Structure as Structure
-import arrays as a
-import constants as c
-import grid as g
-import utilities as u
+import MC_classes
 
-import copy
+MC_classes = importlib.reload(MC_classes)
 
-c = importlib.reload(c)
-g = importlib.reload(g)
-u = importlib.reload(u)
-Electron = importlib.reload(Electron)
-Structure = importlib.reload(Structure)
+
+# %%
 
 
 # %%
