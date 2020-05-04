@@ -6,7 +6,7 @@ import grid as grid
 import gryzinski as gryz
 import constants as c
 import arrays as a
-import utilities as u
+from functions import MC_functions as u
 
 a = importlib.reload(a)
 c = importlib.reload(c)

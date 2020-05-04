@@ -6,13 +6,23 @@ import MC_classes
 
 MC_classes = importlib.reload(MC_classes)
 
-
 if __name__ == '__main__':
-    sim = MC_classes.Simulator(500e-7, 100, 20000)
-    sim.prepare_e_deque()
-    sim.start_simulation()
+    d_PMMA = 500e-7
+    E0 = 10e+3
+    # n_electrons = 100
+    n_electrons = 1
 
-    history = sim.get_total_history()
-    np.save('data/e_DATA/DATA_0_easy.npy', history)
-    # history_Pn = history[np.where(np.logical_and(history[:, 2] == 0, history[:, 3] != 0))]
-    # np.save('data/e_DATA/DATA_Pn_0.npy', history_Pn)
+    for i in range(1):
+        sim = MC_classes.Simulator(
+            d_PMMA=d_PMMA,
+            n_electrons=n_electrons,
+            E0_eV=E0
+        )
+        sim.prepare_e_deque()
+        sim.start_simulation()
+
+        DATA = sim.get_total_history()
+        np.save('data/e_DATA/DATA_test_1.npy', DATA)
+        # DATA_Pn = DATA[np.where(np.logical_and(DATA[:, 2] == 0, DATA[:, 3] != 0))]
+        # np.save('data/e_DATA/Harris/DATA_Pn_' + str(i) + '.npy', DATA_Pn)
+        # print(str(i) + '-th DATA file is saved')

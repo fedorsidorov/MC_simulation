@@ -18,6 +18,12 @@ DATA_e_id_ind = 0
 DATA_parent_e_id_ind = 1
 DATA_layer_id_ind = 2
 DATA_process_id_ind = 3
+DATA_x_ind = 4
+DATA_y_ind = 5
+DATA_z_ind = 6
+DATA_E_dep_ind = 7
+DATA_E2nd_ind = 8
+DATA_E_ind = 9
 
 DATA_coords_inds = slice(4, 7)
 

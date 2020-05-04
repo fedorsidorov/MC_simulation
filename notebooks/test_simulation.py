@@ -32,9 +32,8 @@ def plot_DATA(DATA, d_PMMA=0, E_cut=5):
     plt.show()
 
 
-now_DATA = np.load('data/e_DATA/DATA_0.npy')
-now_DATA_easy = np.load('data/e_DATA/DATA_0_easy.npy')
-# plot_DATA(now_DATA, 500, E_cut=0)
+now_DATA = np.load('data/e_DATA/Harris/DATA_Pn_0.npy')
+plot_DATA(now_DATA, 500, E_cut=0)
 
 # %%
 now_DATA_Pn = np.load('data/e_DATA/DATA_Pn_0.npy')

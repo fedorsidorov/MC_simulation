@@ -7,7 +7,7 @@ import arrays
 import constants as const
 import grid as grid
 import indexes as indxs
-import utilities as utils
+from functions import MC_functions as utils
 
 arrays = importlib.reload(arrays)
 const = importlib.reload(const)

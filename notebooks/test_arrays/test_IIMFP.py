@@ -7,7 +7,7 @@ import numpy as np
 import grid as grid
 import constants as c
 import arrays as a
-import utilities as u
+from functions import MC_functions as u
 
 a = importlib.reload(a)
 c = importlib.reload(c)

@@ -3,7 +3,7 @@ import importlib
 import matplotlib.pyplot as plt
 import numpy as np
 import grid as grid
-import utilities as util
+from functions import MC_functions as util
 
 grid = importlib.reload(grid)
 util = importlib.reload(util)

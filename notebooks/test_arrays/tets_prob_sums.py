@@ -1,17 +1,14 @@
 import importlib
 
-import matplotlib.pyplot as plt
-
 from MC_classes import Structure
 
-import numpy as np
 from numpy import random
 
 import arrays
 import constants as const
 import grid as grid
 import indexes as indxs
-import utilities as utils
+from functions import MC_functions as utils
 
 arrays = importlib.reload(arrays)
 const = importlib.reload(const)

@@ -2,7 +2,7 @@ import importlib
 
 import numpy as np
 
-import utilities as util
+from functions import MC_functions as util
 import indexes as inds
 
 util = importlib.reload(util)
