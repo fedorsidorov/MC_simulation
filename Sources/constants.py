@@ -10,6 +10,7 @@ Na = 6.02214076e+23
 m = 9.1093837015e-28
 # e = const.e * 10 * const.c
 e = 4.803204712570263e-10
+e_SI = 1.6021766209e-19
 
 # %% relativity
 # c = const.c * 1e+2
@@ -18,6 +19,7 @@ c = 29979245800.0
 # %% quantum physics
 # eV = const.e * 1e+7
 eV = 1.602176634e-12
+eV_SI = eV * 1e-7
 # hbar = const.hbar * 1e+7
 hbar = 1.0545718176461565e-27
 # a0 = const.physical_constants['Bohr radius'][0] * 1e+2  # Bohr radius

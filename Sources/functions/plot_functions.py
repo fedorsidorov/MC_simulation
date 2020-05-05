@@ -43,6 +43,8 @@ def plot_DATA(DATA, d_PMMA=0, E_cut=5, proj='xz'):
     plt.gca().set_aspect('equal', adjustable='box')
     plt.xlabel('x, nm')
     plt.ylabel('z, nm')
+    plt.xlim(0, 1)
+    plt.ylim(0, 1)
     plt.gca().invert_yaxis()
     plt.grid()
     plt.show()

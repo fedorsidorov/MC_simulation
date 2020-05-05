@@ -8,6 +8,7 @@ PMMA_ind = 0
 Si_ind = 1
 
 sim_elastic_ind = 0
+sim_PMMA_ee_val_ind = 1
 sim_PMMA_phonon_ind = 4
 sim_PMMA_polaron_ind = 5
 
@@ -24,11 +25,7 @@ DATA_z_ind = 6
 DATA_E_dep_ind = 7
 DATA_E2nd_ind = 8
 DATA_E_ind = 9
-
-DATA_coords_inds = slice(4, 7)
-
-DATA_E_dep_id_ind = 7
-DATA_E2nd_id_ind = 8
-DATA_result_E_id_ind = 9
+DATA_xy_inds = range(DATA_x_ind, DATA_y_ind + 1)
+DATA_coord_inds = range(DATA_x_ind, DATA_z_ind + 1)
 
 DATA_line_len = 10
