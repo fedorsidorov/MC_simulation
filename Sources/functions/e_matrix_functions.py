@@ -3,7 +3,7 @@ import importlib
 import numpy as np
 
 import indexes as ind
-import constants as const
+import constants_physics as const
 
 ind = importlib.reload(ind)
 const = importlib.reload(const)

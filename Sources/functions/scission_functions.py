@@ -2,7 +2,7 @@ import importlib
 import numpy as np
 import matplotlib.pyplot as plt
 
-import constants as const
+import constants_physics as const
 import grid
 
 const = importlib.reload(const)

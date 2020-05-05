@@ -5,7 +5,7 @@ from MC_classes import Structure
 from numpy import random
 
 import arrays
-import constants as const
+import constants_physics as const
 import grid as grid
 import indexes as indxs
 from functions import MC_functions as utils

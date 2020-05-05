@@ -4,7 +4,7 @@ import numpy as np
 from scipy import integrate
 
 import grid as g
-import constants as c
+import constants_physics as c
 import arrays as a
 from functions import MC_functions as u
 

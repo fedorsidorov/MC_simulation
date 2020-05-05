@@ -4,7 +4,7 @@ from collections import deque
 import numpy as np
 from tqdm import tqdm
 import arrays
-import constants as const
+import constants_physics as const
 import grid as grid
 import indexes as indxs
 from functions import MC_functions as utils

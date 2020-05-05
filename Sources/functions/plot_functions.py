@@ -1,15 +1,15 @@
 import importlib
 
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 import indexes as ind
-
 ind = importlib.reload(ind)
 
 
 # %%
-def plot_DATA(DATA, d_PMMA=0, E_cut=5, proj='xz'):
+def plot_e_DATA(DATA, d_PMMA=0, E_cut=5, proj='xz'):
     DATA_cut = DATA[np.where(DATA[:, ind.DATA_E_ind] > E_cut)]
     fig, ax = plt.subplots(dpi=300)
 
@@ -48,3 +48,16 @@ def plot_DATA(DATA, d_PMMA=0, E_cut=5, proj='xz'):
     plt.gca().invert_yaxis()
     plt.grid()
     plt.show()
+
+
+# %%
+def plot_chain(chain_arr, beg=0, end=-1):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    ax.plot(chain_arr[beg:end, 0], chain_arr[beg:end, 1], chain_arr[beg:end, 2], 'bo-')
+    #    ax.plot(chain_arr[0:-1, 0], chain_arr[0:-1, 1], chain_arr[0:-1, 2], 'bo-')
+
+    ax.set_xlabel('x, nm')
+    ax.set_ylabel('y, nm')
+    ax.set_zlabel('z, nm')

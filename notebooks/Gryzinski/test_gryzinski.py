@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import grid as grid
 import gryzinski as gryz
-import constants as c
+import constants_physics as c
 import arrays as a
 from functions import MC_functions as u
 
