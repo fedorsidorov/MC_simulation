@@ -52,7 +52,7 @@ Zs_C, Zs_O = 5.7, 7.7
 Wf_PMMA = 4.68  # dapor2015.pdf
 W_phonon = 0.1  # dapor2015.pdf
 
-# PMMA_E_cut_ind = 0
+CC_bond_length = 0.28  # nm
 
 # %% Si
 Z_Si = 14

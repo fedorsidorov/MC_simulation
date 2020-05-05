@@ -5,7 +5,10 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 import indexes as ind
+import constants_mapping as const_m
+
 ind = importlib.reload(ind)
+const_m = importlib.reload(const_m)
 
 
 # %%
@@ -52,7 +55,7 @@ def plot_e_DATA(DATA, d_PMMA=0, E_cut=5, proj='xz'):
 
 # %%
 def plot_chain(chain_arr, beg=0, end=-1):
-    fig = plt.figure()
+    fig = plt.figure(dpi=300)
     ax = fig.add_subplot(111, projection='3d')
 
     ax.plot(chain_arr[beg:end, 0], chain_arr[beg:end, 1], chain_arr[beg:end, 2], 'bo-')
@@ -61,3 +64,48 @@ def plot_chain(chain_arr, beg=0, end=-1):
     ax.set_xlabel('x, nm')
     ax.set_ylabel('y, nm')
     ax.set_zlabel('z, nm')
+    plt.show()
+
+
+def plot_many_chains(chain_list):
+    fig = plt.figure(dpi=300)
+    ax = fig.add_subplot(111, projection='3d')
+
+    for chain in chain_list:
+        ax.plot(chain[:, 0], chain[:, 1], chain[:, 2])
+
+    ax.plot(np.linspace(const_m.x_min, const_m.x_max, const_m.l_x), np.ones(const_m.l_x)*const_m.y_min,
+            np.ones(const_m.l_x)*const_m.z_min, 'k')
+    ax.plot(np.linspace(const_m.x_min, const_m.x_max, const_m.l_x), np.ones(const_m.l_x)*const_m.y_max,
+            np.ones(const_m.l_x)*const_m.z_min, 'k')
+    ax.plot(np.linspace(const_m.x_min, const_m.x_max, const_m.l_x), np.ones(const_m.l_x)*const_m.y_min,
+            np.ones(const_m.l_x)*const_m.z_max, 'k')
+    ax.plot(np.linspace(const_m.x_min, const_m.x_max, const_m.l_x), np.ones(const_m.l_x)*const_m.y_max,
+            np.ones(const_m.l_x)*const_m.z_max, 'k')
+
+    ax.plot(np.ones(const_m.l_y)*const_m.x_min, np.linspace(const_m.y_min, const_m.y_max, const_m.l_y),
+            np.ones(const_m.l_y)*const_m.z_min, 'k')
+    ax.plot(np.ones(const_m.l_y)*const_m.x_max, np.linspace(const_m.y_min, const_m.y_max, const_m.l_y),
+            np.ones(const_m.l_y)*const_m.z_min, 'k')
+    ax.plot(np.ones(const_m.l_y)*const_m.x_min, np.linspace(const_m.y_min, const_m.y_max, const_m.l_y),
+            np.ones(const_m.l_y)*const_m.z_max, 'k')
+    ax.plot(np.ones(const_m.l_y)*const_m.x_max, np.linspace(const_m.y_min, const_m.y_max, const_m.l_y),
+            np.ones(const_m.l_y)*const_m.z_max, 'k')
+
+    ax.plot(np.ones(const_m.l_z)*const_m.x_min, np.ones(const_m.l_z)*const_m.y_min,
+            np.linspace(const_m.z_min, const_m.z_max, const_m.l_z), 'k')
+    ax.plot(np.ones(const_m.l_z)*const_m.x_max, np.ones(const_m.l_z)*const_m.y_min,
+            np.linspace(const_m.z_min, const_m.z_max, const_m.l_z), 'k')
+    ax.plot(np.ones(const_m.l_z)*const_m.x_min, np.ones(const_m.l_z)*const_m.y_max,
+            np.linspace(const_m.z_min, const_m.z_max, const_m.l_z), 'k')
+    ax.plot(np.ones(const_m.l_z)*const_m.x_max, np.ones(const_m.l_z)*const_m.y_max,
+            np.linspace(const_m.z_min, const_m.z_max, const_m.l_z), 'k')
+
+    plt.xlim(const_m.x_min, const_m.x_max)
+    plt.ylim(const_m.y_min, const_m.y_max)
+    plt.title('Polymer chain simulation')
+    ax.set_xlabel('x, nm')
+    ax.set_ylabel('y, nm')
+    ax.set_zlabel('z, nm')
+    plt.show()
+
