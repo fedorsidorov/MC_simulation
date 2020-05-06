@@ -13,6 +13,9 @@ xyz_max = np.array((x_max, y_max, z_max))
 step_2nm = 2
 step_5nm = 5
 
+harris_d_PMMA = 500e-7
+harris_square = 100e-7 ** 2
+
 # %% histograms parameters
 # bins_total = np.array(np.hstack((xyz_min.reshape(3, 1), xyz_max.reshape(3, 1))))
 x_bins_2nm = np.arange(x_min, x_max + 1, step_2nm)

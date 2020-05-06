@@ -57,14 +57,12 @@ plt.legend()
 plt.grid()
 plt.show()
 
-
 #%%
 distr = np.array(list(zip(x_diff, y_diff_n)))
 plt.semilogx(distr[:, 0], distr[:, 1])
 plt.show()
 
-#plt.savefig('Harris_after.png', dpi=300)
-
+# plt.savefig('Harris_after.png', dpi=300)
 
 #%%
 Mn_fit = np.dot(x_diff, y_diff_n) / np.sum(y_diff_n)

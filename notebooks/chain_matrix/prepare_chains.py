@@ -72,6 +72,9 @@ for n, chain in enumerate(chain_list):
 
 np.save('data/Harris/prepared_chains_3/prepared_chain_lens.npy', chain_lens_array)
 
+# %%
+chain_lens_array = np.load('data/Harris/prepared_chains_1/prepared_chain_lens.npy')
+
 
 # %% check chain lengths distribution
 simulated_mw_array = chain_lens_array * 100
