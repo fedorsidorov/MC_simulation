@@ -63,21 +63,14 @@ while True:
 
 chain_lens_array = np.array(chain_lens_list)
 
-# %%
-lens_inuque = np.unique(chain_lens_list)
-lens_entries = np.zeros(len(lens_inuque))
-
-for i, chain_len in enumerate(lens_inuque):
-    lens_entries[i] = len(np.where(chain_lens_list == lens_inuque[i])[0])
-
 # %% save chains to files
 progress_bar = tqdm(total=len(chain_list), position=0)
 
 for n, chain in enumerate(chain_list):
-    np.save('data/Harris/prepared_chains/prepared_chain_' + str(n) + '.npy', chain)
+    np.save('data/Harris/prepared_chains_3/prepared_chain_' + str(n) + '.npy', chain)
     progress_bar.update(1)
 
-np.save('data/Harris/prepared_chain_lens_array.npy', chain_lens_array)
+np.save('data/Harris/prepared_chains_3/prepared_chain_lens.npy', chain_lens_array)
 
 
 # %% check chain lengths distribution

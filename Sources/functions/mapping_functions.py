@@ -9,12 +9,12 @@ const_m = importlib.reload(const_m)
 # changes monomer type
 def rewrite_mon_type(resist_matrix, chain_table, n_chain, n_mon, new_type):
     # change mon_type in chain_inv_matrix
-    chain_table[n_chain, n_mon, const_m.mon_type_pos] = new_type
+    chain_table[n_chain, n_mon, const_m.monomer_type_pos] = new_type
     # define x, y, z of monomer
-    x_pos, y_pos, z_pos, mon_line_pos = chain_table[n_chain, n_mon, :const_m.mon_type_pos]
+    x_pos, y_pos, z_pos, mon_line_pos = chain_table[n_chain, n_mon, :const_m.monomer_type_pos]
     # if we aren't outside the resist area of interest
     if not x_pos == y_pos == z_pos == mon_line_pos == const_m.uint16_max:
-        resist_matrix[x_pos, y_pos, z_pos, mon_line_pos, const_m.mon_type_pos] = new_type
+        resist_matrix[x_pos, y_pos, z_pos, mon_line_pos, const_m.monomer_type_pos] = new_type
 
 
 # choose one of existing particles to interact electron with
@@ -75,19 +75,19 @@ def get_local_chain_len(res_shape, N_mon_max, chain_table, N_chains):
 
         while True:
 
-            if beg_pos >= N_mon_max or chain[beg_pos, const_m.mon_type_pos] == const_m.uint16_max:
+            if beg_pos >= N_mon_max or chain[beg_pos, const_m.monomer_type_pos] == const_m.uint16_max:
                 break
 
-            if chain[beg_pos, const_m.mon_type_pos] in [const_m.free_mon, const_m.free_rad_mon]:
+            if chain[beg_pos, const_m.monomer_type_pos] in [const_m.free_monomer, const_m.free_radicalized_monomer]:
                 beg_pos += 1
                 continue
 
-            if chain[beg_pos, const_m.mon_type_pos] != const_m.beg_mon:
-                print('mon_type', chain[beg_pos, const_m.mon_type_pos])
+            if chain[beg_pos, const_m.monomer_type_pos] != const_m.begin_monomer:
+                print('mon_type', chain[beg_pos, const_m.monomer_type_pos])
                 print('idx, beg_pos', idx, beg_pos)
                 print('chain indexing error!')
 
-            where_result = np.where(chain[beg_pos:, const_m.mon_type_pos] == const_m.end_mon)[0]
+            where_result = np.where(chain[beg_pos:, const_m.monomer_type_pos] == const_m.end_monomer)[0]
 
             if len(where_result) == 0:
                 break
@@ -132,7 +132,7 @@ def get_L_final(chain_table):
             if np.all(line == const_m.uint16_max):
                 break
 
-            mon_type = line[const_m.mon_type_pos]
+            mon_type = line[const_m.monomer_type_pos]
 
             if mon_type == 0:
                 cnt == 1
