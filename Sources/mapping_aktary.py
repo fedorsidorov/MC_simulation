@@ -13,6 +13,7 @@ xyz_min = np.array((x_min, y_min, z_min))
 xyz_max = np.array((x_max, y_max, z_max))
 
 step_2nm = 2
+step_4nm = 5
 step_5nm = 5
 
 d_PMMA_nm = z_max
@@ -24,12 +25,18 @@ x_bins_2nm = np.arange(x_min, x_max + 1, step_2nm)
 y_bins_2nm = np.arange(y_min, y_max + 1, step_2nm)
 z_bins_2nm = np.arange(z_min, z_max + 1, step_2nm)
 
+x_bins_4nm = np.arange(x_min, x_max + 1, step_4nm)
+y_bins_4nm = np.arange(y_min, y_max + 1, step_4nm)
+z_bins_4nm = np.arange(z_min, z_max + 1, step_4nm)
+
 x_bins_5nm = np.arange(x_min, x_max + 1, step_5nm)
 y_bins_5nm = np.arange(y_min, y_max + 1, step_5nm)
 z_bins_5nm = np.arange(z_min, z_max + 1, step_5nm)
 
 bins_2nm = [x_bins_2nm, y_bins_2nm, z_bins_2nm]
+bins_4nm = [x_bins_4nm, y_bins_4nm, z_bins_4nm]
 bins_5nm = [x_bins_5nm, y_bins_5nm, z_bins_5nm]
 
 hist_2nm_shape = (len(x_bins_2nm) - 1, len(y_bins_2nm) - 1, len(z_bins_2nm) - 1)
+hist_4nm_shape = (len(x_bins_4nm) - 1, len(y_bins_4nm) - 1, len(z_bins_4nm) - 1)
 hist_5nm_shape = (len(x_bins_5nm) - 1, len(y_bins_5nm) - 1, len(z_bins_5nm) - 1)

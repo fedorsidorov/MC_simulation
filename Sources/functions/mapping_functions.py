@@ -73,16 +73,16 @@ def process_scission(resist_matrix, chain_table, n_monomer, monomer_type):
         print('monomer type error, monomer_type =', monomer_type)
 
 
-def get_chain_lens(chain_table):
+def get_chain_lens(chain_tables):
     lens_final = []
-    p_bar = tqdm(total=len(chain_table), position=0)
+    p_bar = tqdm(total=len(chain_tables), position=0)
 
-    for _, now_chain in enumerate(chain_table):
+    for chain_table in chain_tables:
         cnt = 0
-        if len(now_chain) == 1:
+        if len(chain_table) == 1:
             lens_final.append(1)
             continue
-        for line in now_chain:
+        for line in chain_table:
             monomer_type = line[indexes.monomer_type_ind]
             if monomer_type == 0:
                 cnt = 1
@@ -97,13 +97,11 @@ def get_chain_lens(chain_table):
     return np.array(lens_final)
 
 
-# calculate local AVG chain length distribution
-def get_local_chain_len(res_shape, N_mon_max, chain_table, N_chains):
-    chain_sum_len_matrix = np.zeros(res_shape)
-    n_chains_matrix = np.zeros(res_shape)
+def get_local_chain_len(resist_shape, N_mon_max, chain_table):
+    chain_sum_len_matrix = np.zeros(resist_shape)
+    n_chains_matrix = np.zeros(resist_shape)
 
     for idx, chain in enumerate(chain_table):
-
         beg_pos = 0
 
         while True:
