@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import grid as grid
-import constants_physics as c
+import constants as c
 import arrays as a
 from functions import MC_functions as u
 

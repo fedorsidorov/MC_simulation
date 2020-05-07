@@ -5,7 +5,7 @@ import numpy as np
 from scipy import integrate
 from tqdm.auto import trange
 import grid as g
-import constants_physics as c
+import constants as c
 from functions import MC_functions as u
 
 u = importlib.reload(u)

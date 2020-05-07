@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import interpolate
 
-import constants_physics as c
+import constants as c
 import grid as g
 
 

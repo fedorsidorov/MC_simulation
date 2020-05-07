@@ -29,3 +29,12 @@ DATA_xy_inds = range(DATA_x_ind, DATA_y_ind + 1)
 DATA_coord_inds = range(DATA_x_ind, DATA_z_ind + 1)
 
 DATA_line_len = 10
+
+# %% resist_matrix
+n_chain_ind = 0
+begin_monomer, middle_monomer, end_monomer = 0, 1, 2
+free_monomer, free_radicalized_monomer = 10, 20
+
+# %% chain_table
+x_pos, y_pos, z_pos = 0, 1, 2
+monomer_type_ind = -1

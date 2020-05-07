@@ -3,7 +3,7 @@ import importlib
 import matplotlib.pyplot as plt
 import numpy as np
 
-import constants_physics as cp
+import constants as cp
 
 cp = importlib.reload(cp)
 

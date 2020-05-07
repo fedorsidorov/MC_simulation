@@ -1,12 +1,13 @@
 import importlib
 import numpy as np
 import matplotlib.pyplot as plt
-
-import constants_physics as const
+import indexes as ind
+import constants as const
 import grid
 
 const = importlib.reload(const)
 grid = importlib.reload(grid)
+ind = importlib.reload(ind)
 
 
 # %%
@@ -42,12 +43,11 @@ def get_scission_probs(degpath_dict, E_array=grid.EE):
         Ebond_Nelectrons_scission_list.append([MMA_bonds[value][0], degpath_dict[value]])
 
     Ebond_Nelectrons_scission_array = np.array(Ebond_Nelectrons_scission_list)
-
     probs = np.zeros(len(E_array))
 
     for i, E in enumerate(E_array):
-        num = 0
 
+        num = 0
         for Eb_Nel in Ebond_Nelectrons_scission_array:
             if E >= Eb_Nel[0]:
                 num += Eb_Nel[1]
@@ -56,7 +56,6 @@ def get_scission_probs(degpath_dict, E_array=grid.EE):
             continue
 
         den = 0
-
         for Eb_Nel in Ebond_Nelectrons_array:
             if E >= Eb_Nel[0]:
                 den += Eb_Nel[1]
@@ -64,6 +63,12 @@ def get_scission_probs(degpath_dict, E_array=grid.EE):
         probs[i] = num / den
 
     return probs
+
+
+def get_scissions(DATA, degpath_dict):
+    EE = DATA[:, ind.DATA_E_dep_ind] + DATA[:, ind.DATA_E2nd_ind] + DATA[:, ind.DATA_E_ind]  # energy before collision
+    scission_probs = get_scission_probs(degpath_dict, E_array=EE)
+    return np.array(np.random.random(len(DATA)) < scission_probs).astype(int)
 
 
 # %%

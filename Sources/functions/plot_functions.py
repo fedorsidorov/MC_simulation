@@ -5,7 +5,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 import indexes as ind
-import constants_mapping as const_m
+import mapping_harris as const_m
 
 ind = importlib.reload(ind)
 const_m = importlib.reload(const_m)

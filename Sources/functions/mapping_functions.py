@@ -1,67 +1,100 @@
 import importlib
-import numpy as np
-import constants_mapping as const_m
 
-const_m = importlib.reload(const_m)
+import numpy as np
+from tqdm import tqdm
+
+# import mapping_harris as mapping
+import indexes
+import mapping_aktary as mapping
+
+mapping = importlib.reload(mapping)
+indexes = importlib.reload(indexes)
 
 
 # %%
-# changes monomer type
-def rewrite_mon_type(resist_matrix, chain_table, n_chain, n_mon, new_type):
-    # change mon_type in chain_inv_matrix
-    chain_table[n_chain, n_mon, const_m.monomer_type_pos] = new_type
-    # define x, y, z of monomer
-    x_pos, y_pos, z_pos, mon_line_pos = chain_table[n_chain, n_mon, :const_m.monomer_type_pos]
-    # if we aren't outside the resist area of interest
-    if not x_pos == y_pos == z_pos == mon_line_pos == const_m.uint16_max:
-        resist_matrix[x_pos, y_pos, z_pos, mon_line_pos, const_m.monomer_type_pos] = new_type
-
-
-# choose one of existing particles to interact electron with
-def get_resist_part_pos(resist_matrix, x_pos, y_pos, z_pos):
-    # indexes of existing particle lines
-    resist_particle_positions = np.where(resist_matrix[x_pos, y_pos, z_pos, :, const_m.n_chain_pos] != const_m.uint16_max)[0]
-    # if no free particles
-    if len(resist_particle_positions) == 0:
-        return -1
-    return np.random.choice(resist_particle_positions)
-
-
-# choose of monomer type
-def get_mon_type():
-    return np.random.choice([0, 2])
-
-
-# get neede chain_table line
-def get_chain_table_line(chain_table, n_chain, n_mon):
-    return chain_table[n_chain, n_mon]
-
-
-# get n events in the cell
-def get_n_events(e_matrix, x_pos, y_pos, z_pos):
-    return e_matrix[x_pos, y_pos, z_pos]
-
-
-# get particle line from
-def get_resist_part_line(resist_matrix, x_pos, y_pos, z_pos, resist_part_pos):
-    return resist_matrix[x_pos, y_pos, z_pos, resist_part_pos, :]
-
-
-# convert monomer type to monomer kind
-def mon_type_to_kind(mon_type):
-    # with ester group
-    if mon_type in [-1, 0, 1]:
-        return mon_type
-    # W/O ester group
+def move_scissions(scission_matrix, x_ind, y_ind, z_ind, n_sci):
+    if x_ind + 1 < np.shape(scission_matrix)[0]:
+        scission_matrix[x_ind + 1, y_ind, z_ind] += n_sci
+    elif y_ind + 1 < np.shape(scission_matrix)[1]:
+        scission_matrix[x_ind, y_ind + 1, z_ind] += n_sci
+    elif z_ind + 1 < np.shape(scission_matrix)[2]:
+        scission_matrix[x_ind, y_ind, z_ind + 1] += n_sci
     else:
-        return mon_type - 10
+        print('no space for extra events, nowhere to move')
 
 
-# convert 65536 to -1
-def correct_mon_type(mon_type):
-    if mon_type == const_m.uint16_max:
-        return -1
-    return mon_type
+def rewrite_monomer_type(resist_matrix, chain_table, n_monomer, new_type):
+    chain_table[n_monomer, indexes.monomer_type_ind] = new_type
+    x_ind, y_ind, z_ind, monomer_line_pos = chain_table[n_monomer, :indexes.monomer_type_ind].astype(int)
+    resist_matrix[x_ind, y_ind, z_ind, monomer_line_pos, indexes.monomer_type_ind] = new_type
+
+
+def process_scission(resist_matrix, chain_table, n_monomer, monomer_type):
+    if monomer_type == indexes.middle_monomer:  # bonded monomer
+        # choose between left and right bond
+        new_monomer_type = np.random.choice([0, 2])
+        rewrite_monomer_type(resist_matrix, chain_table, n_monomer, new_monomer_type)
+        n_next_monomer = n_monomer + new_monomer_type - 1
+        next_x_ind, next_y_ind, next_z_ind, _, next_monomer_type = chain_table[n_next_monomer]
+
+        # if next monomer was at the end
+        if next_monomer_type in [indexes.begin_monomer, indexes.end_monomer]:
+            next_monomer_new_type = indexes.free_monomer
+            rewrite_monomer_type(resist_matrix, chain_table, n_next_monomer, next_monomer_new_type)
+
+        # if next monomer is full bonded
+        elif next_monomer_type == indexes.middle_monomer:
+            next_monomer_new_type = next_monomer_type - (new_monomer_type - 1)
+            rewrite_monomer_type(resist_matrix, chain_table, n_next_monomer, next_monomer_new_type)
+
+        else:
+            print('next monomer type error, next_monomer_type =', monomer_type, next_monomer_type)
+
+    elif monomer_type in [indexes.begin_monomer, indexes.end_monomer]:  # half-bonded monomer
+        new_monomer_type = indexes.free_monomer
+        rewrite_monomer_type(resist_matrix, chain_table, n_monomer, new_monomer_type)
+        n_next_monomer = n_monomer - (monomer_type - 1)  # minus, Karl!
+        next_x_ind, next_y_ind, next_z_ind, _, next_monomer_type = chain_table[n_next_monomer]
+
+        # if next monomer was at the end
+        if next_monomer_type in [indexes.begin_monomer, indexes.end_monomer]:
+            next_monomer_new_type = indexes.free_monomer
+            rewrite_monomer_type(resist_matrix, chain_table, n_next_monomer, next_monomer_new_type)
+
+        # if next monomer is full bonded
+        elif next_monomer_type == indexes.middle_monomer:
+            next_monomer_new_type = next_monomer_type + (monomer_type - 1)
+            rewrite_monomer_type(resist_matrix, chain_table, n_next_monomer, next_monomer_new_type)
+
+        else:
+            print('next monomer type error, next_monomer_type =', monomer_type, next_monomer_type)
+
+    else:
+        print('monomer type error, monomer_type =', monomer_type)
+
+
+def get_chain_lens(chain_table):
+    lens_final = []
+    p_bar = tqdm(total=len(chain_table), position=0)
+
+    for _, now_chain in enumerate(chain_table):
+        cnt = 0
+        if len(now_chain) == 1:
+            lens_final.append(1)
+            continue
+        for line in now_chain:
+            monomer_type = line[indexes.monomer_type_ind]
+            if monomer_type == 0:
+                cnt = 1
+            elif monomer_type == 1:
+                cnt += 1
+            elif monomer_type == 2:
+                cnt += 1
+                lens_final.append(cnt)
+                cnt = 0
+        p_bar.update()
+
+    return np.array(lens_final)
 
 
 # calculate local AVG chain length distribution
@@ -75,19 +108,19 @@ def get_local_chain_len(res_shape, N_mon_max, chain_table, N_chains):
 
         while True:
 
-            if beg_pos >= N_mon_max or chain[beg_pos, const_m.monomer_type_pos] == const_m.uint16_max:
+            if beg_pos >= N_mon_max or chain[beg_pos, mapping.monomer_type_pos] == mapping.uint16_max:
                 break
 
-            if chain[beg_pos, const_m.monomer_type_pos] in [const_m.free_monomer, const_m.free_radicalized_monomer]:
+            if chain[beg_pos, mapping.monomer_type_pos] in [mapping.free_monomer, mapping.free_radicalized_monomer]:
                 beg_pos += 1
                 continue
 
-            if chain[beg_pos, const_m.monomer_type_pos] != const_m.begin_monomer:
-                print('mon_type', chain[beg_pos, const_m.monomer_type_pos])
+            if chain[beg_pos, mapping.monomer_type_pos] != mapping.begin_monomer:
+                print('monomer_type', chain[beg_pos, mapping.monomer_type_pos])
                 print('idx, beg_pos', idx, beg_pos)
-                print('chain indexing error!')
+                print('chain index_indng error!')
 
-            where_result = np.where(chain[beg_pos:, const_m.monomer_type_pos] == const_m.end_monomer)[0]
+            where_result = np.where(chain[beg_pos:, mapping.monomer_type_pos] == mapping.end_monomer)[0]
 
             if len(where_result) == 0:
                 break
@@ -101,7 +134,7 @@ def get_local_chain_len(res_shape, N_mon_max, chain_table, N_chains):
 
                 x_pos, y_pos, z_pos = mon_line[:3]
 
-                if x_pos == y_pos == z_pos == const_m.uint16_max:
+                if x_pos == y_pos == z_pos == mapping.uint16_max:
                     continue
 
                 now_poss = [x_pos, y_pos, z_pos]
@@ -117,33 +150,3 @@ def get_local_chain_len(res_shape, N_mon_max, chain_table, N_chains):
             beg_pos = end_pos + 1
 
     return chain_sum_len_matrix, n_chains_matrix
-
-
-# calculate final L distribution
-def get_L_final(chain_table):
-    L_final = []
-
-    for i, now_chain in enumerate(chain_table):
-
-        cnt = 0
-
-        for line in now_chain:
-
-            if np.all(line == const_m.uint16_max):
-                break
-
-            mon_type = line[const_m.monomer_type_pos]
-
-            if mon_type == 0:
-                cnt == 1
-
-            elif mon_type == 1:
-                cnt += 1
-
-            elif mon_type == 2:
-                cnt += 1
-                L_final.append(cnt)
-                cnt = 0
-
-    return np.array(L_final)
-

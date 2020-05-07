@@ -3,20 +3,21 @@ import importlib
 import numpy as np
 
 import indexes as ind
-import constants_physics as const
+import constants as const
 
 ind = importlib.reload(ind)
 const = importlib.reload(const)
 
 
 # %%
-def get_x0y0(x_range, y_range):
-    return np.random.uniform(*x_range), np.random.uniform(*y_range)
-
-
 def get_e_id_DATA_ind_range(DATA, e_id):
-    beg_ind = np.where(DATA[:, ind.DATA_e_id_ind] == e_id)[0][0]
-    end_ind = np.where(DATA[:, ind.DATA_parent_e_id_ind] == e_id)[0][-1]
+    e_id_inds = np.where(DATA[:, ind.DATA_e_id_ind] == e_id)[0]
+    beg_ind = e_id_inds[0]
+    secondary_inds = np.where(DATA[:, ind.DATA_parent_e_id_ind] == e_id)[0]
+    if len(secondary_inds) == 0:  # primary e created no 2ndaries
+        end_ind = e_id_inds[-1]
+    else:
+        end_ind = secondary_inds[-1]  # there are secondary electrons
     return range(beg_ind, end_ind + 1)
 
 
@@ -31,28 +32,26 @@ def rotate_DATA(DATA, phi=2 * np.pi * np.random.random()):
         np.dot(rot_mat, DATA[:, ind.DATA_x_ind:ind.DATA_E_dep_ind].transpose()).transpose()
 
 
-def add_easy_xy_shift(DATA, x_shift, y_shift):
-    DATA[:, ind.DATA_xy_inds] += x_shift, y_shift
+def add_uniform_xy_shift_to_track(track_DATA, x_range, y_range):
+    x_shift, y_shift = np.random.uniform(*x_range), np.random.uniform(*y_range)
+    track_DATA[:, ind.DATA_xy_inds] += x_shift, y_shift
 
 
-def add_uniform_xy_shift(DATA, x_range, y_range):
-    add_easy_xy_shift(DATA, np.random.uniform(*x_range), np.random.uniform(*y_range))
+def add_gaussian_xy_shift_to_track(track_DATA, x_position, x_sigma, y_range):
+    x_shift, y_shift = np.random.normal(loc=x_position, scale=x_sigma), np.random.uniform(*y_range)
+    track_DATA[:, ind.DATA_xy_inds] += x_shift, y_shift
 
 
-# def add_xy_shift(DATA, e_id, x_shift, y_shift):
-#     inds = get_e_id_DATA_ind_range(DATA, e_id)
-#     add_easy_xy_shift(DATA[inds, :], x_shift, y_shift)
+# def add_uniform_xy_shift_to_DATA(DATA, x_range, y_range):
+#     n_e_prim = int(DATA[np.where(DATA[:, ind.DATA_parent_e_id_ind] == -1)][-1, 0] + 1)
+#     for e_id in range(n_e_prim):
+#         add_xy_shift_to_track(DATA, e_id, np.random.uniform(*x_range), np.random.uniform(*y_range))
 
 
-def add_xy_shift(DATA, e_id, x_shift, y_shift):  # add shift to the whole track, including secondary electrons
-    inds = get_e_id_DATA_ind_range(DATA, e_id)
-    add_easy_xy_shift(DATA[inds, :], x_shift, y_shift)
-
-
-def add_uniform_shift_to_DATA(DATA, x_range, y_range):
-    n_e_prim = int(DATA[np.where(DATA[:, ind.DATA_parent_e_id_ind] == -1)][-1, 0] + 1)
-    for e_id in range(n_e_prim):
-        add_xy_shift(DATA, e_id, np.random.uniform(*x_range), np.random.uniform(*y_range))
+# def get_daussian_xy_shift_to_DATA(DATA, r_beam, y_range):
+#     n_e_prim = int(DATA[np.where(DATA[:, ind.DATA_parent_e_id_ind] == -1)][-1, 0] + 1)
+#     for e_id in range(n_e_prim):
+#         add_xy_shift_to_track(DATA, e_id, np.random.normal(loc=0, scale=r_beam), np.random.uniform(*y_range))
 
 
 def get_n_electrons_2D(dose_uC_cm2, lx_nm, ly_nm):
@@ -63,5 +62,5 @@ def get_n_electrons_2D(dose_uC_cm2, lx_nm, ly_nm):
 # def get_n_electrons_1D(dose_C_cm, ly_nm, y_borders_nm):
 #     q_el_C = 1.6e-19
 #     L_cm = (ly_nm + y_borders_nm * 2) * 1e-7
-#     Q_C = dose_C_cm * L_cm#
+#     Q_C = dose_C_cm * L_cm
 #     return int(np.round(Q_C / q_el_C))

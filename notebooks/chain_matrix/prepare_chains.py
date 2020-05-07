@@ -1,17 +1,23 @@
 import importlib
-import numpy as np
-import matplotlib.pyplot as plt
 import os
-from functions import chain_functions as cf
-from functions import array_functions as af
+
+import matplotlib.pyplot as plt
+import numpy as np
 from tqdm import tqdm
-import constants_mapping as const_m
-import constants_physics as const_p
+
+import constants as cp
+
+# mapping parameters
+# import mapping_harris as mapping
+import mapping_aktary as mapping
+
+from functions import array_functions as af
+from functions import chain_functions as cf
 
 cf = importlib.reload(cf)
 af = importlib.reload(af)
-const_m = importlib.reload(const_m)
-const_p = importlib.reload(const_p)
+cp = importlib.reload(cp)
+mapping = importlib.reload(mapping)
 
 # %%
 source_dir = '/Volumes/ELEMENTS/Chains/'
@@ -29,8 +35,8 @@ for folder in os.listdir(source_dir):
         chains.append(np.load(os.path.join(source_dir, folder, fname)))
 
 # %% create chain_list and check density
-volume = np.prod(const_m.l_xyz) * const_m.nm3_to_cm_3
-n_monomers_required = int(const_p.rho_PMMA * volume / const_p.m_MMA)
+volume = np.prod(mapping.l_xyz) * cp.nm3_to_cm_3
+n_monomers_required = int(cp.rho_PMMA * volume / cp.m_MMA)
 
 mass_array = np.load('Resources/Harris/harris_x_before.npy')
 molecular_weight_array = np.load('Resources/Harris/harris_y_before_fit.npy')
@@ -64,19 +70,18 @@ while True:
 chain_lens_array = np.array(chain_lens_list)
 
 # %% save chains to files
+folder_name = 'Aktary'
 progress_bar = tqdm(total=len(chain_list), position=0)
 
 for n, chain in enumerate(chain_list):
-    np.save('data/Harris/prepared_chains_3/prepared_chain_' + str(n) + '.npy', chain)
-    progress_bar.update(1)
+    np.save('data/chains/' + folder_name + '/prepared_chains/prepared_chain_' + str(n) + '.npy', chain)
+    progress_bar.update()
 
-np.save('data/Harris/prepared_chains_3/prepared_chain_lens.npy', chain_lens_array)
-
-# %%
-chain_lens_array = np.load('data/Harris/prepared_chains_1/prepared_chain_lens.npy')
-
+np.save('data/chains/' + folder_name + '/prepared_chains/prepared_chain_lens.npy', chain_lens_array)
 
 # %% check chain lengths distribution
+chain_lens_array = np.load('data/chains/' + folder_name + '/prepared_chains/prepared_chain_lens.npy')
+
 simulated_mw_array = chain_lens_array * 100
 bins = np.logspace(2, 7.1, 21)
 

@@ -1,5 +1,6 @@
 # %%
 # import scipy.constants as const
+import numpy as np
 
 # %% general
 # Na = const.N_A
@@ -64,3 +65,8 @@ n_Si = rho_Si * Na / u_Si
 Si_MuElec_E_bind = [0, 6.52, 13.63, 107.98, 151.55, 1828.5]
 Si_MuElec_E_plasmon = 16.65
 Si_MuElec_occup = [4, 2, 2, 6, 2, 2]
+
+# %%
+nm3_to_cm_3 = 1e-7 ** 3
+uint16_max = np.iinfo(np.uint16).max
+uint32_max = np.iinfo(np.uint32).max

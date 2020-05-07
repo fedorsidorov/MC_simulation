@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import grid as g
-import constants_physics as c
+import constants as c
 from functions import MC_functions as u
 
 u = importlib.reload(u)

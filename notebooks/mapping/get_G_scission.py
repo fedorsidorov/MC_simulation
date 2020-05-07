@@ -1,7 +1,7 @@
 import importlib
 import numpy as np
-import constants_physics as cp
-import constants_mapping as cm
+import constants as cp
+import mapping_harris as cm
 
 cp = importlib.reload(cp)
 cm = importlib.reload(cm)

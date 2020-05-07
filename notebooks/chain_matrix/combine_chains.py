@@ -5,22 +5,23 @@ from functions import chain_functions as cf
 from functions import array_functions as af
 from functions import plot_functions as pf
 from tqdm import tqdm
-import constants_mapping as const_m
-import constants_physics as const_p
+# import mapping_harris as mapping
+import mapping_aktary as mapping
+import constants as cp
 
 cf = importlib.reload(cf)
 af = importlib.reload(af)
 pf = importlib.reload(pf)
-const_m = importlib.reload(const_m)
-const_p = importlib.reload(const_p)
+mapping = importlib.reload(mapping)
+cp = importlib.reload(cp)
 
 
 # %%
 def get_shift(x_bin, y_bin, z_bin):
     shift = [
-        (const_m.x_bins_2nm[x_bin] + const_m.x_bins_2nm[x_bin + 1]) / 2,
-        (const_m.y_bins_2nm[y_bin] + const_m.y_bins_2nm[y_bin + 1]) / 2,
-        (const_m.z_bins_2nm[z_bin] + const_m.z_bins_2nm[z_bin + 1]) / 2
+        (mapping.x_bins_2nm[x_bin] + mapping.x_bins_2nm[x_bin + 1]) / 2,
+        (mapping.y_bins_2nm[y_bin] + mapping.y_bins_2nm[y_bin + 1]) / 2,
+        (mapping.z_bins_2nm[z_bin] + mapping.z_bins_2nm[z_bin + 1]) / 2
     ]
     return shift
 
@@ -51,7 +52,8 @@ def get_zero_shift(array):
 
 
 # %%
-source_folder = 'data/Harris/prepared_chains_3/'
+folder_name = 'Aktary'
+source_folder = 'data/chains/' + folder_name + '/prepared_chains/'
 
 chain_lens = np.load(source_folder + 'prepared_chain_lens.npy')
 chain_list = []
@@ -63,7 +65,7 @@ for n, _ in enumerate(chain_lens):
     progress_bar.update()
 
 # %%
-hist_2nm = np.zeros(const_m.hist_2nm_shape)
+hist_2nm = np.zeros(mapping.hist_2nm_shape)
 
 final_chain_list = []
 chain_lens_list = []
@@ -86,15 +88,15 @@ for n, now_chain in enumerate(chain_list):
     # now_shift = get_zero_shift(hist_2nm)
 
     # window_size = 10
-    window_size = int(np.average(now_chain_l_xyz) // const_m.step_2nm)
-    # window_size = 5
+    # window_size = int(np.average(now_chain_l_xyz) // mapping.step_2nm)
+    window_size = 5
     now_shift = get_window_shift(hist_2nm, window_size)
 
     now_chain_shifted = now_chain + now_shift
-    af.snake_array(now_chain_shifted, 0, 1, 2, const_m.xyz_min, const_m.xyz_max)
+    af.snake_array(now_chain_shifted, 0, 1, 2, mapping.xyz_min, mapping.xyz_max)
     final_chain_list.append(now_chain_shifted)
 
-    hist_2nm += np.histogramdd(now_chain_shifted, bins=const_m.bins_2nm)[0]
+    hist_2nm += np.histogramdd(now_chain_shifted, bins=mapping.bins_2nm)[0]
 
     n_monomers_now = np.sum(hist_2nm)
     progress_bar.update()
@@ -105,14 +107,15 @@ plt.imshow(np.average(hist_2nm, axis=0))
 plt.show()
 
 # %%
-n_empty = 50 * 50 * 250 - np.count_nonzero(hist_2nm)
-part_empty = n_empty / (50 * 50 * 250)
+n_empty = np.prod(mapping.hist_2nm_shape) - np.count_nonzero(hist_2nm)
+part_empty = n_empty / np.prod(mapping.hist_2nm_shape)
 
 print(np.sqrt(np.var(hist_2nm)))
 print(part_empty)
 
 # %% save chains to files
-dest_folder = 'data/Harris/shifted_snaked_chains_2/'
+# data/chains/Aktary/shifted_snaked_chains
+dest_folder = 'data/chains/' + folder_name + '/shifted_snaked_chains/'
 progress_bar = tqdm(total=len(chain_list), position=0)
 
 for n, chain in enumerate(final_chain_list):
