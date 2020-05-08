@@ -45,6 +45,10 @@ def update_n_surface_facets(development_times, n_surface_facets):
     for i in range(np.shape(development_times)[0]):
         for j in range(np.shape(development_times)[1]):
 
+            if development_times[i, j] == 0:
+                n_surface_facets[i, j] = 0
+                continue
+
             now_n_surface_facets = 0
 
             if i - 1 >= 0 and development_times[i - 1, j] == 0:
@@ -62,34 +66,52 @@ def update_n_surface_facets(development_times, n_surface_facets):
             n_surface_facets[i, j] = now_n_surface_facets
 
 
-def share_overkill(development_times, i, j, overkill):
+def transfer_overkill(development_times, i, j, overkill):  # overkill is negative
     neighbour_inds = []
 
     for di in range(-1, 2):
         for dj in range(-1, 2):
 
-            if di == 0 and dj == 0:
+            if np.abs(di) == np.abs(dj):
                 continue
             if not 0 <= i + di < np.shape(development_times)[0]:
                 continue
             if not 0 <= j + dj < np.shape(development_times)[1]:
                 continue
-
             if development_times[i + di, j + dj] > 0:
                 neighbour_inds.append([i + di, j + dj])
 
-    for inds in neighbour_inds:
-        development_times[inds] -= overkill / len(neighbour_inds)
+    if len(neighbour_inds) == 0:
+        print('can\'t share overkill')
+
+    for neigh_inds in neighbour_inds:
+        neigh_i, neigh_j = neigh_inds
+        development_times[neigh_i, neigh_j] += overkill / len(neighbour_inds)
+
+    # return development_times
+
+
+def share_all_overkills(development_times):
+    while True:
+        negative_inds = np.where(development_times < 0)
+        if len(negative_inds[0]) == 0:
+            return
+
+        for neg_inds in np.array(negative_inds).transpose():
+            i, j = neg_inds
+            overkill = development_times[i, j]
+            development_times[i, j] = 0
+            transfer_overkill(development_times, i, j, overkill)
 
 
 def make_develop_step(development_times, n_surface_facets, delta_t):
-    progress_bar = tqdm(total=np.shape(development_times)[0], position=0)
-
-    # for i in range(np.shape(development_times)[0]):
-    #     for j in range(np.shape(development_times)[1]):
 
     for j in range(np.shape(development_times)[1]):
         for i in range(np.shape(development_times)[0]):
+
+            negative_inds = np.array(np.where(development_times < 0))
+            if len(negative_inds[0]) != 0:
+                print('negative times exist')
 
             now_development_time = development_times[i, j]
             now_n_surface_facets = n_surface_facets[i, j]
@@ -97,25 +119,8 @@ def make_develop_step(development_times, n_surface_facets, delta_t):
             if now_n_surface_facets == 0 or now_development_time == 0:
                 continue
 
-            if now_development_time < 0:
-                new_development_time = 0
-                overkill = - now_development_time
-                share_overkill(development_times, i, j, overkill)
-
-                development_times[i, j] = new_development_time
-                update_n_surface_facets(development_times, n_surface_facets)
-                continue
-
             effective_delta_t = delta_t * get_development_time_factor(now_n_surface_facets)
             new_development_time = now_development_time - effective_delta_t
-
-            if new_development_time < 0:
-
-                new_development_time = 0
-                overkill = effective_delta_t - now_development_time
-                share_overkill(development_times, i, j, overkill)
-
             development_times[i, j] = new_development_time
+            share_all_overkills(development_times)
             update_n_surface_facets(development_times, n_surface_facets)
-
-        progress_bar.update()

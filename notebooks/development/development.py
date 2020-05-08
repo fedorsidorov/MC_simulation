@@ -6,7 +6,6 @@ from tqdm import tqdm
 
 import constants as const
 import indexes
-# import mapping_harris as mapping
 import mapping_aktary as mapping
 from functions import development_functions_2d as df
 from functions import mapping_functions as mf
@@ -34,17 +33,18 @@ development_times = bin_size / development_rates
 n_surface_facets = df.get_initial_n_surface_facets(local_chain_length_avg)
 
 # %%
-delta_t = 1 / 30
-n_steps = 1
+delta_t = 1 / 10
+n_steps = 60
 
-# progress_bar = tqdm(total=n_steps, position=0)
+progress_bar = tqdm(total=n_steps, position=0)
 
 for i in range(n_steps):
-    print(i)
     df.make_develop_step(development_times, n_surface_facets, delta_t)
-    # progress_bar.update()
+    progress_bar.update()
 
-# ans = np.average(development_times, axis=1)
-# plt.imshow(np.average(development_times, axis=1).transpose())
-# plt.colorbar()
-# plt.show()
+
+# %%
+plt.figure(dpi=300)
+plt.imshow(development_times.transpose())
+plt.colorbar()
+plt.show()
