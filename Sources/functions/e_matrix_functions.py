@@ -59,8 +59,8 @@ def get_n_electrons_2D(dose_uC_cm2, lx_nm, ly_nm):
     Q_C = dose_uC_cm2 * 1e-6 * A_cm2
     return int(np.round(Q_C / const.e_SI))
 
-# def get_n_electrons_1D(dose_C_cm, ly_nm, y_borders_nm):
-#     q_el_C = 1.6e-19
-#     L_cm = (ly_nm + y_borders_nm * 2) * 1e-7
-#     Q_C = dose_C_cm * L_cm
-#     return int(np.round(Q_C / q_el_C))
+
+def get_n_electrons_1D(dose_pC_cm, ly_nm):
+    L_cm = ly_nm * 1e-7
+    Q_C = dose_pC_cm * 1e-12 * L_cm
+    return int(np.round(Q_C / const.e_SI))

@@ -1,6 +1,5 @@
 import numpy as np
 
-
 # %% mapping Harris matrices
 x_min, x_max = -50, 50
 y_min, y_max = -50, 50
@@ -19,6 +18,7 @@ step_5nm = 5
 d_PMMA_nm = z_max
 d_PMMA_cm = d_PMMA_nm * 1e-7
 area_cm2 = (x_max - x_min) * (y_max - y_min) * 1e-7 ** 2
+volume_cm3 = area_cm2 * d_PMMA_cm
 
 # %% histograms parameters
 x_bins_2nm = np.arange(x_min, x_max + 1, step_2nm)

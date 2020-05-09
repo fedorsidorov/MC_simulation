@@ -15,15 +15,18 @@ indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 
 # %% load arrays
+# folder_name = 'Harris'
 folder_name = 'Aktary'
-deg_path = 'C-C2:4_C-C\':2_C-C3:1'
+# deg_path = 'C-C2:4_C-C\':2'
+deg_path = 'series_5'
+# deg_path = 'C-C2:4_C-C\':2_C-C3:1'
 
 e_matrix_val_exc_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path + '/e_matrix_val_exc_sci.npy')
 e_matrix_val_ion_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path + '/e_matrix_val_ion_sci.npy')
 
 scission_matrix = e_matrix_val_exc_sci + e_matrix_val_exc_sci
 
-resist_matrix = np.load('data/chains/' + folder_name + '/MATRIX_resist.npy')
+resist_matrix = np.load('data/chains/' + folder_name + '/resist_matrix.npy')
 chain_lens_array = np.load('data/chains/' + folder_name + '/prepared_chains/prepared_chain_lens.npy')
 n_chains = len(chain_lens_array)
 
@@ -84,5 +87,5 @@ np.save('data/chains/' + folder_name + '/lens_final_' + deg_path + '.npy', lens_
 progress_bar = tqdm(total=len(chain_tables), position=0)
 
 for n, chain_table in enumerate(chain_tables):
-    np.save('data/chains/' + folder_name + '/chain_tables_final/chain_table_' + str(n) + '.npy', chain_table)
+    np.save('data/chains/' + folder_name + '/chain_tables_final_series_5/chain_table_' + str(n) + '.npy', chain_table)
     progress_bar.update()

@@ -30,7 +30,7 @@ progress_bar = tqdm(total=n_chains, position=0)
 for n in range(n_chains):
     chain_tables_final.append(
         np.load('/Users/fedor/PycharmProjects/MC_simulation/data/chains/' +
-                folder_name + '/chain_tables_final/chain_table_' + str(n) + '.npy'))
+                folder_name + '/chain_tables_final_series_5/chain_table_' + str(n) + '.npy'))
     progress_bar.update()
 
 final_resist_shape = mapping.hist_2nm_shape
@@ -60,11 +60,7 @@ for chain_table in chain_tables_final:
 
         now_chain.append(line)
 
-        # if monomer_type == 2:
-        #     print('here')
-
         if monomer_type == indexes.end_monomer:
-            # print(monomer_type)
             now_chain_arr = np.array(now_chain)
             unique_bins = np.unique(now_chain_arr[:, :3], axis=0)
 
@@ -78,5 +74,5 @@ for chain_table in chain_tables_final:
     p_bar.update()
 
 # %%
-np.save('data/chains/Aktary/development/n_chains_matrix.npy', n_chains_matrix)
-np.save('data/chains/Aktary/development/sum_lens_matrix.npy', sum_lens_matrix)
+np.save('data/chains/Aktary/development/n_chains_matrix_series_5.npy', n_chains_matrix)
+np.save('data/chains/Aktary/development/sum_lens_matrix_series_5.npy', sum_lens_matrix)
