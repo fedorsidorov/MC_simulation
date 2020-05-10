@@ -3,6 +3,8 @@ import importlib
 import numpy as np
 from tqdm import tqdm
 
+import matplotlib.pyplot as plt
+
 import constants as cp
 import mapping_aktary as mapping
 
@@ -19,13 +21,12 @@ def get_hist_position(element, bins):
 # %% load data
 folder_name = 'Aktary'
 
-chain_lens = np.load('data/chains/' + folder_name + '/prepared_chains/prepared_chain_lens.npy')
-hist_2nm = np.load('data/chains/' + folder_name + '/shifted_snaked_chains/hist_2nm.npy')
+hist_2nm = np.load('data/chains/' + folder_name + '/best_sh_sn_chains/best_hist_2nm.npy')
 
-# plt.imshow(np.average(hist_2nm, axis=2))
-# plt.show()
+plt.imshow(np.average(hist_2nm, axis=2).transpose())
+plt.show()
 
-n_chains = len(chain_lens)
+n_chains = 754
 n_mon_cell_max = int(np.max(hist_2nm))
 
 # %% create arrays
@@ -40,7 +41,7 @@ progress_bar = tqdm(total=n_chains, position=0)
 for chain_num in range(n_chains):
 
     now_chain = np.load('data/chains/' + folder_name +
-                        '/shifted_snaked_chains/shifted_snaked_chain_' + str(chain_num) + '.npy')
+                        '/best_sh_sn_chains/sh_sn_chain_' + str(chain_num) + '.npy')
     chain_table = np.zeros((len(now_chain), 5), dtype=np.uint16)
     # chain_table = np.zeros((len(now_chain), 5), dtype=np.uint32)
 
@@ -71,11 +72,11 @@ for chain_num in range(n_chains):
 
 # %%
 print('resist_matrix size, Gb:', resist_matrix.nbytes / 1024 ** 3)
-np.save('data/chains/' + folder_name + '/MATRIX_resist.npy', resist_matrix)
+np.save('data/chains/' + folder_name + '/best_resist_matrix.npy', resist_matrix)
 
 # %%
 progress_bar = tqdm(total=len(chain_tables), position=0)
 
 for n, chain_table in enumerate(chain_tables):
-    np.save('data/chains/' + folder_name + '/chain_tables/chain_table_' + str(n) + '.npy', chain_table)
+    np.save('data/chains/' + folder_name + '/best_chain_tables/chain_table_' + str(n) + '.npy', chain_table)
     progress_bar.update()

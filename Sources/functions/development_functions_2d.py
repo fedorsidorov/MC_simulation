@@ -25,9 +25,22 @@ def get_initial_n_surface_facets(local_chain_length_avg):
 
 
 def get_development_rates(local_chain_length_avg):
+    # atoda1979.pdf
     S0 = 51  # A/min
     beta = 3.59e+8  # A/min
     alpha = 1.42
+
+    # greeneich1975.pdf MIBK:IPA 1:1
+    # S0 = 0
+    # beta = 6.645e+6
+    # alpha = 1.188
+
+    # greeneich1975.pdf MIBK:IPA 1:3
+    # S0 = 0
+    # beta = 9.332e+14  # 22.8 C
+    # beta = 1.046e+16  # 32.8 C
+    # alpha = 3.86
+
     development_rates = np.zeros(np.shape(local_chain_length_avg))
 
     for i in range(np.shape(local_chain_length_avg)[0]):

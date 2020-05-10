@@ -7,13 +7,13 @@ from functions import plot_functions as pf
 from tqdm import tqdm
 # import mapping_harris as mapping
 import mapping_aktary as mapping
-import constants as cp
+import constants as const
 
 cf = importlib.reload(cf)
 af = importlib.reload(af)
 pf = importlib.reload(pf)
 mapping = importlib.reload(mapping)
-cp = importlib.reload(cp)
+const = importlib.reload(const)
 
 
 # %%
@@ -53,53 +53,69 @@ def get_zero_shift(array):
 
 # %%
 folder_name = 'Aktary'
-source_folder = 'data/chains/' + folder_name + '/prepared_chains/'
+# source_folder = 'data/chains/' + folder_name + '/prepared_chains/'
+source_folder = 'data/Aktary_chains_950K/'
 
-chain_lens = np.load(source_folder + 'prepared_chain_lens.npy')
+# chain_lens = np.load(source_folder + 'prepared_chain_lens.npy')
+chain_lens = np.load(source_folder + 'chain_lens.npy')
 chain_list = []
 
 progress_bar = tqdm(total=len(chain_lens), position=0)
 
 for n, _ in enumerate(chain_lens):
-    chain_list.append(np.load(source_folder + 'prepared_chain_' + str(n) + '.npy'))
+    chain_list.append(np.load(source_folder + 'chain_' + str(n) + '.npy'))
     progress_bar.update()
 
 # %%
-hist_2nm = np.zeros(mapping.hist_2nm_shape)
+best_angles = np.zeros((len(chain_list), 3))
+best_shifts = np.zeros((len(chain_list), 3))
+best_part_empty = 1
 
-final_chain_list = []
-chain_lens_list = []
-n_monomers_now = 0
+for _ in range(1000):
 
-chains_l_xyz_array = np.zeros((len(chain_lens), 3))
+    final_chain_list = []
+    chain_lens_list = []
+    n_monomers_now = 0
 
-progress_bar = tqdm(total=len(chain_list), position=0)
+    progress_bar = tqdm(total=len(chain_list), position=0)
 
-for n, now_chain in enumerate(chain_list):
+    hist_2nm = np.zeros(mapping.hist_2nm_shape)
+    angles_array = np.zeros((len(chain_list), 3))
+    shifts_array = np.zeros((len(chain_list), 3))
 
-    now_chain -= now_chain[0, :]
-    now_chain_center_xyz = (np.max(now_chain, axis=0) + np.min(now_chain, axis=0)) / 2
-    now_chain = now_chain - now_chain_center_xyz
+    for n, now_chain in enumerate(chain_list):
 
-    now_chain_l_xyz = np.max(now_chain, axis=0) - np.min(now_chain, axis=0)
-    chains_l_xyz_array[n, :] = now_chain_l_xyz
+        now_chain -= now_chain[0, :]
+        now_chain_center_xyz = (np.max(now_chain, axis=0) + np.min(now_chain, axis=0)) / 2
+        now_chain = now_chain - now_chain_center_xyz
 
-    # now_shift = np.random.uniform(const_m.xyz_min, const_m.xyz_max)
-    # now_shift = get_zero_shift(hist_2nm)
+        a, b, g = np.random.random(3) * 2 * np.pi
+        angles_array[n, :] = a, b, g
+        now_chain = cf.rotate_chain(now_chain, a, b, g)
 
-    # window_size = 10
-    # window_size = int(np.average(now_chain_l_xyz) // mapping.step_2nm)
-    window_size = 5
-    now_shift = get_window_shift(hist_2nm, window_size)
+        now_chain_l_xyz = np.max(now_chain, axis=0) - np.min(now_chain, axis=0)
+        now_shift = get_zero_shift(hist_2nm)
+        shifts_array[n, :] = now_shift
+        now_chain_shifted = now_chain + now_shift
 
-    now_chain_shifted = now_chain + now_shift
-    af.snake_array(now_chain_shifted, 0, 1, 2, mapping.xyz_min, mapping.xyz_max)
-    final_chain_list.append(now_chain_shifted)
+        af.snake_array(now_chain_shifted, 0, 1, 2, mapping.xyz_min, mapping.xyz_max)
+        final_chain_list.append(now_chain_shifted)
 
-    hist_2nm += np.histogramdd(now_chain_shifted, bins=mapping.bins_2nm)[0]
+        hist_2nm += np.histogramdd(now_chain_shifted, bins=mapping.bins_2nm)[0]
 
-    n_monomers_now = np.sum(hist_2nm)
-    progress_bar.update()
+        n_monomers_now = np.sum(hist_2nm)
+
+        n_empty = np.prod(mapping.hist_2nm_shape) - np.count_nonzero(hist_2nm)
+        part_empty = n_empty / np.prod(mapping.hist_2nm_shape)
+
+        if part_empty < best_part_empty:
+            best_part_empty = part_empty
+            best_angles = angles_array
+            best_shifts = shifts_array
+
+        progress_bar.update()
+
+    print('\nbest part of empty bins =', best_part_empty)
 
 
 # %%

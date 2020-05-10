@@ -6,11 +6,8 @@ import numpy as np
 from tqdm import tqdm
 
 import constants as cp
-
-# mapping parameters
 # import mapping_harris as mapping
 import mapping_aktary as mapping
-
 from functions import array_functions as af
 from functions import chain_functions as cf
 
@@ -53,11 +50,12 @@ while True:
     if n_monomers_now > n_monomers_required:
         print('Needed density is achieved')
         break
-
+    print('here')
     chain_base_ind = np.random.choice(len(chains))
     now_chain_base = chains[chain_base_ind]
 
-    now_chain_len = cf.get_chain_len(mass_array, molecular_weight_array)
+    # now_chain_len = cf.get_chain_len(mass_array, molecular_weight_array)
+    now_chain_len = 9500
     chain_lens_list.append(now_chain_len)
 
     beg_ind = np.random.choice(len(now_chain_base) - now_chain_len)
@@ -74,10 +72,12 @@ folder_name = 'Aktary'
 progress_bar = tqdm(total=len(chain_list), position=0)
 
 for n, chain in enumerate(chain_list):
-    np.save('data/chains/' + folder_name + '/prepared_chains/prepared_chain_' + str(n) + '.npy', chain)
+    # np.save('data/chains/' + folder_name + '/prepared_chains/prepared_chain_' + str(n) + '.npy', chain)
+    np.save('data/Aktary_chains_950K/chain_' + str(n) + '.npy', chain)
     progress_bar.update()
 
-np.save('data/chains/' + folder_name + '/prepared_chains/prepared_chain_lens.npy', chain_lens_array)
+# np.save('data/chains/' + folder_name + '/prepared_chains/prepared_chain_lens.npy', chain_lens_array)
+np.save('data/Aktary_chains_950K/chain_lens.npy', chain_lens_array)
 
 # %% check chain lengths distribution
 chain_lens_array = np.load('data/chains/' + folder_name + '/prepared_chains/prepared_chain_lens.npy')

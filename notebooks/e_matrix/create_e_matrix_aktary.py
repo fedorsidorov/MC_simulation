@@ -25,7 +25,8 @@ e_matrix_E_dep = np.zeros(mapping.hist_2nm_shape)
 # dose_C_cm2 = 100
 dose_pC_cm = 150
 # x_position = 0
-x_positions = [10, 30, 50, 70, 90]
+# x_positions = [10, 30, 50, 70, 90]
+x_positions = [25, 75]
 r_beam = 1
 
 # n_electrons_required = emf.get_n_electrons_2D(dose_C_cm2, 2 * r_beam, mapping.l_y)
@@ -106,6 +107,6 @@ print(np.sum(e_matrix_val_exc_sci) / np.sum(e_matrix_E_dep) * 100)
 print(np.sum(e_matrix_val_ion_sci) / np.sum(e_matrix_E_dep) * 100)
 
 # %%
-np.save('data/e_matrix/Aktary/series/e_matrix_val_exc_sci.npy', e_matrix_val_exc_sci)
-np.save('data/e_matrix/Aktary/series/e_matrix_val_ion_sci.npy', e_matrix_val_ion_sci)
-np.save('data/e_matrix/Aktary/series/e_matrix_E_dep.npy', e_matrix_E_dep)
+np.save('data/e_matrix/Aktary/series_2/e_matrix_val_exc_sci.npy', e_matrix_val_exc_sci)
+np.save('data/e_matrix/Aktary/series_2/e_matrix_val_ion_sci.npy', e_matrix_val_ion_sci)
+np.save('data/e_matrix/Aktary/series_2/e_matrix_E_dep.npy', e_matrix_E_dep)
