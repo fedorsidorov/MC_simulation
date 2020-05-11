@@ -5,6 +5,8 @@ from tqdm import tqdm
 
 import constants as const
 
+from collections import deque
+
 const = importlib.reload(const)
 
 
@@ -89,7 +91,8 @@ def update_n_surface_facets(development_times, n_surface_facets):
 
 
 def transfer_overkill(development_times, i, j, k, overkill):  # overkill is negative
-    neighbour_inds = []
+    # neighbour_inds = []
+    neighbour_inds = deque()
 
     for di in range(-1, 2):
         for dj in range(-1, 2):
@@ -132,6 +135,7 @@ def make_develop_step(development_times, n_surface_facets, delta_t):
 
     for k in range(np.shape(development_times)[2]):
         for i in range(np.shape(development_times)[0]):
+            # print(i)
             for j in range(np.shape(development_times)[1]):
 
                 negative_inds = np.array(np.where(development_times < 0))

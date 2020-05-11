@@ -18,14 +18,17 @@ sf = importlib.reload(sf)
 mapping = importlib.reload(mapping)
 
 # %% get e-matrix
-e_matrix_val_exc_sci = np.zeros(mapping.hist_2nm_shape)
-e_matrix_val_ion_sci = np.zeros(mapping.hist_2nm_shape)
-e_matrix_E_dep = np.zeros(mapping.hist_2nm_shape)
+# e_matrix_val_exc_sci = np.zeros(mapping.hist_2nm_shape)
+# e_matrix_val_ion_sci = np.zeros(mapping.hist_2nm_shape)
+# e_matrix_E_dep = np.zeros(mapping.hist_2nm_shape)
+
+e_matrix_val_exc_sci = np.zeros(mapping.hist_4nm_shape)
+e_matrix_val_ion_sci = np.zeros(mapping.hist_4nm_shape)
+e_matrix_E_dep = np.zeros(mapping.hist_4nm_shape)
 
 # dose_C_cm2 = 100
 dose_pC_cm = 150
 # x_position = 0
-# x_positions = [10, 30, 50, 70, 90]
 x_positions = [25, 75]
 r_beam = 1
 
@@ -73,7 +76,8 @@ for x_position in x_positions:
 
             e_matrix_E_dep += np.histogramdd(
                 sample=now_prim_e_DATA[:, ind.DATA_coord_inds],
-                bins=mapping.bins_2nm,
+                # bins=mapping.bins_2nm,
+                bins=mapping.bins_4nm,
                 weights=now_prim_e_DATA[:, ind.DATA_E_dep_ind]
             )[0]
 
@@ -86,13 +90,15 @@ for x_position in x_positions:
 
             e_matrix_val_exc_sci += np.histogramdd(
                 sample=now_prim_e_val_DATA[inds_exc, :][:, ind.DATA_coord_inds],
-                bins=mapping.bins_2nm,
+                # bins=mapping.bins_2nm,
+                bins=mapping.bins_4nm,
                 weights=scissions[inds_exc]
             )[0]
 
             e_matrix_val_ion_sci += np.histogramdd(
                 sample=now_prim_e_val_DATA[inds_ion, :][:, ind.DATA_coord_inds],
-                bins=mapping.bins_2nm,
+                # bins=mapping.bins_2nm,
+                bins=mapping.bins_4nm,
                 weights=scissions[inds_ion]
             )[0]
 
@@ -107,6 +113,6 @@ print(np.sum(e_matrix_val_exc_sci) / np.sum(e_matrix_E_dep) * 100)
 print(np.sum(e_matrix_val_ion_sci) / np.sum(e_matrix_E_dep) * 100)
 
 # %%
-np.save('data/e_matrix/Aktary/series_2/e_matrix_val_exc_sci.npy', e_matrix_val_exc_sci)
-np.save('data/e_matrix/Aktary/series_2/e_matrix_val_ion_sci.npy', e_matrix_val_ion_sci)
-np.save('data/e_matrix/Aktary/series_2/e_matrix_E_dep.npy', e_matrix_E_dep)
+np.save('data/e_matrix/Aktary/series_2/e_matrix_val_exc_sci_4nm.npy', e_matrix_val_exc_sci)
+np.save('data/e_matrix/Aktary/series_2/e_matrix_val_ion_sci_4nm.npy', e_matrix_val_ion_sci)
+np.save('data/e_matrix/Aktary/series_2/e_matrix_E_dep_4nm.npy', e_matrix_E_dep)

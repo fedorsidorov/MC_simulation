@@ -21,22 +21,15 @@ def get_hist_position(element, bins):
 # %% load data
 folder_name = 'Aktary'
 
-# hist_2nm = np.load('data/chains/' + folder_name + '/best_sh_sn_chains/best_hist_2nm.npy')
-hist_4nm = np.load('data/chains/' + folder_name + '/best_sh_sn_chains/best_hist_4nm.npy')
-
-# plt.imshow(np.average(hist_2nm, axis=2).transpose())
-plt.imshow(np.average(hist_4nm, axis=2).transpose())
-plt.show()
+# plt.imshow(np.average(hist_4nm, axis=2).transpose())
+# plt.show()
 
 n_chains = 754
-# n_mon_cell_max = int(np.max(hist_2nm))
-n_mon_cell_max = int(np.max(hist_4nm))
+# n_mon_cell_max = int(np.max(hist_4nm))
+n_mon_cell_max = 1422
 
 # %% create arrays
-# pos_matrix = np.zeros(const_m.hist_2nm_shape, dtype=np.uint16)
-# pos_matrix = np.zeros(mapping.hist_2nm_shape, dtype=np.uint32)
 pos_matrix = np.zeros(mapping.hist_4nm_shape, dtype=np.uint32)
-# resist_matrix = -np.ones((*mapping.hist_2nm_shape, n_mon_cell_max, 3), dtype=np.uint32)
 resist_matrix = -np.ones((*mapping.hist_4nm_shape, n_mon_cell_max, 3), dtype=np.uint32)
 chain_tables = []
 
@@ -59,10 +52,6 @@ for chain_num in range(n_chains):
         else:
             mon_type = 1
 
-        # x_bin = get_hist_position(element=mon_line[0], bins=mapping.x_bins_2nm)
-        # y_bin = get_hist_position(element=mon_line[1], bins=mapping.y_bins_2nm)
-        # z_bin = get_hist_position(element=mon_line[2], bins=mapping.z_bins_2nm)
-
         x_bin = get_hist_position(element=mon_line[0], bins=mapping.x_bins_4nm)
         y_bin = get_hist_position(element=mon_line[1], bins=mapping.y_bins_4nm)
         z_bin = get_hist_position(element=mon_line[2], bins=mapping.z_bins_4nm)
@@ -82,11 +71,11 @@ for chain_num in range(n_chains):
 
 # %%
 print('resist_matrix size, Gb:', resist_matrix.nbytes / 1024 ** 3)
-np.save('data/chains/' + folder_name + '/best_resist_matrix.npy', resist_matrix)
+np.save('data/chains/' + folder_name + '/best_resist_matrix_4nm.npy', resist_matrix)
 
 # %%
 progress_bar = tqdm(total=len(chain_tables), position=0)
 
 for n, chain_table in enumerate(chain_tables):
-    np.save('data/chains/' + folder_name + '/best_chain_tables/chain_table_' + str(n) + '.npy', chain_table)
+    np.save('data/chains/' + folder_name + '/best_chain_tables_4nm/chain_table_' + str(n) + '.npy', chain_table)
     progress_bar.update()

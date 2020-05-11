@@ -53,24 +53,26 @@ for j in range(np.shape(sum_lens_matrix)[1]):
 # plt.show()
 
 # %%
-delta_t = 1 / 60 / 2
-n_steps = 10
+delta_t = 1 / 60 / 10
+n_steps = 200
 
+progress_bar = tqdm(total=n_steps, position=0)
 
-for i in range(n_steps):
-
-    print('step #' + str(i), '\n')
-    progress_bar = tqdm(total=np.shape(sum_lens_matrix)[1], position=0)
+for _ in range(n_steps):
 
     for j in range(np.shape(sum_lens_matrix)[1]):
         df.make_develop_step(development_times[:, j, :], n_surface_facets[:, j, :], delta_t)
-        progress_bar.update()
 
-    progress_bar.close()
+    progress_bar.update()
+
+progress_bar.close()
 
 # %%
 plt.figure(dpi=300)
 # plt.imshow(development_times.transpose())
-plt.imshow(np.average(n_surface_facets, axis=1).transpose())
+plt.imshow(n_surface_facets[:, 4, :].transpose())
 plt.colorbar()
 plt.show()
+
+# %%
+np.save('data/chains/Aktary/development/n_surface_facets_series_2.npy', n_surface_facets)
