@@ -16,10 +16,10 @@ mf = importlib.reload(mf)
 
 # %% load arrays
 folder_name = 'Aktary'
-deg_path = 'series_2'
+deg_path = 'series_1_4nm'
 
-e_matrix_val_exc_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path + '/e_matrix_val_exc_sci_4nm.npy')
-e_matrix_val_ion_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path + '/e_matrix_val_ion_sci_4nm.npy')
+e_matrix_val_exc_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path + '/e_matrix_val_exc_sci_500.npy')
+e_matrix_val_ion_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path + '/e_matrix_val_ion_sci_500.npy')
 
 scission_matrix = e_matrix_val_exc_sci + e_matrix_val_exc_sci
 
@@ -77,13 +77,12 @@ for x_ind in range(resist_shape[0]):
 
 # %%
 lens_final = mf.get_chain_lens(chain_tables)
-np.save('data/chains/' + folder_name + '/lens_final_' + deg_path + '_4nm.npy', lens_final)
+np.save('data/chains/' + folder_name + '/lens_final_' + deg_path + '_500.npy', lens_final)
 
 # %%
 progress_bar = tqdm(total=len(chain_tables), position=0)
 
 for n, chain_table in enumerate(chain_tables):
-    np.save('data/chains/' + folder_name + '/best_chain_tables_series_2_4nm/chain_table_' + str(n) + '.npy', chain_table)
+    np.save('data/chains/' + folder_name + '/best_chain_tables_series_1_4nm_500/chain_table_' +
+            str(n) + '.npy', chain_table)
     progress_bar.update()
-
-progress_bar.close()

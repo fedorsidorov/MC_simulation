@@ -5,8 +5,8 @@ from tqdm import tqdm
 
 import constants as const
 import indexes
-# import mapping_harris as mapping
-import mapping_aktary as mapping
+import mapping_harris as mapping
+# import mapping_aktary as mapping
 from functions import mapping_functions as mf
 
 mapping = importlib.reload(mapping)
@@ -15,10 +15,11 @@ indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 
 # %% load arrays
-# folder_name = 'Harris'
-folder_name = 'Aktary'
+folder_name = 'Harris'
+# folder_name = 'Aktary'
+deg_path = 'C-C2:4'
 # deg_path = 'C-C2:4_C-C\':2'
-deg_path = 'series_2'
+# deg_path = 'series_2'
 # deg_path = 'C-C2:4_C-C\':2_C-C3:1'
 
 e_matrix_val_exc_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path + '/e_matrix_val_exc_sci.npy')
@@ -26,16 +27,20 @@ e_matrix_val_ion_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path +
 
 scission_matrix = e_matrix_val_exc_sci + e_matrix_val_exc_sci
 
-resist_matrix = np.load('data/chains/' + folder_name + '/best_resist_matrix.npy')
+resist_matrix = np.load('data/chains/' + folder_name + '/MATRIX_resist.npy')
+# resist_matrix = np.load('data/chains/' + folder_name + '/best_resist_matrix.npy')
+chain_lens_array = np.load('data/chains/Harris/lens_initial.npy')
 # chain_lens_array = np.load('data/chains/' + folder_name + '/prepared_chains/prepared_chain_lens.npy')
-n_chains = 754
+n_chains = len(chain_lens_array)
+# n_chains = 754
 
 chain_tables = []
 progress_bar = tqdm(total=n_chains, position=0)
 
 for n in range(n_chains):
     chain_tables.append(
-        np.load('data/chains/' + folder_name + '/best_chain_tables/chain_table_' + str(n) + '.npy'))
+        np.load('data/chains/Harris/chain_tables/chain_table_' + str(n) + '.npy'))
+    # np.load('data/chains/' + folder_name + '/best_chain_tables/chain_table_' + str(n) + '.npy'))
     progress_bar.update()
 
 resist_shape = mapping.hist_2nm_shape

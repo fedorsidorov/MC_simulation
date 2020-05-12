@@ -2,7 +2,7 @@ import importlib
 
 import numpy as np
 from tqdm import tqdm
-
+from collections import deque
 import constants as const
 import indexes
 import mapping_aktary as mapping
@@ -24,23 +24,7 @@ def get_initial_n_surface_facets(local_chain_length_avg):
     return n_surface_facets
 
 
-def get_development_rates(local_chain_length_avg):
-    # atoda1979.pdf
-    S0 = 51  # A/min
-    beta = 3.59e+8  # A/min
-    alpha = 1.42
-
-    # greeneich1975.pdf MIBK:IPA 1:1
-    # S0 = 0
-    # beta = 6.645e+6
-    # alpha = 1.188
-
-    # greeneich1975.pdf MIBK:IPA 1:3
-    # S0 = 0
-    # beta = 9.332e+14  # 22.8 C
-    # beta = 1.046e+16  # 32.8 C
-    # alpha = 3.86
-
+def get_development_rates(local_chain_length_avg, S0, alpha, beta):
     development_rates = np.zeros(np.shape(local_chain_length_avg))
 
     for i in range(np.shape(local_chain_length_avg)[0]):
@@ -79,8 +63,8 @@ def update_n_surface_facets(development_times, n_surface_facets):
             n_surface_facets[i, j] = now_n_surface_facets
 
 
-def transfer_overkill(development_times, i, j, overkill):  # overkill is negative
-    neighbour_inds = []
+def transfer_overkill(development_times, n_surface_facets, i, j, overkill):  # overkill is negative
+    neighbour_inds = deque()
 
     for di in range(-1, 2):
         for dj in range(-1, 2):
@@ -99,12 +83,12 @@ def transfer_overkill(development_times, i, j, overkill):  # overkill is negativ
 
     for neigh_inds in neighbour_inds:
         neigh_i, neigh_j = neigh_inds
-        development_times[neigh_i, neigh_j] += overkill / len(neighbour_inds)
 
-    # return development_times
+        neigh_development_time_factor = get_development_time_factor(n_surface_facets[neigh_i, neigh_j])
+        development_times[neigh_i, neigh_j] += overkill / len(neighbour_inds) * neigh_development_time_factor
 
 
-def share_all_overkills(development_times):
+def share_all_overkills(development_times, n_surface_facets):
     while True:
         negative_inds = np.where(development_times < 0)
         if len(negative_inds[0]) == 0:
@@ -114,7 +98,7 @@ def share_all_overkills(development_times):
             i, j = neg_inds
             overkill = development_times[i, j]
             development_times[i, j] = 0
-            transfer_overkill(development_times, i, j, overkill)
+            transfer_overkill(development_times, n_surface_facets, i, j, overkill)
 
 
 def make_develop_step(development_times, n_surface_facets, delta_t):
@@ -135,5 +119,5 @@ def make_develop_step(development_times, n_surface_facets, delta_t):
             effective_delta_t = delta_t * get_development_time_factor(now_n_surface_facets)
             new_development_time = now_development_time - effective_delta_t
             development_times[i, j] = new_development_time
-            share_all_overkills(development_times)
+            share_all_overkills(development_times, n_surface_facets)
             update_n_surface_facets(development_times, n_surface_facets)

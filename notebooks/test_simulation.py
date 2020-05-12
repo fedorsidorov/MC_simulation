@@ -20,8 +20,8 @@ def plot_DATA(DATA, d_PMMA=0, E_cut=5):
         ax.plot(points, np.zeros(len(points)), 'k')
         ax.plot(points, np.ones(len(points)) * d_PMMA, 'k')
 
-    ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
-    ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
+    # ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
+    # ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
     plt.gca().set_aspect('equal', adjustable='box')
     plt.xlabel('x, nm')
     plt.ylabel('z, nm')
@@ -32,11 +32,13 @@ def plot_DATA(DATA, d_PMMA=0, E_cut=5):
     plt.show()
 
 
-now_DATA = np.load('data/e_DATA/Harris/DATA_Pn_0.npy')
+# %%
+now_DATA = np.load('data/e_DATA/DATA_test.npy')
+# now_DATA_P = now_DATA[np.where(now_DATA[:, 2] == 0)]
 plot_DATA(now_DATA, 500, E_cut=0)
 
 # %%
-now_DATA_Pn = np.load('data/e_DATA/DATA_Pn_0.npy')
+now_DATA_Pn = np.load('data/e_DATA/DATA_test.npy')
 ans = np.max(now_DATA[:, 0])
 bns = np.max(now_DATA_Pn[:, 0])
 

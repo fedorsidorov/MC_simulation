@@ -16,11 +16,11 @@ indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 df = importlib.reload(df)
 
-# %% 2nm histograms
+# 4nm histograms
 sum_lens_matrix = np.load(
-    '/Users/fedor/PycharmProjects/MC_simulation/data/chains/Aktary/development/sum_lens_matrix_series_2.npy')
+    '/Users/fedor/PycharmProjects/MC_simulation/data/chains/Aktary/development/sum_lens_matrix_series_1_4nm_1500.npy')
 n_chains_matrix = np.load(
-    '/Users/fedor/PycharmProjects/MC_simulation/data/chains/Aktary/development/n_chains_matrix_series_2.npy')
+    '/Users/fedor/PycharmProjects/MC_simulation/data/chains/Aktary/development/n_chains_matrix_series_1_4nm_1500.npy')
 
 sum_lens_matrix_avg = np.average(sum_lens_matrix, axis=1)
 n_chains_matrix_avg = np.average(n_chains_matrix, axis=1)
@@ -44,8 +44,11 @@ development_rates = np.zeros(np.shape(sum_lens_matrix))
 development_times = np.zeros(np.shape(sum_lens_matrix))
 n_surface_facets = np.zeros(np.shape(sum_lens_matrix))
 
+# greeneich1975.pdf MIBK:IPA 1:3
+S0, alpha, beta = 0, 3.86, 9.332e+14  # 22.8 C, Han
+
 for j in range(np.shape(sum_lens_matrix)[1]):
-    development_rates[:, j, :] = df.get_development_rates(local_chain_length[:, j, :])
+    development_rates[:, j, :] = df.get_development_rates(local_chain_length[:, j, :], S0, alpha, beta)
     development_times[:, j, :] = mapping.step_2nm * 10 / development_rates[:, j, :]
     n_surface_facets[:, j, :] = df.get_initial_n_surface_facets(local_chain_length[:, j, :])
 
@@ -53,26 +56,29 @@ for j in range(np.shape(sum_lens_matrix)[1]):
 # plt.show()
 
 # %%
-delta_t = 1 / 60 / 10
-n_steps = 200
+n_seconds = 10
+factor = 100 * 2
 
-progress_bar = tqdm(total=n_steps, position=0)
+delta_t = 1 / 60 / factor
+n_steps = n_seconds * factor
 
-for _ in range(n_steps):
+progress_bar = tqdm(total=np.shape(sum_lens_matrix)[1], position=0)
 
-    for j in range(np.shape(sum_lens_matrix)[1]):
+for j in range(np.shape(sum_lens_matrix)[1]):
+
+    for n in range(n_steps):
         df.make_develop_step(development_times[:, j, :], n_surface_facets[:, j, :], delta_t)
 
     progress_bar.update()
 
-progress_bar.close()
+np.save('data/chains/Aktary/development/n_surface_facets_series_1_4nm_1500_j.npy', n_surface_facets)
 
 # %%
 plt.figure(dpi=300)
 # plt.imshow(development_times.transpose())
-plt.imshow(n_surface_facets[:, 4, :].transpose())
+plt.imshow(n_surface_facets[:, 24, :].transpose())
 plt.colorbar()
 plt.show()
 
 # %%
-np.save('data/chains/Aktary/development/n_surface_facets_series_2.npy', n_surface_facets)
+#

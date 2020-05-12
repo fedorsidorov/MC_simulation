@@ -27,9 +27,9 @@ n_electrons = 0
 
 source = '/Users/fedor/PycharmProjects/MC_simulation/data/e_DATA/Harris/'
 
-# deg_paths = {"C-C2": 4}
+deg_paths = {"C-C2": 4}
 # deg_paths = {"C-C2": 4, "C-C'": 2}
-deg_paths = {"C-C2": 4, "C-C'": 2, "C-C3": 1}
+# deg_paths = {"C-C2": 4, "C-C'": 2, "C-C3": 1}
 
 progress_bar = tqdm(total=n_electrons_required, position=0)
 

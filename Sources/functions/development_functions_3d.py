@@ -1,11 +1,10 @@
 import importlib
+from collections import deque
 
 import numpy as np
 from tqdm import tqdm
 
 import constants as const
-
-from collections import deque
 
 const = importlib.reload(const)
 
@@ -21,23 +20,23 @@ def get_initial_n_surface_facets(local_chain_length):
     return n_surface_facets
 
 
-def get_development_rates(sum_lens_matrix, n_chains_matrix):
-    # atoda1979.pdf
-    S0 = 51  # A/min
-    beta = 3.59e+8  # A/min
-    alpha = 1.42
+def get_local_chain_lengths(sum_lens_matrix, n_chains_matrix):
+    local_chain_length_avg = np.average(sum_lens_matrix, axis=1) / np.average(n_chains_matrix, axis=1)
+    local_chain_length = np.zeros(np.shape(sum_lens_matrix))
 
-    # greeneich1975.pdf MIBK:IPA 1:1
-    # S0 = 0
-    # beta = 6.645e+6
-    # alpha = 1.188
+    for i in range(np.shape(sum_lens_matrix)[0]):
+        for j in range(np.shape(sum_lens_matrix)[1]):
+            for k in range(np.shape(sum_lens_matrix)[2]):
 
-    # greeneich1975.pdf MIBK:IPA 1:3
-    # S0 = 0
-    # beta = 9.332e+14  # 22.8 C
-    # beta = 1.046e+16  # 32.8 C
-    # alpha = 3.86
+                if n_chains_matrix[i, j, k] == 0:
+                    local_chain_length[i, j, k] = local_chain_length_avg[i, k]
+                else:
+                    local_chain_length[i, j, k] = sum_lens_matrix[i, j, k] / n_chains_matrix[i, j, k]
 
+    return local_chain_length
+
+
+def get_development_rates(sum_lens_matrix, n_chains_matrix, S0, alpha, beta):
     local_chain_length_avg = np.average(sum_lens_matrix, axis=1) / np.average(n_chains_matrix, axis=1)
     development_rates = np.zeros(np.shape(sum_lens_matrix))
 
@@ -90,8 +89,7 @@ def update_n_surface_facets(development_times, n_surface_facets):
                 n_surface_facets[i, j, k] = now_n_surface_facets
 
 
-def transfer_overkill(development_times, i, j, k, overkill):  # overkill is negative
-    # neighbour_inds = []
+def transfer_overkill(development_times, n_surface_facets, i, j, k, overkill):  # overkill is negative
     neighbour_inds = deque()
 
     for di in range(-1, 2):
@@ -114,10 +112,11 @@ def transfer_overkill(development_times, i, j, k, overkill):  # overkill is nega
 
     for neigh_inds in neighbour_inds:
         neigh_i, neigh_j, neigh_k = neigh_inds
-        development_times[neigh_i, neigh_j, neigh_k] += overkill / len(neighbour_inds)
+        neigh_development_time_factor = get_development_time_factor(n_surface_facets[neigh_i, neigh_j, neigh_k])
+        development_times[neigh_i, neigh_j, neigh_k] += overkill / len(neighbour_inds) * neigh_development_time_factor
 
 
-def share_all_overkills(development_times):
+def share_all_overkills(development_times, n_surface_facets):
     while True:
         negative_inds = np.where(development_times < 0)
         if len(negative_inds[0]) == 0:
@@ -127,16 +126,14 @@ def share_all_overkills(development_times):
             neg_i, neg_j, neg_k = neg_inds
             overkill = development_times[neg_i, neg_j, neg_k]
             development_times[neg_i, neg_j, neg_k] = 0
-            transfer_overkill(development_times, neg_i, neg_j, neg_k, overkill)
+            transfer_overkill(development_times, n_surface_facets, neg_i, neg_j, neg_k, overkill)
 
 
-def make_develop_step(development_times, n_surface_facets, delta_t):
-    progress_bar = tqdm(total=np.shape(development_times)[2], position=0)
-
+def make_develop_step(development_times, n_surface_facets, delta_t, j_range=range(0, 50)):
     for k in range(np.shape(development_times)[2]):
         for i in range(np.shape(development_times)[0]):
-            # print(i)
-            for j in range(np.shape(development_times)[1]):
+            # for j in range(np.shape(development_times)[1]):
+            for j in j_range:
 
                 negative_inds = np.array(np.where(development_times < 0))
                 if len(negative_inds[0]) != 0:
@@ -151,9 +148,5 @@ def make_develop_step(development_times, n_surface_facets, delta_t):
                 effective_delta_t = delta_t * get_development_time_factor(now_n_surface_facets)
                 new_development_time = now_development_time - effective_delta_t
                 development_times[i, j, k] = new_development_time
-                share_all_overkills(development_times)
+                share_all_overkills(development_times, n_surface_facets)
                 update_n_surface_facets(development_times, n_surface_facets)
-
-        progress_bar.update()
-
-    progress_bar.close()
