@@ -13,9 +13,7 @@ indexes = importlib.reload(indexes)
 folder_name = 'Aktary'
 
 resist_matrix = np.load('/Users/fedor/PycharmProjects/MC_simulation/data/chains/' +
-                        folder_name + '/best_resist_matrix_4nm.npy')
-# chain_lens_array = np.load('/Users/fedor/PycharmProjects/MC_simulation/data/chains/' +
-#                            folder_name + '/prepared_chains/prepared_chain_lens.npy')
+                        folder_name + '/best_resist_matrix_1nm.npy')
 n_chains = 754
 
 chain_tables_final = []
@@ -25,10 +23,10 @@ progress_bar = tqdm(total=n_chains, position=0)
 for n in range(n_chains):
     chain_tables_final.append(
         np.load('/Users/fedor/PycharmProjects/MC_simulation/data/chains/' +
-                folder_name + '/best_chain_tables_series_1_4nm_500/chain_table_' + str(n) + '.npy'))
+                folder_name + '/best_chain_tables_series_1_1nm_1500/chain_table_' + str(n) + '.npy'))
     progress_bar.update()
 
-final_resist_shape = mapping.hist_4nm_shape
+final_resist_shape = mapping.hist_1nm_shape
 n_chains_matrix = np.zeros(final_resist_shape)
 sum_lens_matrix = np.zeros(final_resist_shape)
 
@@ -69,5 +67,5 @@ for chain_table in chain_tables_final:
     p_bar.update()
 
 # %%
-np.save('data/chains/Aktary/development/n_chains_matrix_series_1_4nm_500.npy', n_chains_matrix)
-np.save('data/chains/Aktary/development/sum_lens_matrix_series_1_4nm_500.npy', sum_lens_matrix)
+np.save('data/chains/Aktary/development/n_chains_matrix_series_1_1nm_1500.npy', n_chains_matrix)
+np.save('data/chains/Aktary/development/sum_lens_matrix_series_1_1nm_1500.npy', sum_lens_matrix)

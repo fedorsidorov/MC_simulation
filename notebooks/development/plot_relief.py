@@ -10,14 +10,9 @@ mapping = importlib.reload(mapping)
 
 # %%
 folder_name = 'Aktary'
-deg_path = 'series_2'
 
-n_surface_facets = np.load(
-    '/Users/fedor/PycharmProjects/MC_simulation/data/chains/Aktary/development/n_surface_facets_4nm_15s.npy'
-)
-resist_matrix = np.load(
-    '/Users/fedor/PycharmProjects/MC_simulation/data/chains/' + folder_name + '/best_resist_matrix_4nm.npy'
-)
+n_surface_facets = np.load('data/chains/Aktary/development/n_surface_facets_paper.npy')
+resist_matrix = np.load('data/chains/' + folder_name + '/best_resist_matrix_4nm.npy')
 n_chains = 754
 
 chain_tables = []
@@ -31,10 +26,8 @@ for n in range(n_chains):
             '/Users/fedor/PycharmProjects/MC_simulation/data/chains/Aktary/best_sh_sn_chains/sh_sn_chain_'
             + str(n) + '.npy')
     )
-    chain_tables.append(
-        np.load('/Users/fedor/PycharmProjects/MC_simulation/data/chains/'
-                + folder_name + '/best_chain_tables_series_2_4nm/chain_table_' + str(n) + '.npy')
-    )
+    chain_tables.append(np.load('data/chains/Aktary/best_chain_tables_series_1_4nm_1500_new/chain_table_' + \
+                                str(n) + '.npy'))
     progress_bar.update()
 
 progress_bar.close()

@@ -16,16 +16,16 @@ mf = importlib.reload(mf)
 
 # %% load arrays
 folder_name = 'Aktary'
-deg_path = 'series_1_4nm'
+deg_path = 'series_1_1nm'
 
 e_matrix_val_exc_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path +
-                               '/e_matrix_val_exc_sci_1500_4nm_new_2.npy')
+                               '/e_matrix_val_exc_sci_1500_1nm.npy')
 e_matrix_val_ion_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path +
-                               '/e_matrix_val_ion_sci_1500_4nm_new_2.npy')
+                               '/e_matrix_val_ion_sci_1500_1nm.npy')
 
 scission_matrix = e_matrix_val_exc_sci + e_matrix_val_exc_sci
 
-resist_matrix = np.load('data/chains/' + folder_name + '/best_resist_matrix_4nm.npy')
+resist_matrix = np.load('data/chains/' + folder_name + '/best_resist_matrix_1nm.npy')
 n_chains = 754
 
 chain_tables = []
@@ -33,10 +33,10 @@ progress_bar = tqdm(total=n_chains, position=0)
 
 for n in range(n_chains):
     chain_tables.append(
-        np.load('data/chains/' + folder_name + '/best_chain_tables_4nm/chain_table_' + str(n) + '.npy'))
+        np.load('data/chains/' + folder_name + '/best_chain_tables_1nm/chain_table_' + str(n) + '.npy'))
     progress_bar.update()
 
-resist_shape = mapping.hist_4nm_shape
+resist_shape = mapping.hist_1nm_shape
 
 # %% mapping
 n_scissions_moved = 0
@@ -79,12 +79,12 @@ for x_ind in range(resist_shape[0]):
 
 # %%
 lens_final = mf.get_chain_lens(chain_tables)
-np.save('data/chains/' + folder_name + '/lens_final_' + deg_path + '_1500_new_2.npy', lens_final)
+np.save('data/chains/' + folder_name + '/lens_final_' + deg_path + '_1500.npy', lens_final)
 
 # %%
 progress_bar = tqdm(total=len(chain_tables), position=0)
 
 for n, chain_table in enumerate(chain_tables):
-    np.save('data/chains/' + folder_name + '/best_chain_tables_series_1_4nm_1500_new_2/chain_table_' +
+    np.save('data/chains/' + folder_name + '/best_chain_tables_series_1_1nm_1500/chain_table_' +
             str(n) + '.npy', chain_table)
     progress_bar.update()

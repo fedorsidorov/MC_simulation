@@ -19,7 +19,7 @@ Mw = 2.26e+6
 # Mn = 2370
 # Mw = 8160
 
-Harris_data = np.loadtxt('data/Harris/curves/Harris_before.txt')
+Harris_data = np.loadtxt('data/chains/Harris/curves/Harris_before.txt')
 xx_fit = np.logspace(2, 8, 1001)  # before
 
 # mat = np.loadtxt('data/Harris/curves/Harris_after.txt')
