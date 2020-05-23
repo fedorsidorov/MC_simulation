@@ -16,9 +16,11 @@ deg_paths = 'C-C2:4_C-C\':2'
 
 # %%
 e_matrix_E_dep = np.load('data/e_matrix/' + folder_name + '/' + deg_paths + '/e_matrix_E_dep.npy')
-chain_lens_initial = np.load('data/chains/Harris/lens_initial.npy')
+# chain_lens_initial = np.load('data/chains/Harris/lens_initial.npy')
+chain_lens_initial = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/Harris/chain_lens.npy')
 # chain_lens_initial = np.load('data/chains/' + folder_name + '/prepared_chains/prepared_chain_lens.npy')
-chain_lens_final = np.load('data/chains/' + folder_name + '/lens_final_' + deg_paths + '.npy')
+# chain_lens_final = np.load('/Volumes/ELEMENTS/PyCharm_may/chains/Harris/lens_final_' + deg_paths + '.npy')
+chain_lens_final = np.load('data/exposed_chains/Harris/harris_lens_final_4+2_2nm.npy')
 
 Mn = np.average(chain_lens_initial) * const.u_MMA
 Mf = np.average(chain_lens_final) * const.u_MMA

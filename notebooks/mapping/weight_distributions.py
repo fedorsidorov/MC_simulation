@@ -8,16 +8,19 @@ import constants as cp
 cp = importlib.reload(cp)
 
 # %%
-deg_path = 'C-C2:4_C-C\':2'
+deg_paths = 'C-C2:4_C-C\':2'
 
-lens_initial = np.load('data/Harris/prepared_chains_1/prepared_chain_lens.npy')
-lens_final = np.load('data/Harris/lens_final_' + deg_path + '.npy')
+# lens_initial = np.load('data/Harris/prepared_chains_1/prepared_chain_lens.npy')
+lens_initial = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/Harris/chain_lens.npy')
+# lens_final = np.load('data/Harris/lens_final_' + deg_path + '.npy')
+lens_final = chain_lens_final = np.load('/Volumes/ELEMENTS/PyCharm_may/chains/Harris/lens_final_'
+                                        + deg_paths + '.npy')
 
 mass_initial = lens_initial * 100
 mass_final = lens_final * cp.u_MMA
 
-harris_mass = np.load('Resources/Harris/harris_x_before.npy')
-harris_distribution = np.load('Resources/Harris/harris_y_before_fit.npy')
+# harris_mass = np.load('Resources/Harris/harris_x_before.npy')
+# harris_distribution = np.load('Resources/Harris/harris_y_before_fit.npy')
 
 # %%
 # bins = np.logspace(2, 7.1, 21)

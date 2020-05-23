@@ -1,14 +1,14 @@
 import importlib
+from collections import deque
 
 import numpy as np
 from tqdm import tqdm
 
-# import mapping_harris as mapping
+import constants
 import indexes
-import mapping_aktary as mapping
 
-mapping = importlib.reload(mapping)
 indexes = importlib.reload(indexes)
+constants = importlib.reload(constants)
 
 
 # %%
@@ -74,8 +74,8 @@ def process_scission(resist_matrix, chain_table, n_monomer, monomer_type):
 
 
 def get_chain_lens(chain_tables):
-    lens_final = []
-    p_bar = tqdm(total=len(chain_tables), position=0)
+    lens_final = deque()
+    progress_bar = tqdm(total=len(chain_tables), position=0)
 
     for chain_table in chain_tables:
         cnt = 0
@@ -92,7 +92,8 @@ def get_chain_lens(chain_tables):
                 cnt += 1
                 lens_final.append(cnt)
                 cnt = 0
-        p_bar.update()
+
+        progress_bar.update()
 
     return np.array(lens_final)
 
@@ -106,19 +107,19 @@ def get_local_chain_len(resist_shape, N_mon_max, chain_table):
 
         while True:
 
-            if beg_pos >= N_mon_max or chain[beg_pos, mapping.monomer_type_pos] == mapping.uint16_max:
+            if beg_pos >= N_mon_max or chain[beg_pos, indexes.monomer_type_ind] == constants.uint32_max:
                 break
 
-            if chain[beg_pos, mapping.monomer_type_pos] in [mapping.free_monomer, mapping.free_radicalized_monomer]:
+            if chain[beg_pos, indexes.monomer_type_ind] in [indexes.free_monomer, indexes.free_radicalized_monomer]:
                 beg_pos += 1
                 continue
 
-            if chain[beg_pos, mapping.monomer_type_pos] != mapping.begin_monomer:
-                print('monomer_type', chain[beg_pos, mapping.monomer_type_pos])
+            if chain[beg_pos, indexes.monomer_type_ind] != indexes.begin_monomer:
+                print('monomer_type', chain[beg_pos, indexes.monomer_type_ind])
                 print('idx, beg_pos', idx, beg_pos)
                 print('chain index_indng error!')
 
-            where_result = np.where(chain[beg_pos:, mapping.monomer_type_pos] == mapping.end_monomer)[0]
+            where_result = np.where(chain[beg_pos:, indexes.monomer_type_ind] == indexes.end_monomer)[0]
 
             if len(where_result) == 0:
                 break
@@ -132,7 +133,7 @@ def get_local_chain_len(resist_shape, N_mon_max, chain_table):
 
                 x_pos, y_pos, z_pos = mon_line[:3]
 
-                if x_pos == y_pos == z_pos == mapping.uint16_max:
+                if x_pos == y_pos == z_pos == constants.uint32_max:
                     continue
 
                 now_poss = [x_pos, y_pos, z_pos]
