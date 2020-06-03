@@ -16,9 +16,9 @@ mf = importlib.reload(mf)
 
 # %% 1nm histograms
 sum_lens_matrix_1nm = np.load(
-    '/Users/fedor/PycharmProjects/MC_simulation/data/chains/Aktary/development/sum_lens_matrix_series_1_1nm_1500.npy')
+    '/Users/fedor/PycharmProjects/MC_simulation/data/chains/combine_chains/development/sum_lens_matrix_series_1_1nm_1500.npy')
 n_chains_matrix_1nm = np.load(
-    '/Users/fedor/PycharmProjects/MC_simulation/data/chains/Aktary/development/n_chains_matrix_series_1_1nm_1500.npy')
+    '/Users/fedor/PycharmProjects/MC_simulation/data/chains/combine_chains/development/n_chains_matrix_series_1_1nm_1500.npy')
 
 # %% 4nm histograms
 sum_lens_matrix_05nm = np.zeros(mapping.hist_05nm_shape)
@@ -62,5 +62,5 @@ plt.colorbar()
 plt.show()
 
 # %%
-np.save('data/chains/Aktary/development/sum_lens_matrix_series_1_05nm_1500.npy', sum_lens_matrix_05nm)
-np.save('data/chains/Aktary/development/n_chains_matrix_series_1_05nm_1500.npy', n_chains_matrix_05nm)
+np.save('data/chains/combine_chains/development/sum_lens_matrix_series_1_05nm_1500.npy', sum_lens_matrix_05nm)
+np.save('data/chains/combine_chains/development/n_chains_matrix_series_1_05nm_1500.npy', n_chains_matrix_05nm)

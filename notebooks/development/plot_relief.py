@@ -9,9 +9,9 @@ import constants as const
 mapping = importlib.reload(mapping)
 
 # %%
-folder_name = 'Aktary'
+folder_name = 'combine_chains'
 
-n_surface_facets = np.load('data/chains/Aktary/development/n_surface_facets_paper.npy')
+n_surface_facets = np.load('data/chains/combine_chains/development/n_surface_facets_paper.npy')
 resist_matrix = np.load('data/chains/' + folder_name + '/best_resist_matrix_4nm.npy')
 n_chains = 754
 
@@ -23,10 +23,10 @@ progress_bar = tqdm(total=n_chains, position=0)
 for n in range(n_chains):
     chains.append(
         np.load(
-            '/Users/fedor/PycharmProjects/MC_simulation/data/chains/Aktary/best_sh_sn_chains/sh_sn_chain_'
+            '/Users/fedor/PycharmProjects/MC_simulation/data/chains/combine_chains/best_sh_sn_chains/sh_sn_chain_'
             + str(n) + '.npy')
     )
-    chain_tables.append(np.load('data/chains/Aktary/best_chain_tables_series_1_4nm_1500_new/chain_table_' + \
+    chain_tables.append(np.load('data/chains/combine_chains/best_chain_tables_series_1_4nm_1500_new/chain_table_' + \
                                 str(n) + '.npy'))
     progress_bar.update()
 
@@ -65,9 +65,9 @@ yy = points_array[:, 1]
 zz = points_array[:, 2]
 
 # %%
-np.save('data/chains/Aktary/development/xx.npy', xx)
-np.save('data/chains/Aktary/development/yy.npy', yy)
-np.save('data/chains/Aktary/development/zz.npy', zz)
+np.save('data/chains/combine_chains/development/xx.npy', xx)
+np.save('data/chains/combine_chains/development/yy.npy', yy)
+np.save('data/chains/combine_chains/development/zz.npy', zz)
 
 # %%
 fig = plt.figure(dpi=300)

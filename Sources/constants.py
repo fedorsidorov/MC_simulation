@@ -43,7 +43,8 @@ N_H_MMA, N_C_MMA, N_O_MMA = 8, 5, 2
 u_MMA = N_H_MMA * u_H + N_C_MMA * u_C + N_O_MMA * u_O
 n_MMA = rho_PMMA * Na / u_MMA
 m_MMA = u_MMA / Na
-M0 = u_MMA / Na
+M_mon = u_MMA / Na
+V_mon = 1 / n_MMA
 
 K_occup = 2
 val_E_bind_PMMA = 15  # dapor 2017.pdf

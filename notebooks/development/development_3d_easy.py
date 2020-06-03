@@ -17,8 +17,8 @@ mf = importlib.reload(mf)
 df = importlib.reload(df)
 
 # 4nm histograms
-sum_lens_matrix = np.load('data/chains/Aktary/development/sum_lens_matrix_series_1_4nm_1500.npy')
-n_chains_matrix = np.load('data/chains/Aktary/development/n_chains_matrix_series_1_4nm_1500.npy')
+sum_lens_matrix = np.load('data/chains/combine_chains/development/sum_lens_matrix_series_1_4nm_1500.npy')
+n_chains_matrix = np.load('data/chains/combine_chains/development/n_chains_matrix_series_1_4nm_1500.npy')
 
 sum_lens_matrix_avg = np.average(sum_lens_matrix, axis=1)
 n_chains_matrix_avg = np.average(n_chains_matrix, axis=1)
@@ -69,7 +69,7 @@ for j in range(np.shape(sum_lens_matrix)[1]):
 
     progress_bar.update()
 
-np.save('data/chains/Aktary/development/n_surface_facets_series_1_4nm_1500_j.npy', n_surface_facets)
+np.save('data/chains/combine_chains/development/n_surface_facets_series_1_4nm_1500_j.npy', n_surface_facets)
 
 # %%
 plt.figure(dpi=300)

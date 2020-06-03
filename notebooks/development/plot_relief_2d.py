@@ -9,8 +9,8 @@ import constants as const
 mapping = importlib.reload(mapping)
 
 # %%
-folder_name = 'Aktary'
-n_surface_facets = np.load('data/chains/Aktary/development/n_surface_facets_series_1_1500_1nm.npy')
+folder_name = 'combine_chains'
+n_surface_facets = np.load('data/chains/combine_chains/development/n_surface_facets_series_1_1500_1nm.npy')
 resist_matrix = np.load('data/chains/' + folder_name + '/best_resist_matrix_1nm.npy')
 n_chains = 754
 
@@ -20,8 +20,8 @@ chain_tables = []
 progress_bar = tqdm(total=n_chains, position=0)
 
 for n in range(n_chains):
-    chains.append(np.load('data/chains/Aktary/best_sh_sn_chains/sh_sn_chain_' + str(n) + '.npy'))
-    chain_tables.append(np.load('data/chains/Aktary/best_chain_tables_series_1_1nm_1500/chain_table_' +
+    chains.append(np.load('data/chains/combine_chains/best_sh_sn_chains/sh_sn_chain_' + str(n) + '.npy'))
+    chain_tables.append(np.load('data/chains/combine_chains/best_chain_tables_series_1_1nm_1500/chain_table_' +
                                 str(n) + '.npy'))
     progress_bar.update()
 

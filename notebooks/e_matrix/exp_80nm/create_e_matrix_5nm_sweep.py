@@ -4,44 +4,51 @@ import numpy as np
 from tqdm import tqdm
 
 import indexes as ind
+import mapping_exp_80nm as mapping
 from functions import array_functions as af
 from functions import e_matrix_functions as emf
+from functions import plot_functions as pf
 from functions import scission_functions as sf
-import mapping_aktary as mapping
 
+mapping = importlib.reload(mapping)
 emf = importlib.reload(emf)
 ind = importlib.reload(ind)
 af = importlib.reload(af)
+pf = importlib.reload(pf)
 sf = importlib.reload(sf)
-mapping = importlib.reload(mapping)
 
-# %% get e-matrix
-e_matrix_val_exc_sci = np.zeros(mapping.hist_2nm_shape)
-e_matrix_val_ion_sci = np.zeros(mapping.hist_2nm_shape)
-e_matrix_E_dep = np.zeros(mapping.hist_2nm_shape)
+# %%
+r_beam_nm = 5
+dose_pC_cm = 6e+3
+n_electrons_required = emf.get_n_electrons_1D(dose_pC_cm, mapping.x_max - mapping.x_min)
 
-dose_pC_cm = 1500
-# dose_pC_cm = 500
-x_positions = [0]
-r_beam = 5
+n_electrons = 0
 
-n_electrons_required = emf.get_n_electrons_1D(dose_pC_cm, mapping.l_y)
-source = '/Users/fedor/PycharmProjects/MC_simulation/data/e_DATA/Aktary/'
+source = '/Volumes/ELEMENTS/e_DATA/Harris/'
+
+# deg_paths = {"C-C2": 4}
 deg_paths = {"C-C2": 4, "C-C'": 2}
+# deg_paths = {"C-C2": 4, "C-C'": 2, "C-C3": 1}
 
-for x_position in x_positions:
+n_files = 500
+primary_electrons_in_file = 100
+file_cnt = 0
 
-    print('x position is', x_position)
-    n_electrons = 0
-    progress_bar = tqdm(total=n_electrons_required, position=0)
+n_sweeps = 200
+progress_bar = tqdm(total=n_sweeps, position=0)
 
-    while n_electrons < n_electrons_required:
+for i in range(n_sweeps):
 
-        n_files = 500
-        file_cnt = 0
-        primary_electrons_in_file = 100
+    e_matrix_val_exc_sci = np.zeros(mapping.hist_5nm_shape)
+    e_matrix_val_ion_sci = np.zeros(mapping.hist_5nm_shape)
+    e_matrix_E_dep = np.zeros(mapping.hist_5nm_shape)
 
-        now_DATA = np.load(source + '/DATA_Pn_' + str(file_cnt % n_files) + '.npy')
+    for _ in range(15):
+
+        now_DATA = np.load(source + 'DATA_Pn_' + str(file_cnt % n_files) + '.npy')
+        file_cnt += 1
+
+        now_DATA = now_DATA[np.where(now_DATA[:, ind.DATA_z_ind] <= mapping.z_max)]
 
         if file_cnt > n_files:
             emf.rotate_DATA(now_DATA)
@@ -49,7 +56,8 @@ for x_position in x_positions:
         for primary_e_id in range(primary_electrons_in_file):
             now_prim_e_DATA = emf.get_e_id_DATA(now_DATA, primary_e_id)
 
-            emf.add_gaussian_xy_shift_to_track(now_prim_e_DATA, x_position, r_beam, [mapping.y_min, mapping.y_max])
+            emf.add_uniform_xy_shift_to_track(now_prim_e_DATA,
+                                              [mapping.x_min, mapping.x_max], [-r_beam_nm, r_beam_nm])
 
             af.snake_array(
                 array=now_prim_e_DATA,
@@ -62,7 +70,7 @@ for x_position in x_positions:
 
             e_matrix_E_dep += np.histogramdd(
                 sample=now_prim_e_DATA[:, ind.DATA_coord_inds],
-                bins=mapping.bins_2nm,
+                bins=mapping.bins_5nm,
                 weights=now_prim_e_DATA[:, ind.DATA_E_dep_ind]
             )[0]
 
@@ -75,27 +83,18 @@ for x_position in x_positions:
 
             e_matrix_val_exc_sci += np.histogramdd(
                 sample=now_prim_e_val_DATA[inds_exc, :][:, ind.DATA_coord_inds],
-                bins=mapping.bins_2nm,
+                bins=mapping.bins_5nm,
                 weights=scissions[inds_exc]
             )[0]
 
             e_matrix_val_ion_sci += np.histogramdd(
                 sample=now_prim_e_val_DATA[inds_ion, :][:, ind.DATA_coord_inds],
-                bins=mapping.bins_2nm,
+                bins=mapping.bins_5nm,
                 weights=scissions[inds_ion]
             )[0]
 
-            n_electrons += 1
-            progress_bar.update()
+    scissions_matrix = e_matrix_val_exc_sci + e_matrix_val_ion_sci
+    np.save('/Volumes/ELEMENTS/e_matrix/exp_80nm/scission_matrix_' + str(i) + '.npy', scissions_matrix)
+    np.save('/Volumes/ELEMENTS/e_matrix/exp_80nm/E_dep_matrix_' + str(i) + '.npy', e_matrix_E_dep)
 
-            if n_electrons >= n_electrons_required:
-                break
-
-# %%
-print(np.sum(e_matrix_val_exc_sci) / np.sum(e_matrix_E_dep) * 100)
-print(np.sum(e_matrix_val_ion_sci) / np.sum(e_matrix_E_dep) * 100)
-
-# %%
-np.save('data/e_matrix/Aktary/series_1_2nm/e_matrix_val_exc_sci_1500_2nm.npy', e_matrix_val_exc_sci)
-np.save('data/e_matrix/Aktary/series_1_2nm/e_matrix_val_ion_sci_1500_2nm.npy', e_matrix_val_ion_sci)
-np.save('data/e_matrix/Aktary/series_1_2nm/e_matrix_E_dep_1500_2nm.npy', e_matrix_E_dep)
+    progress_bar.update()

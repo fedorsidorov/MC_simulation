@@ -8,7 +8,7 @@ import importlib
 pf = importlib.reload(pf)
 const_m = importlib.reload(const_m)
 
-hist_4nm = np.load('data/chains/Aktary/best_sh_sn_chains/best_hist_2nm.npy')
+hist_4nm = np.load('data/chains/combine_chains/best_sh_sn_chains/best_hist_2nm.npy')
 
 # %%
 font_size = 8

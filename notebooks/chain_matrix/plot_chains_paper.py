@@ -15,7 +15,7 @@ chain_list = []
 for n in range(1447):
     chain_list.append(
         np.load('data/chains/Harris/shifted_snaked_chains/shifted_snaked_chain_' + str(n) + '.npy'))
-        # np.load('data/chains/Aktary/best_sh_sn_chains/sh_sn_chain_' + str(n) + '.npy'))
+        # np.load('data/chains/combine_chains/best_sh_sn_chains/sh_sn_chain_' + str(n) + '.npy'))
 
 # %%
 # font_size = 8

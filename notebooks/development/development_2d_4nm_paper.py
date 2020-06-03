@@ -11,8 +11,8 @@ mapping = importlib.reload(mapping)
 df = importlib.reload(df)
 
 # %% 2nm histograms
-sum_lens_matrix = np.load('data/chains/Aktary/development/sum_lens_matrix_series_1_1nm_1500.npy')
-n_chains_matrix = np.load('data/chains/Aktary/development/n_chains_matrix_series_1_1nm_1500.npy')
+sum_lens_matrix = np.load('data/chains/combine_chains/development/sum_lens_matrix_series_1_1nm_1500.npy')
+n_chains_matrix = np.load('data/chains/combine_chains/development/n_chains_matrix_series_1_1nm_1500.npy')
 
 n_chains_matrix_avg = np.average(n_chains_matrix, axis=1)
 sum_lens_matrix_avg = np.average(sum_lens_matrix, axis=1)

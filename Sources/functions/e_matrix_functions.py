@@ -28,8 +28,8 @@ def get_e_id_DATA(DATA, e_id):
 def rotate_DATA(DATA, phi=2 * np.pi * np.random.random()):
     rot_mat = np.mat([[np.cos(phi), -np.sin(phi)],
                       [np.sin(phi), np.cos(phi)]])
-    DATA[:, ind.DATA_x_ind:ind.DATA_E_dep_ind] = \
-        np.dot(rot_mat, DATA[:, ind.DATA_x_ind:ind.DATA_E_dep_ind].transpose()).transpose()
+    DATA[:, ind.DATA_x_ind:ind.DATA_z_ind] = \
+        np.dot(rot_mat, DATA[:, ind.DATA_x_ind:ind.DATA_z_ind].transpose()).transpose()
 
 
 def add_uniform_xy_shift_to_track(track_DATA, x_range, y_range):

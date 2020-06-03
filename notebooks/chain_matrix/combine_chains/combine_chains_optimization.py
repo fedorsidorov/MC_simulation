@@ -134,14 +134,14 @@ print(part_empty)
 progress_bar = tqdm(total=len(best_chains), position=0)
 
 for n, chain in enumerate(best_chains):
-    np.save('data/chains/Aktary/best_sh_sn_chains/sh_sn_chain_' + str(n) + '.npy', chain)
+    np.save('data/chains/combine_chains/best_sh_sn_chains/sh_sn_chain_' + str(n) + '.npy', chain)
     progress_bar.update()
 
 # %%
-np.save('data/chains/Aktary/best_sh_sn_chains/best_hist_2nm.npy', best_hist_2nm)
+np.save('data/chains/combine_chains/best_sh_sn_chains/best_hist_2nm.npy', best_hist_2nm)
 
 # %% save chains to files
-# data/chains/Aktary/shifted_snaked_chains
+# data/chains/combine_chains/shifted_snaked_chains
 dest_folder = 'data/chains/' + folder_name + '/shifted_snaked_chains/'
 progress_bar = tqdm(total=len(chain_deque), position=0)
 

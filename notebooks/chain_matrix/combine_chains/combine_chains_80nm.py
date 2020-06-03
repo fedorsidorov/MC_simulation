@@ -1,13 +1,14 @@
 import importlib
-import numpy as np
+
 import matplotlib.pyplot as plt
-from functions import chain_functions as cf
-from functions import array_functions as af
-from functions import plot_functions as pf
+import numpy as np
 from tqdm import tqdm
-import mapping_harris as mapping
-# import mapping_aktary as mapping
+
 import constants as const
+import mapping_exp_80nm as mapping
+from functions import array_functions as af
+from functions import chain_functions as cf
+from functions import plot_functions as pf
 
 cf = importlib.reload(cf)
 af = importlib.reload(af)
@@ -52,7 +53,7 @@ def get_zero_shift(array):
 
 
 # %%
-source_folder = '/Volumes/ELEMENTS/PyCharm_may/prepared_chains/Harris/'
+source_folder = '/Volumes/ELEMENTS/chains_950K/prepared_chains/exp_80nm/'
 
 chain_lens = np.load(source_folder + 'chain_lens.npy')
 chain_list = []
@@ -73,7 +74,6 @@ progress_bar = tqdm(total=len(chain_list), position=0)
 hist_5nm = np.zeros(mapping.hist_5nm_shape)
 
 for n, now_chain in enumerate(chain_list):
-
     now_chain -= now_chain[0, :]
     now_chain_center_xyz = (np.max(now_chain, axis=0) + np.min(now_chain, axis=0)) / 2
     now_chain = now_chain - now_chain_center_xyz
@@ -94,7 +94,6 @@ for n, now_chain in enumerate(chain_list):
 
     progress_bar.update()
 
-
 # %%
 plt.imshow(np.average(hist_5nm, axis=0))
 plt.show()
@@ -107,7 +106,7 @@ print(np.sqrt(np.var(hist_5nm)))
 print(part_empty)
 
 # %% save chains to files
-dest_folder = 'data/rot_sh_sn_chains/'
+dest_folder = '/Volumes/ELEMENTS/chains_950K/rot_sh_sn_chains/exp_80nm/'
 progress_bar = tqdm(total=len(chain_list), position=0)
 
 for n, chain in enumerate(final_chain_list):
@@ -115,4 +114,4 @@ for n, chain in enumerate(final_chain_list):
     progress_bar.update()
 
 # %%
-np.save('/Volumes/ELEMENTS/PyCharm_may/rot_sh_sn_chains/Harris/hist_5nm.npy', hist_5nm)
+np.save('/Volumes/ELEMENTS/chains_950K/rot_sh_sn_chains/exp_80nm/hist_5nm.npy', hist_5nm)

@@ -15,7 +15,7 @@ indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 
 # %% load arrays
-folder_name = 'Aktary'
+folder_name = 'combine_chains'
 deg_path = 'series_1_4nm'
 
 e_matrix_val_exc_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path +

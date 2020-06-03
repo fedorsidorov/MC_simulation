@@ -33,9 +33,9 @@ def plot_DATA(DATA, d_PMMA=0, E_cut=5):
 
 
 # %%
-now_DATA = np.load('data/e_DATA/DATA_test.npy')
-# now_DATA_P = now_DATA[np.where(now_DATA[:, 2] == 0)]
-plot_DATA(now_DATA, 500, E_cut=0)
+now_DATA = np.load('/Volumes/ELEMENTS/PyCharm_may/e_DATA/DATA_test.npy')
+now_DATA_P = now_DATA[np.where(now_DATA[:, 2] == 0)]
+plot_DATA(now_DATA_P, 500, E_cut=10)
 
 # %%
 now_DATA_Pn = np.load('data/e_DATA/DATA_test.npy')

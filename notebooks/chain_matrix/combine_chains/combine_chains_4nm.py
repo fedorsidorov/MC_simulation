@@ -16,7 +16,7 @@ mapping = importlib.reload(mapping)
 const = importlib.reload(const)
 
 # %%
-folder_name = 'Aktary'
+folder_name = 'combine_chains'
 progress_bar = tqdm(total=754, position=0)
 
 hist_4nm = np.zeros(mapping.hist_4nm_shape)
@@ -34,7 +34,7 @@ plt.imshow(np.average(hist_4nm, axis=0))
 plt.show()
 
 # %% save chains to files
-# data/chains/Aktary/shifted_snaked_chains
+# data/chains/combine_chains/shifted_snaked_chains
 dest_folder = 'data/chains/' + folder_name + '/shifted_snaked_chains/'
 progress_bar = tqdm(total=len(chain_list), position=0)
 

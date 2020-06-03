@@ -9,7 +9,7 @@ mapping = importlib.reload(mapping)
 
 # %%
 folder_name = 'Harris'
-# folder_name = 'Aktary'
+# folder_name = 'combine_chains'
 # deg_paths = 'C-C2:4'
 deg_paths = 'C-C2:4_C-C\':2'
 # deg_paths = 'C-C2:4_C-C\':2_C-C3:1'
@@ -17,8 +17,9 @@ deg_paths = 'C-C2:4_C-C\':2'
 # %%
 e_matrix_E_dep = np.load('data/e_matrix/' + folder_name + '/' + deg_paths + '/e_matrix_E_dep.npy')
 # chain_lens_initial = np.load('data/chains/Harris/lens_initial.npy')
-chain_lens_initial = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/Harris/chain_lens.npy')
+# chain_lens_initial = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/Harris/chain_lens.npy')
 # chain_lens_initial = np.load('data/chains/' + folder_name + '/prepared_chains/prepared_chain_lens.npy')
+chain_lens_initial = np.load('data/choi_weight/harris_lens_initial.npy')
 # chain_lens_final = np.load('/Volumes/ELEMENTS/PyCharm_may/chains/Harris/lens_final_' + deg_paths + '.npy')
 chain_lens_final = np.load('data/exposed_chains/Harris/harris_lens_final_4+2_2nm.npy')
 
@@ -31,7 +32,7 @@ G_scission = (Mn/Mf - 1) * const.rho_PMMA * const.Na / (total_E_loss / mapping.v
 print('G(S) =', G_scission)
 
 
-# %% direct calculation
+# direct calculation
 scission_matrix_exc = np.load('data/e_matrix/' + folder_name + '/' + deg_paths + '/e_matrix_val_exc_sci.npy')
 scission_matrix_ion = np.load('data/e_matrix/' + folder_name + '/' + deg_paths + '/e_matrix_val_ion_sci.npy')
 

@@ -10,7 +10,7 @@ mapping = importlib.reload(mapping)
 indexes = importlib.reload(indexes)
 
 # %%
-folder_name = 'Aktary'
+folder_name = 'combine_chains'
 
 resist_matrix = np.load('/Users/fedor/PycharmProjects/MC_simulation/data/chains/' +
                         folder_name + '/best_resist_matrix_1nm.npy')
@@ -67,5 +67,5 @@ for chain_table in chain_tables_final:
     p_bar.update()
 
 # %%
-np.save('data/chains/Aktary/development/n_chains_matrix_series_1_1nm_1500.npy', n_chains_matrix)
-np.save('data/chains/Aktary/development/sum_lens_matrix_series_1_1nm_1500.npy', sum_lens_matrix)
+np.save('data/chains/combine_chains/development/n_chains_matrix_series_1_1nm_1500.npy', n_chains_matrix)
+np.save('data/chains/combine_chains/development/sum_lens_matrix_series_1_1nm_1500.npy', sum_lens_matrix)

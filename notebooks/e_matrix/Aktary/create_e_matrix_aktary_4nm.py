@@ -28,7 +28,7 @@ x_positions = [0]
 r_beam = 0.001
 
 n_electrons_required = emf.get_n_electrons_1D(dose_pC_cm, mapping.l_y)
-source = '/Users/fedor/PycharmProjects/MC_simulation/data/e_DATA/Aktary/'
+source = '/Users/fedor/PycharmProjects/MC_simulation/data/e_DATA/combine_chains/'
 deg_paths = {"C-C2": 4, "C-C'": 2}
 
 for x_position in x_positions:
@@ -98,6 +98,6 @@ print(np.sum(e_matrix_val_exc_sci) / np.sum(e_matrix_E_dep) * 100)
 print(np.sum(e_matrix_val_ion_sci) / np.sum(e_matrix_E_dep) * 100)
 
 # %%
-np.save('data/e_matrix/Aktary/series_1_4nm/e_matrix_val_exc_sci_1500_4nm_new_2.npy', e_matrix_val_exc_sci)
-np.save('data/e_matrix/Aktary/series_1_4nm/e_matrix_val_ion_sci_1500_4nm_new_2.npy', e_matrix_val_ion_sci)
-np.save('data/e_matrix/Aktary/series_1_4nm/e_matrix_E_dep_1500_4nm_new_2.npy', e_matrix_E_dep)
+np.save('data/e_matrix/combine_chains/series_1_4nm/e_matrix_val_exc_sci_1500_4nm_new_2.npy', e_matrix_val_exc_sci)
+np.save('data/e_matrix/combine_chains/series_1_4nm/e_matrix_val_ion_sci_1500_4nm_new_2.npy', e_matrix_val_ion_sci)
+np.save('data/e_matrix/combine_chains/series_1_4nm/e_matrix_E_dep_1500_4nm_new_2.npy', e_matrix_E_dep)

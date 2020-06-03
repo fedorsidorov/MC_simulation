@@ -5,8 +5,7 @@ from tqdm import tqdm
 
 import constants as const
 import indexes
-# import mapping_harris as mapping
-import mapping_aktary as mapping
+import mapping_exp_80nm as mapping
 from functions import mapping_functions as mf
 
 mapping = importlib.reload(mapping)
@@ -15,28 +14,22 @@ indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 
 # %% load arrays
-folder_name = 'combine_chains'
-deg_path = 'series_1_1nm'
+scission_matrix = np.load('/Volumes/ELEMENTS/e_matrix/exp_80nm/scission_matrix_0.npy')
 
-e_matrix_val_exc_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path +
-                               '/e_matrix_val_exc_sci_1500_1nm.npy')
-e_matrix_val_ion_sci = np.load('data/e_matrix/' + folder_name + '/' + deg_path +
-                               '/e_matrix_val_ion_sci_1500_1nm.npy')
+resist_matrix = np.load('/Volumes/ELEMENTS/chains_950K/resist_matrix/exp_80nm/resist_matrix_5nm.npy')
+chain_lens = np.load('/Volumes/ELEMENTS/chains_950K/prepared_chains/exp_80nm/chain_lens.npy')
+n_chains = len(chain_lens)
 
-scission_matrix = e_matrix_val_exc_sci + e_matrix_val_exc_sci
-
-resist_matrix = np.load('data/chains/' + folder_name + '/best_resist_matrix_1nm.npy')
-n_chains = 754
-
+# %%
 chain_tables = []
 progress_bar = tqdm(total=n_chains, position=0)
 
 for n in range(n_chains):
     chain_tables.append(
-        np.load('data/chains/' + folder_name + '/best_chain_tables_1nm/chain_table_' + str(n) + '.npy'))
+        np.load('/Volumes/ELEMENTS/chains_950K/chain_tables/exp_80nm/chain_table_' + str(n) + '.npy'))
     progress_bar.update()
 
-resist_shape = mapping.hist_1nm_shape
+resist_shape = mapping.hist_5nm_shape
 
 # %% mapping
 n_scissions_moved = 0
@@ -79,12 +72,14 @@ for x_ind in range(resist_shape[0]):
 
 # %%
 lens_final = mf.get_chain_lens(chain_tables)
-np.save('data/chains/' + folder_name + '/lens_final_' + deg_path + '_1500.npy', lens_final)
+np.save('data/exposed_chains/Harris/harris_lens_final_4+2_5nm.npy', lens_final)
 
 # %%
-progress_bar = tqdm(total=len(chain_tables), position=0)
-
-for n, chain_table in enumerate(chain_tables):
-    np.save('data/chains/' + folder_name + '/best_chain_tables_series_1_1nm_1500/chain_table_' +
-            str(n) + '.npy', chain_table)
-    progress_bar.update()
+# progress_bar = tqdm(total=len(chain_tables), position=0)
+#
+# for n, chain_table in enumerate(chain_tables):
+#     np.save('data/chains/' + folder_name + '/best_chain_tables_series_1_5nm_1500/chain_table_' + str(n) +
+#             '.npy', chain_table)
+#     progress_bar.update()
+#
+# progress_bar.close()
