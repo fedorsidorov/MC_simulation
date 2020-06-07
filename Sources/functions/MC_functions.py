@@ -27,6 +27,14 @@ def log_log_interp_2d(xp, yp, zp, kind='linear'):
     return func
 
 
+def lin_lin_interp(xp, yp, kind='linear'):
+    interp = interpolate.interp1d(xp, yp, kind=kind)
+
+    def func(x): return interp(x)
+
+    return func
+
+
 def lin_log_interp(xp, yp, kind='linear'):
     log_yp = np.log10(yp)
     interp = interpolate.interp1d(xp, log_yp, kind=kind)
