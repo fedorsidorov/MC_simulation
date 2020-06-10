@@ -21,55 +21,6 @@ def An(num, period):
     return 2 / period * quad(get_Y, -period / 2, period / 2)[0]
 
 
-def Cn(num, period):
-    def get_Y_real(x):
-        return np.real(func(x) * np.exp(-1j * 2 * np.pi * num * x / period))
-
-    def get_Y_imag(x):
-        return np.imag(func(x) * np.exp(-1j * 2 * np.pi * num * x / period))
-
-    real_part = 1 / period * quad(get_Y_real, -period / 2, period / 2)[0]
-    imag_part = 1 / period * quad(get_Y_imag, -period / 2, period / 2)[0]
-    return real_part + 1j * imag_part
-
-
-# %%
-N = 1000
-T = 10e-6
-
-xx = np.linspace(-5, 5, 1000) * 1e-6
-
-An_array = np.zeros(N)
-
-xx_FT_even = np.zeros(len(xx))
-xx_FT_even += An(0, T) / 2
-An_array[0] = An(0, T) / 2
-
-for n in range(1, N):
-    An_array[n] = An(n, T)
-    # xx_FT_even += An(n, T) * np.cos(np.pi * n * xx / (T / 2))
-
-# %%
-FT = np.zeros(len(xx)) + np.zeros(len(xx)) * 1j
-Cn_array = np.zeros(2 * N + 1, dtype=complex)
-
-progress_bar = tqdm(total=2*N+1, position=0)
-
-for n in range(-N, N + 1):
-    # FT += Cn(n, T) * np.exp(1j * 2 * np.pi * n * xx / T)
-    Cn_array[n] = Cn(n, T)
-    progress_bar.update(1)
-
-# %%
-# l_period = 10e-6
-l_period = 500e-9
-A = 1e-19  # J
-gamma = 34e-3  # N / m
-# h0 = 307e-9  # m
-h0 = 4e-9  # m
-eta = 5.51e+6  # Pa * s
-
-
 def get_tau_n(num):
     if num == 0:
         return np.inf
@@ -86,25 +37,44 @@ def get_tau_n_easy(num):
 
 def get_h(x_array, t):
     result = np.zeros(len(x_array))
-    result +=
+    result += An_array[0]
     for num in range(1, N):
-        result += An_array[num] * np.exp(-t / get_tau_n(num)) * np.cos(2 * np.pi * num * x_array / l_period)
-
-    return result
-
-
-def get_h_complex(x_array, t):
-    result = np.zeros(len(x_array))
-    for num in range(-N, N + 1):
-        result += np.real(Cn_array[num] * np.exp(-t / get_tau_n(num) + 1j * num * 2 * np.pi * x_array / l_period))
+        result += An_array[num] * np.exp(-t / get_tau_n_easy(num)) * np.cos(2 * np.pi * num * x_array / l_period)
+        # result += An_array[num] * np.exp(-t / get_tau_n(num)) * np.cos(2 * np.pi * num * x_array / l_period)
 
     return result
 
 
 # %%
+N = 1000
+T = 10e-6
+
+xx = np.linspace(-5, 5, 1000) * 1e-6
+
+An_array = np.zeros(N)
+An_array[0] = An(0, T) / 2
+
+for n in range(1, N):
+    An_array[n] = An(n, T)
+
+# %%
+l_period = 10e-6
+A = 1e-19  # J
+gamma = 34e-3  # N / m
+# gamma = 34  # N / m
+h0 = 307e-9  # m
+# eta = 5.51e+6  # Pa * s
+# eta = 5.51e+8  # Pa * s
+# eta = 5.64e+8  # Pa * s
+eta = 5.48e+8  # Pa * s
+
+# %%
+profile = np.loadtxt('data/reflow/2h.txt')
+
 plt.figure(dpi=300)
 plt.plot(xx, func(xx))
-# plt.plot(xx, xx_FT_even)
-plt.plot(xx, np.real(FT))
-plt.plot(xx, get_h(xx, 2))
+plt.plot(xx, get_h(xx, 3200*2))
+
+plt.plot(profile[:, 0]*1e-6, profile[:, 1]*1e-9, 'o')
+
 plt.show()

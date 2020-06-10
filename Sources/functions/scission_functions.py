@@ -73,7 +73,7 @@ def get_scission_probs(degpath_dict, E_array=grid.EE):
 
 
 def get_scissions(DATA, degpath_dict, weight=1):
-    ee = DATA[:, ind.DATA_E_dep_ind] + DATA[:, ind.DATA_E2nd_ind] + DATA[:, ind.DATA_E_ind]  # energy before collision
+    ee = DATA[:, ind.DATA_E_dep_ind] + DATA[:, ind.DATA_E2nd_ind] + DATA[:, ind.DATA_E_ind]  # E before collision
     scission_probs = get_scission_probs(degpath_dict, E_array=ee) * weight
     return np.array(np.random.random(len(DATA)) < scission_probs).astype(int)
 

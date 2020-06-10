@@ -42,18 +42,6 @@ def add_gaussian_xy_shift_to_track(track_DATA, x_position, x_sigma, y_range):
     track_DATA[:, ind.DATA_xy_inds] += x_shift, y_shift
 
 
-# def add_uniform_xy_shift_to_DATA(DATA, x_range, y_range):
-#     n_e_prim = int(DATA[np.where(DATA[:, ind.DATA_parent_e_id_ind] == -1)][-1, 0] + 1)
-#     for e_id in range(n_e_prim):
-#         add_xy_shift_to_track(DATA, e_id, np.random.uniform(*x_range), np.random.uniform(*y_range))
-
-
-# def get_daussian_xy_shift_to_DATA(DATA, r_beam, y_range):
-#     n_e_prim = int(DATA[np.where(DATA[:, ind.DATA_parent_e_id_ind] == -1)][-1, 0] + 1)
-#     for e_id in range(n_e_prim):
-#         add_xy_shift_to_track(DATA, e_id, np.random.normal(loc=0, scale=r_beam), np.random.uniform(*y_range))
-
-
 def get_n_electrons_2D(dose_uC_cm2, lx_nm, ly_nm):
     A_cm2 = lx_nm * ly_nm * 1e-14
     Q_C = dose_uC_cm2 * 1e-6 * A_cm2

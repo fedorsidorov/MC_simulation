@@ -1,6 +1,6 @@
 #%% Import
 import numpy as np
-import matsemilogxlib.pysemilogx as plt
+import matplotlib.pyplot as plt
 import importlib
 
 import constants as const

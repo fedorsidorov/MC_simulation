@@ -1,0 +1,75 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sympy import erfinv
+from tqdm import tqdm
+from collections import deque
+
+
+# %%
+def get_delta_coord(D, t):
+    arg = erfinv(np.random.random()) * np.sqrt(2)
+    coord = arg * np.sqrt(2 * D * t)
+    return coord * np.random.choice([1, -1])
+
+
+def get_delta_xyz(D, t):
+    x = get_delta_coord(D, t)
+    y = get_delta_coord(D, t)
+    z = get_delta_coord(D, t)
+    return np.array((x, y, z), dtype=float)
+
+
+def track_monomer(xyz_0, l_xyz, D, t_step):
+    now_x = xyz_0[0]
+    now_z = xyz_0[2]
+    history_x = deque()
+    history_z = deque()
+    history_x.append(now_x)
+    history_z.append(now_z)
+
+    while now_z >= 0:
+        now_x += get_delta_coord(D, t_step)
+        now_z += get_delta_coord(D, t_step)
+
+        while now_z > l_xyz[2]:
+            now_z += get_delta_coord(D, t_step)
+
+        history_x.append(now_x)
+        history_z.append(now_z)
+
+    return history_x, history_z
+
+
+# %%
+# D = 3.16e-6  # cm^2 / s
+# delta_t = 1e-7  # s
+#
+# x0, y0, z0 = 0, 0, 50e-7
+# l_x, l_y, l_z = 3300e-7, 20e-7, 80e-7
+#
+# x_h, y_h = track_monomer([x0, y0, z0], [l_x, l_y, l_z], D, delta_t)
+#
+# # %%
+# plt.figure(dpi=300)
+# plt.plot(x_h, y_h)
+# plt.show()
+
+# %%
+# array = np.zeros((1000, 3))
+#
+# now_coords = np.array((0, 0, 0), dtype=float)
+#
+# progress_bar = tqdm(total=len(array), position=0)
+#
+# for i in range(len(array)):
+#     array[i, :] = now_coords
+#     now_coords += get_delta_xyz(3.1e-6, 1e-6)
+#     progress_bar.update()
+#
+# # %%
+# plt.figure(dpi=300)
+# plt.plot(array[:, 0], array[:, 1])
+#
+# plt.xlim(-0.00005, 0.00005)
+# plt.ylim(-0.00005, 0.00005)
+# plt.show()
