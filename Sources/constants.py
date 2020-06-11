@@ -35,16 +35,16 @@ P_au = 1.9928519141e-19
 E_au = 4.3597447222071e-11
 
 # %% PMMA
-rho_PMMA = 1.19
+rho_PMMA = 1.19  # g / cc
 Z_H, u_H = 1, 1.008
 Z_C, u_C = 6, 12.0096
-Z_O, u_O = 8, 15.99903
+Z_O, u_O = 8, 15.999
 N_H_MMA, N_C_MMA, N_O_MMA = 8, 5, 2
 u_MMA = N_H_MMA * u_H + N_C_MMA * u_C + N_O_MMA * u_O
-n_MMA = rho_PMMA * Na / u_MMA
-m_MMA = u_MMA / Na
-M_mon = u_MMA / Na
-V_mon = 1 / n_MMA
+n_MMA = rho_PMMA * Na / u_MMA  # 1 / cc
+# m_MMA = u_MMA / Na
+M_mon = u_MMA / Na  # g
+V_mon = 1 / n_MMA  # cc
 
 K_occup = 2
 val_E_bind_PMMA = 15  # dapor 2017.pdf
