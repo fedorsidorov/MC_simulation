@@ -21,6 +21,7 @@ sf = importlib.reload(sf)
 
 # %%
 r_beam_nm = 100
+delta_y_cm = (mapping.y_max - mapping.y_min) * 1e-7
 
 line_pitch_cm = 3.3e-4
 line_area_cm2_per_cm = line_pitch_cm * 1
@@ -32,9 +33,12 @@ sweep_time = 20e-3
 j_beam_A_cm2 = 1.9e-9
 dose_per_sweep_per_cm = j_beam_A_cm2 * line_area_cm2_per_cm * sweep_time
 n_electrons_per_sweep_per_cm = dose_per_sweep_per_cm / const.e_SI
-n_electrons_per_sweep = n_electrons_per_sweep_per_cm * (mapping.y_max - mapping.y_min) * 1e-7
+n_electrons_per_sweep = n_electrons_per_sweep_per_cm * delta_y_cm
 
-n_electrons_required = emf.get_n_electrons_1D(dose_pC_cm, mapping.y_max - mapping.y_min)
+time_for_10_electrons = 10 / n_electrons_per_sweep * sweep_time
+
+# n_electrons_required = emf.get_n_electrons_1D(dose_pC_cm, mapping.y_max - mapping.y_min)
+n_electrons_required = int(np.round(line_area_cm2_per_cm * 20e-7 * 0.6e-6 / const.e_SI))
 n_electrons = 0
 
 # %%

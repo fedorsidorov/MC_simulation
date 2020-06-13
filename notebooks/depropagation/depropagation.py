@@ -68,7 +68,7 @@ for i, x_esc in enumerate(x_escape_array):
 x_escape_hist = np.histogram(x_escape_array_corr, bins=mapping.bins_2nm[0])[0]
 
 # %%
-xx = mapping.bins_2nm[0][:-1] + mapping.bins_2nm[0][1:]
+xx = (mapping.bins_2nm[0][:-1] + mapping.bins_2nm[0][1:]) / 2
 h_final = mapping.z_max - x_escape_hist * mon_h_nm
 
 h_final_corr = copy.deepcopy(h_final)
