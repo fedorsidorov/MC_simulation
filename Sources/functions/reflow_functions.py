@@ -1,5 +1,5 @@
 import importlib
-
+from tqdm import tqdm
 import numpy as np
 from scipy.integrate import quad
 import matplotlib.pyplot as plt
@@ -9,7 +9,7 @@ mf = importlib.reload(mf)
 
 
 # %%
-PMMA_950K_viscosity = np.loadtxt('data/reflow/PMMA_996K_viscosity.txt')
+# PMMA_950K_viscosity = np.loadtxt('data/reflow/PMMA_996K_viscosity.txt')
 
 
 def get_PMMA_950K_viscosity(T_C):  # hirai2003.pdf
@@ -83,9 +83,7 @@ def get_tau_n_easy_array(eta, gamma, h0, l0, N):
 def get_An(func, n, l0):
     def get_Y(x):
         return func(x) * np.cos(2 * np.pi * n * x / l0)
-
     return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
-    # return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2, epsabs=1.49e-12, epsrel=1.49e-12)[0]
 
 
 def get_An_array(xx, zz, l0, N):
@@ -93,10 +91,14 @@ def get_An_array(xx, zz, l0, N):
         return mf.lin_lin_interp(xx, zz)(x)
 
     An_array = np.zeros(N)
+
     An_array[0] = get_An(func, 0, l0) / 2
+
+    progress_bar = tqdm(total=N, position=0)
 
     for n in range(1, N):
         An_array[n] = get_An(func, n, l0)
+        progress_bar.update()
 
     return An_array
 

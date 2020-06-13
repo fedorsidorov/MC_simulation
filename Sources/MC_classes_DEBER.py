@@ -174,11 +174,11 @@ class Electron:
 
 class Structure:
 
-    def __init__(self, d_PMMA_cm, xx, zz_vac, ly_cm):
-        self.d_PMMA = d_PMMA_cm
+    def __init__(self, d_PMMA, xx, zz_vac, ly):  # in cm !!!
+        self.d_PMMA = d_PMMA
         self.xx = xx
         self.zz_vac = zz_vac
-        self.ly = ly_cm
+        self.ly = ly
 
         self.IMFP_norm = [arrays.PMMA_IMFP_norm, arrays.Si_IMFP_norm]
         self.total_IMFP = [arrays.PMMA_total_IMFP, arrays.Si_total_IMFP]

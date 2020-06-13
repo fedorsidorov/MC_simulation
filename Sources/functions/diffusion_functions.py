@@ -27,17 +27,17 @@ def get_delta_coord_fast():
     return np.random.choice(xx, p=probs_norm)
 
 
-def get_delta_coord(D, t):
-    arg = erfinv(np.random.random()) * np.sqrt(2)
-    coord = arg * np.sqrt(2 * D * t)
-    return coord * np.random.choice([1, -1])
+# def get_delta_coord(D, t):
+#     arg = erfinv(np.random.random()) * np.sqrt(2)
+#     coord = arg * np.sqrt(2 * D * t)
+#     return coord * np.random.choice([1, -1])
 
 
-def get_delta_xyz(D, t):
-    x = get_delta_coord(D, t)
-    y = get_delta_coord(D, t)
-    z = get_delta_coord(D, t)
-    return np.array((x, y, z), dtype=float)
+# def get_delta_xyz(D, t):
+#     x = get_delta_coord(D, t)
+#     y = get_delta_coord(D, t)
+#     z = get_delta_coord(D, t)
+#     return np.array((x, y, z), dtype=float)
 
 
 def track_monomer(xz_0, l_xz):

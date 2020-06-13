@@ -53,7 +53,6 @@ An_array = An_array_nm * 1e-9
 
 # %%
 tau_n_array = rf.get_tau_n_array(eta=eta, gamma=gamma, h0=h0, l0=l0, N=N)
-# tau_n_easy_array = rf.get_tau_n_easy_array(gamma=eta, gamma=gamma, h0=h0, l0=l0, N=N)
 
 # plt.figure(dpi=300)
 # plt.semilogy(tau_n_array)
@@ -66,7 +65,6 @@ result += An_array[0]
 
 for n in range(1, len(An_array)):
     result += An_array[n] * np.cos(2 * np.pi * n * xx / l0)
-    # result += An_array[n] * np.cos(2 * np.pi * n * xx_nm / l0_nm)
 
 plt.figure(dpi=300)
 # plt.plot(xx, result)
@@ -76,7 +74,7 @@ plt.plot(xx, result, '--')
 plt.show()
 
 # %%
-t = 5 * 60  # s
+t = 0 * 60  # s
 zz_final = rf.get_h_at_t(xx, An_array, tau_n_array, l0, t)
 
 plt.figure(dpi=300)
