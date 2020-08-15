@@ -27,10 +27,10 @@ sf = importlib.reload(sf)
 
 
 # %%
-def get_e_DATA_PMMA_val(xx, zz_vac, n_electrons):
+def get_e_DATA_PMMA_val(xx, zz_vac, n_electrons, r_beam=100e-7):
     d_PMMA = 80e-7
     ly = mapping.l_y * 1e-7
-    r_beam = 100e-7
+    # r_beam = 100e-7
 
     E0 = 20e+3
 
@@ -115,7 +115,7 @@ def track_monomer(xz_0, xx, zz_vac, d_PMMA):
     return now_x
 
 
-def get_profile_after_diffusion(scission_matrix, zip_length, xx, zz_vac, d_PMMA):
+def get_profile_after_diffusion(scission_matrix, zip_length, xx, zz_vac, d_PMMA, double):
 
     # D = 3.16e-6 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
     # delta_t = 1e-7  # s
@@ -133,11 +133,16 @@ def get_profile_after_diffusion(scission_matrix, zip_length, xx, zz_vac, d_PMMA)
         x_ind, z_ind = sci_coords
         n_scissions = int(scission_matrix_sum_y[x_ind, z_ind])
 
-        xz_0 = mapping.x_centers_2nm[x_ind] * 1e-7, mapping.z_centers_2nm[z_ind] * 1e-7
+        xz0 = mapping.x_centers_2nm[x_ind] * 1e-7, mapping.z_centers_2nm[z_ind] * 1e-7
 
         for _ in range(n_scissions):
             for _ in range(n_monomers_groups):
-                x_escape_array[pos] = track_monomer(xz_0, xx, zz_vac, d_PMMA)
+                sigma = 20e-7
+                # sigma = 1e-4
+                x0_gauss = np.random.normal(xz0[0], sigma)
+                z0_gauss = np.random.normal(xz0[1], sigma)
+                # x_escape_array[pos] = track_monomer(xz0, xx, zz_vac, d_PMMA)
+                x_escape_array[pos] = track_monomer([x0_gauss, z0_gauss], xx, zz_vac, d_PMMA)
                 pos += 1
 
         progress_bar.update()
@@ -156,14 +161,16 @@ def get_profile_after_diffusion(scission_matrix, zip_length, xx, zz_vac, d_PMMA)
     x_escape_hist = np.histogram(x_escape_array_corr, bins=mapping.x_bins_2nm * 1e-7)[0]
 
     delta_zz_vac = x_escape_hist * mon_h_cm
-    delta_zz_vac_doubled = delta_zz_vac + delta_zz_vac[::-1]
 
-    zz_vac_new = zz_vac + delta_zz_vac_doubled
+    if double:
+        delta_zz_vac = delta_zz_vac + delta_zz_vac[::-1]
+
+    zz_vac_new = zz_vac + delta_zz_vac
 
     return zz_vac_new
 
 
-def get_A_tau_arrays(eta, xx, zz_vac, T_C, N):
+def get_An_tau_arrays(eta, xx, zz_vac, T_C, N):
     hh_vac = 80e-7 - zz_vac
     # eta = rf.get_PMMA_950K_viscosity(T_C)
     gamma = rf.get_PMMA_surface_tension(T_C)
@@ -193,8 +200,49 @@ def get_A_tau_arrays(eta, xx, zz_vac, T_C, N):
     return An_array, tau_n_array
 
 
-def get_h_at_t(xx, An_array, tau_n_array, l0, t):
-    return rf.get_h_at_t(xx * 1e-2, An_array, tau_n_array, l0, t)
+def get_An_Bn_tau_arrays(eta, xx, zz_vac, T_C, N):
+    hh_vac = 80e-7 - zz_vac
+    # eta = rf.get_PMMA_950K_viscosity(T_C)
+    gamma = rf.get_PMMA_surface_tension(T_C)
+    # N = 100
+    h0 = np.trapz(hh_vac, x=xx) / (np.max(xx) - np.min(xx)) * 1e-2  # cm -> m
+    l0 = 3.3e-6  # m
+
+    xx_nm = xx * 1e+7
+    xx_nm[0] = mapping.x_min
+    xx_nm[-1] = mapping.x_max
+
+    An_array = rf.get_An_array(
+        xx=xx_nm,
+        zz=hh_vac*1e+7,
+        l0=l0*1e+9,
+        N=N
+    ) * 1e-9  # cm -> nm -> m
+
+    Bn_array = rf.get_Bn_array(
+        xx=xx_nm,
+        zz=hh_vac * 1e+7,
+        l0=l0 * 1e+9,
+        N=N
+    ) * 1e-9  # cm -> nm -> m
+
+    tau_n_array = rf.get_tau_n_array(
+        eta=eta,
+        gamma=gamma,
+        h0=h0,
+        l0=l0,
+        N=N
+    )
+
+    return An_array, Bn_array, tau_n_array
+
+
+def get_h_at_t_even(xx, An_array, tau_n_array, l0, t):
+    return rf.get_h_at_t_even(xx * 1e-2, An_array, tau_n_array, l0, t)
+
+
+def get_h_at_t(xx, An_array, Bn_array, tau_n_array, l0, t):
+    return rf.get_h_at_t(xx * 1e-2, An_array, Bn_array, tau_n_array, l0, t)
 
 
 # %%

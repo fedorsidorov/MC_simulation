@@ -28,22 +28,22 @@ def get_PMMA_surface_tension(T_C):  # wu1970.pdf
     return gamma_SI
 
 
+# %%
 # def get_PMMA_viscosity(T_C):  # jones2006.pdf - ???
-#     T0 = 86  # C
+#     T0 = 150  # C
 #     C1 = 70.1
-#     C2 = -12.21
-#     C2 = 12.21
-#     eta0 = 1e+12  # Pa s
-#     eta = eta0 * np.exp(C1 * (T_C - T0) / (C2 + (T_C - T0)))
-#     eta = eta0 * np.exp(-C1 * (T_C - T0) / (C2 + (T_C - T0)))
-#     return eta
+    C2 = -12.21
+    # C2 = 12.21
+    # eta0 = 3.2e+5  # Pa s
+    # eta = eta0 * np.exp(-C1 * (T_C - T0) / (C2 + (T_C - T0)))
+    # return eta
 
 
 # TT = np.linspace(80, 160, 100)
 # etas = np.zeros(len(TT))
 #
 # for i, T in enumerate(TT):
-#     etas[i] = get_PMMA_950K_viscosity(T)
+#     etas[i] = get_PMMA_viscosity(T)
 #
 # plt.figure(dpi=300)
 # plt.semilogy(TT, etas)
@@ -86,6 +86,12 @@ def get_An(func, n, l0):
     return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
 
 
+def get_Bn(func, n, l0):
+    def get_Y(x):
+        return func(x) * np.sin(2 * np.pi * n * x / l0)
+    return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
+
+
 def get_An_array(xx, zz, l0, N):
     def func(x):
         return mf.lin_lin_interp(xx, zz)(x)
@@ -103,9 +109,33 @@ def get_An_array(xx, zz, l0, N):
     return An_array
 
 
-def get_h_at_t(xx, An_array, tau_n_array, l0, t):
+def get_Bn_array(xx, zz, l0, N):
+    def func(x):
+        return mf.lin_lin_interp(xx, zz)(x)
+
+    Bn_array = np.zeros(N)
+
+    progress_bar = tqdm(total=N, position=0)
+
+    for n in range(1, N):
+        Bn_array[n] = get_Bn(func, n, l0)
+        progress_bar.update()
+
+    return Bn_array
+
+
+def get_h_at_t_even(xx, An_array, tau_n_array, l0, t):
     result = np.zeros(len(xx))
     result += An_array[0]
     for n in range(1, len(An_array)):
         result += An_array[n] * np.exp(-t / tau_n_array[n]) * np.cos(2 * np.pi * n * xx / l0)
+    return result
+
+
+def get_h_at_t(xx, An_array, Bn_array, tau_n_array, l0, t):
+    result = np.zeros(len(xx))
+    result += An_array[0]
+    for n in range(1, len(An_array)):
+        result += An_array[n] * np.exp(-t / tau_n_array[n]) * np.cos(2 * np.pi * n * xx / l0) + \
+                  Bn_array[n] * np.exp(-t / tau_n_array[n]) * np.sin(2 * np.pi * n * xx / l0)
     return result

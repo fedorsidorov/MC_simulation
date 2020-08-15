@@ -25,6 +25,10 @@ x_bins_2nm = np.arange(x_min, x_max + 1, step_2nm)
 y_bins_2nm = np.arange(y_min, y_max + 1, step_2nm)
 z_bins_2nm = np.arange(z_min, z_max + 1, step_2nm)
 
+x_centers_2nm = (x_bins_2nm[:-1] + x_bins_2nm[1:]) / 2
+y_centers_2nm = (y_bins_2nm[:-1] + y_bins_2nm[1:]) / 2
+z_centers_2nm = (z_bins_2nm[:-1] + z_bins_2nm[1:]) / 2
+
 x_bins_5nm = np.arange(x_min, x_max + 1, step_5nm)
 y_bins_5nm = np.arange(y_min, y_max + 1, step_5nm)
 z_bins_5nm = np.arange(z_min, z_max + 1, step_5nm)

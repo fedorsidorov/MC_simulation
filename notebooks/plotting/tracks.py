@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import matplotlib
 
 
-DATA = np.load('data/e_DATA/DATA_test_50.npy')
-E_cut = 0
+DATA = np.load('data/e_DATA/10keV_500nm/DATA_test_50.npy')
+E_cut = 10
 d_PMMA = 500
 
 font_size = 8
@@ -14,8 +14,7 @@ print('initial size =', len(DATA))
 DATA_cut = DATA[np.where(DATA[:, 9] > E_cut)]
 print('cut DATA size =', len(DATA_cut))
 
-_, ax = plt.subplots(dpi=300)
-# fig = plt.figure(figsize=[3.35, 3], dpi=300)
+_, ax = plt.subplots(dpi=600)
 fig = plt.gcf()
 fig.set_size_inches(3, 3)
 
@@ -33,8 +32,9 @@ if d_PMMA != 0:
     plt.plot(points, np.zeros(len(points)), 'k')
     plt.plot(points, np.ones(len(points)) * d_PMMA, 'k')
 
-plt.text(-1000, 320, 'PMMA', fontsize=font_size)
-plt.text(-1000, 1300, 'Si', fontsize=font_size)
+# plt.text(-1000, 320, 'PMMA', fontsize=font_size)
+plt.text(-1250, 320, 'ПММА', fontsize=font_size)
+plt.text(-1250, 1300, 'Si', fontsize=font_size)
 
 # ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
 # ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
@@ -46,14 +46,16 @@ for tick in ax.xaxis.get_major_ticks():
 for tick in ax.yaxis.get_major_ticks():
     tick.label.set_fontsize(font_size)
 
-plt.xlabel(r'$x$, nm', fontsize=font_size)
-plt.ylabel(r'$z$, nm', fontsize=font_size)
-plt.xlim(-1250, 1250)
-plt.ylim(0, 1750)
+# plt.xlabel(r'$x$, nm', fontsize=font_size)
+# plt.ylabel(r'$z$, nm', fontsize=font_size)
+plt.xlabel(r'$x$, нм', fontsize=font_size)
+plt.ylabel(r'$z$, нм', fontsize=font_size)
+
+plt.xlim(-1500, 1500)
+plt.ylim(0, 2000)
 plt.gca().invert_yaxis()
 plt.grid()
 # plt.show()
 
 # %%
-# plt.savefig('tracks.eps', bbox_inches='tight')
-plt.savefig('tracks.tiff', bbox_inches='tight')
+plt.savefig('tracks.tiff', bbox_inches='tight', dpi=600)

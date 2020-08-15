@@ -14,17 +14,29 @@ ind = importlib.reload(ind)
 kJmol2eV = 1e+3 / (const.Na * const.eV_SI)
 kJmol_2_eV = 1e+3 / (const.Na * const.eV)
 
-MMA_bonds = {
-    'Oval': (13.62, 8),  # 13.62
-    'Cp-Op': (815 * kJmol2eV, 4),  # 8.45
-    'Cp-O': (420 * kJmol2eV, 2),  # 4.35
-    'C3-H': (418 * kJmol2eV, 12),  # 4.33
-    'C2-H': (406 * kJmol2eV, 4),  # 4.21
-    'CCp-Cp': (383 * kJmol2eV, 2),  # 3.97
-    'O-C3': (364 * kJmol2eV, 2),  # 3.77
-    'CCp-C3': (332 * kJmol2eV, 2),  # 3.44
-    'CCp-C2': (329 * kJmol2eV, 4)  # 3.41
-}
+# MMA_bonds = {
+#     'Oval': (13.62, 8),  # 13.62
+#     'Cp-Op': (815 * kJmol2eV, 4),  # 8.45
+#     'Cp-O': (420 * kJmol2eV, 2),  # 4.35
+#     'C3-H': (418 * kJmol2eV, 12),  # 4.33
+#     'C2-H': (406 * kJmol2eV, 4),  # 4.21
+#     'CCp-Cp': (383 * kJmol2eV, 2),  # 3.97
+#     'O-C3': (364 * kJmol2eV, 2),  # 3.77
+#     'CCp-C3': (332 * kJmol2eV, 2),  # 3.44
+#     'CCp-C2': (329 * kJmol2eV, 4)  # 3.41
+# }
+
+MMA_bonds = {}
+
+MMA_bonds["Oval"] = 13.62, 8
+MMA_bonds["C'-O'"] = 815 * kJmol_2_eV, 4
+MMA_bonds["C'-O"] = 420 * kJmol_2_eV, 2
+MMA_bonds["C3-H"] = 418 * kJmol_2_eV, 12
+MMA_bonds["C2-H"] = 406 * kJmol_2_eV, 4
+MMA_bonds["C-C'"] = 373 * kJmol_2_eV, 2  ## 383-10 !!!!
+MMA_bonds["O-C3"] = 364 * kJmol_2_eV, 2
+MMA_bonds["C-C3"] = 356 * kJmol_2_eV, 2
+MMA_bonds["C-C2"] = 354 * kJmol_2_eV, 4
 
 n_bonds = len(MMA_bonds)
 bond_inds = list(range(n_bonds))
@@ -77,3 +89,16 @@ def get_scissions(DATA, degpath_dict, weight=1):
     ee = DATA[:, ind.DATA_E_dep_ind] + DATA[:, ind.DATA_E2nd_ind] + DATA[:, ind.DATA_E_ind]  # E before collision
     scission_probs = get_scission_probs(degpath_dict, E_array=ee) * weight
     return np.array(np.random.random(len(DATA)) < scission_probs).astype(int)
+
+
+# %%
+EE = np.linspace(0, 100, 1000)
+
+stairway_RT = get_scission_probs({'C-C2': 4}, EE)
+stairway_Hi = get_scission_probs({'C-C2': 4, "C-C'": 2}, EE)
+
+plt.figure(dpi=300)
+plt.plot(EE, stairway_RT)
+plt.plot(EE, stairway_Hi)
+plt.grid()
+plt.show()

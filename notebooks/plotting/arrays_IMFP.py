@@ -1,15 +1,17 @@
 import importlib
 
+import matplotlib.pyplot as plt
 import numpy as np
 
-from functions import MC_functions as util
+import grid as grid
 import indexes as inds
+from functions import MC_functions as util
 
-util = importlib.reload(util)
+grid = importlib.reload(grid)
 inds = importlib.reload(inds)
+util = importlib.reload(util)
 
-
-#%%
+# %%
 # elastic interactions - OK
 PMMA_el_IMFP = np.load('Resources/ELSEPA/PMMA/PMMA_muffin_EIMFP.npy')
 PMMA_el_IMFP[:228] = PMMA_el_IMFP[228]  # no extrapolation
@@ -48,4 +50,35 @@ Si_IMFP = np.vstack((Si_el_IMFP, Si_ee_IMFP_6.transpose())).transpose()
 Si_IMFP_norm = util.norm_2d_array(Si_IMFP)
 Si_total_IMFP = np.sum(Si_IMFP, axis=1)
 
+# %%
+_, _ = plt.subplots(dpi=600)
+fig = plt.gcf()
+fig.set_size_inches(3, 3)
+
+font_size = 8
+
+plt.loglog(grid.EE, PMMA_el_IMFP, label='упр. расс.')
+plt.loglog(grid.EE, PMMA_val_IMFP, label='вал. эл.')
+plt.loglog(grid.EE, C_K_ee_IMFP, label='внутр. эл. C')
+plt.loglog(grid.EE, O_K_ee_IMFP, label='внутр. эл. O')
+plt.loglog(grid.EE, PMMA_ph_IMFP, label='расс. на фон.')
+plt.loglog(grid.EE, PMMA_pol_IMFP, label='ген. полярона')
+
+ax = plt.gca()
+for tick in ax.xaxis.get_major_ticks():
+    tick.label.set_fontsize(font_size)
+for tick in ax.yaxis.get_major_ticks():
+    tick.label.set_fontsize(font_size)
+
+plt.xlabel(r'$E$, эВ', fontsize=font_size)
+plt.ylabel(r'$\mu$, cm$^{-1}$', fontsize=font_size)
+
+plt.legend(fontsize=6, loc='upper right')
+plt.xlim(2, 2e+4)
+plt.ylim(1e+2, 1e+9)
+plt.grid()
+# plt.show()
+
+# %%
+plt.savefig('IMFP_PMMA.tiff', bbox_inches='tight', dpi=600)
 

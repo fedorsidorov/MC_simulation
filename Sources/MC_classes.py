@@ -329,7 +329,7 @@ class Event:
 
 class Simulator:
 
-    def __init__(self, d_PMMA, lx, ly, n_electrons, E0_eV, r_beam):
+    def __init__(self, d_PMMA, lx, n_electrons, E0_eV):
         self.d_PMMA = d_PMMA
         self.lx = lx
         self.n_electrons = n_electrons

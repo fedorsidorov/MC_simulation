@@ -58,9 +58,18 @@ chain_list = []
 
 progress_bar = tqdm(total=len(chain_lens), position=0)
 
+diff_array = np.zeros((len(chain_lens), 3))
+
 for n, _ in enumerate(chain_lens):
-    chain_list.append(np.load(source_folder + 'chain_' + str(n) + '.npy'))
+    now_chain = np.load(source_folder + 'chain_' + str(n) + '.npy')
+    # diff_array[n, :] = now_chain[-1, :] - now_chain[0, :]
+    # diff_array[n, :] = np.abs(now_chain[-1, :] - now_chain[0, :])
+    diff_array[n, :] = (now_chain[-1, :] - now_chain[0, :])**2
+    # chain_list.append(np.load(source_folder + 'chain_' + str(n) + '.npy'))
     progress_bar.update()
+
+# %%
+np.average(diff_array)
 
 # %%
 final_chain_list = []

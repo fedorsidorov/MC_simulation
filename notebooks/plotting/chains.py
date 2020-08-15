@@ -14,8 +14,9 @@ chain_list = []
 # for n in range(754):
 for n in range(1447):
     chain_list.append(
-        np.load('data/chains/Harris/shifted_snaked_chains/shifted_snaked_chain_' + str(n) + '.npy'))
-        # np.load('data/chains/combine_chains/best_sh_sn_chains/sh_sn_chain_' + str(n) + '.npy'))
+        # np.load('data/chains/Harris/shifted_snaked_chains/shifted_snaked_chain_' + str(n) + '.npy'))
+        np.load('/Volumes/ELEMENTS/chains_Harris/_outdated/shifted_snaked_chains'
+                '/shifted_snaked_chain_' + str(n) + '.npy'))
 
 # %%
 # font_size = 8
@@ -67,9 +68,14 @@ ax.plot(np.ones(const_m.l_z)*const_m.x_max, np.ones(const_m.l_z)*const_m.y_max,
 plt.xlim(const_m.x_min, const_m.x_max)
 plt.ylim(const_m.y_min, const_m.y_max)
 # plt.title('Polymer chain simulation')
-ax.set_xlabel('$x$, nm', fontsize=font_size)
-ax.set_ylabel('$y$, nm', fontsize=font_size)
-ax.set_zlabel('$z$, nm', fontsize=font_size)
+
+# ax.set_xlabel('$x$, nm', fontsize=font_size)
+# ax.set_ylabel('$y$, nm', fontsize=font_size)
+# ax.set_zlabel('$z$, nm', fontsize=font_size)
+
+ax.set_xlabel('$x$, нм', fontsize=font_size)
+ax.set_ylabel('$y$, нм', fontsize=font_size)
+ax.set_zlabel('$z$, нм', fontsize=font_size)
 
 ax = plt.gca()
 for tick in ax.xaxis.get_major_ticks():
@@ -81,6 +87,5 @@ for tick in ax.zaxis.get_major_ticks():
 
 # plt.show()
 
-# %
-# plt.savefig('chains.eps', bbox_inches='tight')
-plt.savefig('chains_new.tiff', bbox_inches='tight')
+# %%
+plt.savefig('chains.tiff', bbox_inches='tight')
