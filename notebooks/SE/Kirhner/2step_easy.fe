@@ -1,0 +1,93 @@
+/*------------------------------------HEADER START------------------------------------*/
+/*defining geometry and material parameters*/
+#include "Geometry.fe"	// include the file with the required geometry data
+
+PARAMETER Temp = 120 	// Reflow temperature
+
+#define GR 9.81e6                               // gravity constant
+#define SG 1/(SV+gamma*Temp)                    // specific gravity of resist
+
+#define step1_vol (step_h1*step_w1_top+step_h2*(step_w1_bas-step_w1_top)+0.5*(step_h1-step_h2)*(step_h1-step_h2)/tan(inclination1*pi/180))*step_l
+#define step2_vol (step_h2*step_w2_top+0.5*step_h2*(step_w2_bas-step_w2_top))*step_l
+
+#define vol_easy step_l * step_w1_top * step_h1
+
+/*------------------------------------HEADER END------------------------------------*/
+
+/*##################################################################################*/
+
+/*---------------------------------CONSTRAINTS START--------------------------------*/
+constraint 1   /* fixing the resist on the substrate surface */
+formula: x3 = 0
+
+constraint 3 nonpositive /* pinning resist on upper end of un-exposed PMMA pillar*/
+formula: x3 = pin_h
+
+constraint 4   /* mirror plane, resist on front-side wall */
+formula: x1 = 0.5*step_l
+
+constraint 5   /* mirror plane, resist on back-side wall */
+formula: x1 = -0.5*step_l
+/*---------------------------------CONSTRAINTS END---------------------------------*/
+
+/*##################################################################################*/
+
+/*---------------------------------GEOMETRY START-----------------------------------*/
+vertices
+
+//step 1
+1  -0.5*step_l  	0.0    	0.0     	constraints 1 5    /* 2 vertices on substrate */
+2   0.5*step_l  	0.0    	0.0     	constraints 1 4
+5  -0.5*step_l  	0.0    	step_h1      	constraints 3 5    /* 4 vertices on top */
+6   0.5*step_l  	0.0    	step_h1 	constraints 3 4
+7   0.5*step_l  	step_w1_top	step_h1	constraints 3 4
+8  -0.5*step_l  	step_w1_top	step_h1	constraints 3 5
+
+//step 2
+201  -0.5*step_l  	step_w1_top			0.0 	 constraints 1 5
+202   0.5*step_l  	step_w1_top			0.0 	 constraints 1 4
+
+edges
+//step 1
+1     	1   	2    	constraints 1
+2     	2       202     constraints 1 4
+4   	201   	1    	constraints 1 5
+5     	5   	6    	constraints 3
+6     	6   	7    	constraints 3 4
+7     	7   	8       constraints 3
+8     	8   	5       constraints 3 5
+9     	1   	5       constraints 5
+10    	2   	6       constraints 4
+
+//step 2
+203 	202 	201     constraint 1
+213 	202 	  7     constraint 4
+214 	201 	  8     constraint 5
+
+faces
+//step 1
+1      1  	 10    -5    -9     	color brown 	tension TENS_r
+2    -10 	 2   	213  -6	        color brown   	tension TENS_w
+4      9  	-8     -214   4  	color brown   	tension TENS_w
+5      5   	 6      7     8     	color brown  	tension TENS_r
+6     -4      -203     -2    -1  	color brown 	tension TENS_s2
+
+//step 2
+401   -7 -213  203  214    color brown    tension TENS_r
+
+bodies  
+1 1 5 401 volume vol_easy density SG
+
+/*---------------------------------GEOMETRY END-----------------------------------*/
+
+/*##################################################################################*/
+
+/*----------------------------------simulation--------------------------------------*/
+/*defining commands for SE command line execution*/
+read
+
+/*meshing*/
+meshit := {r 3; area_normalization;}
+
+/*iteration*/
+loopit := {g50; w 0.001; w 0.001; V}

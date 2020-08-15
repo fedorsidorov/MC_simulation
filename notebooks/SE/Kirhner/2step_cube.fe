@@ -1,0 +1,109 @@
+/*------------------------------------HEADER START------------------------------------*/
+/*defining geometry and material parameters*/
+//#include "Geometry.fe"	// include the file with the required geometry data
+
+PARAMETER step_l   = 5.00
+PARAMETER resist_h = 1.820
+PARAMETER pin_h    = resist_h
+
+PARAMETER step1_rel = 1.00
+PARAMETER step2_rel = 0.70
+PARAMETER inclination1 = 85 
+PARAMETER step_w1_top = 1.820
+PARAMETER step_h1     = resist_h*step1_rel
+PARAMETER step_h2     = resist_h*step2_rel
+
+PARAMETER angle_s_ind = 50
+
+PARAMETER angle_w_ind = 90      
+PARAMETER TENS_r  = 33.5e-2
+
+PARAMETER TENS_s = -TENS_r*cos((angle_s_ind)*pi/180)
+PARAMETER TENS_w = -TENS_r*cos((angle_w_ind)*pi/180)
+
+#define cube_vol step_l * step_w1_top * step_h1
+
+/*------------------------------------HEADER END------------------------------------*/
+
+/*##################################################################################*/
+
+/*---------------------------------CONSTRAINTS START--------------------------------*/
+constraint 1   /* fixing the resist on the substrate surface */
+formula: x3 = 0
+
+constraint 3 nonpositive /* pinning resist on upper end of un-exposed PMMA pillar*/
+formula: x3 = pin_h
+
+constraint 4   /* mirror plane, resist on front-side wall */
+formula: x1 = 0.5*step_l
+
+constraint 5   /* mirror plane, resist on back-side wall */
+formula: x1 = -0.5*step_l
+/*---------------------------------CONSTRAINTS END---------------------------------*/
+
+/*##################################################################################*/
+
+/*---------------------------------GEOMETRY START-----------------------------------*/
+vertices
+
+//step 1
+1  -0.5*step_l  	0.0    	0.0     	constraints 1 5
+2   0.5*step_l  	0.0    	0.0     	constraints 1 4
+5  -0.5*step_l  	0.0    	step_h1      	constraints 3 5
+6   0.5*step_l  	0.0    	step_h1 	constraints 3 4
+7   0.5*step_l  	step_w1_top	step_h1	constraints 3 4
+8  -0.5*step_l  	step_w1_top	step_h1	constraints 3 5
+
+//step 2
+201  -0.5*step_l  	step_w1_top			0.0 	 constraints 1 5
+202   0.5*step_l  	step_w1_top			0.0 	 constraints 1 4
+205  -0.5*step_l  	step_w1_top			step_h2  constraint 5
+206   0.5*step_l  	step_w1_top  			step_h2  constraint 4
+
+edges
+//step 1
+1     	1   	2    	constraints 1 
+2     	2       202     constraints 1 4
+4   	201   	1    	constraints 1 5
+5     	5   	6    	//constraints 3 
+6     	6   	7    	constraints 4 //3
+7     	7   	8
+8     	8   	5       constraints 5 //3
+9     	1   	5       constraints 5
+10    	2   	6       constraints 4
+
+//step 2
+203 	202 	201     constraint 1
+205 	205 	206
+209 	205   	8       constraint 5
+210 	206  	7       constraint 4
+213 	202 	206     constraint 4
+214 	201 	205     constraint 5
+
+faces
+//step 1
+1      1  	 10    -5    -9    	 	color brown 	tension TENS_r
+2    -10 	 2   	213   210   -6		color yellow   	tension TENS_w
+4      9  	-8     -209  -214    4		color yellow   	tension TENS_w
+5      5   	 6      7     8     		color brown  	tension TENS_r
+6     -4      -203   -2    -1  			color brown 	tension TENS_s
+201   -7      -210   -205   209         	color brown  	tension TENS_r
+401    205    -213    203   214                 color brown     tension TENS_r
+
+bodies  
+// body defined by its oriented faces
+1 1 5 201 401 volume cube_vol
+
+/*---------------------------------GEOMETRY END-----------------------------------*/
+
+/*##################################################################################*/
+
+/*----------------------------------simulation--------------------------------------*/
+/*defining commands for SE command line execution*/
+read
+
+/*meshing*/
+meshit := {r 3; area_normalization;}
+
+/*iteration*/
+loopit := {g50; w 0.001; w 0.001; V}
