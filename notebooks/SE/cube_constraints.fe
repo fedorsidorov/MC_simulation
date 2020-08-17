@@ -4,7 +4,7 @@ PARAMETER angle_m_ind = 90
 
 PARAMETER TENS_r = 33.5e-2
 PARAMETER TENS_s = -TENS_r*cos((angle_s_ind)*pi/180)
-PARAMETER TENS_m  = -TENS_r*cos((angle_m_ind)*pi/180)
+PARAMETER TENS_m = -TENS_r*cos((angle_m_ind)*pi/180)
 
 constraint 1   /* fixing the resist on the substrate surface */
 formula: x3 = 0
@@ -85,3 +85,5 @@ gogo2 := { g 5; r; g 5; hessian; r; g 5; hessian;
              max(vertex,sqrt((x-.5)^2+(y-.5)^2+(z-.5)^2))
                - min(vertex,sqrt((x-.5)^2+(y-.5)^2+(z-.5)^2));
 }
+
+lift_z := {foreach vertex do {if z > 0.5 then set vertex z 2}}

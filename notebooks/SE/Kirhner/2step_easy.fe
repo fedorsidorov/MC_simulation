@@ -86,6 +86,9 @@ bodies
 /*defining commands for SE command line execution*/
 read
 
+/*define mobilities*/
+defv:={foreach vertex vv do {set vv vmob 0.5*y*y}}
+
 /*meshing*/
 meshit := {r 3; area_normalization;}
 

@@ -116,13 +116,20 @@ F[4*(n-1) + 1, :] = 501, -(1300 + n-1), (1200 + n-1), (2400 + n-1), -(3400 + n-1
 # %% datafile
 file = ''
 
+file += 'define vertex attribute vmob real\n\n'
+
+file += 'MOBILITY_TENSOR \n' +\
+    'vmob  0     0\n' +\
+    '0     vmob  0\n' +\
+    '0     0  vmob\n\n'
+
 file += 'PARAMETER step_lx = ' + str(step_lx) + '\n\n'
 file += 'PARAMETER angle_s_ind = 55' + '\n'
 file += 'PARAMETER angle_w_ind = 90' + '\n'
 
 file += 'PARAMETER TENS_r = 33.5e-2' + '\n'
 file += 'PARAMETER TENS_s = -TENS_r*cos((angle_s_ind)*pi/180)' + '\n'
-file += 'PARAMETER TENS_w = -TENS_r*cos((angle_w_ind)*pi/180)' + '\n'
+file += 'PARAMETER TENS_w = -TENS_r*cos((angle_w_ind)*pi/180)' + '\n\n'
 
 file += '/*--------------------CONSTRAINTS START--------------------*/\n'
 file += 'constraint 1 /* fixing the resist on the substrate surface */\n'
@@ -172,7 +179,7 @@ for i in range(len(V)):
     elif V0 == '4':
         file += '\tconstraint 24'
 
-    file += '\n'
+    file += ' vmob 0\n'
 
 file += '/*--------------------VERTICES END--------------------*/\n\n'
 
