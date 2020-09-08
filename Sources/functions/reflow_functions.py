@@ -32,11 +32,11 @@ def get_PMMA_surface_tension(T_C):  # wu1970.pdf
 # def get_PMMA_viscosity(T_C):  # jones2006.pdf - ???
 #     T0 = 150  # C
 #     C1 = 70.1
-    C2 = -12.21
-    # C2 = 12.21
-    # eta0 = 3.2e+5  # Pa s
-    # eta = eta0 * np.exp(-C1 * (T_C - T0) / (C2 + (T_C - T0)))
-    # return eta
+#     C2 = -12.21
+#     C2 = 12.21
+#     eta0 = 3.2e+5  # Pa s
+#     eta = eta0 * np.exp(-C1 * (T_C - T0) / (C2 + (T_C - T0)))
+#     return eta
 
 
 # TT = np.linspace(80, 160, 100)
@@ -83,13 +83,15 @@ def get_tau_n_easy_array(eta, gamma, h0, l0, N):
 def get_An(func, n, l0):
     def get_Y(x):
         return func(x) * np.cos(2 * np.pi * n * x / l0)
-    return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
+    # return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
+    return 2 / l0 * quad(get_Y, 0, l0)[0]
 
 
 def get_Bn(func, n, l0):
     def get_Y(x):
         return func(x) * np.sin(2 * np.pi * n * x / l0)
-    return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
+    # return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
+    return 2 / l0 * quad(get_Y, 0, l0)[0]
 
 
 def get_An_array(xx, zz, l0, N):
@@ -98,6 +100,7 @@ def get_An_array(xx, zz, l0, N):
 
     An_array = np.zeros(N)
 
+    # An_array[0] = get_An(func, -l0 / 2, l0 / 2) / 2
     An_array[0] = get_An(func, 0, l0) / 2
 
     progress_bar = tqdm(total=N, position=0)

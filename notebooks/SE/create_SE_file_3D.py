@@ -4,18 +4,24 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 
 # %% read datafile
-l_x = 10
-l_y = 10
-nx = 50 + 1
-ny = 50 + 1
+lx = 10
+ly = 10
+nx = 40 + 1
+ny = 40 + 1
 
-xx = np.linspace(-l_x / 2, l_x / 2, nx)
-yy = np.linspace(-l_y / 2, l_y / 2, ny)
+xx = np.linspace(-lx / 2, lx / 2, nx)
+yy = np.linspace(-ly / 2, ly / 2, ny)
 zz = np.zeros((len(xx), len(yy)))
+
+volume = 0
 
 for i in range(len(xx)):
     for j in range(len(yy)):
-        zz[i, j] = np.sin(xx[i] * yy[j]) + 2
+        # zz[i, j] = (np.sin(xx[i] * yy[j]))*np.exp(-(xx[i]**2 + yy[j]**2)/20) + 2
+        zz[i, j] = (np.sin(xx[i] * yy[j])) + 2
+
+for j in range(len(yy)):
+    volume += np.trapz(zz[:, j], x=xx) * (yy[1] - yy[0])
 
 plt.figure(dpi=300)
 plt.imshow(zz)
@@ -34,11 +40,6 @@ for i, x in enumerate(xx):
         VV_inv[0, i, j] = cnt
         VV_inv[1, i, j] = nx * ny + cnt
         cnt += 1
-
-# fig = plt.figure(dpi=300)
-# ax = fig.add_subplot(111, projection='3d')
-# ax.plot(VV[:, 1], VV[:, 2], VV[:, 3], 'o')
-# plt.show()
 
 # %% edges
 n_edges = ((nx - 1) * ny + (ny - 1) * nx) * 2 + nx * 2 + ny * 2 - 4
@@ -133,30 +134,31 @@ file += 'MOBILITY_TENSOR \n' + \
            '0     vmob  0\n' + \
            '0     0  vmob\n\n'
 
-file += 'PARAMETER l_x = ' + str(l_x) + '\n'
-file += 'PARAMETER l_y = ' + str(l_y) + '\n'
+file += 'PARAMETER lx = ' + str(lx) + '\n'
+file += 'PARAMETER ly = ' + str(ly) + '\n'
 file += 'PARAMETER angle_surface = 55' + '\n'
 file += 'PARAMETER angle_mirror = 90' + '\n'
 
 file += 'PARAMETER TENS_r = 33.5e-2' + '\n'
-file += 'PARAMETER TENS_s = -TENS_r*cos((angle_surface_ind)*pi/180)' + '\n'
-file += 'PARAMETER TENS_w = -TENS_r*cos((angle_mirror_ind)*pi/180)' + '\n\n'
+file += 'PARAMETER TENS_s = -TENS_r*cos((angle_surface)*pi/180)' + '\n'
+file += 'PARAMETER TENS_m = -TENS_r*cos((angle_mirror)*pi/180)' + '\n\n'
 
 file += '/*--------------------CONSTRAINTS START--------------------*/\n'
+
 file += 'constraint 1\n'
 file += 'formula: z = 0\n\n'
 
 file += 'constraint 11\n'
-file += 'formula: x = -l_x/2\n\n'
+file += 'formula: x = -lx/2\n\n'
 
 file += 'constraint 22\n'
-file += 'formula: y = -l_y/2\n\n'
+file += 'formula: y = -ly/2\n\n'
 
 file += 'constraint 33\n'
-file += 'formula: x = l_x/2\n\n'
+file += 'formula: x = lx/2\n\n'
 
 file += 'constraint 44\n'
-file += 'formula: y = l_y/2\n\n'
+file += 'formula: y = ly/2\n\n'
 
 file += '/*--------------------CONSTRAINTS END--------------------*/\n\n'
 
@@ -166,7 +168,6 @@ file += 'vertices\n'
 
 for line in VV:
     file += str(int(line[0])) + '\t' + str(line[1:])[1:-1] + '\n'
-    file += ' vmob 0\n'
 
 file += '/*--------------------VERTICES END--------------------*/\n\n'
 
@@ -195,9 +196,13 @@ file += 'bodies' + '\n' + '1' + '\t'
 for fn in FF[:, 0]:
     file += str(fn) + ' '
 
-file += '/*--------------------BODIES END--------------------*/\n\n'
+file += '\tvolume ' + str(volume) + '\n'
+
+file += '\n/*--------------------BODIES END--------------------*/\n\n'
+
+with open('notebooks/SE/set_SE_constraints.txt', 'r') as myfile:
+    file += myfile.read()
 
 # %% write to file
 with open('notebooks/SE/SE_input_3D.fe', 'w') as myfile:
     myfile.write(file)
-

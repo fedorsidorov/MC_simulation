@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 
 
 #%% read datafile
-profile = np.loadtxt('notebooks/SE/profile.txt')
+# profile = np.loadtxt('notebooks/SE/profile.txt')
+profile = np.load('notebooks/Leveder/2010/0.txt')
 
 arr_y_pre = profile[::3, 0]
 arr_z_pre = profile[::3, 1] * 5

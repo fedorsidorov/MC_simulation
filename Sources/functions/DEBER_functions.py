@@ -170,79 +170,35 @@ def get_profile_after_diffusion(scission_matrix, zip_length, xx, zz_vac, d_PMMA,
     return zz_vac_new
 
 
-def get_An_tau_arrays(eta, xx, zz_vac, T_C, N):
-    hh_vac = 80e-7 - zz_vac
-    # eta = rf.get_PMMA_950K_viscosity(T_C)
-    gamma = rf.get_PMMA_surface_tension(T_C)
-    # N = 100
-    h0 = np.trapz(hh_vac, x=xx) / (np.max(xx) - np.min(xx)) * 1e-2  # cm -> m
-    l0 = 3.3e-6  # m
-
-    xx_nm = xx * 1e+7
-    xx_nm[0] = mapping.x_min
-    xx_nm[-1] = mapping.x_max
+def get_An_Bn_tau_arrays(N, l0, h0, eta, gamma, xx, zz):
 
     An_array = rf.get_An_array(
-        xx=xx_nm,
-        zz=hh_vac*1e+7,
-        l0=l0*1e+9,
+        xx=xx * 1e+9,
+        zz=zz * 1e+9,
+        l0=l0 * 1e+9,
         N=N
-    ) * 1e-9  # cm -> nm -> m
-
-    tau_n_array = rf.get_tau_n_array(
-        eta=eta,
-        gamma=gamma,
-        h0=h0,
-        l0=l0,
-        N=N
-    )
-
-    return An_array, tau_n_array
-
-
-def get_An_Bn_tau_arrays(eta, xx, zz_vac, T_C, N):
-    hh_vac = 80e-7 - zz_vac
-    # eta = rf.get_PMMA_950K_viscosity(T_C)
-    gamma = rf.get_PMMA_surface_tension(T_C)
-    # N = 100
-    h0 = np.trapz(hh_vac, x=xx) / (np.max(xx) - np.min(xx)) * 1e-2  # cm -> m
-    l0 = 3.3e-6  # m
-
-    xx_nm = xx * 1e+7
-    xx_nm[0] = mapping.x_min
-    xx_nm[-1] = mapping.x_max
-
-    An_array = rf.get_An_array(
-        xx=xx_nm,
-        zz=hh_vac*1e+7,
-        l0=l0*1e+9,
-        N=N
-    ) * 1e-9  # cm -> nm -> m
+    ) * 1e-9  # m -> nm -> m
 
     Bn_array = rf.get_Bn_array(
-        xx=xx_nm,
-        zz=hh_vac * 1e+7,
+        xx=xx * 1e+9,
+        zz=zz * 1e+9,
         l0=l0 * 1e+9,
         N=N
     ) * 1e-9  # cm -> nm -> m
 
-    tau_n_array = rf.get_tau_n_array(
+    tau_n_array = rf.get_tau_n_easy_array(
         eta=eta,
         gamma=gamma,
         h0=h0,
         l0=l0,
         N=N
-    )
+    )  # s
 
     return An_array, Bn_array, tau_n_array
 
 
-def get_h_at_t_even(xx, An_array, tau_n_array, l0, t):
-    return rf.get_h_at_t_even(xx * 1e-2, An_array, tau_n_array, l0, t)
-
-
-def get_h_at_t(xx, An_array, Bn_array, tau_n_array, l0, t):
-    return rf.get_h_at_t(xx * 1e-2, An_array, Bn_array, tau_n_array, l0, t)
+def get_h_at_t(xx_cm, An_array, Bn_array, tau_n_array, l0_cm, t):
+    return rf.get_h_at_t(xx_cm, An_array, Bn_array, tau_n_array, l0_cm, t)
 
 
 # %%
