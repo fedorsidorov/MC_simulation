@@ -170,7 +170,7 @@ def get_profile_after_diffusion(scission_matrix, zip_length, xx, zz_vac, d_PMMA,
     return zz_vac_new
 
 
-def get_An_Bn_tau_arrays(N, l0, h0, eta, gamma, xx, zz):
+def get_An_Bn_tau_arrays(N, l0, eta, gamma, xx, zz):
 
     An_array = rf.get_An_array(
         xx=xx * 1e+9,
@@ -189,7 +189,7 @@ def get_An_Bn_tau_arrays(N, l0, h0, eta, gamma, xx, zz):
     tau_n_array = rf.get_tau_n_easy_array(
         eta=eta,
         gamma=gamma,
-        h0=h0,
+        h0=An_array[0],
         l0=l0,
         N=N
     )  # s

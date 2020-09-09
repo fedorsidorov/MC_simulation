@@ -119,4 +119,17 @@ save := {
 		}
 	}
 
-loopit_do_talogo := {while total_time < 1 do loopit; save}
+ebash := {
+	prepare_surface;
+	m 0.0001;
+	cnt := 0;
+	save;
+	printf "%f %f %f\n", total_time, -100., -100. >> "vlist.txt";
+	while cnt < 1000 do {
+		loopit 5;
+		save;
+		printf "%f %f %f\n", total_time, -100., -100. >> "vlist.txt";
+		cnt := cnt + 1;
+		print cnt;
+		};
+	}

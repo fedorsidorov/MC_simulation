@@ -9,44 +9,33 @@ mf = importlib.reload(mf)
 
 
 # %%
-# PMMA_950K_viscosity = np.loadtxt('data/reflow/PMMA_996K_viscosity.txt')
-
-
-def get_PMMA_950K_viscosity(T_C):  # hirai2003.pdf
-    # if T_C < PMMA_950K_viscosity[0, 0]:
-    #     return PMMA_950K_viscosity[0, 1]
-    # elif T_C > PMMA_950K_viscosity[0, -1]:
-    #     return PMMA_950K_viscosity[-1, 1]
-    # else:
-    #     return mf.lin_log_interp(PMMA_950K_viscosity[:, 0], PMMA_950K_viscosity[:, 1])(T_C)
-    return 5e+6
-
-
 def get_PMMA_surface_tension(T_C):  # wu1970.pdf
     gamma_CGS = 41.1 - 0.076 * (T_C - 20)
     gamma_SI = gamma_CGS * 1e-3
     return gamma_SI
 
 
-# %%
-# def get_PMMA_viscosity(T_C):  # jones2006.pdf - ???
-#     T0 = 150  # C
-#     C1 = 70.1
-#     C2 = -12.21
-#     C2 = 12.21
-#     eta0 = 3.2e+5  # Pa s
-#     eta = eta0 * np.exp(-C1 * (T_C - T0) / (C2 + (T_C - T0)))
-#     return eta
+def get_viscosity_PMMA_6N(T):  # aho2008.pdf
+    eta_0 = 13450
+    T0 = 200
+    C1 = 7.6682
+    C2 = 210.76
+    log_aT = -C1 * (T - T0) / (C2 + (T - T0))
+    eta = eta_0 * np.exp(log_aT)
+    return eta
 
 
-# TT = np.linspace(80, 160, 100)
-# etas = np.zeros(len(TT))
-#
-# for i, T in enumerate(TT):
-#     etas[i] = get_PMMA_viscosity(T)
+def get_viscosity_W(T, Mw):  # aho2008.pdf, bueche1955.pdf
+    Mw_0 = 9e+4
+    eta = get_viscosity_PMMA_6N(T)
+    eta_final = eta * (Mw / Mw_0)**3.4
+    return eta_final
+
+
+# temp = np.linspace(120, 170)
 #
 # plt.figure(dpi=300)
-# plt.semilogy(TT, etas)
+# plt.semilogy(temp, get_viscosity_W(temp, 669e+3))
 # plt.show()
 
 
@@ -83,15 +72,15 @@ def get_tau_n_easy_array(eta, gamma, h0, l0, N):
 def get_An(func, n, l0):
     def get_Y(x):
         return func(x) * np.cos(2 * np.pi * n * x / l0)
-    # return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
-    return 2 / l0 * quad(get_Y, 0, l0)[0]
+    return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
+    # return 2 / l0 * quad(get_Y, 0, l0)[0]
 
 
 def get_Bn(func, n, l0):
     def get_Y(x):
         return func(x) * np.sin(2 * np.pi * n * x / l0)
-    # return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
-    return 2 / l0 * quad(get_Y, 0, l0)[0]
+    return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
+    # return 2 / l0 * quad(get_Y, 0, l0)[0]
 
 
 def get_An_array(xx, zz, l0, N):
@@ -99,8 +88,6 @@ def get_An_array(xx, zz, l0, N):
         return mf.lin_lin_interp(xx, zz)(x)
 
     An_array = np.zeros(N)
-
-    # An_array[0] = get_An(func, -l0 / 2, l0 / 2) / 2
     An_array[0] = get_An(func, 0, l0) / 2
 
     progress_bar = tqdm(total=N, position=0)
@@ -125,14 +112,6 @@ def get_Bn_array(xx, zz, l0, N):
         progress_bar.update()
 
     return Bn_array
-
-
-def get_h_at_t_even(xx, An_array, tau_n_array, l0, t):
-    result = np.zeros(len(xx))
-    result += An_array[0]
-    for n in range(1, len(An_array)):
-        result += An_array[n] * np.exp(-t / tau_n_array[n]) * np.cos(2 * np.pi * n * xx / l0)
-    return result
 
 
 def get_h_at_t(xx, An_array, Bn_array, tau_n_array, l0, t):
