@@ -28,7 +28,7 @@ sf = importlib.reload(sf)
 
 # %%
 def get_e_DATA_PMMA_val(xx, zz_vac, n_electrons, r_beam=100e-7):
-    d_PMMA = 80e-7
+    d_PMMA = 100e-7
     ly = mapping.l_y * 1e-7
     # r_beam = 100e-7
 

@@ -2,6 +2,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+import mapping_harris as mapping
+import MC_classes_DEBER as mcd
+
 
 def plot_DATA(DATA, d_PMMA=0, E_cut=5):
     print('initial size =', len(DATA))
@@ -33,9 +36,28 @@ def plot_DATA(DATA, d_PMMA=0, E_cut=5):
 
 
 # %%
-now_DATA = np.load('/Volumes/ELEMENTS/PyCharm_may/e_DATA/DATA_test.npy')
-now_DATA_P = now_DATA[np.where(now_DATA[:, 2] == 0)]
-plot_DATA(now_DATA_P, 500, E_cut=10)
+d_PMMA_cm = 100e-7
+ly = 1
+r_beam = 0
+E0 = 10e+3
+
+xx = mapping.x_centers_2nm * 1e-7
+zz_vac = np.zeros(len(xx))
+# zz_vac = np.ones(len(xx)) * np.cos(xx * np.pi / 100e-7) * d_PMMA/2
+
+structure = mcd.Structure(d_PMMA=d_PMMA_cm, xx=xx, zz_vac=zz_vac, ly=ly)
+
+simulator = mcd.Simulator(structure=structure, n_electrons=10, E0_eV=E0, r_beam=r_beam)
+simulator.prepare_e_deque()
+simulator.start_simulation()
+
+e_DATA = simulator.get_total_history()
+# np.save('data/e_DATA/DATA_test_10.npy', e_DATA)
+
+# %%
+# now_DATA = np.load('data/e_DATA/DATA_test_50.npy')
+e_DATA_P = e_DATA[np.where(e_DATA[:, 2] == 0)]
+plot_DATA(e_DATA, 500, E_cut=10)
 
 # %%
 now_DATA_Pn = np.load('data/e_DATA/DATA_test.npy')
