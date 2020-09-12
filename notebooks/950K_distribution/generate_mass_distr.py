@@ -30,8 +30,8 @@ def Flory_Schulz_mod(k, n, p, n_g, mu, sigma):
 
 #%%
 mma_mass = const.u_MMA
-Mn_0 = 27.1e+4
-Mw_0 = 66.9e+4
+Mn_0 = 27.1e+4  # from e-mail
+Mw_0 = 66.9e+4  # from e-mail
 
 x_Mn_Mw = np.ones(100)
 y_Mn_Mw = np.linspace(0, 10, len(x_Mn_Mw))

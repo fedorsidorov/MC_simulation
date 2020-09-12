@@ -95,11 +95,15 @@ plt.figure(dpi=300)
 
 for i in range(len(tt[:5])):
     zz_t_um = rf.get_h_at_t(yy_prec_um, An_array_m, Bn_array_m, tau_n_array_s, l0_m, t=tt[i]) * 1e+6
-    plt.plot(yy_prec_um, zz_t_um)
+    plt.plot(yy_prec_um, zz_t_um, label=str(tt[i]) + ' s')
     plt.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1], 'o')
 
 plt.xlim(-1, 1)
 plt.ylim(0.03, 0.07)
+plt.title(r'$\eta$ = ' + str(int(etas_SI[eta_ind])) + ' Pa s')
+plt.xlabel('x, um')
+plt.ylabel('z, um')
+plt.legend()
 plt.grid()
 plt.show()
 

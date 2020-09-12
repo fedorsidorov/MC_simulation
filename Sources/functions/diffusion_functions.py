@@ -7,9 +7,9 @@ from tqdm import tqdm
 
 
 # %%
-def get_D(T):
+def get_D(T, wp=1):
     dT = T - 120
-    wp = 1  # polymer weight fraction
+    # wp = 1  # polymer weight fraction
     C1, C2, C3, C4 = 26.0, 37.0, 0.0797, 0
     log_D = wp * dT * C4 + (C1 - wp * C2) + dT * C3
     return 10**log_D
@@ -19,16 +19,16 @@ def get_D(T):
 # D = 3.16e-6 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
 # D = 3.16e-5 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
 
-T_C = 140
+# T_C = 140
 
-D = get_D(T_C)
+# D = get_D(T_C)
 
-delta_t = 1e-7  # s
-sigma = np.sqrt(2 * D * delta_t)
+# delta_t = 1e-7  # s
+# sigma = np.sqrt(2 * D * delta_t)
 
-xx = np.linspace(-3 * sigma, 3 * sigma, 100)
-probs = 1 / (sigma * np.sqrt(2 * np.pi)) * np.exp(-xx ** 2 / (2 * sigma ** 2))
-probs_norm = probs / np.sum(probs)
+# xx = np.linspace(-3 * sigma, 3 * sigma, 100)
+# probs = 1 / (sigma * np.sqrt(2 * np.pi)) * np.exp(-xx ** 2 / (2 * sigma ** 2))
+# probs_norm = probs / np.sum(probs)
 
 # plt.figure(dpi=300)
 # plt.plot(xx, probs, 'o')
@@ -36,7 +36,13 @@ probs_norm = probs / np.sum(probs)
 
 
 # %%
-def get_delta_coord_fast():
+def get_delta_coord_fast(T_C, wp):
+    D = get_D(T_C)
+    delta_t = 1e-6  # s
+    sigma = np.sqrt(2 * D * delta_t)
+    xx = np.linspace(-3 * sigma, 3 * sigma, 100)
+    probs = 1 / (sigma * np.sqrt(2 * np.pi)) * np.exp(-xx ** 2 / (2 * sigma ** 2))
+    probs_norm = probs / np.sum(probs)
     return np.random.choice(xx, p=probs_norm)
 
 

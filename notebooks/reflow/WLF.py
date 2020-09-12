@@ -24,5 +24,5 @@ def get_viscosity_W(T, Mw):  # aho2008.pdf, bueche1955.pdf
 temp = np.linspace(120, 170)
 
 plt.figure(dpi=300)
-plt.semilogy(temp, get_viscosity_W(temp, 669e+3))
+plt.semilogy(temp, get_viscosity_W(temp, 80e+3))
 plt.show()
