@@ -32,6 +32,13 @@ def get_viscosity_W(T, Mw):  # aho2008.pdf, bueche1955.pdf
     return eta_final
 
 
+def get_SE_mobility(eta):
+    k = 1.0043796246664092
+    b = -3.8288826121816815
+    time2scale = np.exp(np.log(eta) * k + b)
+    mobility = 1/time2scale
+    return mobility
+
 # temp = np.linspace(120, 170)
 #
 # plt.figure(dpi=300)

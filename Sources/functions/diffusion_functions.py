@@ -1,13 +1,16 @@
-from collections import deque
-
+import importlib
 import matplotlib.pyplot as plt
+from functions import MC_functions as mcf
 import numpy as np
-from sympy import erfinv
 from tqdm import tqdm
+import mapping_exp_100_3 as mapping
+
+mcf = importlib.reload(mcf)
+mapping = importlib.reload(mapping)
 
 
 # %%
-def get_D(T, wp=1):
+def get_D(T, wp=1):  # in cm^2 / s
     dT = T - 120
     # wp = 1  # polymer weight fraction
     C1, C2, C3, C4 = 26.0, 37.0, 0.0797, 0
@@ -15,123 +18,87 @@ def get_D(T, wp=1):
     return 10**log_D
 
 
-# D = 3.16e-7 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
-# D = 3.16e-6 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
-# D = 3.16e-5 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
-
-# T_C = 140
-
-# D = get_D(T_C)
-
-# delta_t = 1e-7  # s
-# sigma = np.sqrt(2 * D * delta_t)
-
-# xx = np.linspace(-3 * sigma, 3 * sigma, 100)
-# probs = 1 / (sigma * np.sqrt(2 * np.pi)) * np.exp(-xx ** 2 / (2 * sigma ** 2))
-# probs_norm = probs / np.sum(probs)
-
-# plt.figure(dpi=300)
-# plt.plot(xx, probs, 'o')
-# plt.show()
-
-
-# %%
-def get_delta_coord_fast(T_C, wp):
-    D = get_D(T_C)
-    delta_t = 1e-6  # s
-    sigma = np.sqrt(2 * D * delta_t)
+def get_delta_coord(T_C, wp=1):  # nanometers!!!
+    D = get_D(T_C, wp)  # in cm^2 / s
+    dt = 1e-6  # s
+    sigma = np.sqrt(2 * D * dt)
     xx = np.linspace(-3 * sigma, 3 * sigma, 100)
     probs = 1 / (sigma * np.sqrt(2 * np.pi)) * np.exp(-xx ** 2 / (2 * sigma ** 2))
     probs_norm = probs / np.sum(probs)
-    return np.random.choice(xx, p=probs_norm)
+    return np.random.choice(xx, p=probs_norm) * 1e+7
 
 
-# def get_delta_coord(D, t):
-#     arg = erfinv(np.random.random()) * np.sqrt(2)
-#     coord = arg * np.sqrt(2 * D * t)
-#     return coord * np.random.choice([1, -1])
+def get_delta_xyz(D, t):
+    x = get_delta_coord(D, t)
+    y = get_delta_coord(D, t)
+    z = get_delta_coord(D, t)
+    return np.array((x, y, z), dtype=float)
 
 
-# def get_delta_xyz(D, t):
-#     x = get_delta_coord(D, t)
-#     y = get_delta_coord(D, t)
-#     z = get_delta_coord(D, t)
-#     return np.array((x, y, z), dtype=float)
+def track_monomer(x0, z0, xx, zz_vac, d_PMMA, T_C):  # nanometers!!!
 
+    def get_z_vac_for_x(x):
+        if x > np.max(xx):
+            return zz_vac[-1]
+        elif x < np.min(xx):
+            return zz_vac[0]
+        else:
+            return mcf.lin_lin_interp(xx, zz_vac)(x)
 
-def track_monomer(xz_0, l_xz):
-    now_x = xz_0[0]
-    now_z = xz_0[1]
+    pos_max = 100000
 
-    pos_max = 1000
-
-    # history_x = np.zeros(pos_max)
-    # history_z = np.zeros(pos_max)
-    # history_x[0] = now_x
-    # history_z[0] = now_z
+    history_x = np.zeros(pos_max)
+    history_z = np.zeros(pos_max)
+    history_x[0] = x0
+    history_z[0] = z0
 
     pos = 1
 
-    while now_z >= 0 and pos < pos_max:
-        now_x += get_delta_coord_fast()
+    now_x = x0
+    now_z = z0
 
-        delta_z = get_delta_coord_fast()
+    while now_z > get_z_vac_for_x(now_x):  # and pos < pos_max:
 
-        if now_z + delta_z > l_xz[1]:
+        now_x += get_delta_coord(T_C)
+        delta_z = get_delta_coord(T_C)
+
+        if now_z + delta_z > d_PMMA:
             now_z -= delta_z
         else:
             now_z += delta_z
 
-        # history_x[pos] = now_x
-        # history_z[pos] = now_z
+        history_x[pos] = now_x
+        history_z[pos] = now_z
 
         pos += 1
 
-        # if pos == pos_max:
-        #     print('overload')
-        #     break
+        if pos == pos_max:
+            print('overload')
+            break
 
-    # return history_x, history_z, pos
-    return now_x
+    return history_x, history_z, pos
 
 
 # %%
-# D = 3.16e-6 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
-# delta_t = 1e-6  # s
-#
-# x_0, z_0 = -356, 44
-# l_x, l_z = 3300, 80
-#
-# N = 10000
-#
-# progress_bar = tqdm(total=N, position=0)
-#
-# for i in range(N):
-#     x_h, z_h, cnt = track_monomer([x_0, z_0], [l_x, l_z])
-    # z_escape = track_monomer([x_0, z_0], [l_x, l_z])
-    # progress_bar.update()
+T_C = 140
+delta_t = 1e-6  # s
+d_PMMA = 100
+x0, z0 = 100, 90
 
+x_arr = mapping.x_centers_2nm
+z_vac_arr = np.ones(len(x_arr)) * np.cos(x_arr * np.pi / 2000 / 20) * d_PMMA / 2
 
-# plt.figure(dpi=300)
-# plt.plot(x_h, z_h, 'o-')
-# plt.show()
+N = 1
 
-# %%
-# array = np.zeros((1000, 3))
-#
-# now_coords = np.array((0, 0, 0), dtype=float)
-#
-# progress_bar = tqdm(total=len(array), position=0)
-#
-# for i in range(len(array)):
-#     array[i, :] = now_coords
-#     now_coords += get_delta_xyz(3.1e-6, 1e-6)
-#     progress_bar.update()
-#
-# # %%
-# plt.figure(dpi=300)
-# plt.plot(array[:, 0], array[:, 1])
-#
-# plt.xlim(-0.00005, 0.00005)
-# plt.ylim(-0.00005, 0.00005)
-# plt.show()
+progress_bar = tqdm(total=N, position=0)
+
+plt.figure(dpi=300)
+
+for i in range(N):
+    x_h, z_h, cnt = track_monomer(x0, z0, x_arr, z_vac_arr, d_PMMA, T_C)
+    plt.plot(x_h[:cnt], z_h[:cnt], 'o-')
+    # z_escape = track_monomer(x0, z0, xx, zz_vac, d_PMMA, T_C)
+    progress_bar.update()
+
+plt.plot(x_arr, z_vac_arr)
+plt.show()

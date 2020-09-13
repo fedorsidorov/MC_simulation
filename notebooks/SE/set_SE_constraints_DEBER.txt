@@ -1,0 +1,132 @@
+/*--------------------SIMULATION START--------------------*/
+read
+
+defmob := {foreach vertex vv do {set vv vmob now_vmob}}
+
+set_v_constraint_1 := {
+	foreach vertex vv do {if vv.z == 0 then set vv constraint 1}
+	}
+
+set_v_constraints_11_33 := {
+	foreach vertex vv do {
+		if vv.x = -lx/2 then set vv constraint 11;
+		if vv.x = lx/2 then set vv constraint 33;
+		}
+	}
+
+set_v_constraints_22_44 := {
+	foreach vertex vv do {
+		if vv.y = -ly/2 then set vv constraint 22;
+		if vv.y = ly/2 then set vv constraint 44;
+		}
+	}
+
+set_e_constraint_1 := {
+	foreach edge ee do {
+		cnt := 0;
+		foreach ee.vertices vv do {
+			if vv.z == 0 then cnt := cnt + 1
+			};
+		if cnt == 2 then set ee constraint 1
+		};
+	}
+
+set_e_constraint_11_33 := {
+	foreach edge ee do {
+		cnt := 0;
+		foreach ee.vertices vv do {
+			if vv.x == -lx/2 then cnt := cnt - 1;
+			if vv.x == lx/2 then cnt := cnt + 1
+			};
+		if cnt == -2 then set ee constraint 11;
+		if cnt == 2 then set ee constraint 33
+		};
+	}
+
+set_e_constraint_22_44 := {
+	foreach edge ee do {
+		cnt := 0;
+		foreach ee.vertices vv do {
+			if vv.y == -ly/2 then cnt := cnt - 1;
+			if vv.y == ly/2 then cnt := cnt + 1
+			};
+		if cnt == -2 then set ee constraint 22;
+		if cnt == 2 then set ee constraint 44
+		};
+	}
+
+set_f_tension_resist := {foreach facet ff do {set ff tension TENS_r}}
+
+set_f_tension_surface := {
+	foreach facet ff do {
+		cnt := 0;
+		foreach ff.vertices vv do {
+			if vv.z == 0 then cnt := cnt + 1
+			};
+		if cnt == 3 then set ff tension TENS_s
+		}
+	}
+
+set_f_tension_mirror := {
+	foreach facet ff do {
+		cnt := 0;
+		foreach ff.vertices vv do {
+			if vv.x == -lx/2 then cnt := cnt - 1;
+			if vv.x == lx/2 then cnt := cnt + 1
+			};
+		if abs(cnt) == 3 then set ff tension TENS_m;
+		};
+	foreach facet ff do {
+		cnt := 0;
+		foreach ff.vertices vv do {
+			if vv.y == -ly/2 then cnt := cnt - 1;
+			if vv.y == ly/2 then cnt := cnt + 1
+			};
+		if abs(cnt) == 3 then set ff tension TENS_m;
+		}
+	}
+
+color_TENS_m_faces := {set facet color brown where tension == TENS_m}
+
+color_TENS_s_faces := {set facet color cyan where tension == TENS_s}
+
+color_TENS_r_faces := {set facet color yellow where tension == TENS_r}
+
+prepare_surface := {
+	set_v_constraint_1;
+	set_v_constraints_11_33;
+	set_v_constraints_22_44;
+	set_e_constraint_1;
+	set_e_constraint_11_33;
+	set_e_constraint_22_44;
+	set_f_tension_resist;
+	set_f_tension_surface;
+	set_f_tension_mirror;
+	color_TENS_m_faces;
+	color_TENS_s_faces;
+	color_TENS_r_faces;
+	area_normalization
+	}
+
+loopit := {g10; w 0.001; w 0.001; V}
+
+save := {
+	foreach vertex do {
+		if x < 1 then if x > -1 then printf "%f %f %f\n", x, y, z >> "vlist.txt";
+		}
+	}
+
+ebash := {
+	prepare_surface;
+	m 0.1;
+	cnt := 0;
+	save;
+	printf "%f %f %f\n", total_time, -100., -100. >> "vlist.txt";
+	while cnt < 1000 do {
+		loopit 5;
+		save;
+		printf "%f %f %f\n", total_time, -100., -100. >> "vlist.txt";
+		cnt := cnt + 1;
+		print cnt;
+		};
+	}
