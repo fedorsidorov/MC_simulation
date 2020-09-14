@@ -6,7 +6,7 @@ from functions import chain_functions as cf
 from functions import array_functions as af
 from functions import plot_functions as pf
 from tqdm import tqdm
-# import mapping_harris as mapping
+# import mapping_harris as _outdated
 from collections import deque
 import mapping_aktary as mapping
 import constants as cp
@@ -100,8 +100,8 @@ for _ in range(n_iterations):
 
         hist_2nm += np.histogramdd(now_chain_shifted, bins=mapping.bins_2nm)[0]
 
-    # n_empty = np.prod(mapping.hist_2nm_shape) - np.count_nonzero(hist_2nm)
-    # part_empty = n_empty / np.prod(mapping.hist_2nm_shape)
+    # n_empty = np.prod(_outdated.hist_2nm_shape) - np.count_nonzero(hist_2nm)
+    # part_empty = n_empty / np.prod(_outdated.hist_2nm_shape)
 
     # if part_empty < best_part_empty:
     #     best_chains = final_chain_deque

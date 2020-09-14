@@ -1,8 +1,9 @@
 import importlib
 import numpy as np
 import constants as const
-import mapping_harris as mapping
-# import mapping_aktary as mapping
+from mapping import mapping_harris as mapping
+
+# import mapping_aktary as _outdated
 
 const = importlib.reload(const)
 mapping = importlib.reload(mapping)

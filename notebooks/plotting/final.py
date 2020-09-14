@@ -3,7 +3,7 @@ import importlib
 import matplotlib.pyplot as plt
 import numpy as np
 
-import mapping_exp_80nm_Camscan as mapping
+from mapping import mapping_3p3um_80nm as mapping
 from functions import reflow_functions as rf
 from functions import DEBER_functions as deber
 
@@ -46,7 +46,7 @@ fig.set_size_inches(3.5, 3.5)
 
 font_size = 8
 
-exp_prof = np.loadtxt('data/DEBER_profiles/Camscan_80nm/Camscan_new.txt')
+exp_prof = np.loadtxt('data/deber_profiles/Camscan_80nm/Camscan_new.txt')
 
 beg, end = 40, 170
 exp_xx = exp_prof[beg:end, 0] - 2960

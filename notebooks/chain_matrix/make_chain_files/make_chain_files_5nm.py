@@ -6,8 +6,9 @@ from tqdm import tqdm
 import matplotlib.pyplot as plt
 
 import constants as cp
-import mapping_harris as mapping
-# import mapping_aktary as mapping
+from mapping import mapping_harris as mapping
+
+# import mapping_aktary as _outdated
 
 mapping = importlib.reload(mapping)
 cp = importlib.reload(cp)

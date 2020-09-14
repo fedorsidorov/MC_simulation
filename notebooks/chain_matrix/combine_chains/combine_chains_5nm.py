@@ -5,8 +5,8 @@ from functions import chain_functions as cf
 from functions import array_functions as af
 from functions import plot_functions as pf
 from tqdm import tqdm
-import mapping_harris as mapping
-# import mapping_aktary as mapping
+from mapping import mapping_harris as mapping
+# import mapping_aktary as _outdated
 import constants as const
 
 cf = importlib.reload(cf)

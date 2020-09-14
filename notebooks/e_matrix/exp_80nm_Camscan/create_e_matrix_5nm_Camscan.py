@@ -1,12 +1,11 @@
 import importlib
 
-import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
 
 import constants as const
 import indexes as ind
-import mapping_exp_80nm_Camscan as mapping
+from mapping import mapping_3p3um_80nm as mapping
 from functions import array_functions as af
 from functions import e_matrix_functions as emf
 from functions import plot_functions as pf
@@ -37,7 +36,7 @@ n_electrons_per_sweep = n_electrons_per_sweep_per_cm * delta_y_cm
 
 time_for_10_electrons = 10 / n_electrons_per_sweep * sweep_time
 
-# n_electrons_required = emf.get_n_electrons_1D(dose_pC_cm, mapping.y_max - mapping.y_min)
+# n_electrons_required = emf.get_n_electrons_1D(dose_pC_cm, _outdated.y_max - _outdated.y_min)
 n_electrons_required = int(np.round(line_area_cm2_per_cm * 20e-7 * 0.6e-6 / const.e_SI))
 n_electrons = 0
 
@@ -53,8 +52,8 @@ n_files = 500
 primary_electrons_in_file = 100
 file_cnt = 0
 
-# e_matrix_val_exc_sci = np.zeros(mapping.hist_2nm_shape)
-# e_matrix_val_ion_sci = np.zeros(mapping.hist_2nm_shape)
+# e_matrix_val_exc_sci = np.zeros(_outdated.hist_2nm_shape)
+# e_matrix_val_ion_sci = np.zeros(_outdated.hist_2nm_shape)
 e_matrix_val_sci = np.zeros(mapping.hist_2nm_shape)
 e_matrix_E_dep = np.zeros(mapping.hist_2nm_shape)
 
@@ -83,8 +82,8 @@ for _ in range(n_files_required):
         #     x_ind=ind.DATA_x_ind,
         #     y_ind=ind.DATA_y_ind,
         #     z_ind=ind.DATA_z_ind,
-        #     xyz_min=[mapping.x_min, mapping.y_min, -np.inf],
-        #     xyz_max=[mapping.x_max, mapping.y_max, np.inf]
+        #     xyz_min=[_outdated.x_min, _outdated.y_min, -np.inf],
+        #     xyz_max=[_outdated.x_max, _outdated.y_max, np.inf]
         # )
 
         e_matrix_E_dep += np.histogramdd(

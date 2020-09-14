@@ -6,7 +6,7 @@ import numpy as np
 from tqdm import tqdm
 
 import constants as const
-import mapping_exp_80nm_Camscan as mapping
+from mapping import mapping_3p3um_80nm as mapping
 from functions import diffusion_functions as df
 
 df = importlib.reload(df)

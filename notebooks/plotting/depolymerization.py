@@ -1,8 +1,7 @@
 import matplotlib.pyplot as plt
-import matplotlib
 import numpy as np
 from functions import plot_functions as pf
-import mapping_harris as const_m
+from mapping import mapping_harris as const_m
 # import mapping_aktary as const_m
 import importlib
 pf = importlib.reload(pf)

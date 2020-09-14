@@ -1,6 +1,4 @@
-import copy
 import importlib
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy import interpolate
 from tqdm import tqdm
@@ -8,7 +6,7 @@ from tqdm import tqdm
 import MC_classes_DEBER as mcd
 import constants as const
 import indexes as ind
-import mapping_exp_80nm_Camscan as mapping
+from mapping import mapping_3p3um_80nm as mapping
 from functions import array_functions as af
 from functions import diffusion_functions as df
 from functions import e_matrix_functions as emf
@@ -202,7 +200,7 @@ def get_h_at_t(xx_cm, An_array, Bn_array, tau_n_array, l0_cm, t):
 
 
 # %%
-# xx = mapping.x_centers_2nm * 1e-7
+# xx = _outdated.x_centers_2nm * 1e-7
 # zz_vac = np.zeros(len(xx))
 # zip_length = 1000
 # d_PMMA = 80e-7

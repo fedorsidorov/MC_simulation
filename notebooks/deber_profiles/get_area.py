@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # %%
-prof = np.loadtxt('data/DEBER_profiles/Ultra_4s.txt')
+prof = np.loadtxt('data/deber_profiles/Ultra_4s.txt')
 
 xx = prof[:, 0]
 yy = prof[:, 1]

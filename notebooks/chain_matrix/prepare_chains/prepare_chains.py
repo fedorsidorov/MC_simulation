@@ -6,8 +6,8 @@ import numpy as np
 from tqdm import tqdm
 
 import constants as cp
-import mapping_harris as mapping
-# import mapping_aktary as mapping
+from mapping import mapping_harris as mapping
+# import mapping_aktary as _outdated
 from functions import array_functions as af
 from functions import chain_functions as cf
 

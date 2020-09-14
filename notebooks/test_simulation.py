@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# import mapping_harris as mapping
+# import mapping_harris as _outdated
 import mapping_exp_100_3 as mapping
 import MC_classes_DEBER as mcd
 

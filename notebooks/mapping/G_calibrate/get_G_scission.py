@@ -5,7 +5,7 @@ import numpy as np
 from scipy.optimize import curve_fit
 
 import constants as const
-import mapping_harris as mapping
+from mapping import mapping_harris as mapping
 
 const = importlib.reload(const)
 mapping = importlib.reload(mapping)

@@ -18,9 +18,9 @@ sf = importlib.reload(sf)
 mapping = importlib.reload(mapping)
 
 # %% get e-matrix
-# e_matrix_val_exc_sci = np.zeros(mapping.hist_2nm_shape)
-# e_matrix_val_ion_sci = np.zeros(mapping.hist_2nm_shape)
-# e_matrix_E_dep = np.zeros(mapping.hist_2nm_shape)
+# e_matrix_val_exc_sci = np.zeros(_outdated.hist_2nm_shape)
+# e_matrix_val_ion_sci = np.zeros(_outdated.hist_2nm_shape)
+# e_matrix_E_dep = np.zeros(_outdated.hist_2nm_shape)
 
 e_matrix_val_exc_sci = np.zeros(mapping.hist_4nm_shape)
 e_matrix_val_ion_sci = np.zeros(mapping.hist_4nm_shape)
@@ -32,7 +32,7 @@ dose_pC_cm = 150
 # x_positions = [25, 75]
 r_beam = 1
 
-# n_electrons_required = emf.get_n_electrons_2D(dose_C_cm2, 2 * r_beam, mapping.l_y)
+# n_electrons_required = emf.get_n_electrons_2D(dose_C_cm2, 2 * r_beam, _outdated.l_y)
 n_electrons_required = emf.get_n_electrons_1D(dose_pC_cm, mapping.l_y)
 
 source = '/Users/fedor/PycharmProjects/MC_simulation/data/e_DATA/combine_chains/'
@@ -76,7 +76,7 @@ for x_position in x_positions:
 
             e_matrix_E_dep += np.histogramdd(
                 sample=now_prim_e_DATA[:, ind.DATA_coord_inds],
-                # bins=mapping.bins_2nm,
+                # bins=_outdated.bins_2nm,
                 bins=mapping.bins_4nm,
                 weights=now_prim_e_DATA[:, ind.DATA_E_dep_ind]
             )[0]
@@ -90,14 +90,14 @@ for x_position in x_positions:
 
             e_matrix_val_exc_sci += np.histogramdd(
                 sample=now_prim_e_val_DATA[inds_exc, :][:, ind.DATA_coord_inds],
-                # bins=mapping.bins_2nm,
+                # bins=_outdated.bins_2nm,
                 bins=mapping.bins_4nm,
                 weights=scissions[inds_exc]
             )[0]
 
             e_matrix_val_ion_sci += np.histogramdd(
                 sample=now_prim_e_val_DATA[inds_ion, :][:, ind.DATA_coord_inds],
-                # bins=mapping.bins_2nm,
+                # bins=_outdated.bins_2nm,
                 bins=mapping.bins_4nm,
                 weights=scissions[inds_ion]
             )[0]

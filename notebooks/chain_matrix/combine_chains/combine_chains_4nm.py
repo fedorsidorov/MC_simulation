@@ -5,7 +5,7 @@ from functions import chain_functions as cf
 from functions import array_functions as af
 from functions import plot_functions as pf
 from tqdm import tqdm
-# import mapping_harris as mapping
+# import mapping_harris as _outdated
 import mapping_aktary as mapping
 import constants as const
 

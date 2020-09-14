@@ -1,12 +1,11 @@
 import importlib
 import os
 
-import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
 
 import constants as cp
-import mapping_harris as mapping
+from mapping import mapping_harris as mapping
 from functions import array_functions as af
 from functions import chain_functions as cf
 

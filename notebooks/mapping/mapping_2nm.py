@@ -5,8 +5,8 @@ from tqdm import tqdm
 
 import constants as const
 import indexes
-import mapping_harris as mapping
-# import mapping_aktary as mapping
+from mapping import mapping_harris as mapping
+# import mapping_aktary as _outdated
 from functions import mapping_functions as mf
 
 
@@ -35,7 +35,7 @@ for n in range(n_chains):
 
 resist_shape = mapping.hist_2nm_shape
 
-# %% mapping
+# %% _outdated
 n_scissions_moved = 0
 progress_bar = tqdm(total=resist_shape[0], position=0)
 

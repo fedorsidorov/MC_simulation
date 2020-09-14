@@ -3,9 +3,8 @@ import importlib
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import interpolate
-from tqdm import tqdm
 
-import mapping_exp_80nm_Camscan as mapping
+from mapping import mapping_3p3um_80nm as mapping
 from functions import DEBER_functions as deber
 from functions import diffusion_functions as df
 

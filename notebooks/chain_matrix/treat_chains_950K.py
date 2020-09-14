@@ -2,12 +2,11 @@ import importlib
 import os
 from collections import deque
 
-import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
 
 import constants as cp
-import mapping_exp_80nm_Camscan as mapping
+from mapping import mapping_3p3um_80nm as mapping
 from functions import array_functions as af
 from functions import chain_functions as cf
 

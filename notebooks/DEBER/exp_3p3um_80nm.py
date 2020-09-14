@@ -4,11 +4,11 @@ import warnings
 import matplotlib.pyplot as plt
 import numpy as np
 
-import MC_classes_DEBER as mcd
-import mapping_exp_80nm_Camscan as mapping
+import MC_classes as mcc
+from mapping import mapping_3p3um_80nm as mapping
 from functions import DEBER_functions as deber
 
-mcd = importlib.reload(mcd)
+mcc = importlib.reload(mcc)
 deber = importlib.reload(deber)
 mapping = importlib.reload(mapping)
 

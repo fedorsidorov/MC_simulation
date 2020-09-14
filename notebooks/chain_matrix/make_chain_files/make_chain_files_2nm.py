@@ -6,9 +6,9 @@ import numpy as np
 from tqdm import tqdm
 
 import constants as cp
-import mapping_harris as mapping
+from mapping import mapping_harris as mapping
 
-# import mapping_aktary as mapping
+# import mapping_aktary as _outdated
 
 mapping = importlib.reload(mapping)
 cp = importlib.reload(cp)

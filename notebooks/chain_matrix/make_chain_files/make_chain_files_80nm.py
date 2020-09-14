@@ -5,7 +5,7 @@ import numpy as np
 from tqdm import tqdm
 
 import constants as cp
-import mapping_exp_80nm_Camscan as mapping
+from mapping import mapping_3p3um_80nm as mapping
 
 mapping = importlib.reload(mapping)
 cp = importlib.reload(cp)

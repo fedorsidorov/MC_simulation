@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 import constants as const
 import indexes
-import mapping_harris as mapping
+from mapping import mapping_harris as mapping
 from functions import mapping_functions as mf
 
 mapping = importlib.reload(mapping)
@@ -38,7 +38,7 @@ for weight in ['0.425']:
 
     resist_shape = mapping.hist_5nm_shape
 
-    # mapping
+    # _outdated
     n_scissions_moved = 0
     progress_bar = tqdm(total=resist_shape[0], position=0)
 

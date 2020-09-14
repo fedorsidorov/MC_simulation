@@ -8,7 +8,7 @@ from functions import array_functions as af
 from functions import e_matrix_functions as emf
 from functions import plot_functions as pf
 from functions import scission_functions as sf
-import mapping_harris as mapping
+from mapping import mapping_harris as mapping
 
 mapping = importlib.reload(mapping)
 emf = importlib.reload(emf)

@@ -31,7 +31,7 @@ for n in range(n_chains):
 
 resist_shape = mapping.hist_5nm_shape
 
-# %% mapping
+# %% _outdated
 n_scissions_moved = 0
 progress_bar = tqdm(total=resist_shape[0], position=0)
 

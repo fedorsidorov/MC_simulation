@@ -5,7 +5,7 @@ from functions import chain_functions as cf
 from functions import array_functions as af
 from functions import plot_functions as pf
 from tqdm import tqdm
-import mapping_exp_80nm_Camscan as mapping
+from mapping import mapping_3p3um_80nm as mapping
 import constants as const
 
 cf = importlib.reload(cf)

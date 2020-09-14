@@ -1,7 +1,6 @@
 import importlib
-import matplotlib.pyplot as plt
 import numpy as np
-import mapping_harris as mapping
+from mapping import mapping_harris as mapping
 import MC_classes_DEBER as mcd
 
 mcd = importlib.reload(mcd)
@@ -15,7 +14,7 @@ mapping = importlib.reload(mapping)
 #
 # E0 = 10e+3
 #
-# xx = mapping.x_centers_2nm * 1e-7
+# xx = _outdated.x_centers_2nm * 1e-7
 # zz_vac = np.ones(len(xx)) * np.cos(xx * np.pi / 100e-7) * d_PMMA/2
 
 # plt.figure(dpi=300)

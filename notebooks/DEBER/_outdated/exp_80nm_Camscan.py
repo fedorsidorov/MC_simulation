@@ -4,7 +4,7 @@ import importlib
 
 import numpy as np
 import MC_classes_DEBER as mcd
-import mapping_exp_80nm_Camscan as mapping
+from mapping import mapping_3p3um_80nm as mapping
 from functions import DEBER_functions as deber
 mcd = importlib.reload(mcd)
 deber = importlib.reload(deber)

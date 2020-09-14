@@ -10,7 +10,7 @@ from functions import plot_functions as pf
 from functions import scission_functions as sf
 from functions import G_functions as Gf
 
-import mapping_harris as mapping
+from mapping import mapping_harris as mapping
 
 mapping = importlib.reload(mapping)
 emf = importlib.reload(emf)

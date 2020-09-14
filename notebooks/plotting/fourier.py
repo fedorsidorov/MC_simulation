@@ -3,7 +3,7 @@ import importlib
 import matplotlib.pyplot as plt
 import numpy as np
 
-import mapping_exp_80nm_Camscan as mapping
+from mapping import mapping_3p3um_80nm as mapping
 from functions import reflow_functions as rf
 from functions import DEBER_functions as deber
 

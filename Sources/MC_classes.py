@@ -19,7 +19,7 @@ utils = importlib.reload(utils)
 
 class Electron:
 
-    def __init__(self, e_id, parent_e_id, E, coords, O_matrix, d_PMMA):
+    def __init__(self, e_id, parent_e_id, E, coords, O_matrix, structure):
         self.e_id = e_id
         self.parent_e_id = parent_e_id
         self.E = E
@@ -27,7 +27,7 @@ class Electron:
         self.O_matrix = O_matrix
         self.history = deque()
         self.x0 = np.mat([[0.], [0.], [1.]])
-        self.d_PMMA = d_PMMA
+        self.structure = structure
         self.layer_ind = indxs.vacuum_ind
         self.E_ind = 0
         self.n_steps = 0
@@ -41,7 +41,7 @@ class Electron:
     def get_delta_s_for_step_considering_interface(self, IMFP_PMMA, IMFP_Si, u1, free_path, z1, z2):
         p1 = [IMFP_PMMA, IMFP_Si][self.layer_ind]
         p2 = [IMFP_PMMA, IMFP_Si][1 - self.layer_ind]
-        scale_factor = np.abs(self.d_PMMA - z1) / np.abs(z2 - z1)
+        scale_factor = np.abs(self.structure.d_PMMA - z1) / np.abs(z2 - z1)
         d = free_path * scale_factor
 
         if u1 < (1 - np.exp(-p1 * d)) or self.E_ind < indxs.Si_E_cut_ind:
@@ -108,19 +108,21 @@ class Electron:
         free_path = -1 / now_IMFP * np.log(u1)
         delta_r = np.matmul(self.O_matrix.transpose(), self.x0) * free_path
         next_coords = self.coords + delta_r
-        z1, z2 = self.coords[2, 0], next_coords[2, 0]
+        z1 = self.coords[2, 0]
+        x2, z2 = next_coords[0, 0], next_coords[2, 0]
 
-        if (z1 < self.d_PMMA) ^ (z2 < self.d_PMMA):  # interface crossing
+        if (z1 < self.structure.d_PMMA) ^ (z2 < self.structure.d_PMMA):  # interface crossing
             self.make_simple_step(
                 self.get_delta_s_for_step_considering_interface(IMFP_PMMA, IMFP_Si, u1, free_path, z1, z2)
             )
-        elif z2 < 0:
+        elif z2 < self.structure.get_z_vac_for_x(x2):
             cos_theta = np.dot(self.get_flight_vector_list(), [0., 0., -1.])
 
             if np.random.random() < self.get_T_PMMA(self.E * cos_theta ** 2):  # electron emerges
                 self.make_simple_step(free_path)
             else:  # electron scatters from PMMA-vacuum surface
-                scale_factor = self.coords[2, 0] / np.abs(delta_r[2, 0])  # z / dz
+                # scale_factor = self.coords[2, 0] / np.abs(delta_r[2, 0])  # z / dz
+                scale_factor = 0  # hot fix lol
                 self.make_simple_step(free_path * scale_factor)  # go to surface
                 self.write_state_to_history(-1, 0, 0)  # write state
                 self.O_matrix[:, 2] *= -1  # change flight direction - CHECK!!!
@@ -153,11 +155,11 @@ class Electron:
     def update_E_ind(self):
         self.E_ind = np.argmin(np.abs(grid.EE - self.E))
 
-    def update_layer_ind(self, structure):
-        if self.coords[2, 0] >= self.d_PMMA:
+    def update_layer_ind(self):
+        if self.coords[2, 0] >= self.structure.d_PMMA:
             self.layer_ind = indxs.Si_ind
         else:
-            z_interface = structure.get_z_vac_for_x(self.coords[0, 0])
+            z_interface = self.structure.get_z_vac_for_x(self.coords[0, 0])
             if self.coords[2, 0] >= z_interface:
                 self.layer_ind = indxs.PMMA_ind
             else:
@@ -172,8 +174,11 @@ class Electron:
 
 class Structure:
 
-    def __init__(self, d_PMMA_cm, lx_cm):
-        self.d_PMMA = d_PMMA_cm
+    def __init__(self, d_PMMA, xx, zz_vac, ly):  # in cm !!!
+        self.d_PMMA = d_PMMA
+        self.xx = xx
+        self.zz_vac = zz_vac
+        self.ly = ly
 
         self.IMFP_norm = [arrays.PMMA_IMFP_norm, arrays.Si_IMFP_norm]
         self.total_IMFP = [arrays.PMMA_total_IMFP, arrays.Si_total_IMFP]
@@ -197,9 +202,6 @@ class Structure:
 
         self.W_phonon = const.W_phonon
         self.Wf_PMMA = const.Wf_PMMA
-
-        self.xx = np.linspace(-lx_cm / 2, lx_cm / 2, 1000)
-        self.zz = np.ones(len(self.xx)) * d_PMMA_cm
 
     def get_d_PMMA(self):
         return self.d_PMMA
@@ -248,17 +250,17 @@ class Structure:
         probs = self.IMFP_norm[electron.get_layer_ind()][electron.get_E_ind()]
         return np.random.choice(inds, p=probs)
 
-    def get_z_for_x(self, x):
+    def get_z_vac_for_x(self, x):
         if x > np.max(self.xx):
-            return self.zz[-1]
+            return self.zz_vac[-1]
         elif x < np.min(self.xx):
-            return self.zz[0]
+            return self.zz_vac[0]
         else:
-            return interpolate.interp1d(self.xx, self.zz)(x)
+            return interpolate.interp1d(self.xx, self.zz_vac)(x)
 
-    def set_xx_zz(self, xx, zz):
+    def set_xx_zz(self, xx, zz_vac):
         self.xx = xx
-        self.zz = zz
+        self.zz_vac = zz_vac
 
 
 class Event:
@@ -305,7 +307,7 @@ class Event:
                     E=self.E_2nd,
                     coords=copy.deepcopy(electron.get_coords_matrix()),
                     O_matrix=copy.deepcopy(electron.get_scattered_O_matrix(phi_2nd, theta_2nd)),
-                    d_PMMA=structure.get_d_PMMA()
+                    structure=structure
                 )
 
     def secondary_generated(self):
@@ -329,11 +331,11 @@ class Event:
 
 class Simulator:
 
-    def __init__(self, d_PMMA, lx, n_electrons, E0_eV):
-        self.d_PMMA = d_PMMA
-        self.lx = lx
+    def __init__(self, structure, n_electrons, E0_eV, r_beam):
+        self.structure = structure
         self.n_electrons = n_electrons
         self.E0 = E0_eV
+        self.r_beam = r_beam
         self.e_cnt = -1
         self.electrons_deque = deque()
         self.total_history = deque()
@@ -349,18 +351,25 @@ class Simulator:
 
     def prepare_e_deque(self):
         for _ in range(self.n_electrons):
+
+            # x0 = 0
+            x0 = np.random.uniform(-self.r_beam, self.r_beam)
+            # x0 = np.random.normal(loc=0, scale=self.r_beam)
+            # y0 = 0
+            y0 = np.random.uniform(-self.structure.ly / 2, self.structure.ly / 2)
+            z0 = self.structure.get_z_vac_for_x(x0)
+
             electron = Electron(
                 e_id=self.get_new_e_id(),
                 parent_e_id=-1,
                 E=self.E0,
-                coords=np.mat([[0.], [0.], [0.]]),
+                coords=np.mat([[x0], [y0], [z0]]),
                 O_matrix=np.mat(np.eye(3)),
-                d_PMMA=self.d_PMMA
+                structure=self.structure
             )
             self.electrons_deque.append(electron)
 
     def start_simulation(self):
-        struct = Structure(self.d_PMMA, self.lx)
         progress_bar = tqdm(total=self.n_electrons, position=0)
 
         while self.electrons_deque:
@@ -369,7 +378,7 @@ class Simulator:
             if now_electron.get_parent_e_id() == -1:
                 progress_bar.update(1)
 
-            self.track_electron(now_electron, struct)
+            self.track_electron(now_electron, self.structure)
             self.total_history.append(now_electron.get_history())
 
         progress_bar.close()
