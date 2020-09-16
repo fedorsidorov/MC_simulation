@@ -3,7 +3,7 @@ import numpy as np
 from scipy import interpolate
 from tqdm import tqdm
 
-import MC_classes_DEBER as mcd
+import MC_classes as mcc
 import constants as const
 import indexes as ind
 from mapping import mapping_3p3um_80nm as mapping
@@ -17,7 +17,7 @@ mapping = importlib.reload(mapping)
 const = importlib.reload(const)
 emf = importlib.reload(emf)
 ind = importlib.reload(ind)
-mcd = importlib.reload(mcd)
+mcc = importlib.reload(mcc)
 af = importlib.reload(af)
 df = importlib.reload(df)
 rf = importlib.reload(rf)
@@ -32,13 +32,13 @@ def get_e_DATA_PMMA_val(xx, zz_vac, n_electrons, r_beam=100e-7):
 
     E0 = 20e+3
 
-    structure = mcd.Structure(
+    structure = mcc.Structure(
         d_PMMA=d_PMMA,
         xx=xx,
         zz_vac=zz_vac,
         ly=ly)
 
-    simulator = mcd.Simulator(
+    simulator = mcc.Simulator(
         structure=structure,
         n_electrons=n_electrons,
         E0_eV=E0,
@@ -56,9 +56,8 @@ def get_e_DATA_PMMA_val(xx, zz_vac, n_electrons, r_beam=100e-7):
     return e_DATA_PMMA_val
 
 
-def get_scission_matrix(e_DATA_PMMA_val):
+def get_scission_matrix_degpaths(e_DATA_PMMA_val, weight):
     deg_paths = sf.degpaths_all_WO_Oval
-    weight = 0.35
 
     af.snake_array(
         array=e_DATA_PMMA_val,
@@ -78,6 +77,39 @@ def get_scission_matrix(e_DATA_PMMA_val):
     )[0]
 
     return scission_matrix
+
+
+def get_scission_matrix(e_DATA, weight):
+
+    deg_paths = sf.degpaths_all_WO_Oval
+
+    e_DATA_PMMA_val = e_DATA[np.where(np.logical_and(e_DATA[:, ind.DATA_layer_id_ind] == ind.PMMA_ind,
+                                                     e_DATA[:, ind.DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))]
+
+    af.snake_array(
+        array=e_DATA_PMMA_val,
+        x_ind=ind.DATA_x_ind,
+        y_ind=ind.DATA_y_ind,
+        z_ind=ind.DATA_z_ind,
+        xyz_min=[mapping.x_min, mapping.y_min, -np.inf],
+        xyz_max=[mapping.x_max, mapping.y_max, np.inf]
+    )
+
+    e_matrix_E_dep = np.histogramdd(
+        sample=e_DATA_PMMA_val[:, ind.DATA_coord_inds],
+        bins=mapping.bins_5nm,
+        weights=e_DATA_PMMA_val[:, ind.DATA_E_dep_ind]
+    )[0]
+
+    scissions = sf.get_scissions(e_DATA_PMMA_val, deg_paths, weight=weight)
+
+    e_matrix_val_sci = np.histogramdd(
+        sample=e_DATA_PMMA_val[:, ind.DATA_coord_inds],
+        bins=mapping.bins_5nm,
+        weights=scissions
+    )[0]
+
+    return e_matrix_val_sci, e_matrix_E_dep
 
 
 def track_monomer(xz_0, xx, zz_vac, d_PMMA):
@@ -114,7 +146,6 @@ def track_monomer(xz_0, xx, zz_vac, d_PMMA):
 
 
 def get_profile_after_diffusion(scission_matrix, zip_length, xx, zz_vac, d_PMMA, double):
-
     # D = 3.16e-6 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
     # delta_t = 1e-7  # s
 
@@ -166,55 +197,3 @@ def get_profile_after_diffusion(scission_matrix, zip_length, xx, zz_vac, d_PMMA,
     zz_vac_new = zz_vac + delta_zz_vac
 
     return zz_vac_new
-
-
-def get_An_Bn_tau_arrays(N, l0, eta, gamma, xx, zz):
-
-    An_array = rf.get_An_array(
-        xx=xx * 1e+9,
-        zz=zz * 1e+9,
-        l0=l0 * 1e+9,
-        N=N
-    ) * 1e-9  # m -> nm -> m
-
-    Bn_array = rf.get_Bn_array(
-        xx=xx * 1e+9,
-        zz=zz * 1e+9,
-        l0=l0 * 1e+9,
-        N=N
-    ) * 1e-9  # cm -> nm -> m
-
-    tau_n_array = rf.get_tau_n_easy_array(
-        eta=eta,
-        gamma=gamma,
-        h0=An_array[0],
-        l0=l0,
-        N=N
-    )  # s
-
-    return An_array, Bn_array, tau_n_array
-
-
-def get_h_at_t(xx_cm, An_array, Bn_array, tau_n_array, l0_cm, t):
-    return rf.get_h_at_t(xx_cm, An_array, Bn_array, tau_n_array, l0_cm, t)
-
-
-# %%
-# xx = _outdated.x_centers_2nm * 1e-7
-# zz_vac = np.zeros(len(xx))
-# zip_length = 1000
-# d_PMMA = 80e-7
-#
-# sci_mat = np.load('/Users/fedor/PycharmProjects/MC_simulation/scission_matrix_5e.npy')
-#
-# zz_vac = get_profile_after_diffusion(sci_mat, zip_length, xx, zz_vac, d_PMMA)
-
-# %%
-# plt.figure(dpi=300)
-# plt.plot(xx, zz_vac)
-# plt.show()
-
-# %%
-# t = 0
-# T_C = 125
-# hh_vac = make_reflow(xx, zz_vac, T_C, 0)

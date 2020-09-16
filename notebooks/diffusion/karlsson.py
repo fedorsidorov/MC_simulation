@@ -33,7 +33,7 @@ plt.figure(dpi=300)
 # plt.plot(w_pol, get_log_D(w_pol, delta_T, coefs[3, :]), label='4')
 
 # plt.plot(delta_T, get_log_D(w_pol, delta_T, coefs[0, :]), label='1')
-plt.plot(delta_T, get_log_D(w_pol, delta_T, coefs[1, :]), label='2')
+plt.plot(delta_T, get_log_D(w_pol, delta_T, coefs[1, :]), label='2')  # region of interest
 # plt.plot(delta_T, get_log_D(w_pol, delta_T, coefs[2, :]), label='3')
 # plt.plot(delta_T, get_log_D(w_pol, delta_T, coefs[3, :]), label='4')
 

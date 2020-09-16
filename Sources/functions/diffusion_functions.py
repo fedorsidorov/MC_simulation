@@ -3,16 +3,15 @@ import matplotlib.pyplot as plt
 from functions import MC_functions as mcf
 import numpy as np
 from tqdm import tqdm
-# from mapping import mapping_3p3um_80nm as mapping
+from mapping import mapping_3p3um_80nm as mapping
 
+mapping = importlib.reload(mapping)
 mcf = importlib.reload(mcf)
-# mapping = importlib.reload(mapping)
 
 
 # %%
-def get_D(T, wp=1):  # in cm^2 / s
-    dT = T - 120
-    # wp = 1  # polymer weight fraction
+def get_D(dT, wp=1):  # in cm^2 / s
+    # dT = T_C - 120
     C1, C2, C3, C4 = 26.0, 37.0, 0.0797, 0
     log_D = wp * dT * C4 + (C1 - wp * C2) + dT * C3
     return 10**log_D
@@ -20,17 +19,18 @@ def get_D(T, wp=1):  # in cm^2 / s
 
 def get_dt_dx_dz(T_C, wp=1):  # nanometers!!!
     D = get_D(T_C, wp)  # in cm^2 / s
-    sigma = 5e-7  # bin size in cm
-    dt = sigma**2 / 4 / D
-    xx = np.linspace(-3 * sigma, 3 * sigma, 100)
+    # sigma = 5e-7  # bin size in cm
+    # dt = sigma**2 / 4 / D
+    dt = 0.1
+    sigma = np.sqrt(2 * D * dt)
+    # print(sigma)
+    xx = np.linspace(-3 * sigma, 3 * sigma, 1000)
     probs = 1 / (sigma * np.sqrt(2 * np.pi)) * np.exp(-xx ** 2 / (2 * sigma ** 2))
     probs_norm = probs / np.sum(probs)
-    return dt, np.random.choice(xx, p=probs_norm) * 1e+7, np.random.choice(xx, p=probs_norm) * 1e+7
+    return dt, np.random.choice(xx, p=probs_norm) * 1e+7, np.random.choice(xx, p=probs_norm) * 1e+7  # nanometers!!!
 
 
-def track_monomer(x0, z0, xx, zz_vac, d_PMMA, T_C, wp):  # nanometers!!!
-
-    t_step = 1  # second
+def track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step):  # nanometers!!!
 
     def get_z_vac_for_x(x):
         if x > np.max(xx):
@@ -40,72 +40,75 @@ def track_monomer(x0, z0, xx, zz_vac, d_PMMA, T_C, wp):  # nanometers!!!
         else:
             return mcf.lin_lin_interp(xx, zz_vac)(x)
 
-    pos_max = 100000
-    history_x = np.zeros(pos_max)
-    history_z = np.zeros(pos_max)
-    history_x[0] = x0
-    history_z[0] = z0
+    # pos_max = 100000
+    # history_x = np.zeros(pos_max)
+    # history_z = np.zeros(pos_max)
+    # history_x[0] = x0
+    # history_z[0] = z0
 
-    pos = 1
+    # pos = 1
 
     now_x = x0
     now_z = z0
 
     total_time = 0
 
-    while total_time < t_step:  # and pos < pos_max:
+    while total_time < t_step:
 
-        dt, dx, dz = get_dt_dx_dz(T_C, wp)
-        # print(dt)
+        dt, dx, dz = get_dt_dx_dz(dT, wp)
         total_time += dt
-
         now_x += dx
-        delta_z = dz
 
-        if now_z + delta_z > d_PMMA:
-            now_z -= delta_z
+        if now_z + dz > d_PMMA:
+            now_z -= dz
         else:
-            now_z += delta_z
+            now_z += dz
 
-        if pos >= pos_max:
-            print('overload pos_max')
-            break
+        # if pos >= pos_max:
+        #     break
 
-        history_x[pos] = now_x
-        history_z[pos] = now_z
+        # history_x[pos] = now_x
+        # history_z[pos] = now_z
 
-        pos += 1
+        # pos += 1
 
         if now_z < get_z_vac_for_x(now_x):
-            # print('vacuum')
-            break
+            return now_x, 0, total_time
 
-    return history_x, history_z, pos
+    return now_x, now_z, total_time
+
+
+def track_all_monomers(monomer_matrix_2d, xx_cm, zz_vac_cm, d_PMMA_cm, dT, wp, t_step):
+
+    xx = xx_cm * 1e+7
+    zz_vac = zz_vac_cm * 1e+7
+    d_PMMA = d_PMMA_cm * 1e+7
+
+    monomer_matrix_2d_final = np.zeros((np.shape(monomer_matrix_2d)))
+    non_zero_inds = np.array(np.where(monomer_matrix_2d != 0)).transpose()
+
+    progress_bar = tqdm(total=len(non_zero_inds), position=0)
+
+    for line in non_zero_inds[:100]:
+
+        ind_x, ind_z = line
+        x0, z0 = mapping.x_centers_5nm[ind_x], mapping.z_centers_5nm[ind_z]  # nanometers!!!
+
+        for n in range(int(monomer_matrix_2d[ind_x, ind_z])):
+            x_final, z_final, total_time = track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step)
+            monomer_matrix_2d_final += np.histogramdd(sample=np.array((x_final, z_final)).reshape((1, 2)),
+                                                      bins=(mapping.x_bins_5nm, mapping.z_bins_5nm))[0]
+
+        progress_bar.update()
+
+    return monomer_matrix_2d_final
 
 
 # %%
-# T_C = 140
-# d_PMMA = 100
-# x0, z0 = 0, 99
-
-# x_arr = mapping.x_centers_2nm
-# z_vac_arr = np.ones(len(x_arr)) * np.cos(x_arr * np.pi / 2000 / 20) * d_PMMA / 2
-# z_vac_arr = np.zeros(len(x_arr))
-
-# plt.plot(x_arr, z_vac_arr)
-
-# N = 10
-
-# progress_bar = tqdm(total=N, position=0)
-
+# hx, hz, time = track_monomer(50, 50, xx*1e+7, zz_vac*1e+7, d_PMMA*1e+7, T_C, 1, 10)
+#
+# inds = np.where(hz != 0)[0]
+#
 # plt.figure(dpi=300)
-
-# for i in range(N):
-    # x_h, z_h, cnt = track_monomer(x0, z0, x_arr, z_vac_arr, d_PMMA, T_C, 1)
-    # plt.plot(x_h[:cnt], z_h[:cnt], 'o-')
-    # progress_bar.update()
-
-# plt.plot(x_arr, z_vac_arr)
-# plt.xlim(-50, 50)
-# plt.ylim(0, 100)
+# plt.plot(hx[inds], hz[inds])
 # plt.show()

@@ -1,96 +1,126 @@
 import importlib
-import warnings
-
+# import warnings
+import constants
 import matplotlib.pyplot as plt
 import numpy as np
-
+from tqdm import tqdm
 import MC_classes as mcc
 from mapping import mapping_3p3um_80nm as mapping
 from functions import DEBER_functions as deber
+from functions import mapping_functions as mf
+from functions import diffusion_functions as df
+from functions import reflow_functions as rf
 
-mcc = importlib.reload(mcc)
-deber = importlib.reload(deber)
 mapping = importlib.reload(mapping)
+deber = importlib.reload(deber)
+mcc = importlib.reload(mcc)
+mf = importlib.reload(mf)
+df = importlib.reload(df)
+rf = importlib.reload(rf)
 
-warnings.filterwarnings('ignore')
+# warnings.filterwarnings('ignore')
 
 # %%
-xx = mapping.x_centers_2nm * 1e-7
-zz_vac = np.zeros(len(xx))
-d_PMMA = 80e-7
+resist_matrix = np.load('data/exp_3p3um_80nm/resist_matrix.npy')
+chain_lens = np.load('data/exp_3p3um_80nm/chain_lens.npy')
+n_chains = len(chain_lens)
 
-N_ten_electrons = 32
-# N_ten_electrons = 10
-# n_electrons = 78
-n_electrons = int(78 / 2)  # doubling !!!
+chain_tables = []
+progress_bar = tqdm(total=n_chains, position=0)
+
+for n in range(n_chains):
+    chain_tables.append(
+        np.load('data/exp_3p3um_80nm/chain_tables/chain_table_' + str(n) + '.npy'))
+    progress_bar.update()
+
+resist_shape = mapping.hist_5nm_shape
+
+# %%
+xx = mapping.x_centers_5nm * 1e-7  # cm
+zz_vac = np.zeros(len(xx))  # cm
+
+l_x = mapping.l_x * 1e-7
+l_y = mapping.l_y * 1e-7
+area = l_x * l_y
+
+d_PMMA = mapping.z_max * 1e-7
+
+j_exp_s = 1.9e-9  # A / cm
+j_exp_l = 1.9e-9 * l_x
+
+dose_s = 0.6e-6  # C / cm^2
+dose_l = dose_s * l_x
 
 T_C = 125
-# N_fourier = 100
-N_fourier = 20
+t = dose_l / j_exp_l  # 316 s
+dt = 1  # s
 
-t = 10  # s
-l0 = 3.3e-6  # m
+Q = dose_s * area
+n_electrons = Q / constants.e_SI  # 2 472
+n_electrons_s = int(np.around(n_electrons / t))
+
+# %%
 # eta = 5e+6  # Pa s
-eta = 1e+5  # Pa s
+# eta = 1e+5  # Pa s
 
-# zip_length = 1000
-# zip_length = 2000  # too much
-# zip_length = 500
-zip_length = 700
+zip_length = 1000
 
 zz_vac_list = []
 
-for i in range(N_ten_electrons):
-    print('electron group', i + 1, 'of', N_ten_electrons)
-
-    print('simulate e-beam scattering')
-    e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(xx, zz_vac, n_electrons)
-    scission_matrix = deber.get_scission_matrix(e_DATA_PMMA_val)
-
-    print('simulate diffusion')
-    zz_vac_diffused = deber.get_profile_after_diffusion(
-        scission_matrix=scission_matrix,
-        zip_length=zip_length,
-        xx=xx,
-        zz_vac=zz_vac,
-        d_PMMA=d_PMMA,
-        double=True
-    )
-
-    print('simulate reflow')
-    An_array, tau_n_array = deber.get_An_tau_arrays(eta, xx, zz_vac_diffused, T_C, N_fourier)
-
-    hh_vac = deber.get_h_at_t_even(xx, An_array, tau_n_array, l0, t) * 1e+2  # m -> cm
-    zz_vac_reflowed = d_PMMA - hh_vac
-
-    zz_vac_list.append(zz_vac_reflowed)
-
-    plt.figure(dpi=300)
-    plt.plot(xx * 1e+7, (d_PMMA - zz_vac_diffused) * 1e+7, label='after diffusion')
-    plt.plot(xx * 1e+7, (d_PMMA - zz_vac_reflowed) * 1e+7, label='after reflow')
-    plt.xlabel('x, nm')
-    plt.ylabel('z, nm')
-    plt.legend()
-    plt.grid()
-    plt.show()
-
-    zz_vac = zz_vac_reflowed
+# print('simulate e-beam scattering')
+e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(xx, zz_vac, n_electrons_s * 100)
+weight = 0.35
+scission_matrix, E_dep_matrix = deber.get_scission_matrix(e_DATA_PMMA_val, weight)
 
 # %%
-# plt.figure(dpi=300)
-# plt.plot(xx * 1e+7, (d_PMMA - zz_vac) * 1e+7)
-# plt.show()
+mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
+mf.process_depolymerization(resist_matrix, chain_tables, zip_length)
 
-t_after = 500
+# %%
+monomer_matrix = np.zeros(np.shape(resist_matrix)[:3])
 
-hh_vac_new = deber.get_h_at_t_even(xx, An_array, tau_n_array, l0, t_after) * 1e+2  # m -> cm
+# %%
+sum_m, sum_m2, new_monomer_matrix = mf.get_chain_len_matrix(resist_matrix, chain_tables)
+# monomer_matrix += new_monomer_matrix
+
+
+# sum_m_2d = np.average(sum_m, axis=1)
+# sum_m2_2d = np.average(sum_m2, axis=1)
+# monomer_matrix_2d = np.sum(monomer_matrix, axis=1)
+
+# %%
+# matrix_Mw = mf.get_local_Mw_matrix(sum_m, sum_m2, new_monomer_matrix)
+# matrix_Mw = mf.get_local_Mw_matrix(sum_m, sum_m2, monomer_matrix)
+matrix_Mw_1d = mf.get_local_Mw_matrix(sum_m, sum_m2, monomer_matrix)
+
+# matrix_Mw = np.zeros(np.shape(sum_m))
+#
+# for i in range(np.shape(sum_m)[0]):
+#     for j in range(np.shape(sum_m)[1]):
+#         for k in range(np.shape(sum_m)[2]):
+#             matrix_Mw[i, j, k] = (sum_m2[i, j, k] + (1 * 100) ** 2 * monomer_matrix[i, j, k]) /\
+#                 (sum_m[i, j, k] + (1 * 100) * monomer_matrix[i, j, k])
+
+# %%
+# matrix_Mw_2d = np.average(matrix_Mw, axis=1)
+# matrix_Mw_1d = np.average(matrix_Mw_2d, axis=1)
 
 plt.figure(dpi=300)
-plt.plot(xx * 1e+7, hh_vac_new * 1e+7, label='after reflow')
-plt.xlabel('x, nm')
-plt.ylabel('z, nm')
-plt.legend()
-plt.grid()
+# plt.imshow(matrix_Mw_2d[200:-200, :].transpose())
+plt.plot(matrix_Mw_1d)
 plt.show()
 
-# plt.savefig('eta=1e+5_zip=500_after=150s.png', dpi=300)
+# %%
+etas = rf.get_viscosity_W(T_C, matrix_Mw_1d)
+
+plt.figure(dpi=300)
+plt.semilogy(mapping.x_centers_5nm, etas)
+plt.show()
+
+# %%
+Tg = 120
+dT = T_C - Tg
+
+monomer_matrix_2d = np.sum(new_monomer_matrix, axis=1)
+monomer_matrix_2d_final = df.track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp=1, t_step=5)
+# np.sum(monomer_matrix_2d_final)

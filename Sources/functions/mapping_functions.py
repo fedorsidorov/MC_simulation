@@ -3,7 +3,7 @@ from collections import deque
 
 import numpy as np
 from tqdm import tqdm
-
+import constants as const
 import constants
 import indexes
 
@@ -149,3 +149,167 @@ def get_local_chain_len(resist_shape, N_mon_max, chain_table):
             beg_pos = end_pos + 1
 
     return chain_sum_len_matrix, n_chains_matrix
+
+
+def process_mapping(scission_matrix, resist_matrix, chain_tables):
+
+    resist_shape = np.shape(scission_matrix)
+    progress_bar = tqdm(total=resist_shape[0], position=0)
+
+    for x_ind in range(resist_shape[0]):
+        for y_ind in range(resist_shape[1]):
+            for z_ind in range(resist_shape[2]):
+
+                n_scissions = int(scission_matrix[x_ind, y_ind, z_ind])
+                monomer_positions = list(
+                    np.where(resist_matrix[x_ind, y_ind, z_ind, :, indexes.n_chain_ind] != const.uint32_max)[0]
+                )
+
+                while n_scissions:
+
+                    #  check if there exist free monomers
+                    inds_free = np.where(
+                        resist_matrix[x_ind, y_ind, z_ind, :, indexes.monomer_type_ind] == indexes.free_monomer
+                    )[0]
+
+                    for ind in inds_free:
+                        if ind in monomer_positions:
+                            monomer_positions.remove(ind)
+
+                    if len(monomer_positions) == 0:  # move events to one of further bins
+                        move_scissions(scission_matrix, x_ind, y_ind, z_ind, n_scissions)
+                        # n_scissions_moved += n_scissions
+                        break
+
+                    monomer_pos = np.random.choice(monomer_positions)
+                    n_scissions -= 1
+
+                    n_chain, n_monomer, monomer_type = resist_matrix[x_ind, y_ind, z_ind, monomer_pos, :]
+                    chain_table = chain_tables[n_chain]
+
+                    process_scission(resist_matrix, chain_table, n_monomer, monomer_type)
+
+        progress_bar.update()
+
+    # return resist_matrix, chain_tables
+
+
+def process_depolymerization(resist_matrix, chain_tables, zip_length):
+
+    for ct_num, ct in enumerate(chain_tables):
+
+        sci_inds = np.where(ct[1:, 4] == 0)[0]
+
+        for sci_ind in sci_inds:
+            now_table = ct
+            n_mon = sci_ind
+            step = np.random.choice([-1, 1])
+
+            if step == -1:
+                n_mon -= 1
+
+            rewrite_monomer_type(resist_matrix, now_table, n_mon, indexes.free_monomer)
+            kin_len = 1
+            n_mon += step
+
+            while kin_len < zip_length:  # do talogo
+
+                x_bin, y_bin, z_bin, mon_line_pos, mon_type = now_table[n_mon, :]
+
+                if mon_type == 1:  # chain is not ended
+                    rewrite_monomer_type(resist_matrix, now_table, n_mon, indexes.free_monomer)
+                    kin_len += 1
+                    n_mon += step
+
+                else:  # chain transfer
+                    rewrite_monomer_type(resist_matrix, now_table, n_mon, indexes.free_monomer)
+                    kin_len += 1
+
+                    free_line_inds = np.where(resist_matrix[x_bin, y_bin, z_bin, :] == 1)[0]
+
+                    if len(free_line_inds) == 0:
+                        break
+
+                    new_line_ind = np.random.choice(free_line_inds)
+                    new_chain_num, new_n_mon = resist_matrix[x_bin, y_bin, z_bin, new_line_ind, :2]
+
+                    now_table = chain_tables[new_chain_num]
+                    n_mon = new_n_mon
+
+
+def get_chain_len_matrix(resist_matrix, chain_tables):
+
+    sum_m2 = np.zeros(np.shape(resist_matrix)[:3])  # for chains only!!!
+    sum_m = np.zeros(np.shape(resist_matrix)[:3])  # for chains only!!!
+    monomer_matrix = np.zeros(np.shape(resist_matrix)[:3])
+
+    progress_bar = tqdm(total=len(chain_tables), position=0)
+
+    for n, ct in enumerate(chain_tables):
+
+        now_len = 0
+        bins = []
+
+        for i, line in enumerate(ct):
+
+            x_bin, y_bin, z_bin, mon_line_pos, mon_type = line
+
+            if mon_type != indexes.free_monomer:
+                now_len += 1
+                bins.append([x_bin, y_bin, z_bin])
+
+            else:
+                # sum_m2[x_bin, y_bin, z_bin] += (1 * 100) ** 2
+                # sum_m[x_bin, y_bin, z_bin] += 1 * 100
+                # print('monomer')
+                monomer_matrix[x_bin, y_bin, z_bin] += 1
+
+                if now_len > 0:  # chain length is gathered
+                    for bu in np.unique(bins, axis=0):
+                        ind_x, ind_y, ind_z = bu
+                        now_mass = now_len * 100
+                        sum_m2[ind_x, ind_y, ind_z] += now_mass ** 2
+                        sum_m[ind_x, ind_y, ind_z] += now_mass
+
+                    now_len = 0
+                    bins = []
+
+        if now_len > 0:
+
+            # print(now_len)
+            now_mass = now_len * 100
+
+            for bu in np.unique(bins, axis=0):
+                ind_x, ind_y, ind_z = bu
+                sum_m2[ind_x, ind_y, ind_z] += now_mass ** 2
+                sum_m[ind_x, ind_y, ind_z] += now_mass
+
+        progress_bar.update()
+
+    # monomer_matrix_2d = np.sum(monomer_matrix, axis=1)
+
+    return sum_m, sum_m2, monomer_matrix
+
+
+def get_local_Mw_matrix(sum_m, sum_m2, monomer_matrix):
+
+    sum_m_1d = np.sum(np.sum(sum_m, axis=1), axis=1)
+    sum_m2_1d = np.sum(np.sum(sum_m2, axis=1), axis=1)
+    monomer_matrix_1d = np.sum(np.sum(monomer_matrix, axis=1), axis=1)
+
+    # matrix_Mw = np.zeros(np.shape(sum_m))
+    matrix_Mw_1d = np.zeros(np.shape(sum_m_1d))
+
+    # for i in range(np.shape(sum_m)[0]):
+    #     for j in range(np.shape(sum_m)[1]):
+    #         for k in range(np.shape(sum_m)[2]):
+    #             matrix_Mw[i, j, k] = (sum_m2[i, j, k] + (1 * 100) ** 2 * monomer_matrix[i, j, k]) / \
+    #                                  (sum_m[i, j, k] + (1 * 100) * monomer_matrix[i, j, k])
+
+    for i in range(len(sum_m)):
+        matrix_Mw_1d[i] = (sum_m2_1d[i] + (1 * 100) ** 2 * monomer_matrix_1d[i]) / \
+            (sum_m_1d[i] + (1 * 100) * monomer_matrix_1d[i])
+
+    # return matrix_Mw
+    return matrix_Mw_1d
+

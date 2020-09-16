@@ -6,7 +6,7 @@ import numpy as np
 from tqdm import tqdm
 
 import constants as cp
-import mapping_exp_80_3 as mapping
+from mapping import mapping_3p3um_80nm as mapping
 from functions import array_functions as af
 from functions import chain_functions as cf
 
@@ -72,10 +72,10 @@ chain_lens_array = np.array(chain_lens_list)
 progress_bar = tqdm(total=len(chain_list), position=0)
 
 for n, chain in enumerate(chain_list):
-    np.save('/Volumes/ELEMENTS/chains_950K/prepared_chains/exp_80_3/chain_' + str(n) + '.npy', chain)
+    np.save('/Volumes/ELEMENTS/chains_950K/prepared_chains/exp_3p3um_80nm/chain_' + str(n) + '.npy', chain)
     progress_bar.update()
 
-np.save('/Volumes/ELEMENTS/chains_950K/prepared_chains/exp_80_3/chain_lens.npy', chain_lens_array)
+np.save('/Volumes/ELEMENTS/chains_950K/prepared_chains/exp_3p3um_80nm/chain_lens.npy', chain_lens_array)
 
 # %%
 print('Mn =', np.average(chain_lens_array) * 100)
