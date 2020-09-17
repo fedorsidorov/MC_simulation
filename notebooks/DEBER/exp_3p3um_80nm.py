@@ -1,24 +1,21 @@
 import importlib
-# import warnings
 import constants
 import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
-import MC_classes as mcc
 from mapping import mapping_3p3um_80nm as mapping
 from functions import DEBER_functions as deber
 from functions import mapping_functions as mf
 from functions import diffusion_functions as df
 from functions import reflow_functions as rf
+from functions import plot_functions as pf
 
 mapping = importlib.reload(mapping)
 deber = importlib.reload(deber)
-mcc = importlib.reload(mcc)
 mf = importlib.reload(mf)
 df = importlib.reload(df)
 rf = importlib.reload(rf)
-
-# warnings.filterwarnings('ignore')
+pf = importlib.reload(pf)
 
 # %%
 resist_matrix = np.load('data/exp_3p3um_80nm/resist_matrix.npy')
@@ -38,23 +35,17 @@ resist_shape = mapping.hist_5nm_shape
 # %%
 xx = mapping.x_centers_5nm * 1e-7  # cm
 zz_vac = np.zeros(len(xx))  # cm
-
 l_x = mapping.l_x * 1e-7
 l_y = mapping.l_y * 1e-7
 area = l_x * l_y
-
-d_PMMA = mapping.z_max * 1e-7
-
+d_PMMA = mapping.z_max * 1e-7  # cm
 j_exp_s = 1.9e-9  # A / cm
 j_exp_l = 1.9e-9 * l_x
-
 dose_s = 0.6e-6  # C / cm^2
 dose_l = dose_s * l_x
-
 T_C = 125
 t = dose_l / j_exp_l  # 316 s
 dt = 1  # s
-
 Q = dose_s * area
 n_electrons = Q / constants.e_SI  # 2 472
 n_electrons_s = int(np.around(n_electrons / t))
@@ -62,27 +53,40 @@ n_electrons_s = int(np.around(n_electrons / t))
 # %%
 # eta = 5e+6  # Pa s
 # eta = 1e+5  # Pa s
-
-zip_length = 1000
-
-zz_vac_list = []
+# zz_vac_list = []
 
 # print('simulate e-beam scattering')
-e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(xx, zz_vac, n_electrons_s * 100)
+e_DATA, e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(xx, zz_vac, d_PMMA, n_electrons=10, E0=20e+3, r_beam=100e-7)
+
 weight = 0.35
-scission_matrix, E_dep_matrix = deber.get_scission_matrix(e_DATA_PMMA_val, weight)
+scission_matrix, E_dep_matrix = deber.get_scission_matrix(e_DATA, weight)
+
+print('G = ', np.sum(scission_matrix) / np.sum(E_dep_matrix) * 100)
+print(np.where(scission_matrix != 0))
+
+# %%
+scission_matrix_2d = np.sum(scission_matrix, axis=1)
+scission_matrix_1d = np.sum(scission_matrix_2d, axis=1)
+
+plt.figure(dpi=300)
+plt.plot(mapping.x_centers_5nm, scission_matrix_1d)
+plt.show()
+
+print(np.sum(scission_matrix_1d))
 
 # %%
 mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
-mf.process_depolymerization(resist_matrix, chain_tables, zip_length)
+
+# %%
+zip_length = 5
+mf.process_depolymerization_2(resist_matrix, chain_tables, zip_length)
 
 # %%
 monomer_matrix = np.zeros(np.shape(resist_matrix)[:3])
 
 # %%
 sum_m, sum_m2, new_monomer_matrix = mf.get_chain_len_matrix(resist_matrix, chain_tables)
-# monomer_matrix += new_monomer_matrix
-
+monomer_matrix += new_monomer_matrix
 
 # sum_m_2d = np.average(sum_m, axis=1)
 # sum_m2_2d = np.average(sum_m2, axis=1)

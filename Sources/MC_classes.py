@@ -353,10 +353,10 @@ class Simulator:
         for _ in range(self.n_electrons):
 
             # x0 = 0
-            x0 = np.random.uniform(-self.r_beam, self.r_beam)
-            # x0 = np.random.normal(loc=0, scale=self.r_beam)
-            # y0 = 0
-            y0 = np.random.uniform(-self.structure.ly / 2, self.structure.ly / 2)
+            # x0 = np.random.uniform(-self.r_beam, self.r_beam)
+            x0 = np.random.normal(loc=0, scale=self.r_beam)
+            y0 = 0
+            # y0 = np.random.uniform(-self.structure.ly / 2, self.structure.ly / 2)
             z0 = self.structure.get_z_vac_for_x(x0)
 
             electron = Electron(

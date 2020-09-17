@@ -33,7 +33,7 @@ DATA_line_len = 10
 # %% resist_matrix
 n_chain_ind = 0
 begin_monomer, middle_monomer, end_monomer = 0, 1, 2
-free_monomer, free_radicalized_monomer = 10, 20
+free_monomer, gone_monomer = 10, 20
 
 # %% chain_table
 x_pos, y_pos, z_pos = 0, 1, 2

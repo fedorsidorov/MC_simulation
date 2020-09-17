@@ -1,15 +1,10 @@
 import importlib
-
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-
 import indexes as ind
-# import mapping_harris as const_m
-import mapping_aktary as const_m
 
 ind = importlib.reload(ind)
-const_m = importlib.reload(const_m)
 
 
 # %%
@@ -35,7 +30,7 @@ def plot_e_DATA(DATA, d_PMMA=0, E_cut=5, proj='xz'):
             print('specify projection: \'xy\', \'yz\' or \'yz\'')
             return
         # ax.plot(now_DATA_cut[:, xx_ind], now_DATA_cut[:, yy_ind])
-        ax.plot(DATA_cut[inds, xx_ind], DATA_cut[inds, yy_ind])
+        ax.plot(DATA_cut[inds, xx_ind], DATA_cut[inds, yy_ind], '.-')
 
     if proj != 'xy' and d_PMMA != 0:
         points = np.linspace(-d_PMMA * 2, d_PMMA * 2, 100)
@@ -47,8 +42,8 @@ def plot_e_DATA(DATA, d_PMMA=0, E_cut=5, proj='xz'):
     plt.gca().set_aspect('equal', adjustable='box')
     plt.xlabel('x, nm')
     plt.ylabel('z, nm')
-    plt.xlim(0, 1)
-    plt.ylim(0, 1)
+    # plt.xlim(0, 1)
+    # plt.ylim(0, 1)
     plt.gca().invert_yaxis()
     plt.grid()
     plt.show()
