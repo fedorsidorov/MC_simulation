@@ -4,10 +4,11 @@ from functions import mapping_functions as mf
 import importlib
 from tqdm import tqdm
 
+# %%
 mapping = importlib.reload(mapping)
 mf = importlib.reload(mf)
 
-scission_matrix = np.load('/Users/fedor/PycharmProjects/MC_simulation/scission_matrix.npy') * 2
+scission_matrix = np.load('/Users/fedor/PycharmProjects/MC_simulation/scission_matrix.npy')
 resist_matrix = np.load('/Users/fedor/PycharmProjects/MC_simulation/data/exp_3p3um_80nm/resist_matrix.npy')
 chain_lens = np.load('/Users/fedor/PycharmProjects/MC_simulation/data/exp_3p3um_80nm/chain_lens.npy')
 n_chains = len(chain_lens)
@@ -25,4 +26,9 @@ resist_shape = mapping.hist_5nm_shape
 
 mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
 zip_length = 1000
-mf.process_depolymerization_2(resist_matrix, chain_tables, zip_length)
+mf.process_depolymerization(resist_matrix, chain_tables, zip_length)
+
+# %%
+for ct in chain_tables:
+    if len(np.where(ct[:, -1] == 10)[0]) > 0:
+        break

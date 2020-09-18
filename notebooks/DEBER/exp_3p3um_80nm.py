@@ -3,17 +3,24 @@ import constants
 import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
+import copy
 from mapping import mapping_3p3um_80nm as mapping
+from functions import MC_functions as mcf
 from functions import DEBER_functions as deber
 from functions import mapping_functions as mf
 from functions import diffusion_functions as df
 from functions import reflow_functions as rf
 from functions import plot_functions as pf
+from functions import evolver_functions as ef
+
+from scipy.optimize import curve_fit
 
 mapping = importlib.reload(mapping)
 deber = importlib.reload(deber)
+mcf = importlib.reload(mcf)
 mf = importlib.reload(mf)
 df = importlib.reload(df)
+ef = importlib.reload(ef)
 rf = importlib.reload(rf)
 pf = importlib.reload(pf)
 
@@ -33,8 +40,6 @@ for n in range(n_chains):
 resist_shape = mapping.hist_5nm_shape
 
 # %%
-xx = mapping.x_centers_5nm * 1e-7  # cm
-zz_vac = np.zeros(len(xx))  # cm
 l_x = mapping.l_x * 1e-7
 l_y = mapping.l_y * 1e-7
 area = l_x * l_y
@@ -50,81 +55,94 @@ Q = dose_s * area
 n_electrons = Q / constants.e_SI  # 2 472
 n_electrons_s = int(np.around(n_electrons / t))
 
-# %%
-# eta = 5e+6  # Pa s
-# eta = 1e+5  # Pa s
-# zz_vac_list = []
+zip_length = 1000
+Tg = 120
 
-# print('simulate e-beam scattering')
-e_DATA, e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(xx, zz_vac, d_PMMA, n_electrons=10, E0=20e+3, r_beam=100e-7)
-
-weight = 0.35
-scission_matrix, E_dep_matrix = deber.get_scission_matrix(e_DATA, weight)
-
-print('G = ', np.sum(scission_matrix) / np.sum(E_dep_matrix) * 100)
-print(np.where(scission_matrix != 0))
-
-# %%
-scission_matrix_2d = np.sum(scission_matrix, axis=1)
-scission_matrix_1d = np.sum(scission_matrix_2d, axis=1)
-
-plt.figure(dpi=300)
-plt.plot(mapping.x_centers_5nm, scission_matrix_1d)
-plt.show()
-
-print(np.sum(scission_matrix_1d))
-
-# %%
-mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
-
-# %%
-zip_length = 5
-mf.process_depolymerization_2(resist_matrix, chain_tables, zip_length)
-
-# %%
+xx = mapping.x_centers_5nm * 1e-7  # cm
+zz_vac = np.zeros(len(xx))  # cm
 monomer_matrix = np.zeros(np.shape(resist_matrix)[:3])
 
+zz_vac_list = [zz_vac]
+
 # %%
+time_s = 10
+
+e_DATA, e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(
+    xx=xx,
+    zz_vac=zz_vac,
+    d_PMMA=d_PMMA,
+    n_electrons=n_electrons_s*time_s,
+    E0=20e+3,
+    r_beam=100e-7
+)
+
+scission_matrix, E_dep_matrix = deber.get_scission_matrix(e_DATA, weight=0.35)
+mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
+mf.process_depolymerization(resist_matrix, chain_tables, zip_length)
+
 sum_m, sum_m2, new_monomer_matrix = mf.get_chain_len_matrix(resist_matrix, chain_tables)
 monomer_matrix += new_monomer_matrix
 
-# sum_m_2d = np.average(sum_m, axis=1)
-# sum_m2_2d = np.average(sum_m2, axis=1)
-# monomer_matrix_2d = np.sum(monomer_matrix, axis=1)
+sum_m_1d = np.sum(np.sum(sum_m, axis=1), axis=1)
+sum_m2_1d = np.sum(np.sum(sum_m2, axis=1), axis=1)
+monomer_matrix_1d = np.sum(np.sum(monomer_matrix, axis=1), axis=1)
 
-# %%
-# matrix_Mw = mf.get_local_Mw_matrix(sum_m, sum_m2, new_monomer_matrix)
-# matrix_Mw = mf.get_local_Mw_matrix(sum_m, sum_m2, monomer_matrix)
-matrix_Mw_1d = mf.get_local_Mw_matrix(sum_m, sum_m2, monomer_matrix)
+sum_m_1d_100nm = df.get_100nm_array(sum_m_1d)
+sum_m2_1d_100nm = df.get_100nm_array(sum_m2_1d)
+monomer_matrix_1d_100nm = df.get_100nm_array(monomer_matrix_1d)
 
-# matrix_Mw = np.zeros(np.shape(sum_m))
-#
-# for i in range(np.shape(sum_m)[0]):
-#     for j in range(np.shape(sum_m)[1]):
-#         for k in range(np.shape(sum_m)[2]):
-#             matrix_Mw[i, j, k] = (sum_m2[i, j, k] + (1 * 100) ** 2 * monomer_matrix[i, j, k]) /\
-#                 (sum_m[i, j, k] + (1 * 100) * monomer_matrix[i, j, k])
+matrix_Mw_1d_100nm = mf.get_local_Mw_matrix(sum_m_1d_100nm, sum_m2_1d_100nm, monomer_matrix_1d_100nm)
 
-# %%
-# matrix_Mw_2d = np.average(matrix_Mw, axis=1)
-# matrix_Mw_1d = np.average(matrix_Mw_2d, axis=1)
+popt, _ = curve_fit(df.minus_exp_gauss, mapping.x_centers_100nm, matrix_Mw_1d_100nm)
 
 plt.figure(dpi=300)
-# plt.imshow(matrix_Mw_2d[200:-200, :].transpose())
-plt.plot(matrix_Mw_1d)
+plt.semilogy(mapping.x_centers_100nm, matrix_Mw_1d_100nm, '-o')
+plt.semilogy(mapping.x_centers_50nm, df.minus_exp_gauss(mapping.x_centers_50nm, *popt), '.-')
 plt.show()
 
-# %%
-etas = rf.get_viscosity_W(T_C, matrix_Mw_1d)
+etas_50nm_fit = rf.get_viscosity_W(T_C, df.minus_exp_gauss(mapping.x_centers_25nm, *popt))
+mobs_50nm_fit = rf.get_SE_mobility(etas_50nm_fit)
 
 plt.figure(dpi=300)
-plt.semilogy(mapping.x_centers_5nm, etas)
+plt.semilogy(mapping.x_centers_25nm, mobs_50nm_fit, 'o-')
 plt.show()
 
-# %%
-Tg = 120
 dT = T_C - Tg
 
-monomer_matrix_2d = np.sum(new_monomer_matrix, axis=1)
-monomer_matrix_2d_final = df.track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp=1, t_step=5)
-# np.sum(monomer_matrix_2d_final)
+monomer_matrix_2d = np.sum(monomer_matrix, axis=1)
+monomer_matrix_2d_final = df.track_all_monomers(monomer_matrix_2d,
+                                                xx, zz_vac, d_PMMA, dT, wp=1, t_step=time_s, dtdt=0.5)
+
+plt.figure(dpi=300)
+plt.plot(mapping.x_centers_50nm, df.get_50nm_array(monomer_matrix_2d_final[:, 0]))
+plt.show()
+
+zz_vac = np.zeros(len(mapping.x_centers_50nm))  # 50 nm !!!
+zz_vac_new, monomer_matrix_2d_new = df.get_zz_vac_monomer_matrix(zz_vac, monomer_matrix_2d_final)
+
+plt.figure(dpi=300)
+plt.plot(mapping.x_centers_50nm, zz_vac_new)
+plt.show()
+
+zz_vac_evolver = 80e-7 - zz_vac_new
+ef.create_datafile(mapping.x_centers_50nm * 1e-3, zz_vac_evolver * 1e+4, mobs_50nm_fit)
+ef.run_evolver()
+
+tt, pp = ef.get_evolver_times_profiles()
+
+plt.figure(dpi=300)
+plt.plot(pp[0][:, 0], pp[0][:, 1], 'o-')
+plt.plot(pp[1][:, 0], pp[1][:, 1], 'o-')
+plt.show()
+
+xx_final = pp[1][:, 0]
+zz_vac_final = 80e-7 - pp[1][:, 1]*1e-4
+
+plt.figure(dpi=300)
+plt.plot(xx_final, zz_vac_final)
+plt.show()
+
+zz_vac = zz_vac_final
+
+
+

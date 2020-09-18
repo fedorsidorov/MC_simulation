@@ -51,7 +51,7 @@ plt.legend()
 plt.show()
 
 # %%
-SE = np.loadtxt('notebooks/SE/vlist.txt')
+SE = np.loadtxt('notebooks/SE/SIM/vlist_SIM.txt')
 
 times = []
 profiles = []

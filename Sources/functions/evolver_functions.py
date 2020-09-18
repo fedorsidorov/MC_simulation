@@ -1,10 +1,11 @@
 import importlib
 import os
 import numpy as np
-import mapping_exp_80_3 as mapping
+from mapping import mapping_3p3um_80nm as mapping
 import matplotlib.pyplot as plt
 from functions import MC_functions as mcf
 
+mapping = importlib.reload(mapping)
 mcf = importlib.reload(mcf)
 
 
@@ -236,16 +237,47 @@ def run_evolver():
               '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/DEBER_datafile.fe')
 
 
+def get_evolver_times_profiles():
+    SE = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/vlist_SIM.txt')
+
+    times = []
+    profiles = []
+    beg = -1
+
+    for i, line in enumerate(SE[1:]):
+        if line[1] == line[2] == -100:
+            print('read')
+            now_time = line[0]
+            times.append(now_time)
+            profile = SE[beg + 1:i, 1:]
+            profile = profile[np.where(np.abs(profile[:, 0]) < mapping.l_x/2 * 1e-3)]
+            profile = profile[np.where(profile[:, 1] > 0.03)]
+
+            sort_inds = np.argsort(profile[:, 0])
+            profile[:, 0] = profile[sort_inds, 0]
+            profile[:, 1] = profile[sort_inds, 1]
+
+            profiles.append(profile)
+            beg = i
+
+    pr_beg = profiles[0]
+    pr_end = profiles[1]
+
+    shift = ((pr_end[0, 1] - pr_beg[0, 1]) + (pr_end[-1, 1] - pr_beg[-1, 1])) / 2
+    profiles[1][:, 1] -= shift
+
+    return times, profiles
+
+
 # %% read datafile
-yy_test = mapping.x_centers_5nm * 1e-3
-zz_test = np.ones(len(yy_test)) * mapping.l_z * 1e-3 *\
-          (1 - np.cos(2 * np.pi * mapping.x_centers_5nm / 3000) / 5)
+# yy_test = mapping.x_centers_5nm * 1e-3
+# zz_test = np.ones(len(yy_test)) * mapping.l_z * 1e-3 *\
+#           (1 - np.cos(2 * np.pi * mapping.x_centers_5nm / 3000) / 5)
 
 # plt.figure(dpi=300)
 # plt.plot(yy_test, zz_test, '.')
 # plt.show()
 
-# mobilities = np.ones(len(yy_test)) * 0.00044
-mobilities = np.ones(len(yy_test)) * 0.04
-create_datafile(yy_test, zz_test, mobilities)
-run_evolver()
+# mobilities = np.ones(len(yy_test)) * 0.04
+# create_datafile(yy_test, zz_test, mobilities)
+# run_evolver()

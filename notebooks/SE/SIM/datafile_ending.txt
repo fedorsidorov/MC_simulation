@@ -132,17 +132,17 @@ loopit := {g10; w 0.001; w 0.001; V}
 
 save := {
 	foreach vertex do {
-		if x < 1 then if x > -1 then printf "%f %f %f\n", x, y, z >> "vlist_SIM.txt";
+		if x < 1 then if x > -1 then printf "%f %f %f\n", x, y, z >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/vlist_SIM.txt";
 		}
 	}
 
 ebash := {
 	prepare_surface;
 	m 0.05;
-	printf "%f %f %f\n", total_time, -100., -100. >>> "vlist_SIM.txt";
+	printf "%f %f %f\n", total_time, -100., -100. >>> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/vlist_SIM.txt";
 	save;
-	printf "%f %f %f\n", total_time, -100., -100. >> "vlist_SIM.txt";
-	loopit 2;
+	printf "%f %f %f\n", total_time, -100., -100. >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/vlist_SIM.txt";
+	loopit 20;
 	save;
-	printf "%f %f %f\n", total_time, -100., -100. >> "vlist_SIM.txt";
+	printf "%f %f %f\n", total_time, -100., -100. >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/vlist_SIM.txt";
 	}
