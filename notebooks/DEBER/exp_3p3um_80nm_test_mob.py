@@ -24,7 +24,7 @@ ef = importlib.reload(ef)
 rf = importlib.reload(rf)
 pf = importlib.reload(pf)
 
-# %
+# %%
 resist_matrix = np.load('data/exp_3p3um_80nm/resist_matrix.npy')
 chain_lens = np.load('data/exp_3p3um_80nm/chain_lens.npy')
 n_chains = len(chain_lens)
@@ -64,22 +64,37 @@ monomer_matrix = np.zeros(np.shape(resist_matrix)[:3])
 
 zz_vac_list = [zz_vac]
 
-# %
-time_s = 10
+# %%
+# for i in range(32):
+#
+#     print(i)
+#
+#     time_s = 10
+#
+#     e_DATA, e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(
+#         xx=xx,
+#         zz_vac=zz_vac,
+#         d_PMMA=d_PMMA,
+#         n_electrons=n_electrons_s*time_s,
+#         E0=20e+3,
+#         r_beam=100e-7
+#     )
+#
+#     scission_matrix, E_dep_matrix = deber.get_scission_matrix(e_DATA, weight=0.35)
+#     np.save('data/e_DATA/scission_matrix_' + str(i) + '.npy', scission_matrix)
 
-e_DATA, e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(
-    xx=xx,
-    zz_vac=zz_vac,
-    d_PMMA=d_PMMA,
-    n_electrons=n_electrons_s*time_s,
-    E0=20e+3,
-    r_beam=100e-7
-)
+# %%
+for i in range(32):
 
-scission_matrix, E_dep_matrix = deber.get_scission_matrix(e_DATA, weight=0.35)
-mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
-mf.process_depolymerization(resist_matrix, chain_tables, zip_length)
+    print(i)
 
+    scission_matrix = np.load('data/e_DATA/scission_matrix_' + str(i) + '.npy')
+    mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
+    print('mapping is done')
+    mf.process_depolymerization(resist_matrix, chain_tables, zip_length)
+    print('depolymerization is done')
+
+# %%
 sum_m, sum_m2, new_monomer_matrix = mf.get_chain_len_matrix(resist_matrix, chain_tables)
 monomer_matrix += new_monomer_matrix
 

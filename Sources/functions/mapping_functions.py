@@ -55,7 +55,8 @@ def process_scission(resist_matrix, chain_table, n_monomer):
             rewrite_monomer_type(resist_matrix, chain_table, n_next_monomer, next_monomer_new_type)
 
         else:
-            print('next monomer type error, next_monomer_type =', monomer_type, next_monomer_type)
+            pass
+            # print('next monomer type error, next_monomer_type =', monomer_type, next_monomer_type)
 
     elif monomer_type in [indexes.begin_monomer, indexes.end_monomer]:  # half-bonded monomer
         new_monomer_type = indexes.free_monomer
@@ -74,10 +75,12 @@ def process_scission(resist_matrix, chain_table, n_monomer):
             rewrite_monomer_type(resist_matrix, chain_table, n_next_monomer, next_monomer_new_type)
 
         else:
-            print('next monomer type error, next_monomer_type =', monomer_type, next_monomer_type)
+            pass
+            # print('next monomer type error, next_monomer_type =', monomer_type, next_monomer_type)
 
     else:
-        print('monomer type error, monomer_type =', monomer_type)
+        pass
+        # print('monomer type error, monomer_type =', monomer_type)
 
 
 def get_chain_lens(chain_tables):
@@ -177,8 +180,8 @@ def process_mapping(scission_matrix, resist_matrix, chain_tables):
                     )
 
                     if len(monomer_positions) == 0:  # move events to one of further bins
-                        print('moving')
-                        print(x_ind, y_ind, z_ind)
+                        # print('moving')
+                        # print(x_ind, y_ind, z_ind)
                         move_scissions(scission_matrix, x_ind, y_ind, z_ind, n_scissions)
                         break
 
@@ -228,7 +231,36 @@ def process_depolymerization(resist_matrix, chain_tables, zip_length):
                         rewrite_monomer_type(resist_matrix, now_table, n_mon, indexes.free_monomer)
                         kin_len += 1
 
-                    free_line_inds = np.where(resist_matrix[x_bin, y_bin, z_bin, :] <= indexes.end_monomer)[0]
+                    # free_line_inds = np.where(resist_matrix[x_bin, y_bin, z_bin, :] <= indexes.end_monomer)[0]
+                    free_line_inds = np.where(resist_matrix[x_bin, y_bin, z_bin, :, indexes.monomer_type_ind] <=
+                                              indexes.end_monomer)[0]
+
+                    # if len(free_line_inds) == 0:
+                    #     print('no free indexes')
+                    #     if y_bin + 1 < np.shape(resist_matrix)[1]:
+                    #         y_bin += 1
+                    #     elif z_bin + 1 < np.shape(resist_matrix)[2]:
+                    #         z_bin += 1
+                    #     elif x_bin + 1 < np.shape(resist_matrix)[0]:
+                    #         x_bin += 1
+                    #     break
+
+                    while len(free_line_inds) == 0:
+                        # print('no free indexes')
+                        if y_bin + 1 < np.shape(resist_matrix)[1]:
+                            y_bin += 1
+                            free_line_inds = np.where(resist_matrix[x_bin, y_bin, z_bin, :, indexes.monomer_type_ind] <=
+                                                      indexes.end_monomer)[0]
+                        elif z_bin + 1 < np.shape(resist_matrix)[2]:
+                            z_bin += 1
+                            free_line_inds = np.where(resist_matrix[x_bin, y_bin, z_bin, :, indexes.monomer_type_ind] <=
+                                                      indexes.end_monomer)[0]
+                        elif x_bin + 1 < np.shape(resist_matrix)[0]:
+                            x_bin += 1
+                            free_line_inds = np.where(resist_matrix[x_bin, y_bin, z_bin, :, indexes.monomer_type_ind] <=
+                                                      indexes.end_monomer)[0]
+                        else:
+                            break
 
                     if len(free_line_inds) == 0:
                         break
