@@ -46,6 +46,11 @@ def track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt):  # nanomete
     now_x = x0
     now_z = z0
 
+    # history = np.zeros((100000, 2))
+    # cnt = 0
+    # history[cnt, :] = now_x, now_z
+    # cnt += 1
+
     total_time = 0
 
     while total_time < t_step:
@@ -59,13 +64,19 @@ def track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt):  # nanomete
         else:
             now_z += dz
 
-        if now_z < get_z_vac_for_x(now_x):
-            return now_x, 0, total_time
+        # history[cnt, :] = now_x, now_z
+        # cnt += 1
+
+        if now_z < zz_vac.min():
+            if now_z < get_z_vac_for_x(now_x):
+                return now_x, 0, total_time
+                # return now_x, 0, total_time, history[np.where(history[:, 0] != 0)]
 
     return now_x, now_z, total_time
+    # return now_x, now_z, total_time, history[np.where(history[:, 0] != 0)]
 
 
-def track_all_monomers(monomer_matrix_2d, xx_cm, zz_vac_cm, d_PMMA_cm, dT, wp, t_step):
+def track_all_monomers(monomer_matrix_2d, xx_cm, zz_vac_cm, d_PMMA_cm, dT, wp, t_step, dtdt):
 
     xx = xx_cm * 1e+7
     zz_vac = zz_vac_cm * 1e+7
@@ -82,7 +93,7 @@ def track_all_monomers(monomer_matrix_2d, xx_cm, zz_vac_cm, d_PMMA_cm, dT, wp, t
         x0, z0 = mapping.x_centers_5nm[ind_x], mapping.z_centers_5nm[ind_z]  # nanometers!!!
 
         for n in range(int(monomer_matrix_2d[ind_x, ind_z])):
-            x_final, z_final, total_time = track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step)
+            x_final, z_final, total_time = track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt)
             monomer_matrix_2d_final += np.histogramdd(sample=np.array((x_final, z_final)).reshape((1, 2)),
                                                       bins=(mapping.x_bins_5nm, mapping.z_bins_5nm))[0]
 

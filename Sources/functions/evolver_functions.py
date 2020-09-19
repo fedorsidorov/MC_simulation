@@ -250,7 +250,7 @@ def get_evolver_times_profiles():
             now_time = line[0]
             times.append(now_time)
             profile = SE[beg + 1:i, 1:]
-            profile = profile[np.where(np.abs(profile[:, 0]) < mapping.l_x/2 * 1e-3)]
+            profile = profile[np.where(np.abs(profile[:, 0]) < mapping.x_max * 1e-3)]
             profile = profile[np.where(profile[:, 1] > 0.03)]
 
             sort_inds = np.argsort(profile[:, 0])
