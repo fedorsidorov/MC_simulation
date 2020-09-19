@@ -64,13 +64,9 @@ time_s = 10
 
 xx = mapping.x_centers_50nm * 1e-7  # cm
 zz_vac = np.zeros(len(xx))  # cm
-# monomer_matrix = np.zeros(np.shape(resist_matrix)[:3])
+monomer_matrix = np.zeros(np.shape(resist_matrix)[:3])
 
 zz_vac_list = [zz_vac]
-
-
-
-# print('!!!!!!!!!', i, '!!!!!!!!!')
 
 print('getting e_DATA ...')
 e_DATA, e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(
@@ -86,7 +82,7 @@ print('e_DATA is obtained')
 print('getting scission_matrix ...')
 scission_matrix, E_dep_matrix = deber.get_scission_matrix(e_DATA, weight=0.35)
 print('scission_matrix is obtained')
-# %%
+
 print('process mapping ...')
 mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
 print('mapping is carried out')
@@ -173,5 +169,6 @@ plt.show()
 
 zz = mcf.lin_lin_interp(xx_final, zz_vac_final)(xx)
 
-
+# %%
+monomer_matrix_2d = np.sum(new_monomer_matrix, axis=1)
 

@@ -76,6 +76,10 @@ def track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt):  # nanomete
     # return now_x, now_z, total_time, history[np.where(history[:, 0] != 0)]
 
 
+def exp_gauss(xx, A, B, s):
+    return np.exp(A - B*np.exp(-xx**2 / s**2))
+
+
 def track_all_monomers(monomer_matrix_2d, xx_cm, zz_vac_cm, d_PMMA_cm, dT, wp, t_step, dtdt):
 
     xx = xx_cm * 1e+7
@@ -92,7 +96,10 @@ def track_all_monomers(monomer_matrix_2d, xx_cm, zz_vac_cm, d_PMMA_cm, dT, wp, t
         ind_x, ind_z = line
         x0, z0 = mapping.x_centers_5nm[ind_x], mapping.z_centers_5nm[ind_z]  # nanometers!!!
 
-        for n in range(int(monomer_matrix_2d[ind_x, ind_z])):
+        n_tens_monomers = int(np.round(monomer_matrix_2d[ind_x, ind_z] / 10))  # in tens!!!
+
+        # for n in range(int(monomer_matrix_2d[ind_x, ind_z])):
+        for n in range(n_tens_monomers):
             x_final, z_final, total_time = track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt)
             monomer_matrix_2d_final += np.histogramdd(sample=np.array((x_final, z_final)).reshape((1, 2)),
                                                       bins=(mapping.x_bins_5nm, mapping.z_bins_5nm))[0]
@@ -120,13 +127,9 @@ def get_100nm_array(array):
     return hist_weights / hist
 
 
-def minus_exp_gauss(xx, M0, a, s):
-    return np.exp(M0 - a*np.exp(-xx**2 / s))
-
-
 def get_zz_vac_monomer_matrix(zz_vac_old, mon_matrix_2d):
 
-    n_monomers_out = get_50nm_array(mon_matrix_2d[:, 0])
+    n_monomers_out = get_50nm_array(mon_matrix_2d[:, 0]) * 10  # in tens!!!
     V_monomer_out = n_monomers_out * constants.V_mon
     dh_monomer_out = V_monomer_out / (mapping.l_y * 1e-7 * mapping.step_50nm * 1e-7)
 

@@ -55,6 +55,8 @@ Q = dose_s * area
 n_electrons = Q / constants.e_SI  # 2 472
 n_electrons_s = int(np.around(n_electrons / t))
 
+r_beam = 150e-7
+
 zip_length = 1000
 T_C = 125
 Tg = 120
@@ -79,7 +81,7 @@ for i in range(32):
         d_PMMA=d_PMMA,
         n_electrons=n_electrons_s*time_s,
         E0=20e+3,
-        r_beam=100e-7
+        r_beam=r_beam
     )
     print('e_DATA is obtained')
 
@@ -114,21 +116,25 @@ for i in range(32):
     np.save('matrix_Mw_1d_100nm_' + str(i) + '.npy', matrix_Mw_1d_100nm)
     print('local Mw matrix is obtained')
 
-    popt, _ = curve_fit(df.minus_exp_gauss, mapping.x_centers_100nm, matrix_Mw_1d_100nm)
+    # popt, _ = curve_fit(df.minus_exp_gauss, mapping.x_centers_100nm, matrix_Mw_1d_100nm)
+    beg_ind = 1
+    popt, _ = curve_fit(df.exp_gauss, mapping.x_centers_100nm[beg_ind:-beg_ind],
+                        matrix_Mw_1d_100nm[beg_ind:-beg_ind], p0=[13.8, 0.6, 200])
+    print(popt)
 
-    # plt.figure(dpi=300)
-    # plt.semilogy(mapping.x_centers_100nm, matrix_Mw_1d_100nm, '-o')
-    # plt.semilogy(mapping.x_centers_50nm, df.minus_exp_gauss(mapping.x_centers_50nm, *popt), '.-')
-    # plt.title('Mw gauss fit')
-    # plt.show()
+    plt.figure(dpi=300)
+    plt.semilogy(mapping.x_centers_100nm, matrix_Mw_1d_100nm, '-o')
+    plt.semilogy(mapping.x_centers_50nm, df.exp_gauss(mapping.x_centers_50nm, *popt), '.-')
+    plt.title('Mw gauss fit, i = ' + str(i))
+    plt.show()
 
-    etas_50nm_fit = rf.get_viscosity_W(T_C, df.minus_exp_gauss(mapping.x_centers_50nm, *popt))
+    etas_50nm_fit = rf.get_viscosity_W(T_C, df.exp_gauss(mapping.x_centers_50nm, *popt))
     mobs_50nm_fit = rf.get_SE_mobility(etas_50nm_fit)
 
-    # plt.figure(dpi=300)
-    # plt.semilogy(mapping.x_centers_50nm, mobs_50nm_fit, 'o-')
-    # plt.title('obtained mobilities')
-    # plt.show()
+    plt.figure(dpi=300)
+    plt.semilogy(mapping.x_centers_50nm, mobs_50nm_fit, 'o-')
+    plt.title('obtained mobilities, i = ' + str(i))
+    plt.show()
 
     print('simulate diffusion ...')
     monomer_matrix_2d = np.sum(monomer_matrix, axis=1)
@@ -139,10 +145,10 @@ for i in range(32):
     # zz_vac = np.zeros(len(mapping.x_centers_50nm))  # 50 nm !!!
     zz_vac_new, monomer_matrix_2d_new = df.get_zz_vac_monomer_matrix(zz_vac, monomer_matrix_2d_final)
 
-    # plt.figure(dpi=300)
-    # plt.plot(mapping.x_centers_50nm, zz_vac_new)
-    # plt.title('profile after diffusion')
-    # plt.show()
+    plt.figure(dpi=300)
+    plt.plot(mapping.x_centers_50nm, zz_vac_new)
+    plt.title('profile after diffusion, i = ' + str(i))
+    plt.show()
 
     zz_vac_evolver = 80e-7 - zz_vac_new
     ef.create_datafile(mapping.x_centers_50nm * 1e-3, zz_vac_evolver * 1e+4, mobs_50nm_fit)
@@ -156,12 +162,13 @@ for i in range(32):
     xx_final = np.concatenate(([mapping.x_min * 1e-3], xx_final, [mapping.x_max * 1e-3]))
     zz_vac_final = np.concatenate(([zz_vac_final[0]], zz_vac_final, [zz_vac_final[-1]]))
 
-    # plt.figure(dpi=300)
-    # plt.plot(xx_final, zz_vac_final)
-    # plt.title('after SE')
-    # plt.show()
+    plt.figure(dpi=300)
+    plt.plot(xx_final * 1e+3, 80 - zz_vac_final * 1e+8)
+    plt.title('after SE, i = ' + str(i))
+    plt.show()
 
     zz = mcf.lin_lin_interp(xx_final, zz_vac_final)(xx)
+    zz_vac_list.append(zz)
 
 
 

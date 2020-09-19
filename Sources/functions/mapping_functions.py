@@ -83,84 +83,6 @@ def process_scission(resist_matrix, chain_table, n_monomer):
         # print('monomer type error, monomer_type =', monomer_type)
 
 
-def get_chain_lens(chain_tables):
-    lens_final = deque()
-    progress_bar = tqdm(total=len(chain_tables), position=0)
-
-    for chain_table in chain_tables:
-        cnt = 0
-        if len(chain_table) == 1:
-            lens_final.append(1)
-            continue
-        for line in chain_table:
-            monomer_type = line[indexes.monomer_type_ind]
-            if monomer_type == 0:
-                cnt = 1
-            elif monomer_type == 1:
-                cnt += 1
-            elif monomer_type == 2:
-                cnt += 1
-                lens_final.append(cnt)
-                cnt = 0
-
-        progress_bar.update()
-
-    return np.array(lens_final)
-
-
-def get_local_chain_len(resist_shape, N_mon_max, chain_table):
-    chain_sum_len_matrix = np.zeros(resist_shape)
-    n_chains_matrix = np.zeros(resist_shape)
-
-    for idx, chain in enumerate(chain_table):
-        beg_pos = 0
-
-        while True:
-
-            if beg_pos >= N_mon_max or chain[beg_pos, indexes.monomer_type_ind] == constants.uint32_max:
-                break
-
-            if chain[beg_pos, indexes.monomer_type_ind] in [indexes.free_monomer, indexes.free_radicalized_monomer]:
-                beg_pos += 1
-                continue
-
-            if chain[beg_pos, indexes.monomer_type_ind] != indexes.begin_monomer:
-                print('monomer_type', chain[beg_pos, indexes.monomer_type_ind])
-                print('idx, beg_pos', idx, beg_pos)
-                print('chain index_indng error!')
-
-            where_result = np.where(chain[beg_pos:, indexes.monomer_type_ind] == indexes.end_monomer)[0]
-
-            if len(where_result) == 0:
-                break
-
-            end_pos = beg_pos + where_result[0]
-            now_chain_len = end_pos - beg_pos
-
-            inds_list = []
-
-            for mon_line in chain[beg_pos:end_pos + 1]:
-
-                x_pos, y_pos, z_pos = mon_line[:3]
-
-                if x_pos == y_pos == z_pos == constants.uint32_max:
-                    continue
-
-                now_poss = [x_pos, y_pos, z_pos]
-
-                if now_poss in inds_list:
-                    continue
-
-                chain_sum_len_matrix[x_pos, y_pos, z_pos] += now_chain_len
-                n_chains_matrix[x_pos, y_pos, z_pos] += 1
-
-                inds_list.append(now_poss)
-
-            beg_pos = end_pos + 1
-
-    return chain_sum_len_matrix, n_chains_matrix
-
-
 def process_mapping(scission_matrix, resist_matrix, chain_tables):
 
     resist_shape = np.shape(scission_matrix)
@@ -271,50 +193,6 @@ def process_depolymerization(resist_matrix, chain_tables, zip_length):
                     now_table = chain_tables[new_chain_num]
                     n_mon = new_n_mon
                     step = np.random.choice([-1, 1])
-
-
-# def process_depolymerization_2(resist_matrix, chain_tables, zip_length):
-#
-#     for ct_num, ct in enumerate(chain_tables):
-#
-#         sci_inds = np.where(ct[1:, indexes.monomer_type_ind] == 0)[0] + 1  # array is getting shifted!!!
-#
-#         for sci_ind in sci_inds:
-#
-#             now_table = ct
-#             n_mon = sci_ind
-#             step = np.random.choice([-1, 1])
-#
-#             if step == -1:
-#                 n_mon -= 1
-#
-#             process_scission(resist_matrix, now_table, n_mon)
-#             kin_len = 1
-#             n_mon += step
-#
-#             while kin_len < zip_length:  # do talogo
-#
-#                 x_bin, y_bin, z_bin, _, mon_type = now_table[n_mon, :]
-#
-#                 if (mon_type in [indexes.begin_monomer, indexes.middle_monomer, indexes.end_monomer]) and \
-#                         (n_mon > 0) and (n_mon < (len(now_table) - 1)):
-#
-#                     process_scission(resist_matrix, now_table, n_mon)
-#                     kin_len += 1
-#                     n_mon += step
-#
-#                 else:  # chain transfer
-#                     free_line_inds = np.where(resist_matrix[x_bin, y_bin, z_bin, :] == indexes.middle_monomer)[0]
-#
-#                     if len(free_line_inds) == 0:
-#                         break
-#
-#                     new_line_ind = np.random.choice(free_line_inds)
-#                     new_chain_num, new_n_mon = resist_matrix[x_bin, y_bin, z_bin, new_line_ind, :2]
-#                     now_table = chain_tables[new_chain_num]
-#                     n_mon = new_n_mon
-#
-#                     process_scission(resist_matrix, now_table, n_mon)
 
 
 def get_chain_len_matrix(resist_matrix, chain_tables):
