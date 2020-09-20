@@ -46,12 +46,41 @@ def get_e_DATA_PMMA_val(xx, zz_vac, d_PMMA, n_electrons, E0, r_beam):
     simulator.start_simulation()
 
     e_DATA = simulator.get_total_history()
+
     e_DATA_PMMA_val = e_DATA[np.where(np.logical_and(
         e_DATA[:, ind.DATA_layer_id_ind] == ind.PMMA_ind,
         e_DATA[:, ind.DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)
     )]
 
     return e_DATA, e_DATA_PMMA_val
+
+
+def get_e_DATA_Pn(xx, zz_vac, d_PMMA, n_electrons, E0, r_beam):
+    ly = mapping.l_y * 1e-7
+
+    structure = mcc.Structure(
+        d_PMMA=d_PMMA,
+        xx=xx,
+        zz_vac=zz_vac,
+        ly=ly)
+
+    simulator = mcc.Simulator(
+        structure=structure,
+        n_electrons=n_electrons,
+        E0_eV=E0,
+        r_beam=r_beam
+    )
+    simulator.prepare_e_deque()
+    simulator.start_simulation()
+
+    e_DATA = simulator.get_total_history()
+
+    e_DATA_Pn = e_DATA[np.where(np.logical_and(
+        e_DATA[:, ind.DATA_layer_id_ind] == ind.PMMA_ind,
+        e_DATA[:, ind.DATA_process_id_ind] > 0)
+    )]
+
+    return e_DATA, e_DATA_Pn
 
 
 def get_scission_matrix_degpaths(e_DATA_PMMA_val, weight):
@@ -88,7 +117,8 @@ def get_scission_matrix(e_DATA, weight):
         xyz_max=[mapping.x_max, mapping.y_max, np.inf]
     )
 
-    deg_paths = sf.degpaths_all_WO_Oval
+    # deg_paths = sf.degpaths_all_WO_Oval
+    deg_paths = sf.degpaths_all
 
     e_DATA_PMMA = e_DATA[np.where(e_DATA[:, ind.DATA_layer_id_ind] == ind.PMMA_ind)]
     e_DATA_PMMA_val = e_DATA_PMMA[np.where(e_DATA_PMMA[:, ind.DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
@@ -99,7 +129,7 @@ def get_scission_matrix(e_DATA, weight):
         weights=e_DATA_PMMA[:, ind.DATA_E_dep_ind]
     )[0]
 
-    scissions = sf.get_scissions(e_DATA_PMMA_val, deg_paths, weight=weight)
+    scissions = sf.get_scissions_easy(e_DATA_PMMA_val, weight=weight)
 
     e_matrix_val_sci = np.histogramdd(
         sample=e_DATA_PMMA_val[:, ind.DATA_coord_inds],

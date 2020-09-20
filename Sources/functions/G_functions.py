@@ -2,8 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
-
 # %%
+G_k = -454.01242092837134
+G_b = 2.0079453212345793
+
+
 def linear_func(xx, k, b):
     return k * xx + b
 
@@ -28,6 +31,21 @@ def fit_e_G_value():
     return popt
 
 
-def get_G_value(T_C):
+def get_G(T_C):
     T_inv = 1 / (T_C + 273)
-    return np.exp(linear_func(T_inv, -454.01242092837134, 2.0079453212345793))
+    return np.exp(linear_func(T_inv, G_k, G_b))
+
+
+def get_T(G_value):
+    T = G_k / (np.log(G_value) - G_b)
+    return T - 273
+
+
+# %%
+# TT = np.linspace(0, 170, 100)
+# GG = get_G(TT)
+#
+# plt.figure(dpi=300)
+# plt.plot(TT, get_T(GG), 'o-')
+# plt.grid()
+# plt.show()

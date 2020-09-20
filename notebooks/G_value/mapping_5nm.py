@@ -14,9 +14,10 @@ indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 
 # %%
-for weight in ['0.3', '0.4']:
+for weight in [0.15, 0.175, 0.225, 0.25, 0.275, 0.325, 0.35]:
 
     print(weight)
+    weight = str(weight)
 
     scission_matrix = np.load('data/scission_mat_weight/e_matrix_scissions_' + weight + '.npy')
     resist_matrix = np.load('/Volumes/ELEMENTS/chains_harris/resist_matrix_1.npy')

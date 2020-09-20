@@ -10,19 +10,33 @@ const = importlib.reload(const)
 
 
 # %%
-def get_e_id_DATA_ind_range(DATA, e_id):
+# def get_e_id_DATA_ind_range(DATA, e_id):  # to FIX!!!
+#     e_id_inds = np.where(DATA[:, ind.DATA_e_id_ind] == e_id)[0]
+#     beg_ind = e_id_inds[0]
+#     secondary_inds = np.where(DATA[:, ind.DATA_parent_e_id_ind] == e_id)[0]
+#     if len(secondary_inds) == 0:  # primary e created no 2ndaries
+#         end_ind = e_id_inds[-1]
+#     else:
+#         end_ind = secondary_inds[-1]  # there are secondary electrons
+#     return range(beg_ind, end_ind + 1)
+
+
+def get_e_id_DATA_ind_range_corr(DATA, n_primaries, e_id):
     e_id_inds = np.where(DATA[:, ind.DATA_e_id_ind] == e_id)[0]
-    beg_ind = e_id_inds[0]
-    secondary_inds = np.where(DATA[:, ind.DATA_parent_e_id_ind] == e_id)[0]
-    if len(secondary_inds) == 0:  # primary e created no 2ndaries
-        end_ind = e_id_inds[-1]
-    else:
-        end_ind = secondary_inds[-1]  # there are secondary electrons
-    return range(beg_ind, end_ind + 1)
+
+    if len(e_id_inds) == 0:
+        return range(0, 0)
+
+    if e_id == n_primaries - 1:
+        return range(e_id_inds[0], len(DATA))
+
+    next_e_id_inds = np.where(DATA[:, ind.DATA_e_id_ind] == e_id + 1)[0]
+
+    return range(e_id_inds[0], next_e_id_inds[0])
 
 
-def get_e_id_DATA(DATA, e_id):
-    return DATA[get_e_id_DATA_ind_range(DATA, e_id), :]
+def get_e_id_DATA_corr(DATA, n_primaries, e_id):
+    return DATA[get_e_id_DATA_ind_range_corr(DATA, n_primaries, e_id), :]
 
 
 def rotate_DATA(DATA, phi=2 * np.pi * np.random.random()):

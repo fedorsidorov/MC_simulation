@@ -21,7 +21,7 @@ sf = importlib.reload(sf)
 Gf = importlib.reload(Gf)
 
 # %%
-for weight in [0.2, 0.3, 0.4]:
+for weight in [0.15, 0.175, 0.225, 0.25, 0.275, 0.325, 0.35]:
 
     print('weight =', weight)
 

@@ -43,43 +43,44 @@ degpaths_CC = {'CCp-C2': 4}
 degpaths_CC_ester = {'CCp-C2': 4, 'CCp-Cp': 2}
 
 
+# %% _outdated
+# def get_scission_probs(degpath_dict, E_array=grid.EE):
+#     Ebond_Nelectrons_scission_list = []
+#
+#     for value in degpath_dict.keys():
+#         Ebond_Nelectrons_scission_list.append([MMA_bonds[value][0], degpath_dict[value]])
+#
+#     Ebond_Nelectrons_scission_array = np.array(Ebond_Nelectrons_scission_list)
+#     probs = np.zeros(len(E_array))
+#
+#     for i, E in enumerate(E_array):
+#
+#         num = 0
+#         for Eb_Nel in Ebond_Nelectrons_scission_array:
+#             if E >= Eb_Nel[0]:
+#                 num += Eb_Nel[1]
+#
+#         if num == 0:
+#             continue
+#
+#         den = 0
+#         for Eb_Nel in Ebond_Nelectrons_array:
+#             if E >= Eb_Nel[0]:
+#                 den += Eb_Nel[1]
+#
+#         probs[i] = num / den
+#
+#     return probs
+
+
+# def get_scissions(DATA, degpath_dict, weight=1):
+#     ee = DATA[:, ind.DATA_E_dep_ind] + DATA[:, ind.DATA_E2nd_ind] + DATA[:, ind.DATA_E_ind]  # E before collision
+#     scission_probs = get_scission_probs(degpath_dict, E_array=ee) * weight
+#     return np.array(np.random.random(len(DATA)) < scission_probs).astype(int)
+
+
 # %%
-def get_scission_probs(degpath_dict, E_array=grid.EE):
-    Ebond_Nelectrons_scission_list = []
-
-    for value in degpath_dict.keys():
-        Ebond_Nelectrons_scission_list.append([MMA_bonds[value][0], degpath_dict[value]])
-
-    Ebond_Nelectrons_scission_array = np.array(Ebond_Nelectrons_scission_list)
-    probs = np.zeros(len(E_array))
-
-    for i, E in enumerate(E_array):
-
-        num = 0
-        for Eb_Nel in Ebond_Nelectrons_scission_array:
-            if E >= Eb_Nel[0]:
-                num += Eb_Nel[1]
-
-        if num == 0:
-            continue
-
-        den = 0
-        for Eb_Nel in Ebond_Nelectrons_array:
-            if E >= Eb_Nel[0]:
-                den += Eb_Nel[1]
-
-        probs[i] = num / den
-
-    return probs
-
-
-def get_scissions(DATA, degpath_dict, weight=1):
-    ee = DATA[:, ind.DATA_E_dep_ind] + DATA[:, ind.DATA_E2nd_ind] + DATA[:, ind.DATA_E_ind]  # E before collision
-    scission_probs = get_scission_probs(degpath_dict, E_array=ee) * weight
-    return np.array(np.random.random(len(DATA)) < scission_probs).astype(int)
-
-
-def get_scissions_weight(DATA, weight):
+def get_scissions_easy(DATA, weight):
     ee = DATA[:, ind.DATA_E_dep_ind] + DATA[:, ind.DATA_E2nd_ind] + DATA[:, ind.DATA_E_ind]  # E before collision
     scission_probs = np.ones(len(ee)) * weight
     return np.array(np.random.random(len(DATA)) < scission_probs).astype(int)

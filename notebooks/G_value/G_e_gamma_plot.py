@@ -10,7 +10,7 @@ def linear_func(xx, k, b):
 fig, ax = plt.subplots(dpi=300)
 fig.set_size_inches(5, 4)
 
-data = np.loadtxt('data/G_values/gamma.txt')
+data = np.loadtxt('data/_outdated/G_values/gamma.txt')
 TT_inv = data[:, 0] / 1e+3
 GG = data[:, 1]
 GG_log = np.log(GG)
