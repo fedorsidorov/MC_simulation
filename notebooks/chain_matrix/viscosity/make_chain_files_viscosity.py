@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
 import constants as cp
-from mapping import mapping_harris as mapping
+from mapping import mapping_viscosity as mapping
 
 mapping = importlib.reload(mapping)
 cp = importlib.reload(cp)
@@ -16,8 +16,8 @@ def get_hist_position(element, bins):
 
 
 # %% load data
-chain_lens = np.load('/Volumes/ELEMENTS/chains_harris/prepared_chains_3/chain_lens.npy')
-hist_5nm = np.load('/Volumes/ELEMENTS/chains_harris/rot_sh_sn_chains_3/hist_5nm.npy')
+chain_lens = np.load('/Volumes/ELEMENTS/chains_viscosity/prepared_chains_1/chain_lens.npy')
+hist_5nm = np.load('/Volumes/ELEMENTS/chains_viscosity/rot_sh_sn_chains_1/hist_5nm.npy')
 n_mon_cell_max = int(np.max(hist_5nm))
 
 plt.imshow(np.average(hist_5nm, axis=1).transpose())
@@ -32,7 +32,7 @@ progress_bar = tqdm(total=len(chain_lens), position=0)
 
 for chain_num in range(len(chain_lens)):
 
-    now_chain = np.load('/Volumes/ELEMENTS/chains_harris/rot_sh_sn_chains_3/rot_sh_sn_chain_' +
+    now_chain = np.load('/Volumes/ELEMENTS/chains_viscosity/rot_sh_sn_chains_1/rot_sh_sn_chain_' +
                         str(chain_num) + '.npy')
 
     chain_table = np.zeros((len(now_chain), 5), dtype=np.uint32)
@@ -67,11 +67,11 @@ for chain_num in range(len(chain_lens)):
 
 # %%
 print('resist_matrix size, Gb:', resist_matrix.nbytes / 1024 ** 3)
-np.save('/Volumes/ELEMENTS/chains_harris/resist_matrix_3.npy', resist_matrix)
+np.save('/Volumes/ELEMENTS/chains_viscosity/resist_matrix_1.npy', resist_matrix)
 
 # %%
 progress_bar = tqdm(total=len(chain_tables), position=0)
 
 for n, chain_table in enumerate(chain_tables):
-    np.save('/Volumes/ELEMENTS/chains_harris/chain_tables_1/chain_table_' + str(n) + '.npy', chain_table)
+    np.save('/Volumes/ELEMENTS/chains_viscosity/chain_tables_1/chain_table_' + str(n) + '.npy', chain_table)
     progress_bar.update()

@@ -122,12 +122,19 @@ def process_mapping(scission_matrix, resist_matrix, chain_tables):
 
 
 def process_depolymerization(resist_matrix, chain_tables, zip_length):
+    progress_bar = tqdm(total=len(chain_tables), position=0)
 
     for ct_num, ct in enumerate(chain_tables):
 
         sci_inds = np.where(ct[1:, indexes.monomer_type_ind] == 0)[0] + 1
 
+        # stop_flag = False
+
         for sci_ind in sci_inds:
+
+            # if stop_flag:
+            #     break
+
             now_table = ct
             n_mon = sci_ind
             step = np.random.choice([-1, 1])
@@ -153,19 +160,8 @@ def process_depolymerization(resist_matrix, chain_tables, zip_length):
                         rewrite_monomer_type(resist_matrix, now_table, n_mon, indexes.free_monomer)
                         kin_len += 1
 
-                    # free_line_inds = np.where(resist_matrix[x_bin, y_bin, z_bin, :] <= indexes.end_monomer)[0]
                     free_line_inds = np.where(resist_matrix[x_bin, y_bin, z_bin, :, indexes.monomer_type_ind] <=
                                               indexes.end_monomer)[0]
-
-                    # if len(free_line_inds) == 0:
-                    #     print('no free indexes')
-                    #     if y_bin + 1 < np.shape(resist_matrix)[1]:
-                    #         y_bin += 1
-                    #     elif z_bin + 1 < np.shape(resist_matrix)[2]:
-                    #         z_bin += 1
-                    #     elif x_bin + 1 < np.shape(resist_matrix)[0]:
-                    #         x_bin += 1
-                    #     break
 
                     while len(free_line_inds) == 0:
                         # print('no free indexes')
@@ -182,9 +178,12 @@ def process_depolymerization(resist_matrix, chain_tables, zip_length):
                             free_line_inds = np.where(resist_matrix[x_bin, y_bin, z_bin, :, indexes.monomer_type_ind] <=
                                                       indexes.end_monomer)[0]
                         else:
+                            kin_len = zip_length
                             break
 
                     if len(free_line_inds) == 0:
+                        # print('here', x_bin, y_bin, z_bin)
+                        kin_len = zip_length
                         break
 
                     new_line_ind = np.random.choice(free_line_inds)
@@ -194,11 +193,50 @@ def process_depolymerization(resist_matrix, chain_tables, zip_length):
                     n_mon = new_n_mon
                     step = np.random.choice([-1, 1])
 
+        progress_bar.update()
 
-def get_chain_len_matrix(resist_matrix, chain_tables):
 
-    sum_m2 = np.zeros(np.shape(resist_matrix)[:3])  # for chains only!!!
+def get_sum_m_m2(chain_tables):
+
+    sum_m = 0
+    sum_m2 = 0
+
+    progress_bar = tqdm(total=len(chain_tables), position=0)
+
+    for ct_num, ct in enumerate(chain_tables):
+
+        now_len = 0
+
+        for n_mon, mon_line in enumerate(ct):
+
+            mon_type = mon_line[indexes.monomer_type_ind]
+
+            if mon_type != indexes.free_monomer:
+                now_len += 1
+
+            else:
+                # rewrite_monomer_type(resist_matrix, ct, n_mon, indexes.gone_monomer)
+
+                if now_len > 0:  # chain length is gathered
+                    now_mass = now_len * 100
+                    sum_m2 += now_mass ** 2
+                    sum_m += now_mass
+                    now_len = 0
+
+        if now_len > 0:
+            now_mass = now_len * 100
+            sum_m2 += now_mass ** 2
+            sum_m += now_mass
+
+        progress_bar.update()
+
+    return sum_m, sum_m2
+
+
+def get_sum_m_m2_mon_matrix(resist_matrix, chain_tables):
+
     sum_m = np.zeros(np.shape(resist_matrix)[:3])  # for chains only!!!
+    sum_m2 = np.zeros(np.shape(resist_matrix)[:3])  # for chains only!!!
     monomer_matrix = np.zeros(np.shape(resist_matrix)[:3])
 
     progress_bar = tqdm(total=len(chain_tables), position=0)

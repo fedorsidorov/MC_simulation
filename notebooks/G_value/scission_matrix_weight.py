@@ -21,7 +21,7 @@ sf = importlib.reload(sf)
 Gf = importlib.reload(Gf)
 
 # %%
-for weight in [0.15, 0.175, 0.225, 0.25, 0.275, 0.325, 0.35]:
+for weight in [0.1, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35]:
 
     print('weight =', weight)
 
@@ -36,7 +36,7 @@ for weight in [0.15, 0.175, 0.225, 0.25, 0.275, 0.325, 0.35]:
     source = '/Volumes/ELEMENTS/e_DATA/harris/'
 
     # deg_paths = sf.degpaths_all_WO_Oval
-    deg_paths = sf.degpaths_all
+    # deg_paths = sf.degpaths_all
 
     file_cnt = 0
     progress_bar = tqdm(total=n_electrons_required, position=0)
@@ -54,8 +54,8 @@ for weight in [0.15, 0.175, 0.225, 0.25, 0.275, 0.325, 0.35]:
 
         for primary_e_id in range(primary_electrons_in_file):
 
-            now_prim_e_DATA = emf.get_e_id_DATA(now_DATA, primary_e_id)
-            emf.add_uniform_xy_shift_to_track(now_prim_e_DATA,
+            now_prim_e_DATA = emf.get_e_id_DATA_corr(now_DATA, primary_electrons_in_file, primary_e_id)
+            emf.add_uniform_xy_shift_to_e_DATA(now_prim_e_DATA,
                                               [mapping.x_min, mapping.x_max], [mapping.y_min, mapping.y_max])
 
             af.snake_array(
@@ -76,7 +76,7 @@ for weight in [0.15, 0.175, 0.225, 0.25, 0.275, 0.325, 0.35]:
             now_prim_e_val_DATA = \
                 now_prim_e_DATA[np.where(now_prim_e_DATA[:, ind.DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
 
-            scissions = sf.get_scissions_weight(now_prim_e_val_DATA, weight=weight)
+            scissions = sf.get_scissions_easy(now_prim_e_val_DATA, weight=weight)
 
             e_matrix_val_sci += np.histogramdd(
                 sample=now_prim_e_val_DATA[:, ind.DATA_coord_inds],

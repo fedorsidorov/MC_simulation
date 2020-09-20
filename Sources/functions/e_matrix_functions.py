@@ -1,7 +1,5 @@
 import importlib
-
 import numpy as np
-
 import indexes as ind
 import constants as const
 
@@ -32,6 +30,14 @@ def get_e_id_DATA_ind_range_corr(DATA, n_primaries, e_id):
 
     next_e_id_inds = np.where(DATA[:, ind.DATA_e_id_ind] == e_id + 1)[0]
 
+    while len(next_e_id_inds) == 0:
+        e_id += 1
+
+        if e_id == n_primaries - 1:
+            return range(e_id_inds[0], len(DATA))
+        else:
+            next_e_id_inds = np.where(DATA[:, ind.DATA_e_id_ind] == e_id + 1)[0]
+
     return range(e_id_inds[0], next_e_id_inds[0])
 
 
@@ -46,9 +52,14 @@ def rotate_DATA(DATA, phi=2 * np.pi * np.random.random()):
         np.dot(rot_mat, DATA[:, ind.DATA_x_ind:ind.DATA_z_ind].transpose()).transpose()
 
 
-def add_uniform_xy_shift_to_track(track_DATA, x_range, y_range):
+# def add_uniform_xy_shift_to_track(track_DATA, x_range, y_range):
+#     x_shift, y_shift = np.random.uniform(*x_range), np.random.uniform(*y_range)
+#     track_DATA[:, ind.DATA_xy_inds] += x_shift, y_shift
+
+
+def add_uniform_xy_shift_to_e_DATA(e_DATA, x_range, y_range):
     x_shift, y_shift = np.random.uniform(*x_range), np.random.uniform(*y_range)
-    track_DATA[:, ind.DATA_xy_inds] += x_shift, y_shift
+    e_DATA[:, ind.DATA_xy_inds] += x_shift, y_shift
 
 
 def add_gaussian_xy_shift_to_track(track_DATA, x_position, x_sigma, y_range):

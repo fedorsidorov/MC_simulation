@@ -2,7 +2,7 @@ import importlib
 
 import numpy as np
 from tqdm import tqdm
-
+import matplotlib.pyplot as plt
 import indexes as ind
 from functions import array_functions as af
 from functions import e_matrix_functions as emf
@@ -24,50 +24,54 @@ Gf = importlib.reload(Gf)
 source = 'data/e_DATA_Pn_80nm_point/'
 scission_matrix_total = np.zeros(mapping.hist_5nm_shape)
 weight = 0.225
-deg_paths = sf.degpaths_all  # !!!
-
 file_cnt = 0
-
 n_files = 3200
 primary_electrons_in_file = 10
 
-# now_DATA = np.load(source + 'e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
-# file_cnt += 1
+while np.average(scission_matrix_total) < 100:
 
-
-while np.min(scission_matrix_total) < 100:
-
-    now_DATA = np.load(source + 'e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
+    now_e_DATA = np.load(source + 'e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
     file_cnt += 1
 
-    print(np.min(scission_matrix_total))
-
     if file_cnt > n_files:
-        emf.rotate_DATA(now_DATA)
+        emf.rotate_DATA(now_e_DATA)
 
-    for primary_e_id in range(primary_electrons_in_file):
+    emf.add_uniform_xy_shift_to_e_DATA(now_e_DATA, [mapping.x_min, mapping.x_max], [mapping.y_min, mapping.y_max])
 
-        now_prim_e_DATA = emf.get_e_id_DATA_corr(now_DATA, primary_electrons_in_file, primary_e_id)
+    af.snake_array(
+        array=now_e_DATA,
+        x_ind=ind.DATA_x_ind,
+        y_ind=ind.DATA_y_ind,
+        z_ind=ind.DATA_z_ind,
+        xyz_min=[mapping.x_min, mapping.y_min, -np.inf],
+        xyz_max=[mapping.x_max, mapping.y_max, np.inf]
+    )
 
-        emf.add_uniform_xy_shift_to_track(now_prim_e_DATA,
-                                          [mapping.x_min, mapping.x_max], [mapping.y_min, mapping.y_max])
+    now_e_val_DATA = now_e_DATA[np.where(now_e_DATA[:, ind.DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
 
-        af.snake_array(
-            array=now_prim_e_DATA,
-            x_ind=ind.DATA_x_ind,
-            y_ind=ind.DATA_y_ind,
-            z_ind=ind.DATA_z_ind,
-            xyz_min=[mapping.x_min, mapping.y_min, -np.inf],
-            xyz_max=[mapping.x_max, mapping.y_max, np.inf]
-        )
+    scissions = sf.get_scissions_easy(now_e_val_DATA, weight=weight)
 
-        now_prim_e_val_DATA = \
-            now_prim_e_DATA[np.where(now_prim_e_DATA[:, ind.DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
+    scission_matrix = np.histogramdd(
+        sample=now_e_val_DATA[:, ind.DATA_coord_inds],
+        bins=mapping.bins_5nm,
+        weights=scissions
+    )[0]
 
-        scissions = sf.get_scissions_easy(now_prim_e_val_DATA, weight=weight)
+    scission_matrix_total += scission_matrix
 
-        scission_matrix_total += np.histogramdd(
-            sample=now_prim_e_val_DATA[:, ind.DATA_coord_inds],
-            bins=mapping.bins_5nm,
-            weights=scissions
-        )[0]
+    if file_cnt % 1000 == 0:
+        print(file_cnt // 1000, 'K files')
+        print(np.average(scission_matrix_total))
+        np.save('data/sci_mat_viscosity/scission_matrix_total_' +
+                str(file_cnt // 1000) + '.npy', scission_matrix_total)
+
+
+# %%
+sci_mat = np.load('data/sci_mat_viscosity/scission_matrix_total_2.npy')
+sci_mat_2d = np.sum(sci_mat, axis=1)
+
+plt.figure(dpi=300)
+plt.imshow(sci_mat_2d[300:-300, :])
+plt.show()
+
+
