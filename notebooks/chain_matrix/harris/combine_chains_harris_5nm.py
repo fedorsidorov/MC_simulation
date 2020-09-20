@@ -6,14 +6,13 @@ from functions import array_functions as af
 from functions import plot_functions as pf
 from tqdm import tqdm
 from mapping import mapping_harris as mapping
-# import mapping_aktary as _outdated
 import constants as const
 
+mapping = importlib.reload(mapping)
+const = importlib.reload(const)
 cf = importlib.reload(cf)
 af = importlib.reload(af)
 pf = importlib.reload(pf)
-mapping = importlib.reload(mapping)
-const = importlib.reload(const)
 
 
 # %%
@@ -46,23 +45,29 @@ def get_window_shift(array, wind_size):
 
 
 def get_zero_shift(array):
-    inds_xyz = np.array(np.where(array == np.min(array))).transpose()
+    inds_xyz = np.array(np.where(array == array.min())).transpose()
     xyz_bin = inds_xyz[np.random.choice(len(inds_xyz))]
     return get_shift(*xyz_bin)
 
 
 # %%
-source_folder = '/Volumes/ELEMENTS/chains_Harris/'
+source_folder = '/Volumes/ELEMENTS/chains_harris/prepared_chains_3/'
 
-chain_lens = np.load(source_folder + 'lens_initial.npy')
+chain_lens = np.load(source_folder + 'chain_lens.npy')
 chain_list = []
 
-# %%
 progress_bar = tqdm(total=len(chain_lens), position=0)
 
+diff_array = np.zeros((len(chain_lens), 3))
+
 for n, _ in enumerate(chain_lens):
-    chain_list.append(np.load(source_folder + 'chain_' + str(n) + '.npy'))
+    now_chain = np.load(source_folder + 'chain_' + str(n) + '.npy')
+    diff_array[n, :] = (now_chain[-1, :] - now_chain[0, :])**2
+    chain_list.append(now_chain)
     progress_bar.update()
+
+# %%
+np.average(diff_array)
 
 # %%
 final_chain_list = []
@@ -82,7 +87,6 @@ for n, now_chain in enumerate(chain_list):
     a, b, g = np.random.random(3) * 2 * np.pi
     now_chain = cf.rotate_chain(now_chain, a, b, g)
 
-    # now_chain_l_xyz = np.max(now_chain, axis=0) - np.min(now_chain, axis=0)
     now_shift = get_zero_shift(hist_5nm)
     now_chain_shifted = now_chain + now_shift
 
@@ -108,12 +112,11 @@ print(np.sqrt(np.var(hist_5nm)))
 print(part_empty)
 
 # %% save chains to files
-dest_folder = 'data/rot_sh_sn_chains/'
+dest_folder = '/Volumes/ELEMENTS/chains_harris/rot_sh_sn_chains_3/'
 progress_bar = tqdm(total=len(chain_list), position=0)
 
 for n, chain in enumerate(final_chain_list):
     np.save(dest_folder + 'rot_sh_sn_chain_' + str(n) + '.npy', chain)
     progress_bar.update()
 
-# %%
-np.save('/Volumes/ELEMENTS/PyCharm_may/rot_sh_sn_chains/harris/hist_5nm.npy', hist_5nm)
+np.save(dest_folder + 'hist_5nm.npy', hist_5nm)

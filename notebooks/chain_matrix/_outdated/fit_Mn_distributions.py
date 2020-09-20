@@ -19,10 +19,10 @@ Mw = 2.26e+6
 # Mn = 2370
 # Mw = 8160
 
-Harris_data = np.loadtxt('/Volumes/ELEMENTS/PyCharm_may/chains/Harris/curves/Harris_before.txt')
+Harris_data = np.loadtxt('/Volumes/ELEMENTS/PyCharm_may/chains/harris/curves/Harris_before.txt')
 xx_fit = np.logspace(2, 8, 1001)  # before
 
-# mat = np.loadtxt('data/Harris/curves/Harris_after.txt')
+# mat = np.loadtxt('data/harris/curves/Harris_after.txt')
 # x_fit = np.logspace(2, 6, 10000)  # after
 
 # %%
@@ -35,7 +35,7 @@ y_fit = func(xx_fit, *popt)
 
 plt.semilogx(xx_fit, y_fit, 'b-', label='fit')
 plt.semilogx(xx, yy, 'ro', label='paper data')
-plt.title('Harris final integral molecular weight distribution')
+plt.title('harris final integral molecular weight distribution')
 plt.xlabel('molecular weight')
 plt.ylabel('Distribution function')
 
@@ -49,7 +49,7 @@ y_diff = np.diff(y_fit)
 y_diff_n = y_diff / np.max(y_diff)
 
 plt.semilogx(x_diff, y_diff_n, label='fit')
-plt.title('Harris initial molecular weight distribution')
+plt.title('harris initial molecular weight distribution')
 plt.xlabel('molecular weight')
 plt.ylabel('density')
 
@@ -73,7 +73,7 @@ names = 'Mn', 'Mw'
 plt.plot(names, [Mn_fit, Mw_fit], '^-', label='fit')
 plt.plot(names, [Mn, Mw], 'o-', label='paper')
 
-plt.title('Harris final Mn and Mw')
+plt.title('harris final Mn and Mw')
 plt.ylabel('average M')
 
 plt.legend()

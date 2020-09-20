@@ -146,7 +146,7 @@ for i in range(shape[0]):
 
 # %% save chains to files
 chain_lens_array = np.array(chain_lens_deque)
-np.save('data/prepared_chains/Harris/chain_lens.npy', chain_lens_array)
+np.save('data/prepared_chains/harris/chain_lens.npy', chain_lens_array)
 
 # %%
 print('Mn =', np.average(chain_lens_array) * 100)

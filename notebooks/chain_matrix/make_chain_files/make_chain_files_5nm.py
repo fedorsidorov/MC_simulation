@@ -21,8 +21,8 @@ def get_hist_position(element, bins):
 
 
 # %% load data
-chain_lens = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/Harris/chain_lens.npy')
-hist_5nm = np.load('/Volumes/ELEMENTS/PyCharm_may/rot_sh_sn_chains/Harris/hist_5nm.npy')
+chain_lens = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/harris/chain_lens.npy')
+hist_5nm = np.load('/Volumes/ELEMENTS/PyCharm_may/rot_sh_sn_chains/harris/hist_5nm.npy')
 n_mon_cell_max = int(np.max(hist_5nm))
 
 plt.imshow(np.average(hist_5nm, axis=2).transpose())
@@ -39,7 +39,7 @@ progress_bar = tqdm(total=len(chain_lens), position=0)
 
 for chain_num in range(len(chain_lens)):
 
-    now_chain = np.load('/Volumes/ELEMENTS/PyCharm_may/rot_sh_sn_chains/Harris/rot_sh_sn_chain_' +
+    now_chain = np.load('/Volumes/ELEMENTS/PyCharm_may/rot_sh_sn_chains/harris/rot_sh_sn_chain_' +
                         str(chain_num) + '.npy')
 
     # chain_table = np.zeros((len(now_chain), 5), dtype=np.uint16)
@@ -75,7 +75,7 @@ for chain_num in range(len(chain_lens)):
 
 # %%
 print('resist_matrix size, Gb:', resist_matrix.nbytes / 1024 ** 3)
-np.save('/Volumes/ELEMENTS/PyCharm_may/resist_matrix/Harris/resist_matrix_5nm.npy', resist_matrix)
+np.save('/Volumes/ELEMENTS/PyCharm_may/resist_matrix/harris/resist_matrix_5nm.npy', resist_matrix)
 
 # %%
 progress_bar = tqdm(total=len(chain_tables), position=0)

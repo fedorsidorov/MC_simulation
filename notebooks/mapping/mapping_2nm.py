@@ -16,13 +16,13 @@ indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 
 # %% load arrays
-e_matrix_val_exc_sci = np.load('data/e_matrix/Harris/C-C2:4_C-C\':2/e_matrix_val_exc_sci.npy')
-e_matrix_val_ion_sci = np.load('data/e_matrix/Harris/C-C2:4_C-C\':2/e_matrix_val_ion_sci.npy')
+e_matrix_val_exc_sci = np.load('data/e_matrix/harris/C-C2:4_C-C\':2/e_matrix_val_exc_sci.npy')
+e_matrix_val_ion_sci = np.load('data/e_matrix/harris/C-C2:4_C-C\':2/e_matrix_val_ion_sci.npy')
 
 scission_matrix = e_matrix_val_exc_sci + e_matrix_val_exc_sci
 
-resist_matrix = np.load('/Volumes/ELEMENTS/PyCharm_may/resist_matrix/Harris/resist_matrix_2nm.npy')
-chain_lens = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/Harris/chain_lens.npy')
+resist_matrix = np.load('/Volumes/ELEMENTS/PyCharm_may/resist_matrix/harris/resist_matrix_2nm.npy')
+chain_lens = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/harris/chain_lens.npy')
 n_chains = len(chain_lens)
 
 chain_tables = []

@@ -13,7 +13,7 @@ chain_list = []
 # for n in range(754):
 for n in range(1447):
     chain_list.append(
-        # np.load('data/chains/Harris/shifted_snaked_chains/shifted_snaked_chain_' + str(n) + '.npy'))
+        # np.load('data/chains/harris/shifted_snaked_chains/shifted_snaked_chain_' + str(n) + '.npy'))
         np.load('/Volumes/ELEMENTS/chains_Harris/_outdated/shifted_snaked_chains'
                 '/shifted_snaked_chain_' + str(n) + '.npy'))
 

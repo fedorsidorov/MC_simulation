@@ -33,8 +33,7 @@ plt.grid()
 plt.xlim(0, 200)
 plt.ylim(0.200, 0.425)
 
-# plt.show()
+plt.show()
 
-# %%
-plt.savefig('weights.tiff')
+# plt.savefig('weights.tiff')
 

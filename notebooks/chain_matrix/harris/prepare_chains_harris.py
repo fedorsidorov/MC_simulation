@@ -7,14 +7,13 @@ from tqdm import tqdm
 
 import constants as cp
 from mapping import mapping_harris as mapping
-# import mapping_aktary as _outdated
 from functions import array_functions as af
 from functions import chain_functions as cf
 
+mapping = importlib.reload(mapping)
 cf = importlib.reload(cf)
 af = importlib.reload(af)
 cp = importlib.reload(cp)
-mapping = importlib.reload(mapping)
 
 # %%
 source_dir = '/Volumes/ELEMENTS/Spyder/Chains/'
@@ -33,7 +32,7 @@ for folder in os.listdir(source_dir):
 
 # %% create chain_list and check density
 volume = np.prod(mapping.l_xyz) * cp.nm3_to_cm_3
-n_monomers_required = int(cp.rho_PMMA * volume / cp.m_MMA)
+n_monomers_required = int(cp.rho_PMMA * volume / cp.M_mon)
 
 mw = np.load('data/mw_distributions/mw_harris.npy').astype(int)
 mw_probs_n = np.load('data/mw_distributions/mw_probs_n_harris.npy')
@@ -73,30 +72,11 @@ chain_lens_array = np.array(chain_lens_list)
 progress_bar = tqdm(total=len(chain_list), position=0)
 
 for n, chain in enumerate(chain_list):
-    np.save('data/prepared_chains/harris/chain_' + str(n) + '.npy', chain)
+    np.save('/Volumes/ELEMENTS/chains_harris/prepared_chains_3/chain_' + str(n) + '.npy', chain)
     progress_bar.update()
 
-np.save('data/prepared_chains/harris/chain_lens.npy', chain_lens_array)
+np.save('/Volumes/ELEMENTS/chains_harris/prepared_chains_3/chain_lens.npy', chain_lens_array)
 
 # %%
 print('Mn =', np.average(chain_lens_array) * 100)
 print('Mw =', np.sum(chain_lens_array ** 2) / np.sum(chain_lens_array) * 100)
-
-# %% check chain lengths distribution
-# chain_lens_array = np.load('data/chains/' + folder_name + '/prepared_chains/prepared_chain_lens.npy')
-
-simulated_mw_array = chain_lens_array * 100
-bins = np.logspace(2, 7.1, 21)
-
-plt.figure(dpi=300)
-plt.hist(simulated_mw_array, bins, label='sample')
-plt.gca().set_xscale('log')
-# plt.plot(mw, molecular_weight_array * 0.6e+5, label='harris')
-plt.xlabel('molecular weight')
-plt.ylabel('density')
-plt.xlim(1e+3, 1e+8)
-plt.legend()
-plt.grid()
-plt.show()
-
-# plt.savefig('Harris_sample_2020.png', dpi=300)

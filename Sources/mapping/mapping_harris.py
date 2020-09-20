@@ -1,6 +1,6 @@
 import numpy as np
 
-# %% _outdated Harris matrices
+# %% _outdated harris matrices
 x_min, x_max = -50, 50
 y_min, y_max = -50, 50
 z_min, z_max = 0, 500
@@ -12,7 +12,6 @@ xyz_min = np.array((x_min, y_min, z_min))
 xyz_max = np.array((x_max, y_max, z_max))
 
 step_2nm = 2
-step_4nm = 4
 step_5nm = 5
 
 d_PMMA_nm = z_max

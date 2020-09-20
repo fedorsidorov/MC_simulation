@@ -11,15 +11,15 @@ cp = importlib.reload(cp)
 deg_paths = 'C-C2:4_C-C\':2'
 
 lens_initial = np.load('data/choi_weight/harris_lens_initial.npy')
-# lens_initial = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/Harris/chain_lens.npy')
-# lens_final = np.load('data/Harris/lens_final_' + deg_path + '.npy')
-lens_final = np.load('data/exposed_chains/Harris/harris_lens_final_4+2_2nm.npy')
+# lens_initial = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/harris/chain_lens.npy')
+# lens_final = np.load('data/harris/lens_final_' + deg_path + '.npy')
+lens_final = np.load('data/exposed_chains/harris/harris_lens_final_4+2_2nm.npy')
 
 mass_initial = lens_initial * 100
 mass_final = lens_final * cp.u_MMA
 
-# harris_mass = np.load('Resources/Harris/harris_x_before.npy')
-# harris_distribution = np.load('Resources/Harris/harris_y_before_fit.npy')
+# harris_mass = np.load('Resources/harris/harris_x_before.npy')
+# harris_distribution = np.load('Resources/harris/harris_y_before_fit.npy')
 
 # %%
 # bins = np.logspace(2, 7.1, 21)

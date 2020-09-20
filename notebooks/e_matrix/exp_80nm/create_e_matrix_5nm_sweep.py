@@ -24,7 +24,7 @@ n_electrons_required = emf.get_n_electrons_1D(dose_pC_cm, mapping.x_max - mappin
 
 n_electrons = 0
 
-source = '/Volumes/ELEMENTS/e_DATA/Harris/'
+source = '/Volumes/ELEMENTS/e_DATA/harris/'
 
 # deg_paths = {"C-C2": 4}
 deg_paths = {"C-C2": 4, "C-C'": 2}

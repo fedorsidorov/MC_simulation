@@ -83,7 +83,7 @@ n_electrons = 0
 bond_dict_sc = {"C-C2": 4}
 ##########
 
-source = '/Users/fedor/PycharmProjects/MC_simulation/data/e_DATA/Harris/'
+source = '/Users/fedor/PycharmProjects/MC_simulation/data/e_DATA/harris/'
 progress_bar = tqdm(total=n_electrons_required, position=0)
 
 while n_electrons < n_electrons_required:

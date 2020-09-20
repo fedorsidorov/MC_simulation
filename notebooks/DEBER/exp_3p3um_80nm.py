@@ -74,6 +74,11 @@ for i in range(32):
 
     print('!!!!!!!!!', i, '!!!!!!!!!')
 
+    plt.figure(dpi=300)
+    plt.plot(xx, zz_vac)
+    plt.title('suda herachat electrons, i = ' + str(i))
+    plt.show()
+
     print('getting e_DATA ...')
     e_DATA, e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(
         xx=xx,
@@ -119,7 +124,7 @@ for i in range(32):
     # popt, _ = curve_fit(df.minus_exp_gauss, mapping.x_centers_100nm, matrix_Mw_1d_100nm)
     beg_ind = 1
     popt, _ = curve_fit(df.exp_gauss, mapping.x_centers_100nm[beg_ind:-beg_ind],
-                        matrix_Mw_1d_100nm[beg_ind:-beg_ind], p0=[13.8, 0.6, 200])
+                        matrix_Mw_1d_100nm[beg_ind:-beg_ind], p0=[13.8, 0.5, 300])
     print(popt)
 
     plt.figure(dpi=300)
@@ -131,10 +136,10 @@ for i in range(32):
     etas_50nm_fit = rf.get_viscosity_W(T_C, df.exp_gauss(mapping.x_centers_50nm, *popt))
     mobs_50nm_fit = rf.get_SE_mobility(etas_50nm_fit)
 
-    plt.figure(dpi=300)
-    plt.semilogy(mapping.x_centers_50nm, mobs_50nm_fit, 'o-')
-    plt.title('obtained mobilities, i = ' + str(i))
-    plt.show()
+    # plt.figure(dpi=300)
+    # plt.semilogy(mapping.x_centers_50nm, mobs_50nm_fit, 'o-')
+    # plt.title('obtained mobilities, i = ' + str(i))
+    # plt.show()
 
     print('simulate diffusion ...')
     monomer_matrix_2d = np.sum(monomer_matrix, axis=1)
@@ -151,24 +156,48 @@ for i in range(32):
     plt.show()
 
     zz_vac_evolver = 80e-7 - zz_vac_new
+
+    plt.figure(dpi=300)
+    plt.plot(mapping.x_centers_50nm, zz_vac_evolver)
+    plt.title('profile before SE, i = ' + str(i))
+    plt.show()
+
     ef.create_datafile(mapping.x_centers_50nm * 1e-3, zz_vac_evolver * 1e+4, mobs_50nm_fit)
     ef.run_evolver()
 
     tt, pp = ef.get_evolver_times_profiles()
 
-    xx_final = pp[1][:, 0]
-    zz_vac_final = 80e-7 - pp[1][:, 1]*1e-4
+    xx_final_cm = pp[1][:, 0] * 1e-4
+    zz_vac_final_cm = 80e-7 - pp[1][:, 1]*1e-4
 
-    xx_final = np.concatenate(([mapping.x_min * 1e-3], xx_final, [mapping.x_max * 1e-3]))
-    zz_vac_final = np.concatenate(([zz_vac_final[0]], zz_vac_final, [zz_vac_final[-1]]))
+    xx_final_cm = np.concatenate(([mapping.x_min * 1e-7], xx_final_cm, [mapping.x_max * 1e-7]))
+    zz_vac_final_cm = np.concatenate(([zz_vac_final_cm[0]], zz_vac_final_cm, [zz_vac_final_cm[-1]]))
 
     plt.figure(dpi=300)
-    plt.plot(xx_final * 1e+3, 80 - zz_vac_final * 1e+8)
-    plt.title('after SE, i = ' + str(i))
+    plt.plot(xx_final_cm * 1e+7, 80 - zz_vac_final_cm * 1e+7)
+    plt.title('profile after SE, i = ' + str(i))
     plt.show()
 
-    zz = mcf.lin_lin_interp(xx_final, zz_vac_final)(xx)
-    zz_vac_list.append(zz)
+    zz_vac = mcf.lin_lin_interp(xx_final_cm, zz_vac_final_cm)(xx)
+    zz_vac_list.append(zz_vac)
 
+# %%
+tt, pp = ef.get_evolver_times_profiles()
+xx_final_cm = pp[1][1:, 0] * 1e-4
+zz_vac_final_cm = 80e-7 - pp[1][1:, 1]*1e-4
 
+# %%
+# plt.figure(dpi=300)
+# plt.plot(xx_final_cm, zz_vac_final_cm)
+# plt.show()
+
+ind = 15
+
+plt.figure(dpi=300)
+plt.plot(pp[1][1:, 0], pp[1][1:, 1], '.')
+plt.plot(pp[ind][1:, 0], pp[ind][1:, 1], '.')
+# plt.plot(xx_final_cm * 1e+7, zz_vac_final_cm * 1e+7)
+# plt.plot(xx_final_cm * 1e+7, pp[1][:, 1] * 1e-4 * 1e+7)
+plt.title('after SE, i = ' + str(i))
+plt.show()
 

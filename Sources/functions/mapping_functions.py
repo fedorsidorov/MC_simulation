@@ -240,8 +240,6 @@ def get_chain_len_matrix(resist_matrix, chain_tables):
 
         progress_bar.update()
 
-    # monomer_matrix_2d = np.sum(monomer_matrix, axis=1)
-
     return sum_m, sum_m2, monomer_matrix
 
 
@@ -267,3 +265,59 @@ def get_local_Mw_matrix(sum_m_1d, sum_m2_1d, monomer_matrix_1d):
     # return matrix_Mw
     return matrix_Mw_1d
 
+
+def get_chain_lens(chain_tables):
+    lens_final = deque()
+    progress_bar = tqdm(total=len(chain_tables), position=0)
+    for chain_table in chain_tables:
+        cnt = 0
+        if len(chain_table) == 1:
+            lens_final.append(1)
+            continue
+        for line in chain_table:
+            monomer_type = line[indexes.monomer_type_ind]
+            if monomer_type == indexes.begin_monomer:
+                cnt = 1
+            elif monomer_type == indexes.middle_monomer:
+                cnt += 1
+            elif monomer_type == indexes.end_monomer:
+                cnt += 1
+                lens_final.append(cnt)
+                cnt = 0
+        progress_bar.update()
+    return np.array(lens_final)
+
+
+def get_local_chain_len(resist_shape, N_mon_max, chain_table):
+    chain_sum_len_matrix = np.zeros(resist_shape)
+    n_chains_matrix = np.zeros(resist_shape)
+    for idx, chain in enumerate(chain_table):
+        beg_pos = 0
+        while True:
+            if beg_pos >= N_mon_max or chain[beg_pos, indexes.monomer_type_ind] == constants.uint32_max:
+                break
+            if chain[beg_pos, indexes.monomer_type_ind] in [indexes.free_monomer, indexes.free_radicalized_monomer]:
+                beg_pos += 1
+                continue
+            if chain[beg_pos, indexes.monomer_type_ind] != indexes.begin_monomer:
+                print('monomer_type', chain[beg_pos, indexes.monomer_type_ind])
+                print('idx, beg_pos', idx, beg_pos)
+                print('chain index_indng error!')
+            where_result = np.where(chain[beg_pos:, indexes.monomer_type_ind] == indexes.end_monomer)[0]
+            if len(where_result) == 0:
+                break
+            end_pos = beg_pos + where_result[0]
+            now_chain_len = end_pos - beg_pos
+            inds_list = []
+            for mon_line in chain[beg_pos:end_pos + 1]:
+                x_pos, y_pos, z_pos = mon_line[:3]
+                if x_pos == y_pos == z_pos == constants.uint32_max:
+                    continue
+                now_poss = [x_pos, y_pos, z_pos]
+                if now_poss in inds_list:
+                    continue
+                chain_sum_len_matrix[x_pos, y_pos, z_pos] += now_chain_len
+                n_chains_matrix[x_pos, y_pos, z_pos] += 1
+                inds_list.append(now_poss)
+            beg_pos = end_pos + 1
+    return chain_sum_len_matrix, n_chains_matrix

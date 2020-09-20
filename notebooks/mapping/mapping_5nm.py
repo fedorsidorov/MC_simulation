@@ -15,13 +15,13 @@ indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 
 # %% load arrays
-e_matrix_val_exc_sci = np.load('data/e_matrix/Harris/C-C2:4_C-C\':2/e_matrix_val_exc_sci_5nm.npy')
-e_matrix_val_ion_sci = np.load('data/e_matrix/Harris/C-C2:4_C-C\':2/e_matrix_val_ion_sci_5nm.npy')
+e_matrix_val_exc_sci = np.load('data/e_matrix/harris/C-C2:4_C-C\':2/e_matrix_val_exc_sci_5nm.npy')
+e_matrix_val_ion_sci = np.load('data/e_matrix/harris/C-C2:4_C-C\':2/e_matrix_val_ion_sci_5nm.npy')
 
 scission_matrix = e_matrix_val_exc_sci + e_matrix_val_exc_sci
 
-resist_matrix = np.load('/Volumes/ELEMENTS/PyCharm_may/resist_matrix/Harris/resist_matrix_5nm.npy')
-chain_lens = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/Harris/chain_lens.npy')
+resist_matrix = np.load('/Volumes/ELEMENTS/PyCharm_may/resist_matrix/harris/resist_matrix_5nm.npy')
+chain_lens = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/harris/chain_lens.npy')
 n_chains = len(chain_lens)
 
 chain_tables = []
@@ -75,7 +75,7 @@ for x_ind in range(resist_shape[0]):
 
 # %%
 lens_final = mf.get_chain_lens(chain_tables)
-np.save('data/exposed_chains/Harris/harris_lens_final_4+2_5nm.npy', lens_final)
+np.save('data/exposed_chains/harris/harris_lens_final_4+2_5nm.npy', lens_final)
 
 # %%
 # progress_bar = tqdm(total=len(chain_tables), position=0)

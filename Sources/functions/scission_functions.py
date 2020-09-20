@@ -77,3 +77,9 @@ def get_scissions(DATA, degpath_dict, weight=1):
     ee = DATA[:, ind.DATA_E_dep_ind] + DATA[:, ind.DATA_E2nd_ind] + DATA[:, ind.DATA_E_ind]  # E before collision
     scission_probs = get_scission_probs(degpath_dict, E_array=ee) * weight
     return np.array(np.random.random(len(DATA)) < scission_probs).astype(int)
+
+
+def get_scissions_weight(DATA, weight):
+    ee = DATA[:, ind.DATA_E_dep_ind] + DATA[:, ind.DATA_E2nd_ind] + DATA[:, ind.DATA_E_ind]  # E before collision
+    scission_probs = np.ones(len(ee)) * weight
+    return np.array(np.random.random(len(DATA)) < scission_probs).astype(int)

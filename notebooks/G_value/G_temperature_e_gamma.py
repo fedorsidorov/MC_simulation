@@ -48,5 +48,5 @@ def get_e_G_value(T_C):
     return np.exp(linear_func(T_inv, -454.01242092837134, 2.0079453212345793))
 
 
-params = fit_gamma_G_value()
-params = fit_e_G_value()
+# params = fit_gamma_G_value()
+# params = fit_e_G_value()

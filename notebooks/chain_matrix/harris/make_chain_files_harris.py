@@ -1,14 +1,9 @@
 import importlib
-from collections import deque
-
 import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
-
 import constants as cp
 from mapping import mapping_harris as mapping
-
-# import mapping_aktary as _outdated
 
 mapping = importlib.reload(mapping)
 cp = importlib.reload(cp)
@@ -21,24 +16,23 @@ def get_hist_position(element, bins):
 
 
 # %% load data
-chain_lens = np.load('/Volumes/ELEMENTS/PyCharm_may/prepared_chains/harris/chain_lens.npy')
-hist_2nm = np.load('/Volumes/ELEMENTS/PyCharm_may/rot_sh_sn_chains/harris/hist_2nm.npy')
-n_mon_cell_max = int(np.max(hist_2nm))
+chain_lens = np.load('/Volumes/ELEMENTS/chains_harris/prepared_chains_3/chain_lens.npy')
+hist_5nm = np.load('/Volumes/ELEMENTS/chains_harris/rot_sh_sn_chains_3/hist_5nm.npy')
+n_mon_cell_max = int(np.max(hist_5nm))
 
-plt.imshow(np.average(hist_2nm, axis=0))
+plt.imshow(np.average(hist_5nm, axis=1).transpose())
 plt.show()
 
 # %% create arrays
-pos_matrix = np.zeros(mapping.hist_2nm_shape, dtype=np.uint32)
-resist_matrix = -np.ones((*mapping.hist_2nm_shape, n_mon_cell_max, 3), dtype=np.uint32)
-chain_tables = deque()
+pos_matrix = np.zeros(mapping.hist_5nm_shape, dtype=np.uint32)
+resist_matrix = -np.ones((*mapping.hist_5nm_shape, n_mon_cell_max, 3), dtype=np.uint32)
+chain_tables = []
 
-# %%
 progress_bar = tqdm(total=len(chain_lens), position=0)
 
 for chain_num in range(len(chain_lens)):
 
-    now_chain = np.load('/Volumes/ELEMENTS/PyCharm_may/rot_sh_sn_chains/harris/rot_sh_sn_chain_' +
+    now_chain = np.load('/Volumes/ELEMENTS/chains_harris/rot_sh_sn_chains_3/rot_sh_sn_chain_' +
                         str(chain_num) + '.npy')
 
     chain_table = np.zeros((len(now_chain), 5), dtype=np.uint32)
@@ -54,9 +48,9 @@ for chain_num in range(len(chain_lens)):
         else:
             mon_type = 1
 
-        x_bin = get_hist_position(element=mon_line[0], bins=mapping.x_bins_2nm)
-        y_bin = get_hist_position(element=mon_line[1], bins=mapping.y_bins_2nm)
-        z_bin = get_hist_position(element=mon_line[2], bins=mapping.z_bins_2nm)
+        x_bin = get_hist_position(element=mon_line[0], bins=mapping.x_bins_5nm)
+        y_bin = get_hist_position(element=mon_line[1], bins=mapping.y_bins_5nm)
+        z_bin = get_hist_position(element=mon_line[2], bins=mapping.z_bins_5nm)
 
         mon_line_pos = pos_matrix[x_bin, y_bin, z_bin]
 
@@ -73,11 +67,11 @@ for chain_num in range(len(chain_lens)):
 
 # %%
 print('resist_matrix size, Gb:', resist_matrix.nbytes / 1024 ** 3)
-np.save('/Volumes/ELEMENTS/PyCharm_may/resist_matrix/harris/resist_matrix_2nm.npy', resist_matrix)
+np.save('/Volumes/ELEMENTS/chains_harris/resist_matrix_3.npy', resist_matrix)
 
 # %%
 progress_bar = tqdm(total=len(chain_tables), position=0)
 
 for n, chain_table in enumerate(chain_tables):
-    np.save('/Volumes/ELEMENTS/PyCharm_may/chain_tables/Harris_2nm/chain_table_' + str(n) + '.npy', chain_table)
+    np.save('/Volumes/ELEMENTS/chains_harris/chain_tables_3/chain_table_' + str(n) + '.npy', chain_table)
     progress_bar.update()

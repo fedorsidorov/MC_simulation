@@ -72,7 +72,7 @@ for x_ind in range(resist_shape[0]):
 
 # %%
 lens_final = mf.get_chain_lens(chain_tables)
-np.save('data/exposed_chains/Harris/harris_lens_final_4+2_5nm.npy', lens_final)
+np.save('data/exposed_chains/harris/harris_lens_final_4+2_5nm.npy', lens_final)
 
 # %%
 # progress_bar = tqdm(total=len(chain_tables), position=0)

@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
 
+# %%
 def linear_func(xx, k, b):
     return k * xx + b
 

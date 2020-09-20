@@ -53,7 +53,7 @@ def get_zero_shift(array):
 
 # %%
 folder_name = 'combine_chains'
-source_folder = 'data/prepared_chains/Harris/'
+source_folder = 'data/prepared_chains/harris/'
 
 chain_lens = np.load(source_folder + 'chain_lens.npy')
 chain_list = []

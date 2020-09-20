@@ -2,7 +2,7 @@ import importlib
 import numpy as np
 from scipy import interpolate
 from tqdm import tqdm
-
+import matplotlib.pyplot as plt
 import MC_classes as mcc
 import constants as const
 import indexes as ind
@@ -27,7 +27,7 @@ pf = importlib.reload(pf)
 
 
 # %%
-def get_e_DATA_PMMA_val(xx, zz_vac, d_PMMA, n_electrons, E0=20e+3, r_beam=100e-7):
+def get_e_DATA_PMMA_val(xx, zz_vac, d_PMMA, n_electrons, E0, r_beam):
     ly = mapping.l_y * 1e-7
 
     structure = mcc.Structure(
@@ -111,12 +111,11 @@ def get_scission_matrix(e_DATA, weight):
 
 
 # %%
-# xx = mapping.x_centers_5nm
-# zz_vac = np.zeros(len(xx))
+# xx = mapping.x_centers_5nm * 1e-7
+# zz_vac = np.zeros(len(xx)) + 5e-7
 # d_PMMA = 80e-7  # cm
 #
-# data, data_val = get_e_DATA_PMMA_val(xx, zz_vac, d_PMMA, 10, r_beam=100e-7)
+# data, data_val = get_e_DATA_PMMA_val(xx, zz_vac, d_PMMA, 10, E0=20e+3, r_beam=150e-7)
 #
 # # %%
-# pf.plot_e_DATA(data_val, d_PMMA=80, E_cut=5, proj='xz')
-#
+# pf.plot_e_DATA(data, d_PMMA=80, E_cut=5, proj='xz')

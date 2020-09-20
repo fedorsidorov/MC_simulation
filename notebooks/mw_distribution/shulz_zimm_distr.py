@@ -17,23 +17,23 @@ def get_beta_z(Mn, Mw):  # miuake1960.pdf
 
 
 # %%
-# mw = np.arange(100, 2e+7 + 0.1, 1)
-mw = np.arange(100, 4e+6 + 0.1, 1)
-
-# Harris
-Mn_harris = 5.63e+5
-Mw_harris = 2.26e+6
+# harris
+mw = np.arange(100, 2e+7 + 0.1, 1)
+Mn = 5.63e+5
+Mw = 2.26e+6
 
 # 950K
-Mn_950K = 271374.7
-Mw_950K = 669184.4
+# mw = np.arange(100, 4e+6 + 0.1, 1)
+# Mn = 271374.7
+# Mw = 669184.4
 
-mw_distr = shulz_zimm(mw, *get_beta_z(Mn_950K, Mw_950K))
+mw_distr = shulz_zimm(mw, *get_beta_z(Mn, Mw))
 mw_probs_m = mw_distr / np.sum(mw_distr)
 mw_probs_n = (mw_distr / mw) / np.sum(mw_distr / mw)
 
 plt.figure(dpi=300)
 # plt.semilogx(mw, mw_distr)
+# plt.semilogx(mw, mw_probs_n)
 plt.semilogx(mw, mw_probs_m)
 plt.show()
 
