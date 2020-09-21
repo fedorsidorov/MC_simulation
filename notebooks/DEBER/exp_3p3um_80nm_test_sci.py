@@ -78,8 +78,17 @@ for i in range(32):
     # mf.process_depolymerization(resist_matrix, chain_tables, zip_length)
     # print('depolymerization is done')
 
+
 print(np.max(scission_matrix))
 print(np.max(scission_matrix_total))
+
+# %%
+sci_mat_2d = np.average(scission_matrix_total, axis=1)
+sci_mat_1d = np.average(sci_mat_2d, axis=1)
+
+plt.figure(dpi=300)
+plt.plot(sci_mat_1d)
+plt.show()
 
 # %%
 sum_m, sum_m2, new_monomer_matrix = mf.get_chain_len_matrix(resist_matrix, chain_tables)

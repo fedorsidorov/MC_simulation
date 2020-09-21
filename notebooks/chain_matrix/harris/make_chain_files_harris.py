@@ -73,5 +73,5 @@ np.save('/Volumes/ELEMENTS/chains_harris/resist_matrix_3.npy', resist_matrix)
 progress_bar = tqdm(total=len(chain_tables), position=0)
 
 for n, chain_table in enumerate(chain_tables):
-    np.save('/Volumes/ELEMENTS/chains_harris/chain_tables_1/chain_table_' + str(n) + '.npy', chain_table)
+    np.save('/Volumes/ELEMENTS/chains_harris/chain_tables_3/chain_table_' + str(n) + '.npy', chain_table)
     progress_bar.update()

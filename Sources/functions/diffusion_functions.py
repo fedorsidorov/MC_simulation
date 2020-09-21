@@ -80,11 +80,7 @@ def exp_gauss(xx, A, B, s):
     return np.exp(A - B*np.exp(-xx**2 / s**2))
 
 
-def track_all_monomers(monomer_matrix_2d, xx_cm, zz_vac_cm, d_PMMA_cm, dT, wp, t_step, dtdt):
-
-    xx = xx_cm * 1e+7
-    zz_vac = zz_vac_cm * 1e+7
-    d_PMMA = d_PMMA_cm * 1e+7
+def track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt):
 
     monomer_matrix_2d_final = np.zeros((np.shape(monomer_matrix_2d)))
     non_zero_inds = np.array(np.where(monomer_matrix_2d != 0)).transpose()
@@ -94,15 +90,38 @@ def track_all_monomers(monomer_matrix_2d, xx_cm, zz_vac_cm, d_PMMA_cm, dT, wp, t
     for line in non_zero_inds:
 
         ind_x, ind_z = line
-        x0, z0 = mapping.x_centers_5nm[ind_x], mapping.z_centers_5nm[ind_z]  # nanometers!!!
+        x0, z0 = mapping.x_centers_10nm[ind_x], mapping.z_centers_10nm[ind_z]  # nanometers!!!
 
         n_tens_monomers = int(np.round(monomer_matrix_2d[ind_x, ind_z] / 10))  # in tens!!!
 
-        # for n in range(int(monomer_matrix_2d[ind_x, ind_z])):
         for n in range(n_tens_monomers):
             x_final, z_final, total_time = track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt)
             monomer_matrix_2d_final += np.histogramdd(sample=np.array((x_final, z_final)).reshape((1, 2)),
-                                                      bins=(mapping.x_bins_5nm, mapping.z_bins_5nm))[0]
+                                                      bins=(mapping.x_bins_10nm, mapping.z_bins_10nm))[0]
+
+        progress_bar.update()
+
+    return monomer_matrix_2d_final
+
+
+def track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt):
+
+    monomer_matrix_2d_final = np.zeros((np.shape(monomer_matrix_2d)))
+    non_zero_inds = np.array(np.where(monomer_matrix_2d != 0)).transpose()
+
+    progress_bar = tqdm(total=len(non_zero_inds), position=0)
+
+    for line in non_zero_inds:
+
+        ind_x, ind_z = line
+        x0, z0 = mapping.x_centers_10nm[ind_x], mapping.z_centers_10nm[ind_z]  # nanometers!!!
+
+        n_tens_monomers = int(np.round(monomer_matrix_2d[ind_x, ind_z] / 10))  # in tens!!!
+
+        for n in range(n_tens_monomers):
+            x_final, z_final, total_time = track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt)
+            monomer_matrix_2d_final += np.histogramdd(sample=np.array((x_final, z_final)).reshape((1, 2)),
+                                                      bins=(mapping.x_bins_10nm, mapping.z_bins_10nm))[0]
 
         progress_bar.update()
 
@@ -110,34 +129,35 @@ def track_all_monomers(monomer_matrix_2d, xx_cm, zz_vac_cm, d_PMMA_cm, dT, wp, t
 
 
 def get_25nm_array(array):
-    hist_weights = np.histogram(mapping.x_centers_5nm, bins=mapping.x_bins_25nm, weights=array)[0]
-    hist = np.histogram(mapping.x_centers_5nm, bins=mapping.x_bins_25nm)[0]
+    hist_weights = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_25nm, weights=array)[0]
+    hist = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_25nm)[0]
     return hist_weights / hist
 
 
 def get_50nm_array(array):
-    hist_weights = np.histogram(mapping.x_centers_5nm, bins=mapping.x_bins_50nm, weights=array)[0]
-    hist = np.histogram(mapping.x_centers_5nm, bins=mapping.x_bins_50nm)[0]
+    hist_weights = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_50nm, weights=array)[0]
+    hist = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_50nm)[0]
     return hist_weights / hist
 
 
 def get_100nm_array(array):
-    hist_weights = np.histogram(mapping.x_centers_5nm, bins=mapping.x_bins_100nm, weights=array)[0]
-    hist = np.histogram(mapping.x_centers_5nm, bins=mapping.x_bins_100nm)[0]
+    hist_weights = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_100nm, weights=array)[0]
+    hist = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_100nm)[0]
     return hist_weights / hist
 
 
-def get_zz_vac_monomer_matrix(zz_vac_old, mon_matrix_2d):
+def get_zz_vac_50nm_monomer_matrix(zz_vac_old_50nm, mon_matrix_2d):
 
     n_monomers_out = get_50nm_array(mon_matrix_2d[:, 0]) * 10  # in tens!!!
     V_monomer_out = n_monomers_out * constants.V_mon
-    dh_monomer_out = V_monomer_out / (mapping.l_y * 1e-7 * mapping.step_50nm * 1e-7)
+    dh_monomer_out_cm = V_monomer_out / (mapping.l_y * 1e-7 * mapping.step_50nm * 1e-7)
+    dh_monomer_out = dh_monomer_out_cm * 1e+7
 
-    zz_vac_new = zz_vac_old + dh_monomer_out
+    zz_vac_new_50nm = zz_vac_old_50nm + dh_monomer_out
     mon_matrix_2d_final = copy.deepcopy(mon_matrix_2d)
     mon_matrix_2d_final[:, 0] = 0
 
-    return zz_vac_new, mon_matrix_2d_final
+    return zz_vac_new_50nm, mon_matrix_2d_final
 
 
 # %%

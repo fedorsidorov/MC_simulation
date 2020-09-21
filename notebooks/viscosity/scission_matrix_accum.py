@@ -10,7 +10,7 @@ from functions import plot_functions as pf
 from functions import scission_functions as sf
 from functions import G_functions as Gf
 
-from mapping import mapping_3p3um_80nm as mapping
+from mapping import mapping_viscosity as mapping
 
 mapping = importlib.reload(mapping)
 emf = importlib.reload(emf)
@@ -24,14 +24,14 @@ Gf = importlib.reload(Gf)
 source = 'data/e_DATA_Pn_80nm_point/'
 scission_matrix_total = np.zeros(mapping.hist_5nm_shape)
 weight = 0.225
-file_cnt = 0
+# file_cnt = 0
 n_files = 3200
 primary_electrons_in_file = 10
 
-while np.average(scission_matrix_total) < 100:
+for file_cnt in range(2500):
 
     now_e_DATA = np.load(source + 'e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
-    file_cnt += 1
+    # file_cnt += 1
 
     if file_cnt > n_files:
         emf.rotate_DATA(now_e_DATA)
@@ -59,19 +59,19 @@ while np.average(scission_matrix_total) < 100:
 
     scission_matrix_total += scission_matrix
 
-    if file_cnt % 1000 == 0:
-        print(file_cnt // 1000, 'K files')
+    if file_cnt % 100 == 0:
+        print(file_cnt // 100, 'hundred files')
         print(np.average(scission_matrix_total))
         np.save('data/sci_mat_viscosity/scission_matrix_total_' +
-                str(file_cnt // 1000) + '.npy', scission_matrix_total)
+                str(file_cnt // 100) + '.npy', scission_matrix_total)
 
 
 # %%
-sci_mat = np.load('data/sci_mat_viscosity/scission_matrix_total_2.npy')
+sci_mat = np.load('data/sci_mat_viscosity/scission_matrix_total_20.npy')
 sci_mat_2d = np.sum(sci_mat, axis=1)
 
 plt.figure(dpi=300)
-plt.imshow(sci_mat_2d[300:-300, :])
+plt.imshow(sci_mat_2d)
 plt.show()
 
 
