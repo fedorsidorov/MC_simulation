@@ -125,48 +125,51 @@ for i in range(32):
     monomer_matrix_2d += now_monomer_matrix_2d
 
     print('simulate diffusion ...')
+    n_hack = 10
     monomer_matrix_2d_final =\
-        df.track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp=1, t_step=time_s, dtdt=0.5)
+        df.track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp=1, t_step=time_s, dtdt=0.5, n_hack=n_hack)
     print('diffusion is simulated')
 
     zz_vac_50nm = mcf.lin_lin_interp(xx, zz_vac)(mapping.x_centers_50nm)
-    zz_vac_new_50nm, monomer_matrix_2d_final = df.get_zz_vac_50nm_monomer_matrix(zz_vac_50nm, monomer_matrix_2d_final)
+    zz_vac_new_50nm, monomer_matrix_2d_final =\
+        df.get_zz_vac_50nm_monomer_matrix(zz_vac_50nm, monomer_matrix_2d_final, n_hack=n_hack)
 
     monomer_matrix_2d = monomer_matrix_2d_final
     print(np.sum(monomer_matrix_2d))
 
-    plt.figure(dpi=300)
-    plt.plot(mapping.x_centers_50nm, zz_vac_new_50nm, 'o-')
-    plt.title('profile after diffusion, i = ' + str(i))
-    plt.show()
+    # plt.figure(dpi=300)
+    # plt.plot(mapping.x_centers_50nm, zz_vac_new_50nm, 'o-')
+    # plt.title('profile after diffusion, i = ' + str(i))
+    # plt.show()
 
     zz_vac_evolver = 80 - zz_vac_new_50nm
 
     plt.figure(dpi=300)
     plt.plot(mapping.x_centers_50nm, zz_vac_evolver, 'o-')
     plt.title('profile before SE, i = ' + str(i))
+    # plt.show()
+
+    mobs_50nm = np.ones(len(mapping.x_centers_50nm)) * 1e-2
+
+    ef.create_datafile(mapping.x_centers_50nm * 1e-3, zz_vac_evolver * 1e-3, mobs_50nm)
+    ef.run_evolver()
+
+    tt, pp = ef.get_evolver_times_profiles()
+    xx_final = pp[1][:, 0] * 1e+3  # um -> nm
+    zz_vac_final = 80 - pp[1][:, 1] * 1e+3  # um -> nm
+
+    xx_final = np.concatenate(([mapping.x_min], xx_final, [mapping.x_max]))
+    zz_vac_final = np.concatenate(([zz_vac_final[0]], zz_vac_final, [zz_vac_final[-1]]))
+
+    # plt.figure(dpi=300)
+    plt.plot(xx_final, 80 - zz_vac_final, 'o-')
+    plt.title('profile after SE, i = ' + str(i))
     plt.show()
-#
-#     ef.create_datafile(mapping.x_centers_50nm * 1e-3, zz_vac_evolver * 1e+4, mobs_50nm_fit)
-#     ef.run_evolver()
-#
-#     tt, pp = ef.get_evolver_times_profiles()
-#
-#     xx_final_cm = pp[1][:, 0] * 1e-4
-#     zz_vac_final_cm = 80e-7 - pp[1][:, 1]*1e-4
-#
-#     xx_final_cm = np.concatenate(([mapping.x_min * 1e-7], xx_final_cm, [mapping.x_max * 1e-7]))
-#     zz_vac_final_cm = np.concatenate(([zz_vac_final_cm[0]], zz_vac_final_cm, [zz_vac_final_cm[-1]]))
-#
-#     plt.figure(dpi=300)
-#     plt.plot(xx_final_cm * 1e+7, 80 - zz_vac_final_cm * 1e+7)
-#     plt.title('profile after SE, i = ' + str(i))
-#     plt.show()
-#
-#     zz_vac = mcf.lin_lin_interp(xx_final_cm, zz_vac_final_cm)(xx)
-#     zz_vac_list.append(zz_vac)
-#
-# # %%
+
+    zz_vac = mcf.lin_lin_interp(xx_final, zz_vac_final)(xx)
+    zz_vac_list.append(zz_vac)
+
+# %%
 # tt, pp = ef.get_evolver_times_profiles()
 # xx_final_cm = pp[1][1:, 0] * 1e-4
 # zz_vac_final_cm = 80e-7 - pp[1][1:, 1]*1e-4

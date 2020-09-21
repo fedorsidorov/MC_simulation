@@ -14,24 +14,27 @@ indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 
 # %%
+sample = '3'
+
 for weight in [0.1, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35]:
 
     print(weight)
     weight = str(weight)
 
-    scission_matrix = np.load('data/scission_mat_weight/e_matrix_scissions_' + weight + '.npy')
-    resist_matrix = np.load('/Volumes/ELEMENTS/chains_harris/resist_matrix_1.npy')
-    chain_lens = np.load('/Volumes/ELEMENTS/chains_harris/prepared_chains_1/chain_lens.npy')
+    scission_matrix = np.load('data/scission_mat_weight/' + sample + '/e_matrix_scissions_' + weight + '.npy')
+    resist_matrix = np.load('/Volumes/ELEMENTS/chains_harris/resist_matrix_' + sample + '.npy')
+    chain_lens = np.load('/Volumes/ELEMENTS/chains_harris/prepared_chains_' + sample + '/chain_lens.npy')
     n_chains = len(chain_lens)
 
     chain_tables = []
     progress_bar = tqdm(total=n_chains, position=0)
 
     for n in range(n_chains):
-        now_chain_table = np.load('/Volumes/ELEMENTS/chains_harris/chain_tables_1/chain_table_' + str(n) + '.npy')
+        now_chain_table =\
+            np.load('/Volumes/ELEMENTS/chains_harris/chain_tables_' + sample + '/chain_table_' + str(n) + '.npy')
         chain_tables.append(now_chain_table)
         progress_bar.update()
 
     mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
     lens_final = mf.get_chain_lens(chain_tables)
-    np.save('data/G_calibration/harris_lens_final_' + weight + '.npy', lens_final)
+    np.save('data/G_calibration/' + sample + '/harris_lens_final_' + weight + '.npy', lens_final)

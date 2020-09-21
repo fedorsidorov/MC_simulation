@@ -138,11 +138,13 @@ save := {
 
 ebash := {
 	prepare_surface;
-	m 0.05;
+	//m 0.05;
+	m 0.1;
 	printf "%f %f %f\n", total_time, -100., -100. >>> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/vlist_SIM.txt";
 	save;
 	printf "%f %f %f\n", total_time, -100., -100. >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/vlist_SIM.txt";
-	loopit 20;
+	//loopit 20;
+	loopit 10;
 	save;
 	printf "%f %f %f\n", total_time, -100., -100. >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/vlist_SIM.txt";
 	}

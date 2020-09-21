@@ -92,8 +92,8 @@ for weight in [0.1, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35]:
 
     print(np.sum(e_matrix_val_sci) / np.sum(e_matrix_E_dep) * 100)
 
-    np.save('data/scission_mat_weight/e_matrix_scissions_' + str(weight) + '.npy', e_matrix_val_sci)
-    np.save('data/scission_mat_weight/e_matrix_dE_' + str(weight) + '.npy', e_matrix_E_dep)
+    np.save('data/scission_mat_weight/3/e_matrix_scissions_' + str(weight) + '.npy', e_matrix_val_sci)
+    np.save('data/scission_mat_weight/3/e_matrix_dE_' + str(weight) + '.npy', e_matrix_E_dep)
 
 # %%
 # print(np.sum(e_matrix_val_sci) / np.sum(e_matrix_E_dep) * 100)

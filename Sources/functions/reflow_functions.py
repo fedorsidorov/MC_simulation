@@ -39,6 +39,12 @@ def get_SE_mobility(eta):
     mobility = 1/time2scale
     return mobility
 
+
+def move_Mw_to_mob(T_C, Mw):
+    eta = get_viscosity_W(T_C, Mw)
+    mob = get_SE_mobility(eta)
+    return mob
+
 # temp = np.linspace(120, 170)
 #
 # plt.figure(dpi=300)
