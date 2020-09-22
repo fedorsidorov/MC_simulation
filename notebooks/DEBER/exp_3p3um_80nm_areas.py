@@ -103,7 +103,7 @@ for i in range(32):
                 xyz_min=[mapping.x_min, mapping.y_min, -np.inf],
                 xyz_max=[mapping.x_max, mapping.y_max, np.inf]
             )
-#
+
             for pos, line in enumerate(now_prim_e_DATA):
 
                 now_x, now_z = line[ind.DATA_x_ind], line[ind.DATA_z_ind]
@@ -136,27 +136,22 @@ for i in range(32):
     # plt.title('scission_array_100nm, i = ' + str(i))
     # plt.show()
 
-    # T = 120, zip_length = 1000
-    # scale_hack = 1e+6
-    # mobs_50nm = rf.move_sci_to_mobs(scission_array_50nm_fit, 120, 1000) / scale_hack
-    mob = rf.move_sci_to_mobs(np.average(scission_matrix), 160, 1500)
-    print('now mobility is', mob)
-    mobs_50nm = np.ones(len(mapping.x_centers_50nm)) * mob
+    scission_array_50nm = df.move_10nm_to_50nm(np.average(np.average(scission_matrix, axis=1), axis=1))
 
-    # scission_array_50nm = df.move_10nm_to_50nm(np.average(np.average(scission_matrix, axis=1), axis=1))
+    mobs_50nm = np.zeros(len(scission_array_50nm))
 
-    # mobs_50nm = np.zeros(len(scission_array_50nm))
-    # mobs_50nm = np.ones(len(scission_array_50nm)) * np.average(scission_array_50nm[23:-23])
+    avg_edges = (np.average(scission_array_50nm[:23]) + np.average(scission_array_50nm[-23:])) / 2
+    avg_mob = rf.move_sci_to_mobs(avg_edges, 120, 1000)
+    mobs_50nm[:23] = avg_mob
+    mobs_50nm[-23:] = avg_mob
+    mobs_50nm[23:-23] = rf.move_sci_to_mobs(np.average(scission_array_50nm[23:-23]), 120, 1000)
 
-    # avg_edges = (np.average(scission_array_50nm[:23]) + np.average(scission_array_50nm[-23:])) / 2
-    # avg_mob = rf.move_sci_to_mobs(avg_edges, 120, 1000)
-    # mobs_50nm[:23] = avg_mob
-    # mobs_50nm[-23:] = avg_mob
-    # mobs_50nm[:-23] = rf.move_sci_to_mobs(np.average(scission_array_50nm[23:-23]), 120, 1000)
-    # plt.figure(dpi=300)
-    # plt.plot(mobs_50nm)
-    # plt.title('mobs_50nm, i = ' + str(i))
-    # plt.show()
+    plt.figure(dpi=300)
+    plt.plot(mapping.x_centers_50nm, mobs_50nm)
+    plt.title('mobs_50nm, i = ' + str(i))
+    plt.xlabel('x, nm')
+    plt.ylabel('x, nm')
+    plt.show()
 
     now_monomer_matrix_2d = np.sum(scission_matrix, axis=1) * zip_length
     monomer_matrix_2d += now_monomer_matrix_2d
@@ -174,20 +169,7 @@ for i in range(32):
     monomer_matrix_2d = monomer_matrix_2d_final
     print(np.sum(monomer_matrix_2d))
 
-    # plt.figure(dpi=300)
-    # plt.plot(mapping.x_centers_50nm, zz_vac_new_50nm, 'o-')
-    # plt.title('- profile after diffusion, i = ' + str(i))
-    # plt.show()
-
     zz_vac_evolver = 80 - zz_vac_new_50nm
-
-    # plt.figure(dpi=300)
-    # plt.plot(mapping.x_centers_50nm, zz_vac_evolver, 'o-')
-    # plt.title('profile before SE, i = ' + str(i))
-    # plt.show()
-
-    # scission_array = np.sum(np.sum(scission_matrix, axis=1), axis=1)
-    # scission_array_50nm = df.move_10nm_to_50nm(scission_array)
 
     ef.create_datafile(mapping.x_centers_50nm * 1e-3, zz_vac_evolver * 1e-3, mobs_50nm)
     ef.run_evolver()

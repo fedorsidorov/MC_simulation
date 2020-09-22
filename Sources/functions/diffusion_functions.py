@@ -14,7 +14,7 @@ mcf = importlib.reload(mcf)
 
 # %%
 def get_D(dT, wp=1):  # in cm^2 / s
-    # dT = T_C - 120
+    # dT = T_C - mobs_120
     C1, C2, C3, C4 = 26.0, 37.0, 0.0797, 0
     log_D = wp * dT * C4 + (C1 - wp * C2) + dT * C3
     return 10**log_D
@@ -104,43 +104,19 @@ def track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp, t_step, dt
     return monomer_matrix_2d_final
 
 
-# def track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt):
-#
-#     monomer_matrix_2d_final = np.zeros((np.shape(monomer_matrix_2d)))
-#     non_zero_inds = np.array(np.where(monomer_matrix_2d != 0)).transpose()
-#
-#     progress_bar = tqdm(total=len(non_zero_inds), position=0)
-#
-#     for line in non_zero_inds:
-#
-#         ind_x, ind_z = line
-#         x0, z0 = mapping.x_centers_10nm[ind_x], mapping.z_centers_10nm[ind_z]  # nanometers!!!
-#
-#         n_tens_monomers = int(np.round(monomer_matrix_2d[ind_x, ind_z] / 10))  # in tens!!!
-#
-#         for n in range(n_tens_monomers):
-#             x_final, z_final, total_time = track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt)
-#             monomer_matrix_2d_final += np.histogramdd(sample=np.array((x_final, z_final)).reshape((1, 2)),
-#                                                       bins=(mapping.x_bins_10nm, mapping.z_bins_10nm))[0]
-#
-#         progress_bar.update()
-#
-#     return monomer_matrix_2d_final
+# def get_25nm_array(array):
+#     hist_weights = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_25nm, weights=array)[0]
+#     hist = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_25nm)[0]
+#     return hist_weights / hist
 
 
-def get_25nm_array(array):
-    hist_weights = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_25nm, weights=array)[0]
-    hist = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_25nm)[0]
-    return hist_weights / hist
-
-
-def get_50nm_array(array):
+def move_10nm_to_50nm(array):
     hist_weights = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_50nm, weights=array)[0]
     hist = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_50nm)[0]
     return hist_weights / hist
 
 
-def get_100nm_array(array):
+def move_10nm_to_100nm(array):
     hist_weights = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_100nm, weights=array)[0]
     hist = np.histogram(mapping.x_centers_10nm, bins=mapping.x_bins_100nm)[0]
     return hist_weights / hist
@@ -148,7 +124,7 @@ def get_100nm_array(array):
 
 def get_zz_vac_50nm_monomer_matrix(zz_vac_old_50nm, mon_matrix_2d, n_hack=10):
 
-    n_monomers_out = get_50nm_array(mon_matrix_2d[:, 0]) * n_hack
+    n_monomers_out = move_10nm_to_50nm(mon_matrix_2d[:, 0]) * n_hack
     V_monomer_out = n_monomers_out * constants.V_mon
     dh_monomer_out_cm = V_monomer_out / (mapping.l_y * 1e-7 * mapping.step_50nm * 1e-7)
     dh_monomer_out = dh_monomer_out_cm * 1e+7

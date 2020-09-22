@@ -5,155 +5,138 @@ import numpy as np
 from tqdm import tqdm
 import copy
 from mapping import mapping_3p3um_80nm as mapping
+from functions import array_functions as af
+from functions import e_matrix_functions as emf
 from functions import MC_functions as mcf
 from functions import DEBER_functions as deber
 from functions import mapping_functions as mf
 from functions import diffusion_functions as df
 from functions import reflow_functions as rf
 from functions import plot_functions as pf
-from functions import evolver_functions as ef
+from functions import SE_functions as sef
+from functions import scission_functions as sf
 
-from scipy.optimize import curve_fit
+import indexes as ind
 
 mapping = importlib.reload(mapping)
 deber = importlib.reload(deber)
+emf = importlib.reload(emf)
 mcf = importlib.reload(mcf)
+ind = importlib.reload(ind)
+sef = importlib.reload(sef)
+af = importlib.reload(af)
 mf = importlib.reload(mf)
 df = importlib.reload(df)
-ef = importlib.reload(ef)
 rf = importlib.reload(rf)
 pf = importlib.reload(pf)
+sf = importlib.reload(sf)
 
 # %%
-resist_matrix = np.load('data/exp_3p3um_80nm/resist_matrix.npy')
-chain_lens = np.load('data/exp_3p3um_80nm/chain_lens.npy')
-n_chains = len(chain_lens)
-
-chain_tables = []
-progress_bar = tqdm(total=n_chains, position=0)
-
-for n in range(n_chains):
-    chain_tables.append(
-        np.load('data/exp_3p3um_80nm/chain_tables/chain_table_' + str(n) + '.npy'))
-    progress_bar.update()
-
-resist_shape = mapping.hist_5nm_shape
-
-# %
 l_x = mapping.l_x * 1e-7
 l_y = mapping.l_y * 1e-7
 area = l_x * l_y
-d_PMMA = mapping.z_max * 1e-7  # cm
+
+d_PMMA = mapping.z_max
+d_PMMA_cm = d_PMMA * 1e-7  # cm
+
 j_exp_s = 1.9e-9  # A / cm
 j_exp_l = 1.9e-9 * l_x
 dose_s = 0.6e-6  # C / cm^2
 dose_l = dose_s * l_x
-T_C = 125
 t = dose_l / j_exp_l  # 316 s
 dt = 1  # s
 Q = dose_s * area
 n_electrons = Q / constants.e_SI  # 2 472
 n_electrons_s = int(np.around(n_electrons / t))
 
-zip_length = 1000
+T_C = 125
 Tg = 120
-
-xx = mapping.x_centers_5nm * 1e-7  # cm
-zz_vac = np.zeros(len(xx))  # cm
-monomer_matrix = np.zeros(np.shape(resist_matrix)[:3])
-
-zz_vac_list = [zz_vac]
-
-# %%
-scission_matrix_total = np.zeros(np.shape(monomer_matrix))
-
-for i in range(32):
-
-    # print(i)
-
-    scission_matrix = np.load('data/sci_mat_3p3um_80nm/scission_matrix_' + str(i) + '.npy')
-    scission_matrix_total += scission_matrix
-    # mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
-    # print('mapping is done')
-    # mf.process_depolymerization(resist_matrix, chain_tables, zip_length)
-    # print('depolymerization is done')
-
-
-print(np.max(scission_matrix))
-print(np.max(scission_matrix_total))
-
-# %%
-sci_mat_2d = np.average(scission_matrix_total, axis=1)
-sci_mat_1d = np.average(sci_mat_2d, axis=1)
-
-plt.figure(dpi=300)
-plt.plot(sci_mat_1d)
-plt.show()
-
-# %%
-sum_m, sum_m2, new_monomer_matrix = mf.get_chain_len_matrix(resist_matrix, chain_tables)
-monomer_matrix += new_monomer_matrix
-
-sum_m_1d = np.sum(np.sum(sum_m, axis=1), axis=1)
-sum_m2_1d = np.sum(np.sum(sum_m2, axis=1), axis=1)
-monomer_matrix_1d = np.sum(np.sum(monomer_matrix, axis=1), axis=1)
-
-sum_m_1d_100nm = df.get_100nm_array(sum_m_1d)
-sum_m2_1d_100nm = df.get_100nm_array(sum_m2_1d)
-monomer_matrix_1d_100nm = df.get_100nm_array(monomer_matrix_1d)
-
-matrix_Mw_1d_100nm = mf.get_local_Mw_matrix(sum_m_1d_100nm, sum_m2_1d_100nm, monomer_matrix_1d_100nm)
-
-popt, _ = curve_fit(df.minus_exp_gauss, mapping.x_centers_100nm, matrix_Mw_1d_100nm)
-
-plt.figure(dpi=300)
-plt.semilogy(mapping.x_centers_100nm, matrix_Mw_1d_100nm, '-o')
-plt.semilogy(mapping.x_centers_50nm, df.minus_exp_gauss(mapping.x_centers_50nm, *popt), '.-')
-plt.show()
-
-etas_50nm_fit = rf.get_viscosity_W(T_C, df.minus_exp_gauss(mapping.x_centers_25nm, *popt))
-mobs_50nm_fit = rf.get_SE_mobility(etas_50nm_fit)
-
-plt.figure(dpi=300)
-plt.semilogy(mapping.x_centers_25nm, mobs_50nm_fit, 'o-')
-plt.show()
-
 dT = T_C - Tg
 
-monomer_matrix_2d = np.sum(monomer_matrix, axis=1)
-monomer_matrix_2d_final = df.track_all_monomers(monomer_matrix_2d,
-                                                xx, zz_vac, d_PMMA, dT, wp=1, t_step=time_s, dtdt=0.5)
+time_s = 10
 
+# %%
+xx = mapping.x_bins_10nm  # nm
+zz_vac = np.ones(len(xx)) * 0  # nm
+zz_vac_list = [zz_vac]
+
+file_cnt = 0
+n_files = 3200
+primary_electrons_in_file = 10
+
+zip_length = 1000
+r_beam = 100
+weight = 0.3
+source = 'data/e_DATA_Pn_80nm_point/'
+
+scission_matrix = np.zeros(mapping.hist_10nm_shape)
+monomer_matrix_2d = np.zeros(np.shape(np.sum(scission_matrix, axis=1)))
+
+scission_array_total = np.zeros(mapping.hist_10nm_shape[0])
+
+for i in range(32):
+    # i = 0
+
+    # plt.figure(dpi=300)
+    # plt.plot(xx, zz_vac)
+    # plt.title('suda herachat electrons, i = ' + str(i))
+    # plt.show()
+
+    print('!!!!!!!!!', i, '!!!!!!!!!')
+
+    for _ in range(8):
+        now_DATA = np.load(source + 'e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
+        file_cnt += 1
+
+        if file_cnt > n_files:
+            emf.rotate_DATA(now_DATA)
+
+        for primary_e_id in range(primary_electrons_in_file):
+
+            now_prim_e_DATA = emf.get_e_id_DATA_corr(now_DATA, primary_electrons_in_file, primary_e_id)
+
+            emf.add_gaussian_xy_shift_to_track(now_prim_e_DATA, 0, r_beam, [mapping.y_min, mapping.y_max])
+
+            af.snake_array(
+                array=now_prim_e_DATA,
+                x_ind=ind.DATA_x_ind,
+                y_ind=ind.DATA_y_ind,
+                z_ind=ind.DATA_z_ind,
+                xyz_min=[mapping.x_min, mapping.y_min, -np.inf],
+                xyz_max=[mapping.x_max, mapping.y_max, np.inf]
+            )
+
+            for pos, line in enumerate(now_prim_e_DATA):
+
+                now_x, now_z = line[ind.DATA_x_ind], line[ind.DATA_z_ind]
+
+                if now_z < mcf.lin_lin_interp(xx, zz_vac)(now_x):
+                    now_prim_e_DATA[pos, ind.DATA_process_id_ind] = 0  # change type to simulate zz_vac
+
+            now_prim_e_val_DATA = \
+                now_prim_e_DATA[np.where(now_prim_e_DATA[:, ind.DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
+
+            scission_matrix += np.histogramdd(
+                sample=now_prim_e_val_DATA[:, ind.DATA_coord_inds],
+                bins=mapping.bins_10nm,
+                weights=sf.get_scissions_easy(now_prim_e_val_DATA, weight=weight)
+            )[0]
+
+    print('scission matrix is obtained, sum =', np.sum(scission_matrix))
+
+    scission_array = np.sum(np.sum(scission_matrix, axis=1), axis=1)
+    scission_array_total += scission_array
+
+# %%
 plt.figure(dpi=300)
-plt.plot(mapping.x_centers_50nm, df.get_50nm_array(monomer_matrix_2d_final[:, 0]))
+plt.semilogy(mapping.x_centers_10nm, scission_array_total)
+plt.xlabel('x, nm')
+# plt.ylabel('y, nm')
+plt.ylabel('n scission average')
 plt.show()
+# plt.savefig('scissions.png')
 
-zz_vac = np.zeros(len(mapping.x_centers_50nm))  # 50 nm !!!
-zz_vac_new, monomer_matrix_2d_new = df.get_zz_vac_monomer_matrix(zz_vac, monomer_matrix_2d_final)
-
-plt.figure(dpi=300)
-plt.plot(mapping.x_centers_50nm, zz_vac_new)
-plt.show()
-
-zz_vac_evolver = 80e-7 - zz_vac_new
-ef.create_datafile(mapping.x_centers_50nm * 1e-3, zz_vac_evolver * 1e+4, mobs_50nm_fit)
-ef.run_evolver()
-
-tt, pp = ef.get_evolver_times_profiles()
-
-plt.figure(dpi=300)
-plt.plot(pp[0][:, 0], pp[0][:, 1], 'o-')
-plt.plot(pp[1][:, 0], pp[1][:, 1], 'o-')
-plt.show()
-
-xx_final = pp[1][:, 0]
-zz_vac_final = 80e-7 - pp[1][:, 1]*1e-4
-
-plt.figure(dpi=300)
-plt.plot(xx_final, zz_vac_final)
-plt.show()
-
-zz_vac = zz_vac_final
-
+# %%
+np.save('scission_array_sum.npy', scission_array_total)
 
 

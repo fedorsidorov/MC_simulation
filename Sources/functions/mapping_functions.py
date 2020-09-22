@@ -196,6 +196,46 @@ def process_depolymerization(resist_matrix, chain_tables, zip_length):
         progress_bar.update()
 
 
+def process_depolymerization_WO_CT(resist_matrix, chain_tables, zip_length):
+    progress_bar = tqdm(total=len(chain_tables), position=0)
+
+    for ct_num, ct in enumerate(chain_tables):
+
+        sci_inds = np.where(ct[1:, indexes.monomer_type_ind] == 0)[0] + 1
+
+        # stop_flag = False
+
+        for sci_ind in sci_inds:
+
+            # if stop_flag:
+            #     break
+
+            now_table = ct
+            n_mon = sci_ind
+            step = np.random.choice([-1, 1])
+
+            if step == -1:
+                n_mon -= 1
+
+            rewrite_monomer_type(resist_matrix, now_table, n_mon, indexes.free_monomer)
+            kin_len = 1
+            n_mon += step
+
+            while kin_len < zip_length:  # do talogo
+
+                x_bin, y_bin, z_bin, _, mon_type = now_table[n_mon, :]
+
+                if mon_type <= indexes.end_monomer and (n_mon > 0) and (n_mon < (len(now_table) - 1)):
+                    rewrite_monomer_type(resist_matrix, now_table, n_mon, indexes.free_monomer)
+                    kin_len += 1
+                    n_mon += step
+
+                else:  # chain transfer
+                    break
+
+        progress_bar.update()
+
+
 def get_sum_m_m2(chain_tables):
 
     sum_m = 0

@@ -11,7 +11,7 @@ from functions import mapping_functions as mf
 from functions import diffusion_functions as df
 from functions import reflow_functions as rf
 from functions import plot_functions as pf
-from functions import evolver_functions as ef
+from functions import SE_functions as ef
 
 from scipy.optimize import curve_fit
 
@@ -65,34 +65,30 @@ monomer_matrix = np.zeros(np.shape(resist_matrix)[:3])
 zz_vac_list = [zz_vac]
 
 # %%
-# for i in range(32):
-#
-#     print(i)
-#
-#     time_s = 10
-#
-#     e_DATA, e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(
-#         xx=xx,
-#         zz_vac=zz_vac,
-#         d_PMMA=d_PMMA,
-#         n_electrons=n_electrons_s*time_s,
-#         E0=20e+3,
-#         r_beam=100e-7
-#     )
-#
-#     scission_matrix, E_dep_matrix = deber.get_scission_matrix(e_DATA, weight=0.35)
-#     np.save('data/e_DATA/scission_matrix_' + str(i) + '.npy', scission_matrix)
+scission_matrix_total = np.zeros(np.shape(monomer_matrix))
 
-# %%
 for i in range(32):
 
-    print(i)
+    # print(i)
 
-    scission_matrix = np.load('data/e_DATA/scission_matrix_' + str(i) + '.npy')
-    mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
-    print('mapping is done')
-    mf.process_depolymerization(resist_matrix, chain_tables, zip_length)
-    print('depolymerization is done')
+    scission_matrix = np.load('data/sci_mat_3p3um_80nm/scission_matrix_' + str(i) + '.npy')
+    scission_matrix_total += scission_matrix
+    # mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
+    # print('mapping is done')
+    # mf.process_depolymerization(resist_matrix, chain_tables, zip_length)
+    # print('depolymerization is done')
+
+
+print(np.max(scission_matrix))
+print(np.max(scission_matrix_total))
+
+# %%
+sci_mat_2d = np.average(scission_matrix_total, axis=1)
+sci_mat_1d = np.average(sci_mat_2d, axis=1)
+
+plt.figure(dpi=300)
+plt.plot(sci_mat_1d)
+plt.show()
 
 # %%
 sum_m, sum_m2, new_monomer_matrix = mf.get_chain_len_matrix(resist_matrix, chain_tables)
