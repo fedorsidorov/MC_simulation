@@ -8,7 +8,7 @@ ind = importlib.reload(ind)
 
 
 # %%
-def plot_e_DATA(DATA, d_PMMA=0, E_cut=5, proj='xz'):
+def plot_e_DATA(DATA, d_PMMA, xx, zz_vac, E_cut=5, proj='xz', limits=None):
     DATA_cut = DATA[np.where(DATA[:, ind.DATA_E_ind] > E_cut)]
     fig, ax = plt.subplots(dpi=300)
 
@@ -30,20 +30,23 @@ def plot_e_DATA(DATA, d_PMMA=0, E_cut=5, proj='xz'):
             print('specify projection: \'xy\', \'yz\' or \'yz\'')
             return
         # ax.plot(now_DATA_cut[:, xx_ind], now_DATA_cut[:, yy_ind])
-        ax.plot(DATA_cut[inds, xx_ind], DATA_cut[inds, yy_ind], '.-')
+        ax.plot(DATA_cut[inds, xx_ind], DATA_cut[inds, yy_ind], '.-', linewidth='1')
 
     if proj != 'xy' and d_PMMA != 0:
         points = np.linspace(-d_PMMA * 2, d_PMMA * 2, 100)
-        ax.plot(points, np.zeros(len(points)), 'k')
         ax.plot(points, np.ones(len(points)) * d_PMMA, 'k')
+        plt.plot(xx, zz_vac, 'k')
 
     ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
     ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
     plt.gca().set_aspect('equal', adjustable='box')
     plt.xlabel('x, nm')
     plt.ylabel('z, nm')
-    # plt.xlim(0, 1)
-    # plt.ylim(0, 1)
+
+    if limits:
+        plt.xlim(limits[0])
+        plt.ylim(limits[1])
+
     plt.gca().invert_yaxis()
     plt.grid()
     plt.show()

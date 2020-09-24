@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import importlib
-import MC_classes as mcc
+import MC_classes_nm as mcc
 from mapping import mapping_viscosity as mm
 from functions import plot_functions as pf
 
@@ -10,29 +10,28 @@ mm = importlib.reload(mm)
 pf = importlib.reload(pf)
 
 # %%
-# d_PMMA_cm = 100e-7
-d_PMMA_cm = mm.d_PMMA_cm
-# ly = 100e-7
-lx_cm = mm.l_x * 1e-7
-ly_cm = mm.l_y * 1e-7
-r_beam = 100e-7
+d_PMMA = mm.d_PMMA
+lx_cm = mm.l_x
+ly_cm = mm.l_y
+r_beam = 100
 E0 = 20e+3
 
-xx = mm.x_centers_5nm * 1e-7
+xx = mm.x_centers_5nm
 # zz_vac = np.zeros(len(xx))
-zz_vac = np.ones(len(xx)) * (1 - np.cos(xx * np.pi / (lx_cm / 2)) / 5) * d_PMMA_cm
+zz_vac = np.ones(len(xx)) * ((1 + np.cos(xx * np.pi / (lx_cm / 2))) * d_PMMA) / 5
 
 plt.figure(dpi=300)
-plt.plot(xx*1e+7, zz_vac*1e+7)
+plt.plot(xx, zz_vac)
+plt.plot(xx, np.ones(len(xx)) * d_PMMA)
 plt.show()
 
 # %%
-for i in range(100):
+n_electrons = 50
 
-    n_electrons = 50
+for i in range(50):
 
     structure = mcc.Structure(
-            d_PMMA=d_PMMA_cm,
+            d_PMMA=d_PMMA,
             xx=xx,
             zz_vac=zz_vac,
             ly=ly_cm)
@@ -54,7 +53,7 @@ for i in range(100):
 # now_DATA = np.load('data/e_DATA/DATA_test_50.npy')
 # e_DATA_P = e_DATA[np.where(e_DATA[:, 2] == 0)]
 
-# pf.plot_DATA(e_DATA, 100, E_cut=10)
+pf.plot_e_DATA(e_DATA, d_PMMA, xx, zz_vac, limits=[[-200, 200], [-100, 200]])
 
 # %%
 # now_DATA_Pn = np.load('data/e_DATA/DATA_test.npy')
@@ -66,6 +65,3 @@ for i in range(100):
 #
 # cns = now_DATA[a_inds[0], :]
 # dns = now_DATA_Pn[b_inds[0], :]
-#
-# %%
-# plot_DATA(now_DATA, 500, E_cut=0)

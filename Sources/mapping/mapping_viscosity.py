@@ -17,8 +17,8 @@ step_25nm = 25
 step_50nm = 50
 step_100nm = 100
 
-d_PMMA_nm = z_max
-d_PMMA_cm = d_PMMA_nm * 1e-7
+d_PMMA = z_max
+d_PMMA_cm = d_PMMA * 1e-7
 area_cm2 = (x_max - x_min) * (y_max - y_min) * 1e-7 ** 2
 volume_cm3 = area_cm2 * d_PMMA_cm
 

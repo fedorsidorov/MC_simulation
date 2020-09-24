@@ -3,17 +3,16 @@ import importlib
 from collections import deque
 import numpy as np
 from tqdm import tqdm
-import arrays
-import constants as const
+import arrays_nm as arrays
+import constants
 import grid as grid
-import indexes as indxs
+import indexes as indexes
 from functions import MC_functions as utils
 from scipy import interpolate
 
 arrays = importlib.reload(arrays)
-const = importlib.reload(const)
-grid = importlib.reload(grid)
-indxs = importlib.reload(indxs)
+constants = importlib.reload(constants)
+indexes = importlib.reload(indexes)
 utils = importlib.reload(utils)
 
 
@@ -28,7 +27,7 @@ class Electron:
         self.history = deque()
         self.x0 = np.mat([[0.], [0.], [1.]])
         self.structure = structure
-        self.layer_ind = indxs.vacuum_ind
+        self.layer_ind = indexes.vacuum_ind
         self.E_ind = 0
         self.n_steps = 0
 
@@ -44,7 +43,7 @@ class Electron:
         scale_factor = np.abs(self.structure.d_PMMA - z1) / np.abs(z2 - z1)
         d = free_path * scale_factor
 
-        if u1 < (1 - np.exp(-p1 * d)) or self.E_ind < indxs.Si_E_cut_ind:
+        if u1 < (1 - np.exp(-p1 * d)) or self.E_ind < indexes.Si_E_cut_ind:
             delta_s = 1 / p1 * (-np.log(1 - u1))
         else:
             delta_s = d + (1 / p2) * (-np.log(1 - u1) - p1 * d)
@@ -89,9 +88,9 @@ class Electron:
 
     @staticmethod
     def get_T_PMMA(E_cos2_theta):
-        if E_cos2_theta >= const.Wf_PMMA:
-            T_PMMA = 4 * np.sqrt(1 - const.Wf_PMMA / E_cos2_theta) / \
-                     (1 + np.sqrt(1 - const.Wf_PMMA / E_cos2_theta)) ** 2
+        if E_cos2_theta >= constants.Wf_PMMA:
+            T_PMMA = 4 * np.sqrt(1 - constants.Wf_PMMA / E_cos2_theta) / \
+                     (1 + np.sqrt(1 - constants.Wf_PMMA / E_cos2_theta)) ** 2
             return T_PMMA
         else:
             return 0.
@@ -148,7 +147,7 @@ class Electron:
         hw = self.E
         self.E = 0
         if is_polaron:
-            self.write_state_to_history(indxs.sim_PMMA_polaron_ind, hw, 0)
+            self.write_state_to_history(indexes.sim_PMMA_polaron_ind, hw, 0)
         else:
             self.write_state_to_history(-1, hw, 0)
 
@@ -157,13 +156,13 @@ class Electron:
 
     def update_layer_ind(self):
         if self.coords[2, 0] >= self.structure.d_PMMA:
-            self.layer_ind = indxs.Si_ind
+            self.layer_ind = indexes.Si_ind
         else:
             z_interface = self.structure.get_z_vac_for_x(self.coords[0, 0])
             if self.coords[2, 0] >= z_interface:
-                self.layer_ind = indxs.PMMA_ind
+                self.layer_ind = indexes.PMMA_ind
             else:
-                self.layer_ind = indxs.vacuum_ind
+                self.layer_ind = indexes.vacuum_ind
 
     def write_state_to_history(self, proc_ind, hw, E_2nd):
         E_deposited = hw - E_2nd
@@ -174,7 +173,7 @@ class Electron:
 
 class Structure:
 
-    def __init__(self, d_PMMA, xx, zz_vac, ly):  # in cm !!!
+    def __init__(self, d_PMMA, xx, zz_vac, ly):  # now in nanometers !!!
         self.d_PMMA = d_PMMA
         self.xx = xx
         self.zz_vac = zz_vac
@@ -186,8 +185,8 @@ class Structure:
         self.ee_DIMFP_norm = [arrays.PMMA_ee_DIMFP_norm_3, arrays.Si_ee_DIMFP_norm_6]
 
         self.E_bind = [
-            [const.val_E_bind_PMMA, const.K_Ebind_C, const.K_Ebind_O],
-            const.Si_MuElec_E_bind
+            [constants.val_E_bind_PMMA, constants.K_Ebind_C, constants.K_Ebind_O],
+            constants.Si_MuElec_E_bind
         ]
 
         self.proc_inds = [
@@ -196,12 +195,12 @@ class Structure:
         ]
 
         self.E_cutoff_ind = [0, 0, 0]
-        self.E_cutoff_ind[indxs.vacuum_ind] = len(grid.EE) - 1
-        self.E_cutoff_ind[indxs.PMMA_ind] = indxs.PMMA_E_cut_ind
-        self.E_cutoff_ind[indxs.Si_ind] = indxs.Si_E_cut_ind
+        self.E_cutoff_ind[indexes.vacuum_ind] = len(grid.EE) - 1
+        self.E_cutoff_ind[indexes.PMMA_ind] = indexes.PMMA_E_cut_ind
+        self.E_cutoff_ind[indexes.Si_ind] = indexes.Si_E_cut_ind
 
-        self.W_phonon = const.W_phonon
-        self.Wf_PMMA = const.Wf_PMMA
+        self.W_phonon = constants.W_phonon
+        self.Wf_PMMA = constants.Wf_PMMA
 
     def get_d_PMMA(self):
         return self.d_PMMA
@@ -209,8 +208,8 @@ class Structure:
     def get_ee_scat_phi_theta_hw_phi2_theta2(self, electron, subshell_ind):
         phi = 2 * np.pi * np.random.random()
 
-        if electron.get_layer_ind() == indxs.Si_ind and subshell_ind == indxs.sim_MuElec_plasmon_ind:
-            hw = const.Si_MuElec_E_plasmon
+        if electron.get_layer_ind() == indexes.Si_ind and subshell_ind == indexes.sim_MuElec_plasmon_ind:
+            hw = constants.Si_MuElec_E_plasmon
             phi_2nd = 2 * np.pi * np.random.random()
         else:
             probs = self.ee_DIMFP_norm[electron.get_layer_ind()][subshell_ind, electron.get_E_ind(), :]
@@ -282,14 +281,14 @@ class Event:
 
         self.process_ind = structure.get_process_ind(electron)
 
-        if self.layer_ind == indxs.PMMA_ind and self.process_ind == indxs.sim_PMMA_polaron_ind:
+        if self.layer_ind == indexes.PMMA_ind and self.process_ind == indexes.sim_PMMA_polaron_ind:
             self.polaron = True
             self.stop = True
 
-        elif self.process_ind == indxs.sim_elastic_ind:
+        elif self.process_ind == indexes.sim_elastic_ind:
             self.phi, self.theta = structure.get_elastic_scat_phi_theta(electron)
 
-        elif self.layer_ind == indxs.PMMA_ind and self.process_ind == indxs.sim_PMMA_phonon_ind:
+        elif self.layer_ind == indexes.PMMA_ind and self.process_ind == indexes.sim_PMMA_phonon_ind:
             self.phi, self.theta, self.hw = structure.get_phonon_scat_phi_theta_W(electron)
 
         else:  # electron-electron interaction
@@ -298,8 +297,8 @@ class Event:
                 structure.get_ee_scat_phi_theta_hw_phi2_theta2(electron, subshell_ind)
             E_bind = structure.E_bind[self.layer_ind][subshell_ind]
 
-            if self.hw > E_bind and not(self.layer_ind == indxs.Si_ind and
-                                        subshell_ind == indxs.sim_MuElec_plasmon_ind):  # secondary generation
+            if self.hw > E_bind and not(self.layer_ind == indexes.Si_ind and
+                                        subshell_ind == indexes.sim_MuElec_plasmon_ind):  # secondary generation
                 self.E_2nd = self.hw - E_bind
                 self.secondary_electron = Electron(
                     e_id=-1,
@@ -346,7 +345,6 @@ class Simulator:
 
     def get_total_history(self):
         history = np.vstack(self.total_history)
-        history[:, 4:7] *= 1e+7  # cm to nm
         return np.around(np.vstack(history), decimals=5)
 
     def prepare_e_deque(self):
