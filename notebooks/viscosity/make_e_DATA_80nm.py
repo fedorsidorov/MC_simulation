@@ -27,7 +27,7 @@ plt.show()
 # %%
 n_primaries_in_file = 100
 
-for i in range(1):
+for i in range(1000):
 
     print(i)
 
@@ -48,12 +48,11 @@ for i in range(1):
     simulator.start_simulation()
 
     e_DATA = simulator.get_total_history()
-    # e_DATA_PMMA = e_DATA[np.where(e_DATA[:, ind.e_DATA_layer_id_ind] == ind.PMMA_ind)]
-    # e_DATA_PMMA_val = \
-    #     e_DATA_PMMA[np.where(e_DATA_PMMA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
+    e_DATA_PMMA = e_DATA[np.where(e_DATA[:, ind.e_DATA_layer_id_ind] == ind.PMMA_ind)]
+    e_DATA_PMMA_val = \
+        e_DATA_PMMA[np.where(e_DATA_PMMA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
 
-    # np.save('data/e_DATA_Pv_80nm/e_DATA_' + str(i) + '.npy', e_DATA_PMMA_val)
+    np.save('data/e_DATA_Pv_80nm/e_DATA_' + str(i) + '.npy', e_DATA_PMMA_val)
 
-# %
-pf.plot_e_DATA(e_DATA, mm.d_PMMA, xx, zz_vac)
+# %%
 # pf.plot_e_DATA(e_DATA, mm.d_PMMA, xx, zz_vac, limits=[[-200, 200], [-100, 200]])

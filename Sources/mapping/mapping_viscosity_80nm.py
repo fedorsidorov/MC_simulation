@@ -6,7 +6,7 @@ y_min, y_max = -100, 100
 z_min, z_max = 0, 80
 
 l_xyz = np.array((x_max - x_min, y_max - y_min, z_max - z_min))
-l_x, l_y, l_z = l_xyz
+lx, ly, lz = l_xyz
 
 xyz_min = np.array((x_min, y_min, z_min))
 xyz_max = np.array((x_max, y_max, z_max))

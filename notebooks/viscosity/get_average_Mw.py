@@ -2,7 +2,7 @@ import numpy as np
 import importlib
 import matplotlib.pyplot as plt
 from tqdm import tqdm
-from mapping import mapping_viscosity as mapping
+from mapping import mapping_viscosity_80nm as mapping
 from functions import mapping_functions as mf
 import constants
 

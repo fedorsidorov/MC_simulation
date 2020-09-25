@@ -8,29 +8,29 @@ ind = importlib.reload(ind)
 
 
 # %%
-def plot_e_DATA(DATA, d_PMMA, xx, zz_vac, E_cut=5, proj='xz', limits=None):
-    DATA_cut = DATA[np.where(DATA[:, ind.DATA_E_ind] > E_cut)]
+def plot_e_DATA(e_DATA, d_PMMA, xx, zz_vac, E_cut=5, proj='xz', limits=None):
+    e_DATA_cut = e_DATA[np.where(e_DATA[:, ind.e_DATA_E_ind] > E_cut)]
     fig, ax = plt.subplots(dpi=300)
 
-    for e_id in range(int(np.max(DATA_cut[:, ind.DATA_e_id_ind]))):
-        inds = np.where(DATA_cut[:, ind.DATA_e_id_ind] == e_id)[0]
-        # now_DATA_cut = DATA_cut[inds, :]
+    for e_id in range(int(np.max(e_DATA_cut[:, ind.e_DATA_e_id_ind]))):
+        inds = np.where(e_DATA_cut[:, ind.e_DATA_e_id_ind] == e_id)[0]
+        # now_e_DATA_cut = e_DATA_cut[inds, :]
         if len(inds) == 0:
             continue
         if proj == 'xz':
-            xx_ind = ind.DATA_x_ind
-            yy_ind = ind.DATA_z_ind
+            xx_ind = ind.e_DATA_x_ind
+            yy_ind = ind.e_DATA_z_ind
         elif proj == 'yz':
-            xx_ind = ind.DATA_y_ind
-            yy_ind = ind.DATA_z_ind
+            xx_ind = ind.e_DATA_y_ind
+            yy_ind = ind.e_DATA_z_ind
         elif proj == 'xy':
-            xx_ind = ind.DATA_x_ind
-            yy_ind = ind.DATA_y_ind
+            xx_ind = ind.e_DATA_x_ind
+            yy_ind = ind.e_DATA_y_ind
         else:
             print('specify projection: \'xy\', \'yz\' or \'yz\'')
             return
-        # ax.plot(now_DATA_cut[:, xx_ind], now_DATA_cut[:, yy_ind])
-        ax.plot(DATA_cut[inds, xx_ind], DATA_cut[inds, yy_ind], '.-', linewidth='1')
+        # ax.plot(now_e_DATA_cut[:, xx_ind], now_e_DATA_cut[:, yy_ind])
+        ax.plot(e_DATA_cut[inds, xx_ind], e_DATA_cut[inds, yy_ind], '.-', linewidth='1')
 
     if proj != 'xy' and d_PMMA != 0:
         points = np.linspace(-d_PMMA * 2, d_PMMA * 2, 100)

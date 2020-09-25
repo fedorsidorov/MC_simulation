@@ -80,7 +80,7 @@ degpaths_CC_ester = {'CCp-C2': 4, 'CCp-Cp': 2}
 
 
 # %%
-def get_scissions_easy(DATA, weight):
-    ee = DATA[:, ind.DATA_E_dep_ind] + DATA[:, ind.DATA_E2nd_ind] + DATA[:, ind.DATA_E_ind]  # E before collision
+def get_scissions(e_DATA, weight):
+    ee = e_DATA[:, ind.e_DATA_E_dep_ind] + e_DATA[:, ind.e_DATA_E2nd_ind] + e_DATA[:, ind.e_DATA_E_ind]  # E before collision
     scission_probs = np.ones(len(ee)) * weight
-    return np.array(np.random.random(len(DATA)) < scission_probs).astype(int)
+    return np.array(np.random.random(len(e_DATA)) < scission_probs).astype(int)

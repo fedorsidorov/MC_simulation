@@ -1,7 +1,7 @@
 import numpy as np
 import importlib
 from tqdm import tqdm
-from mapping import mapping_viscosity as mapping
+from mapping import mapping_viscosity_80nm as mapping
 from functions import reflow_functions as rf
 from functions import mapping_functions as mf
 import matplotlib.pyplot as plt

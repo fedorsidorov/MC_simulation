@@ -14,21 +14,21 @@ sim_PMMA_polaron_ind = 5
 
 sim_MuElec_plasmon_ind = 0
 
-# %% DATA indexes
-DATA_e_id_ind = 0
-DATA_parent_e_id_ind = 1
-DATA_layer_id_ind = 2
-DATA_process_id_ind = 3
-DATA_x_ind = 4
-DATA_y_ind = 5
-DATA_z_ind = 6
-DATA_E_dep_ind = 7
-DATA_E2nd_ind = 8
-DATA_E_ind = 9
-DATA_xy_inds = range(DATA_x_ind, DATA_y_ind + 1)
-DATA_coord_inds = range(DATA_x_ind, DATA_z_ind + 1)
+# %% e_DATA indexes
+e_DATA_e_id_ind = 0
+e_DATA_parent_e_id_ind = 1
+e_DATA_layer_id_ind = 2
+e_DATA_process_id_ind = 3
+e_DATA_x_ind = 4
+e_DATA_y_ind = 5
+e_DATA_z_ind = 6
+e_DATA_E_dep_ind = 7
+e_DATA_E2nd_ind = 8
+e_DATA_E_ind = 9
+e_DATA_xy_inds = range(e_DATA_x_ind, e_DATA_y_ind + 1)
+e_DATA_coord_inds = range(e_DATA_x_ind, e_DATA_z_ind + 1)
 
-DATA_line_len = 10
+e_DATA_line_len = 10
 
 # %% resist_matrix
 n_chain_ind = 0

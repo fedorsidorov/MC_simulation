@@ -10,7 +10,7 @@ from functions import plot_functions as pf
 from functions import scission_functions as sf
 from functions import G_functions as Gf
 
-from mapping import mapping_viscosity as mapping
+from mapping import mapping_viscosity_80nm as mapping
 
 mapping = importlib.reload(mapping)
 emf = importlib.reload(emf)

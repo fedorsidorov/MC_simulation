@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import importlib
 import MC_classes_nm as mcc
-from mapping import mapping_viscosity_80nm as mm
+from mapping import mapping_viscosity_900nm as mm
 from functions import plot_functions as pf
 import indexes as ind
 
@@ -27,7 +27,7 @@ plt.show()
 # %%
 n_primaries_in_file = 100
 
-for i in range(1):
+for i in range(1000):
 
     print(i)
 
@@ -52,8 +52,7 @@ for i in range(1):
     # e_DATA_PMMA_val = \
     #     e_DATA_PMMA[np.where(e_DATA_PMMA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
 
-    # np.save('data/e_DATA_Pv_80nm/e_DATA_' + str(i) + '.npy', e_DATA_PMMA_val)
+    np.save('data/e_DATA_900nm/e_DATA_' + str(i) + '.npy', e_DATA)
 
-# %
-pf.plot_e_DATA(e_DATA, mm.d_PMMA, xx, zz_vac)
+# %%
 # pf.plot_e_DATA(e_DATA, mm.d_PMMA, xx, zz_vac, limits=[[-200, 200], [-100, 200]])
