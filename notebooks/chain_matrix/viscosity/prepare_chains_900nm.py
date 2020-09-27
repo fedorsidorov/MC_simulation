@@ -72,10 +72,10 @@ chain_lens_array = np.array(chain_lens_list)
 progress_bar = tqdm(total=len(chain_list), position=0)
 
 for n, chain in enumerate(chain_list):
-    np.save('/Volumes/ELEMENTS/chains_viscosity_900nm/prepared_chains_1/chain_' + str(n) + '.npy', chain)
+    np.save('/Volumes/ELEMENTS/chains_viscosity_900nm/10nm/prepared_chains_1/chain_' + str(n) + '.npy', chain)
     progress_bar.update()
 
-np.save('/Volumes/ELEMENTS/chains_viscosity_900nm/prepared_chains_1/chain_lens.npy', chain_lens_array)
+np.save('/Volumes/ELEMENTS/chains_viscosity_900nm/10nm/prepared_chains_1/chain_lens.npy', chain_lens_array)
 
 # %%
 print('Mn =', np.average(chain_lens_array) * 100)

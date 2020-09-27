@@ -7,9 +7,11 @@ from scipy.optimize import curve_fit
 import constants as const
 from mapping import mapping_harris as mapping
 from functions import G_functions as Gf
+from functions import MC_functions as mcf
 
 mapping = importlib.reload(mapping)
 const = importlib.reload(const)
+mcf = importlib.reload(mcf)
 Gf = importlib.reload(Gf)
 
 # %%
@@ -74,5 +76,23 @@ plt.figure(dpi=300)
 plt.plot(TT_sim, weights, 'o-')
 plt.plot(TT_theor, weights, 'o-')
 plt.grid()
-# plt.xlim(100, 150)
+
+# plt.xlim(150, 170)
+# plt.ylim(0.254, 0.256)
+
+plt.show()
+
+# %%
+TT_exact = np.linspace(TT_sim[0], TT_sim[-1], 100)
+weights_exact = mcf.lin_lin_interp(TT_sim, weights)(TT_exact)
+
+ans = np.zeros((len(weights_exact), 2))
+
+ans[:, 0] = TT_exact
+ans[:, 1] = weights_exact
+
+plt.figure(dpi=300)
+plt.plot(TT_exact, weights_exact, 'o-')
+plt.plot(TT_sim, weights, 'o-')
+plt.grid()
 plt.show()

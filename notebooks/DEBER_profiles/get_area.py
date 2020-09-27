@@ -2,12 +2,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # %%
-prof = np.loadtxt('data/DEBER_profiles/Camscan_80nm/Camscan_new.txt')
+# profile = np.loadtxt('data/DEBER_profiles/Camscan_900nm/Camscan_0.05.txt')  # A = 381526 nm^2
+# inds = range(100, 154)
+# xx = profile[inds, 0] * 1000
+# yy = profile[inds, 1] * 1000
 
-inds = range(42, 160)
+# profile = np.loadtxt('data/DEBER_profiles/Camscan_900nm/Camscan_0.2.txt')  # A = 1275148 nm^2
+# inds = range(90, 185)
+# xx = profile[inds, 0] * 1000
+# yy = profile[inds, 1] * 1000
 
-xx = prof[inds, 0]
-yy = prof[inds, 1]
+profile = np.loadtxt('data/DEBER_profiles/Camscan_900nm/Camscan_0.87.txt')  # A = 2037395 nm^2
+inds = range(120, 253)
+xx = profile[inds, 0] * 1000
+yy = profile[inds, 1] * 1000
 
 plt.figure(dpi=300)
 plt.plot(xx, yy, 'o-')
@@ -18,7 +26,7 @@ k = (yy[-1] - yy[0]) / (xx[-1] - xx[0])
 yy_corr = yy - xx * k
 
 plt.figure(dpi=300)
-plt.plot(xx, yy_corr)
+plt.plot(xx, yy_corr, 'o-')
 plt.show()
 
 # %%

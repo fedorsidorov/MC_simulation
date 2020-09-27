@@ -330,11 +330,12 @@ class Event:
 
 class Simulator:
 
-    def __init__(self, structure, n_electrons, E0_eV, r_beam):
+    def __init__(self, structure, n_electrons, E0_eV, r_beam_x, r_beam_y):
         self.structure = structure
         self.n_electrons = n_electrons
         self.E0 = E0_eV
-        self.r_beam = r_beam
+        self.r_beam_x = r_beam_x
+        self.r_beam_y = r_beam_y
         self.e_cnt = -1
         self.electrons_deque = deque()
         self.total_history = deque()
@@ -351,11 +352,10 @@ class Simulator:
         for _ in range(self.n_electrons):
 
             # x0 = 0.
-            x0 = np.random.uniform(-self.r_beam, self.r_beam)
+            x0 = np.random.uniform(-self.r_beam_x, self.r_beam_y)
             # x0 = np.random.normal(loc=0, scale=self.r_beam)
-            y0 = 0.
-            # y0 = np.random.uniform(-self.structure.ly / 2, self.structure.ly / 2)
-            # z0 = 0.
+            # y0 = 0.
+            y0 = np.random.uniform(-self.r_beam_y, self.r_beam_y)
             z0 = self.structure.get_z_vac_for_x(x0)
 
             electron = Electron(

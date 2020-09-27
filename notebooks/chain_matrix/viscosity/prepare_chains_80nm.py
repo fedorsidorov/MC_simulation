@@ -6,14 +6,14 @@ import numpy as np
 from tqdm import tqdm
 
 import constants as cp
-from mapping import mapping_viscosity_900nm as mapping
+from mapping import mapping_viscosity_80nm as mm
 from functions import array_functions as af
 from functions import chain_functions as cf
 
 cf = importlib.reload(cf)
 af = importlib.reload(af)
 cp = importlib.reload(cp)
-mapping = importlib.reload(mapping)
+mm = importlib.reload(mm)
 
 # %%
 source_dir = '/Volumes/ELEMENTS/Spyder/Chains/'
@@ -31,8 +31,7 @@ for folder in os.listdir(source_dir):
         chains.append(np.load(os.path.join(source_dir, folder, fname)))
 
 # %% create chain_list and check density
-volume = np.prod(mapping.l_xyz) * cp.nm3_to_cm_3
-n_monomers_required = int(cp.rho_PMMA * volume / cp.M_mon)
+n_monomers_required = int(cp.rho_PMMA * mm.volume_cm3 / cp.M_mon)
 
 mw = np.load('data/mw_distributions/mw_950K.npy').astype(int)
 mw_probs_n = np.load('data/mw_distributions/mw_probs_n_950K.npy')
@@ -69,13 +68,15 @@ while True:
 chain_lens_array = np.array(chain_lens_list)
 
 # %% save chains to files
+bin_size = '10nm'
+
 progress_bar = tqdm(total=len(chain_list), position=0)
 
 for n, chain in enumerate(chain_list):
-    np.save('/Volumes/ELEMENTS/chains_950K/prepared_chains/viscosity/chain_' + str(n) + '.npy', chain)
+    np.save('/Volumes/ELEMENTS/chains_viscosity_80nm/' + bin_size + '/prepared_chains_1/chain_' + str(n) + '.npy', chain)
     progress_bar.update()
 
-np.save('/Volumes/ELEMENTS/chains_950K/prepared_chains/viscosity/chain_lens.npy', chain_lens_array)
+np.save('/Volumes/ELEMENTS/chains_viscosity_80nm/' + bin_size + '/prepared_chains_1/chain_lens.npy', chain_lens_array)
 
 # %%
 print('Mn =', np.average(chain_lens_array) * 100)

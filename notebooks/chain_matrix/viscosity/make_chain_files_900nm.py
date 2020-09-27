@@ -16,23 +16,23 @@ def get_hist_position(element, bins):
 
 
 # %% load data
-chain_lens = np.load('/Volumes/ELEMENTS/chains_viscosity_900nm/prepared_chains_1/chain_lens.npy')
-hist_5nm = np.load('/Volumes/ELEMENTS/chains_viscosity_900nm/rot_sh_sn_chains_1/hist_5nm.npy')
-n_mon_cell_max = int(np.max(hist_5nm))
+chain_lens = np.load('/Volumes/ELEMENTS/chains_viscosity_900nm/10nm/prepared_chains_1/chain_lens.npy')
+hist_10nm = np.load('/Volumes/ELEMENTS/chains_viscosity_900nm/10nm/rot_sh_sn_chains_1/hist_10nm.npy')
+n_mon_cell_max = int(np.max(hist_10nm))
 
-plt.imshow(np.average(hist_5nm, axis=1).transpose())
+plt.imshow(np.average(hist_10nm, axis=1).transpose())
 plt.show()
 
 # %% create arrays
-pos_matrix = np.zeros(mapping.hist_5nm_shape, dtype=np.uint32)
-resist_matrix = -np.ones((*mapping.hist_5nm_shape, n_mon_cell_max, 3), dtype=np.uint32)
+pos_matrix = np.zeros(mapping.hist_10nm_shape, dtype=np.uint32)
+resist_matrix = -np.ones((*mapping.hist_10nm_shape, n_mon_cell_max, 3), dtype=np.uint32)
 chain_tables = []
 
 progress_bar = tqdm(total=len(chain_lens), position=0)
 
 for chain_num in range(len(chain_lens)):
 
-    now_chain = np.load('/Volumes/ELEMENTS/chains_viscosity_900nm/rot_sh_sn_chains_1/rot_sh_sn_chain_' +
+    now_chain = np.load('/Volumes/ELEMENTS/chains_viscosity_900nm/10nm/rot_sh_sn_chains_1/rot_sh_sn_chain_' +
                         str(chain_num) + '.npy')
 
     chain_table = np.zeros((len(now_chain), 5), dtype=np.uint32)
@@ -48,9 +48,9 @@ for chain_num in range(len(chain_lens)):
         else:
             mon_type = 1
 
-        x_bin = get_hist_position(element=mon_line[0], bins=mapping.x_bins_5nm)
-        y_bin = get_hist_position(element=mon_line[1], bins=mapping.y_bins_5nm)
-        z_bin = get_hist_position(element=mon_line[2], bins=mapping.z_bins_5nm)
+        x_bin = get_hist_position(element=mon_line[0], bins=mapping.x_bins_10nm)
+        y_bin = get_hist_position(element=mon_line[1], bins=mapping.y_bins_10nm)
+        z_bin = get_hist_position(element=mon_line[2], bins=mapping.z_bins_10nm)
 
         mon_line_pos = pos_matrix[x_bin, y_bin, z_bin]
 
@@ -67,11 +67,11 @@ for chain_num in range(len(chain_lens)):
 
 # %%
 print('resist_matrix size, Gb:', resist_matrix.nbytes / 1024 ** 3)
-np.save('/Volumes/ELEMENTS/chains_viscosity_900nm/resist_matrix_1.npy', resist_matrix)
+np.save('/Volumes/ELEMENTS/chains_viscosity_900nm/10nm/resist_matrix_1.npy', resist_matrix)
 
 # %%
 progress_bar = tqdm(total=len(chain_tables), position=0)
 
 for n, chain_table in enumerate(chain_tables):
-    np.save('/Volumes/ELEMENTS/chains_viscosity_900nm/chain_tables_1/chain_table_' + str(n) + '.npy', chain_table)
+    np.save('/Volumes/ELEMENTS/chains_viscosity_900nm/10nm/chain_tables_1/chain_table_' + str(n) + '.npy', chain_table)
     progress_bar.update()
