@@ -5,12 +5,12 @@ from tqdm import tqdm
 
 
 # %%
-def shulz_zimm(M, beta, z):  # miuake1960.pdf
+def shulz_zimm(M, beta, z):  # miyake1960.pdf
     A = beta ** (z + 1) / gamma(z + 1)
     return A * M ** z * np.exp(-beta * M)
 
 
-def get_beta_z(Mn, Mw):  # miuake1960.pdf
+def get_beta_z(Mn, Mw):  # miyake1960.pdf
     beta = 1 / (Mw - Mn)
     z = Mn / (Mw - Mn)
     return beta, z

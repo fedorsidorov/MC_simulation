@@ -48,9 +48,9 @@ def add_uniform_xy_shift_to_e_DATA(e_DATA, x_range, y_range):
     e_DATA[:, ind.e_DATA_xy_inds] += x_shift, y_shift
 
 
-# def add_gaussian_xy_shift_to_track(track_DATA, x_position, x_sigma, y_range):
-#     x_shift, y_shift = np.random.normal(loc=x_position, scale=x_sigma), np.random.uniform(*y_range)
-#     track_DATA[:, ind.e_DATA_xy_inds] += x_shift, y_shift
+def add_gaussian_xy_shift_to_track(track_DATA, x_position, x_sigma, y_range):
+    x_shift, y_shift = np.random.normal(loc=x_position, scale=x_sigma), np.random.uniform(*y_range)
+    track_DATA[:, ind.e_DATA_xy_inds] += x_shift, y_shift
 
 
 def add_individual_uniform_xy_shifts_to_e_DATA(e_DATA, n_primaries_in_file, x_range, y_range):

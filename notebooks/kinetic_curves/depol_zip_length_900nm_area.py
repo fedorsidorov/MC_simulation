@@ -62,9 +62,7 @@ n_scissions_list = []
 scission_matrix_total = np.zeros(mm.hist_10nm_shape)
 n_monomers_detached_total = 0
 
-# progress_bar = tqdm(total=n_files_required, position=0)
 
-# for file_cnt in range(100):
 for file_cnt in range(n_files_required):
 
     print(file_cnt)
@@ -123,31 +121,39 @@ for i, ct in enumerate(chain_tables):
 # %%
 data = np.loadtxt('data/kinetic_curves/kin_curve_160C_900nm.txt')
 
+dose_list = np.load('notebooks/kinetic_curves/sim_data/dose_list_900nm_new.npy')
+L_norm = np.load('notebooks/kinetic_curves/sim_data/L_norm_160C_5500_new.npy')
+
 plt.figure(dpi=300)
 # plt.plot(zip_lens_list)
 
 dose_list_depol = np.arange(n_files_required) * n_primaries_in_file * const.e_SI / mm.area_cm2 * 1e+6
 L_norm_depol = (mm.d_PMMA - np.array(zz_vac_list)) / mm.d_PMMA
 
-plt.plot(dose_list_depol, L_norm_depol, label='simulation')
-plt.plot(data[:, 0], data[:, 1], 'o-', label='experiment')
+L_norm_depol[0] = 1
+
+plt.plot(data[:, 0], data[:, 1], '*--', label='exp 160 °C')
+plt.plot(dose_list, L_norm, label='sim zil length = 5500')
+plt.plot(dose_list_depol, L_norm_depol, label='sim depolymerization')
 
 plt.title('900 nm PMMA, 160 °C')
-plt.xlim(0, 20)
+# plt.xlim(0, 20)
+plt.xlim(0, 1)
 plt.ylim(0, 1)
 plt.xlabel('D, $\mu$C/cm$^2$')
 plt.ylabel('L/L$_0$')
 plt.legend()
 plt.grid()
-plt.show()
-# plt.savefig('900nm_160C.png', dpi=300)
 
-# %%
-scission_matrix_2d = np.sum(scission_matrix_total, axis=1)
+# plt.show()
+plt.savefig('kin_curve_900nm_160C.png', dpi=300)
 
-# %%
-plt.figure(dpi=300)
-plt.plot(zz_vac_list)
-plt.show()
+# %
+# scission_matrix_2d = np.sum(scission_matrix_total, axis=1)
+#
+# # %%
+# plt.figure(dpi=300)
+# plt.plot(zz_vac_list)
+# plt.show()
 
 

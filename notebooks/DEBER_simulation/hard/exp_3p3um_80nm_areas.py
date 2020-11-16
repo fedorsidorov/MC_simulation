@@ -11,7 +11,7 @@ from functions import MC_functions as mcf
 from functions import DEBER_functions as deber
 from functions import mapping_functions as mf
 from functions import diffusion_functions as df
-from functions import reflow_functions as rf
+from functions import reflow_functions_hard as rf
 from functions import plot_functions as pf
 from functions import SE_functions as ef
 from functions import scission_functions as sf
@@ -32,8 +32,8 @@ pf = importlib.reload(pf)
 sf = importlib.reload(sf)
 
 # %%
-l_x = mapping.l_x * 1e-7
-l_y = mapping.l_y * 1e-7
+l_x = mapping.lx * 1e-7
+l_y = mapping.ly * 1e-7
 area = l_x * l_y
 
 d_PMMA = mapping.z_max
@@ -67,7 +67,7 @@ primary_electrons_in_file = 10
 zip_length = 1000
 r_beam = 100
 weight = 0.3
-source = 'data/e_DATA_Pn_80nm_point/'
+source = 'data/_outdated/e_DATA_Pn_80nm_point/'
 
 scission_matrix = np.zeros(mapping.hist_10nm_shape)
 monomer_matrix_2d = np.zeros(np.shape(np.sum(scission_matrix, axis=1)))
@@ -91,33 +91,33 @@ for i in range(32):
 
         for primary_e_id in range(primary_electrons_in_file):
 
-            now_prim_e_DATA = emf.get_e_id_DATA_corr(now_DATA, primary_electrons_in_file, primary_e_id)
+            now_prim_e_DATA = emf.get_e_id_e_DATA(now_DATA, primary_electrons_in_file, primary_e_id)
 
             emf.add_gaussian_xy_shift_to_track(now_prim_e_DATA, 0, r_beam, [mapping.y_min, mapping.y_max])
 
             af.snake_array(
                 array=now_prim_e_DATA,
-                x_ind=ind.DATA_x_ind,
-                y_ind=ind.DATA_y_ind,
-                z_ind=ind.DATA_z_ind,
+                x_ind=ind.e_DATA_x_ind,
+                y_ind=ind.e_DATA_y_ind,
+                z_ind=ind.e_DATA_z_ind,
                 xyz_min=[mapping.x_min, mapping.y_min, -np.inf],
                 xyz_max=[mapping.x_max, mapping.y_max, np.inf]
             )
 
             for pos, line in enumerate(now_prim_e_DATA):
 
-                now_x, now_z = line[ind.DATA_x_ind], line[ind.DATA_z_ind]
+                now_x, now_z = line[ind.e_DATA_x_ind], line[ind.e_DATA_z_ind]
 
                 if now_z < mcf.lin_lin_interp(xx, zz_vac)(now_x):
-                    now_prim_e_DATA[pos, ind.DATA_process_id_ind] = 0  # change type to simulate zz_vac
+                    now_prim_e_DATA[pos, ind.e_DATA_process_id_ind] = 0  # change type to simulate zz_vac
 
             now_prim_e_val_DATA = \
-                now_prim_e_DATA[np.where(now_prim_e_DATA[:, ind.DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
+                now_prim_e_DATA[np.where(now_prim_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
 
             scission_matrix += np.histogramdd(
-                sample=now_prim_e_val_DATA[:, ind.DATA_coord_inds],
+                sample=now_prim_e_val_DATA[:, ind.e_DATA_coord_inds],
                 bins=mapping.bins_10nm,
-                weights=sf.get_scissions_easy(now_prim_e_val_DATA, weight=weight)
+                weights=sf.get_scissions(now_prim_e_val_DATA, weight=weight)
             )[0]
 
     print('scission matrix is obtained, sum =', np.sum(scission_matrix))
@@ -189,3 +189,7 @@ for i in range(32):
 
     zz_vac = mcf.lin_lin_interp(xx_final, zz_vac_final)(xx)
     zz_vac_list.append(zz_vac)
+
+# %%
+np.save('notebooks/DEBER_simulation/xx_SE_5.npy', xx)
+np.save('notebooks/DEBER_simulation/zz_vac_SE_5.npy', zz_vac)

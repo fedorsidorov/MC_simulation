@@ -1,11 +1,11 @@
 import importlib
 import numpy as np
 import matplotlib.pyplot as plt
-from functions import reflow_functions as rf
+from functions import fourier_functions as ff
 from functions import MC_functions as mf
 
 mf = importlib.reload(mf)
-rf = importlib.reload(rf)
+ff = importlib.reload(ff)
 
 # %% original profile in um
 yy_um = np.load('notebooks/SE/REF/yy_pre.npy')
@@ -27,18 +27,18 @@ l0_um = 2
 l0_nm = l0_um * 1e+3
 l0_m = l0_um * 1e-6
 
-An_array_nm = rf.get_An_array(xx=yy_nm, zz=zz_nm, l0=l0_nm, N=N)
-Bn_array_nm = rf.get_Bn_array(xx=yy_nm, zz=zz_nm, l0=l0_nm, N=N)
+An_array_nm = ff.get_An_array(xx=yy_nm, zz=zz_nm, l0=l0_nm, N=N)
+Bn_array_nm = ff.get_Bn_array(xx=yy_nm, zz=zz_nm, l0=l0_nm, N=N)
 An_array_m = An_array_nm * 1e-9
 Bn_array_m = Bn_array_nm * 1e-9
 
 # %%
-tau_n_array_s = rf.get_tau_n_easy_array(eta=etas_SI[3], gamma=gamma_SI, h0=An_array_m[0], l0=l0_m, N=N)
+tau_n_array_s = ff.get_tau_n_easy_array(eta=etas_SI[3], gamma=gamma_SI, h0=An_array_m[0], l0=l0_m, N=N)
 
 yy_prec_um = np.linspace(-10, 10, 1000)
 
-zz_0_um = rf.get_h_at_t(yy_prec_um, An_array_m, Bn_array_m, tau_n_array_s, l0_m, t=0) * 1e+6
-zz_100_um = rf.get_h_at_t(yy_prec_um, An_array_m, Bn_array_m, tau_n_array_s, l0_m, t=100) * 1e+6
+zz_0_um = ff.get_h_at_t(yy_prec_um, An_array_m, Bn_array_m, tau_n_array_s, l0_m, t=0) * 1e+6
+zz_100_um = ff.get_h_at_t(yy_prec_um, An_array_m, Bn_array_m, tau_n_array_s, l0_m, t=100) * 1e+6
 
 # %
 plt.figure(dpi=300)
@@ -51,7 +51,7 @@ plt.legend()
 plt.show()
 
 # %%
-SE = np.loadtxt('notebooks/SE/SIM/vlist_SIM.txt')
+SE = np.loadtxt('notebooks/SE/REF/vlist_REF.txt')
 
 times = []
 profiles = []
@@ -77,8 +77,8 @@ plt.plot(profiles[ind][:, 0], profiles[ind][:, 1], '.')
 plt.show()
 
 # %%
-eta_ind = 3
-tau_n_array_s = rf.get_tau_n_easy_array(eta=etas_SI[eta_ind], gamma=gamma_SI, h0=An_array_m[0], l0=l0_m, N=N)
+eta_ind = 0
+tau_n_array_s = ff.get_tau_n_easy_array(eta=etas_SI[eta_ind], gamma=gamma_SI, h0=An_array_m[0], l0=l0_m, N=N)
 
 tt = [100, 200, 400, 1000, 2000]
 inds = [2, 4, 8, 20, 40]
@@ -86,7 +86,7 @@ inds = [2, 4, 8, 20, 40]
 plt.figure(dpi=300)
 
 for i in range(len(tt)):
-    zz_t_um = rf.get_h_at_t(yy_prec_um, An_array_m, Bn_array_m, tau_n_array_s, l0_m, t=tt[i]) * 1e+6
+    zz_t_um = ff.get_h_at_t(yy_prec_um, An_array_m, Bn_array_m, tau_n_array_s, l0_m, t=tt[i]) * 1e+6
     plt.plot(yy_prec_um, zz_t_um, label='Analytic, t = ' + str(int(tt[i])) + ' s')
     plt.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1], 'o',
              label='SE, scale = ' + str(int(times[inds[i]])) + ' s')
