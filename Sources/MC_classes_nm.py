@@ -351,10 +351,8 @@ class Simulator:
     def prepare_e_deque(self):
         for _ in range(self.n_electrons):
 
-            # x0 = 0.
             x0 = np.random.uniform(-self.r_beam_x, self.r_beam_y)
             # x0 = np.random.normal(loc=0, scale=self.r_beam)
-            # y0 = 0.
             y0 = np.random.uniform(-self.r_beam_y, self.r_beam_y)
             z0 = self.structure.get_z_vac_for_x(x0)
 

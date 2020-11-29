@@ -3,9 +3,9 @@ from tqdm import tqdm
 import numpy as np
 from scipy.integrate import quad
 import matplotlib.pyplot as plt
-# from functions import MC_functions as mcf
+from functions import MC_functions as mcf
 
-# mcf = importlib.reload(mcf)
+mcf = importlib.reload(mcf)
 
 
 # %%

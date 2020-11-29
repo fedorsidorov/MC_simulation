@@ -30,7 +30,7 @@ L_norm_depol = np.load('notebooks/kinetic_curves/sim_data/L_norm_depol_900nm.npy
 plt.figure(dpi=300)
 # plt.plot(data_125C[:, 0], data_125C[:, 1], '*--', label='exp 125 °C')
 # plt.plot(data_150C[:, 0], data_150C[:, 1], '*--', label='exp 150 °C')
-plt.plot(data_160C[:, 0], data_160C[:, 1], '*--', label='exp 150 °C')
+plt.plot(data_160C[:, 0], data_160C[:, 1], '*--', label='exp 160 °C')
 # plt.plot(data_170C[:, 0], data_170C[:, 1], '*--', label='exp 170 °C')
 
 # plt.plot(dose_list, L_125C_300, label='sim zip length = 300')

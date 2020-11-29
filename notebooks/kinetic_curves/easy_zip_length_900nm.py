@@ -94,7 +94,7 @@ for file_cnt in range(n_files_required):
     progress_bar.update()
 
 
-# %
+# %%
 plt.figure(dpi=300)
 
 plt.plot(dose_list, L_norm_list, label='sim, zip length = ' + str(zip_length))
@@ -108,4 +108,5 @@ plt.legend()
 plt.show()
 
 # %%
-np.save('notebooks/kinetic_curves/sim_data/L_norm_170C_1000.npy', L_norm_list)
+np.save('notebooks/kinetic_curves/sim_data/dose_list_900nm_new.npy', dose_list)
+np.save('notebooks/kinetic_curves/sim_data/L_norm_160C_5500_new.npy', L_norm_list)
