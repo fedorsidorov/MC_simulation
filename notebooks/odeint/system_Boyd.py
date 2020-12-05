@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+# %% functins
 def get_dM1_dt(gw, M1w, yw, z):
     derivative = -(
             9 * gw ** 2 * yw ** 2 * z ** 3 + 41 * gw ** 2 * yw ** 2 * z ** 2 + 58 * gw ** 2 * yw ** 2 * z +
@@ -107,36 +108,107 @@ def RK4_PCH(model, gw, y_0, tt):
 
 
 # %%
+tau_total = 20
+tau_step = 0.001
+tau = np.arange(0, tau_total, tau_step)
+
 yw_0 = 1
 z_0 = 10
-# z_0 = -0.8
 M1w_0 = 1
 
-# alpha = 0.1
-# alpha = 1
-alpha = 10
+solution_0p1_m0p8 = RK4_PCH(model_general, 0.1 / (-0.8 + 1), np.array([M1w_0, yw_0, -0.8]), tau)
+solution_0p1_0 = RK4_PCH(model_general, 0.1 / (0 + 1), np.array([M1w_0, yw_0, 0]), tau)
+solution_0p1_10 = RK4_PCH(model_general, 0.1 / (10 + 1), np.array([M1w_0, yw_0, 10]), tau)
+x_0p1_m0p8 = tau * (solution_0p1_m0p8[0, 2] + 1)
+x_0p1_0 = tau * (solution_0p1_0[0, 2] + 1)
+x_0p1_10 = tau * (solution_0p1_10[0, 2] + 1)
 
-gw = alpha / (z_0 + 1)
+solution_1_m0p8 = RK4_PCH(model_general, 1 / (-0.8 + 1), np.array([M1w_0, yw_0, -0.8]), tau)
+solution_1_0 = RK4_PCH(model_general, 1 / (0 + 1), np.array([M1w_0, yw_0, 0]), tau)
+solution_1_10 = RK4_PCH(model_general, 1 / (10 + 1), np.array([M1w_0, yw_0, 10]), tau)
+x_1_m0p8 = tau * (solution_1_m0p8[0, 2] + 1)
+x_1_0 = tau * (solution_1_0[0, 2] + 1)
+x_1_10 = tau * (solution_1_10[0, 2] + 1)
 
-M1w_yw_z_0 = np.array([M1w_0, yw_0, z_0])
-t_total = 20
-t_step = 0.001
+solution_2_m0p8 = RK4_PCH(model_general, 2 / (-0.8 + 1), np.array([M1w_0, yw_0, -0.8]), tau)
+solution_2_0 = RK4_PCH(model_general, 2 / (0 + 1), np.array([M1w_0, yw_0, 0]), tau)
+solution_2_10 = RK4_PCH(model_general, 2 / (10 + 1), np.array([M1w_0, yw_0, 10]), tau)
+x_2_m0p8 = tau * (solution_2_m0p8[0, 2] + 1)
+x_2_0 = tau * (solution_2_0[0, 2] + 1)
+x_2_10 = tau * (solution_2_10[0, 2] + 1)
 
-tt = np.arange(0, t_total, t_step)
-# tt = [0, 1]
+solution_10_m0p8 = RK4_PCH(model_general, 10 / (-0.8 + 1), np.array([M1w_0, yw_0, -0.8]), tau)
+solution_10_0 = RK4_PCH(model_general, 10 / (0 + 1), np.array([M1w_0, yw_0, 0]), tau)
+solution_10_10 = RK4_PCH(model_general, 10 / (10 + 1), np.array([M1w_0, yw_0, 10]), tau)
+x_10_m0p8 = tau * (solution_10_m0p8[0, 2] + 1)
+x_10_0 = tau * (solution_10_0[0, 2] + 1)
+x_10_10 = tau * (solution_10_10[0, 2] + 1)
 
-solution = RK4_PCH(model_general, gw, M1w_yw_z_0, tt)
+# %% Figure 1
+gr_1_0p1_m0p8 = np.loadtxt('notebooks/odeint/curves/Boyd_1_0.1_-0.8.txt')
+gr_1_0p1_10 = np.loadtxt('notebooks/odeint/curves/Boyd_1_0.1_10.txt')
 
-# %
-M1w = solution[:, 0]
-yw = solution[:, 1]
-z = solution[:, 2]
+gr_1_1_m0p8 = np.loadtxt('notebooks/odeint/curves/Boyd_1_1_-0.8.txt')
+gr_1_1_10 = np.loadtxt('notebooks/odeint/curves/Boyd_1_1_10.txt')
+
+gr_1_10_m0p8 = np.loadtxt('notebooks/odeint/curves/Boyd_1_10_-0.8.txt')
+gr_1_10_10 = np.loadtxt('notebooks/odeint/curves/Boyd_1_10_10.txt')
+
+label_base = r'$x_0/ \gamma^{-1}_0=$'
 
 plt.figure(dpi=300)
-plt.plot(1 - M1w, z)
-# plt.plot(tt, y_res)
+plt.plot(1 - solution_0p1_10[:, 0], solution_0p1_10[:, 2], label=label_base+'0.1 my')
+plt.plot(gr_1_0p1_10[:, 0], gr_1_0p1_10[:, 1], '--', label=label_base+'0.1 Boyd')
 
-plt.xlim(0, 1)
-plt.ylim(-1, 10)
+plt.plot(1 - solution_1_10[:, 0], solution_1_10[:, 2], label=label_base+'1 my')
+plt.plot(gr_1_1_10[:, 0], gr_1_1_10[:, 1], '--', label=label_base+'1 Boyd')
 
+plt.plot(1 - solution_10_10[:, 0], solution_10_10[:, 2], label=label_base+'10 my')
+plt.plot(gr_1_10_10[:, 0], gr_1_10_10[:, 1], '--', label=label_base+'10 Boyd')
+
+plt.grid()
+plt.legend(loc='upper right')
+plt.xlabel('1 - $M_1/M_{1_0}$')
+plt.ylabel('z')
+plt.xlim(0, 1.6)
+plt.ylim(0, 11)
 plt.show()
+
+# %%
+plt.figure(dpi=300)
+
+plt.plot(1 - solution_0p1_m0p8[:, 0], solution_0p1_m0p8[:, 2], label=label_base+'0.1 my')
+plt.plot(gr_1_0p1_m0p8[:, 0], gr_1_0p1_m0p8[:, 1], '--', label=label_base+'0.1 Boyd')
+
+plt.plot(1 - solution_1_m0p8[:, 0], solution_1_m0p8[:, 2], label=label_base+'1 my')
+plt.plot(gr_1_1_m0p8[:, 0], gr_1_1_m0p8[:, 1], '--', label=label_base+'1 Boyd')
+
+plt.plot(1 - solution_10_m0p8[:, 0], solution_10_m0p8[:, 2], label=label_base+'10 my')
+plt.plot(gr_1_10_m0p8[:, 0], gr_1_10_m0p8[:, 1], '--', label=label_base+'10 Boyd')
+
+plt.grid()
+plt.legend(loc='upper right')
+plt.xlabel('1 - $M_1/M_{1_0}$')
+plt.ylabel('z')
+plt.xlim(0, 1.6)
+plt.ylim(-1, 0.5)
+plt.show()
+
+# %% Figure 2
+gr_2_0p1_m0p8 = np.loadtxt('notebooks/odeint/curves/Boyd_2_0.1_-0.8.txt')
+gr_2_0p1_0 = np.loadtxt('notebooks/odeint/curves/Boyd_2_0.1_0.txt')
+gr_2_0p1_10 = np.loadtxt('notebooks/odeint/curves/Boyd_2_0.1_10.txt')
+
+gr_2_2_m0p8 = np.loadtxt('notebooks/odeint/curves/Boyd_2_2_-0.8.txt')
+gr_2_2_0 = np.loadtxt('notebooks/odeint/curves/Boyd_2_2_0.txt')
+gr_2_2_10 = np.loadtxt('notebooks/odeint/curves/Boyd_2_2_10.txt')
+
+gr_2_10_0 = np.loadtxt('notebooks/odeint/curves/Boyd_2_10_0.txt')
+gr_2_10_10 = np.loadtxt('notebooks/odeint/curves/Boyd_2_10_10.txt')
+
+plt.figure(dpi=300)
+
+plt.plot()
+
+
+
