@@ -34,8 +34,8 @@ mw_probs_n = (mw_distr / mw) / np.sum(mw_distr / mw)
 
 plt.figure(dpi=300)
 # plt.semilogx(mw, mw_distr)
-# plt.semilogx(mw, mw_probs_n)
-plt.semilogx(mw, mw_probs_m, '.-')
+plt.semilogx(mw, mw_probs_n)
+# plt.semilogx(mw, mw_probs_m, '.-')
 plt.show()
 
 # %%

@@ -33,6 +33,6 @@ M2 = 0
 
 Pn = get_Pn()
 
-# plt.figure(dpi=300)
-# plt.semilogx(nn, Pn)
-# plt.show()
+plt.figure(dpi=300)
+plt.semilogx(nn, Pn)
+plt.show()

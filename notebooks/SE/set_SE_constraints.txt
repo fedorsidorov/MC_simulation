@@ -9,6 +9,10 @@ set_v_constraint_1 := {
 	foreach vertex vv do {if vv.z == 0 then set vv constraint 1}
 	}
 
+set_v_constraint_5 := {
+	foreach vertex vv do {if vv.z == z_max then set vv constraint 5}
+	}
+
 set_v_constraints_11_33 := {
 	foreach vertex vv do {
 		if vv.x = -lx/2 then set vv constraint 11;
