@@ -9,13 +9,13 @@ mf = importlib.reload(mf)
 # %% read datafile
 h0 = 80  # nm
 lx = 50  # nm
-ly = 1000  # nm
+ly = 200  # nm
 
-yy_pre = np.linspace(-ly/40, ly/40, 40)
+yy_pre = np.linspace(-ly/40, ly/40, 20)
 zz_pre = h0 * (1 - np.cos(yy_pre / ly * 20 * 2 * np.pi)) / 4 + 40
 
-yy_beg = np.linspace(-ly/2, -ly/40 - 1, 40)
-yy_end = np.linspace(ly/40 + 1, ly/2, 40)
+yy_beg = np.linspace(-ly/2, -ly/40 - 1, 20)
+yy_end = np.linspace(ly/40 + 1, ly/2, 20)
 zz_beg = np.ones(len(yy_beg)) * zz_pre[0]
 zz_end = np.ones(len(yy_end)) * zz_pre[-1]
 

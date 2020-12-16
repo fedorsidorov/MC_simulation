@@ -18,24 +18,24 @@ z_max = h0 + dh / 2
 # yy_pre = np.array((-l0/2, 0, l0/2))
 # yy_pre = np.array((0, l0/8, l0/4, l0/4, l0/4+l0/8, l0/2, l0/2+l0/8, l0*3/4, l0*3/4, l0*3/4+l0/8, l0))-l0/2
 # yy_pre = np.array([0, l0/8, 2*l0/8, 3*l0/8, 4*l0/8, 5*l0/8, 6*l0/8, 7*l0/8, 8*l0/8]) - l0/2
-# yy_pre = np.linspace(-l0/2, l0/2, 100)
-yy_pre = np.linspace(-l0/10, l0/10, 50)
+yy_pre = np.linspace(-l0/2, l0/2, 100)
+# yy_pre = np.linspace(-l0/10, l0/10, 50)
 
 # zz_pre = [z_max, z_max/2, z_max]
 # zz_pre = [h0, h0/2, h0]
 # zz_pre = [z_min, z_min, z_min, z_max, z_max, z_max, z_max, z_max, z_min, z_min, z_min]
 # zz_pre = [z_max/4, z_max/4, z_max/3, z_max/2, z_max, z_max/2, z_max/3, z_max/4, z_max/4]
-# zz_pre = h0 * (1 - np.cos(yy_pre / l0 * 15 * 2 * np.pi)/2)
 zz_pre = h0 * (1 - np.cos(yy_pre / l0 * 5 * 2 * np.pi)/2)
+# zz_pre = h0 * (1 - np.cos(yy_pre / l0 * 5 * 2 * np.pi)/2)
 # zz_pre = (h0 * (1 - 0.4*np.exp(-(np.abs(yy_pre))))) * 0.5
 
-yy_beg = np.linspace(-l0/2, -l0/10 + 0.1, 10)
-yy_end = np.linspace(l0/10 + 0.01, l0/2, 10)
-zz_beg = np.ones(len(yy_beg)) * zz_pre[0]
-zz_end = np.ones(len(yy_end)) * zz_pre[-1]
+# yy_beg = np.linspace(-l0/2, -l0/10 + 0.1, 10)
+# yy_end = np.linspace(l0/10 + 0.01, l0/2, 10)
+# zz_beg = np.ones(len(yy_beg)) * zz_pre[0]
+# zz_end = np.ones(len(yy_end)) * zz_pre[-1]
 
-yy_pre = np.concatenate((yy_beg, yy_pre, yy_end))
-zz_pre = np.concatenate((zz_beg, zz_pre, zz_end))
+# yy_pre = np.concatenate((yy_beg, yy_pre, yy_end))
+# zz_pre = np.concatenate((zz_beg, zz_pre, zz_end))
 
 plt.figure(dpi=300)
 plt.plot(yy_pre, zz_pre, '.-')
@@ -245,5 +245,5 @@ with open('notebooks/SE/set_SE_constraints.txt', 'r') as myfile:
     file += myfile.read()
 
 # % write to file
-with open('notebooks/SE/SE_input_3D_test.fe', 'w') as myfile:
+with open('notebooks/SE/SE_input_3D_test_sin.fe', 'w') as myfile:
     myfile.write(file)

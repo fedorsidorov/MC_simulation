@@ -68,14 +68,13 @@ L_norm_3 = kin_curve_3[:, 1]
 
 plt.figure(dpi=300)
 
-
 plt.plot(tau * 9, M1w_500, label='zip len = 500')
 plt.plot(tau * 5, M1w_1100, label='zip len = 1100')
 plt.plot(tau * 2.5, M1w_2300, label='zip len = 2300')
 
-plt.plot(tt_3, L_norm_3, 'o--', label='t = 170 C')
-plt.plot(tt_2, L_norm_2, 'o--', label='t = 150 C')
-plt.plot(tt_1, L_norm_1, 'o--', label='t = 125 C')
+plt.plot(tt_3, L_norm_3, 'o--', label='t = 170 C°')
+plt.plot(tt_2, L_norm_2, 'o--', label='t = 150 C°')
+plt.plot(tt_1, L_norm_1, 'o--', label='t = 125 C°')
 plt.xlabel('time, s')
 plt.ylabel('L$_{norm}$')
 plt.xlim(0, 200)
@@ -83,9 +82,3 @@ plt.ylim(0, 1)
 plt.legend()
 plt.grid()
 plt.show()
-
-# %
-# plt.figure(dpi=300)
-# plt.plot([273+140, 273+160, 273+180], [790, 1400, 3200], 'ro')
-# plt.show()
-

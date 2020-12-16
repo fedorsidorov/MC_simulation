@@ -21,9 +21,9 @@ def get_dy_dtau(gw, M1w, yw, z):
     derivative = (
             gw ** 3 * yw ** 3 * z ** 5 + 5 * gw ** 3 * yw ** 3 * z ** 4 + 3 * gw ** 3 * yw ** 3 * z ** 3 -
             17 * gw ** 3 * yw ** 3 * z ** 2 - 28 * gw ** 3 * yw ** 3 * z - 12 * gw ** 3 * yw ** 3 +
-            6 * gw ** 2 * yw ** 2 * z ** 4 + 27 * gw ** 2 * yw ** 2 * z ** 3 + 19 * gw ** 2 * yw ** 2 * z ** 2 -
-            52 * gw ** 2 * yw ** 2 * z - 60 * gw ** 2 * yw ** 2 + 18 * gw * yw * z ** 3 + 42 * gw * yw * z ** 2 -
-            24 * gw * yw * z - 84 * gw * yw - 36
+            6 * gw ** 2 * yw ** 2 * z ** 4 + 27 * gw ** 2 * yw ** 2 * z ** 3 +
+            19 * gw ** 2 * yw ** 2 * z ** 2 - 52 * gw ** 2 * yw ** 2 * z - 60 * gw ** 2 * yw ** 2 +
+            18 * gw * yw * z ** 3 + 42 * gw * yw * z ** 2 - 24 * gw * yw * z - 84 * gw * yw - 36
             ) * yw ** 2 / (
                 6 * (
                     gw ** 3 * yw ** 3 * z ** 3 + 4 * gw ** 3 * yw ** 3 * z ** 2 + 5 * gw ** 3 * yw ** 3 * z +
@@ -95,3 +95,18 @@ def RK4_PCH(gw, y_0, tau):
             y_sol[i + 1, :] = y_new
 
     return y_sol
+
+
+def get_zip_len_term_trans(T_C):
+
+    def func(TT, A, k):
+        return A * np.exp(k / TT)
+
+    popt_k_d = np.array([1.31544076e+13, -9.17590274e+03])
+    popt_k_t = np.array([1209.47832698, -2345.74312909])
+    popt_k_f = np.array([938.53242381, -2314.17898843])
+
+    zip_len_term = func(T_C + 273, *popt_k_d) / func(T_C + 273, *popt_k_t)
+    zip_len_trans = func(T_C + 273, *popt_k_d) / func(T_C + 273, *popt_k_f)
+
+    return zip_len_trans, zip_len_term
