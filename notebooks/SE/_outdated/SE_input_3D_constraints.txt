@@ -1017,6 +1017,21 @@ defmob_1 := {foreach vertex vv do {set vv vmob 1}}
 
 loopit := {g50; w 0.0005; w 0.0005; V}
 
+set_no_refine := {
+	foreach edge ee do {
+		cnt := 0;
+		foreach ee.vertices vv do {
+			if vv.x == -lx/2 then cnt := cnt - 1;
+			if vv.x == lx/2 then cnt := cnt + 1
+			};
+		
+		if abs(cnt) == 2 and ee color == red and ee y != 0 then {
+			set ee no_refine
+			};
+		}
+	foreach edge ee set ee color black
+	}
+
 set_v_constraint_1 := {
 	foreach vertex vv do {if vv.z == 0 then set vv constraint 1}
 	}

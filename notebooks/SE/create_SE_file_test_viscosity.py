@@ -1,4 +1,5 @@
 import importlib
+import os
 import matplotlib.pyplot as plt
 import numpy as np
 from functions import MC_functions as mf
@@ -6,36 +7,22 @@ from functions import MC_functions as mf
 mf = importlib.reload(mf)
 
 # %% read datafile
-h0 = 10  # nm
-l0 = 50  # nm
-dh = 10  # nm
+h0 = 80  # nm
 lx = 50  # nm
-ly = 50
+ly = 1000  # nm
 
-z_min = h0 - dh / 2
-z_max = h0 + dh / 2
+yy_pre = np.linspace(-ly/40, ly/40, 40)
+zz_pre = h0 * (1 - np.cos(yy_pre / ly * 20 * 2 * np.pi)) / 4 + 40
 
-# yy_pre = np.array((-l0/2, 0, l0/2))
-# yy_pre = np.array((0, l0/8, l0/4, l0/4, l0/4+l0/8, l0/2, l0/2+l0/8, l0*3/4, l0*3/4, l0*3/4+l0/8, l0))-l0/2
-# yy_pre = np.array([0, l0/8, 2*l0/8, 3*l0/8, 4*l0/8, 5*l0/8, 6*l0/8, 7*l0/8, 8*l0/8]) - l0/2
-# yy_pre = np.linspace(-l0/2, l0/2, 100)
-yy_pre = np.linspace(-l0/10, l0/10, 50)
-
-# zz_pre = [z_max, z_max/2, z_max]
-# zz_pre = [h0, h0/2, h0]
-# zz_pre = [z_min, z_min, z_min, z_max, z_max, z_max, z_max, z_max, z_min, z_min, z_min]
-# zz_pre = [z_max/4, z_max/4, z_max/3, z_max/2, z_max, z_max/2, z_max/3, z_max/4, z_max/4]
-# zz_pre = h0 * (1 - np.cos(yy_pre / l0 * 15 * 2 * np.pi)/2)
-zz_pre = h0 * (1 - np.cos(yy_pre / l0 * 5 * 2 * np.pi)/2)
-# zz_pre = (h0 * (1 - 0.4*np.exp(-(np.abs(yy_pre))))) * 0.5
-
-yy_beg = np.linspace(-l0/2, -l0/10 + 0.1, 10)
-yy_end = np.linspace(l0/10 + 0.01, l0/2, 10)
+yy_beg = np.linspace(-ly/2, -ly/40 - 1, 40)
+yy_end = np.linspace(ly/40 + 1, ly/2, 40)
 zz_beg = np.ones(len(yy_beg)) * zz_pre[0]
 zz_end = np.ones(len(yy_end)) * zz_pre[-1]
 
 yy_pre = np.concatenate((yy_beg, yy_pre, yy_end))
 zz_pre = np.concatenate((zz_beg, zz_pre, zz_end))
+
+z_max = np.max(zz_pre)
 
 plt.figure(dpi=300)
 plt.plot(yy_pre, zz_pre, '.-')
@@ -43,7 +30,6 @@ plt.show()
 
 # %%
 ny = len(yy_pre)
-# nx = ny
 nx = 2
 
 xx = np.linspace(-lx/2, lx/2, nx)
@@ -59,9 +45,9 @@ for i in range(len(xx) - 1):
     volume += np.trapz(zz[i, :], x=yy) * (xx[1] - xx[0])
 
 # %%
-plt.figure(dpi=300)
-plt.plot(yy, zz[0, :], '.-')
-plt.show()
+# plt.figure(dpi=300)
+# plt.plot(yy, zz[0, :], '.-')
+# plt.show()
 
 # %%
 # % vertices
@@ -245,5 +231,19 @@ with open('notebooks/SE/set_SE_constraints.txt', 'r') as myfile:
     file += myfile.read()
 
 # % write to file
-with open('notebooks/SE/SE_input_3D_test.fe', 'w') as myfile:
+with open('notebooks/SE/SE_input_3D_test_viscosity.fe', 'w') as myfile:
     myfile.write(file)
+
+
+# %%
+os.system('evolver -f/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/commands.txt ' +
+          '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SE_input_3D_test_viscosity.fe')
+
+# %%
+vlist = np.loadtxt('notebooks/SE/vlist.txt')
+
+# vlist = vlist[np.where(vlist[:, 2] != -100)]
+
+plt.figure(dpi=300)
+plt.plot(vlist[:, 1], vlist[:, 2], '.')
+plt.show()

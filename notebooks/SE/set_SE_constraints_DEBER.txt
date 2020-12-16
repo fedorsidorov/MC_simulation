@@ -111,8 +111,9 @@ prepare_surface := {
 loopit := {g10; w 0.001; w 0.001; V}
 
 save := {
+	printf "" >>> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist.txt";
 	foreach vertex do {
-		if x < 1 then if x > -1 then printf "%f %f %f\n", x, y, z >> "vlist.txt";
+		if x < 1 and x > -1 then printf "%f %f %f\n", x, y, z >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist.txt";
 		}
 	}
 
