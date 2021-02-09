@@ -42,8 +42,7 @@ for kind in ['easy', 'atomic', 'muffin']:
         diff_cs_Si_plane_norm[i, :] = now_diff_cs_Si_plane / np.sum(now_diff_cs_Si_plane)
         
         diff_cs_MMA_plane_norm_cumulated[i, :] = mcf.get_cumulated_array(diff_cs_MMA_plane_norm[i, :])
-        diff_cs_Si_plane_norm_cumulated[i, :]  = mcf.get_cumulated_array(diff_cs_Si_plane_norm[i, :])
-    
+        diff_cs_Si_plane_norm_cumulated[i, :] = mcf.get_cumulated_array(diff_cs_Si_plane_norm[i, :])
     
     np.save('final_arrays/PMMA/diff_cs_plane_norm_' + kind + '.npy', diff_cs_MMA_plane_norm)
     np.save('final_arrays/PMMA/diff_cs_plane_norm_cumulated_' + kind + '.npy',
@@ -52,5 +51,3 @@ for kind in ['easy', 'atomic', 'muffin']:
     np.save('final_arrays/Si/diff_cs_plane_norm_' + kind + '.npy', diff_cs_Si_plane_norm)
     np.save('final_arrays/Si/diff_cs_plane_norm_cumulated_' + kind + '.npy',
             diff_cs_Si_plane_norm_cumulated)
-
-

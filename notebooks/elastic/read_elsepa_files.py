@@ -5,13 +5,11 @@ import matplotlib.pyplot as plt
 # from mpl_toolkits.mplot3d import Axes3D
 import importlib
 
-import my_constants as mc
-import my_utilities as mu
+import constants as const
+from functions import MC_functions as mcf
 
-mc = importlib.reload(mc)
-mu = importlib.reload(mu)
-
-os.chdir(os.path.join(mc.sim_folder, 'elastic'))
+const = importlib.reload(const)
+mcf = importlib.reload(mcf)
 
 
 #%%
@@ -31,8 +29,8 @@ def get_elsepa_theta_diff_cs(filename):
         else:
             line_arr = line.split()
             theta[i] = line_arr[0]
-            diff_cs[i] = line_arr[2] ## in cm**2 / sr
-            # diff_cs[i] = line_arr[3] ## in a0_2**2 / sr
+            diff_cs[i] = line_arr[2]  # in cm**2 / sr
+            # diff_cs[i] = line_arr[3]  # in a0_2**2 / sr
             
             i += 1
             
@@ -66,20 +64,19 @@ def get_elsepa_EE_cs(dirname):
 
 #%%
 EE = np.array([
-          10,    11,    12,    13,    14,    15,    16,    17,    18,    19, ##  0- 9
-          20,    25,    30,    35,    40,    45,    50,    60,    70,    80, ## 10-19
-          90,   100,   150,   200,   250,   300,   350,   400,   450,   500, ## 20-29
-         600,   700,   800,   900,  1000,  1500,  2000,  2500,  3000,  3500, ## 30-39
-        4000,  4500,  5000,  6000,  7000,  8000,  9000, 10000, 11000, 12000, ## 40-49
-       13000, 14000, 15000, 16000, 17000, 18000, 19000, 20000, 21000, 22000, ## 50-59
-       23000, 24000, 25000]) ## 60-63
+          10,    11,    12,    13,    14,    15,    16,    17,    18,    19,  #  0- 9
+          20,    25,    30,    35,    40,    45,    50,    60,    70,    80,  # 10-19
+          90,   100,   150,   200,   250,   300,   350,   400,   450,   500,  # 20-29
+         600,   700,   800,   900,  1000,  1500,  2000,  2500,  3000,  3500,  # 30-39
+        4000,  4500,  5000,  6000,  7000,  8000,  9000, 10000, 11000, 12000,  # 40-49
+       13000, 14000, 15000, 16000, 17000, 18000, 19000, 20000, 21000, 22000,  # 50-59
+       23000, 24000, 25000])  # 60-63
 
-a02 = 2.8e-17 ## cm
+a02 = 2.8e-17  # cm
 
 
 for el in ['H', 'C', 'O', 'Si']:
 # for el in ['Si']:
-
 
     folder_ea = 'raw_data/easy/' + el
     folder_at = 'raw_data/atomic/' + el
@@ -90,8 +87,7 @@ for el in ['H', 'C', 'O', 'Si']:
     diff_cs_mu = np.zeros((len(EE), 606))
     
     theta = np.zeros(606)
-    
-    
+
     for i, E in enumerate(EE):
     # for i, E in enumerate([500]):
         
@@ -106,20 +102,18 @@ for el in ['H', 'C', 'O', 'Si']:
         theta, diff_cs_ea[i, :] = get_elsepa_theta_diff_cs(os.path.join(folder_ea, fname))
         theta, diff_cs_at[i, :] = get_elsepa_theta_diff_cs(os.path.join(folder_at, fname))
         theta, diff_cs_mu[i, :] = get_elsepa_theta_diff_cs(os.path.join(folder_mu, fname))
-    
-    
+
     EE, cs_ea = get_elsepa_EE_cs(folder_ea)
     EE, cs_at = get_elsepa_EE_cs(folder_at)
     EE, cs_mu = get_elsepa_EE_cs(folder_mu)
         
+    # np.save(os.path.join('raw_arrays',   'easy', el, el +   '_easy_diff_cs.npy'), diff_cs_ea)
+    # np.save(os.path.join('raw_arrays', 'atomic', el, el + '_atomic_diff_cs.npy'), diff_cs_at)
+    # np.save(os.path.join('raw_arrays', 'muffin', el, el + '_muffin_diff_cs.npy'), diff_cs_mu)
     
-    np.save(os.path.join('raw_arrays',   'easy', el, el +   '_easy_diff_cs.npy'), diff_cs_ea)
-    np.save(os.path.join('raw_arrays', 'atomic', el, el + '_atomic_diff_cs.npy'), diff_cs_at)
-    np.save(os.path.join('raw_arrays', 'muffin', el, el + '_muffin_diff_cs.npy'), diff_cs_mu)
-    
-    np.save(os.path.join('raw_arrays',   'easy', el, el +   '_easy_cs.npy'), cs_ea)
-    np.save(os.path.join('raw_arrays', 'atomic', el, el + '_atomic_cs.npy'), cs_at)
-    np.save(os.path.join('raw_arrays', 'muffin', el, el + '_muffin_cs.npy'), cs_mu)
+    # np.save(os.path.join('raw_arrays',   'easy', el, el +   '_easy_cs.npy'), cs_ea)
+    # np.save(os.path.join('raw_arrays', 'atomic', el, el + '_atomic_cs.npy'), cs_at)
+    # np.save(os.path.join('raw_arrays', 'muffin', el, el + '_muffin_cs.npy'), cs_mu)
 
 
 #%%
