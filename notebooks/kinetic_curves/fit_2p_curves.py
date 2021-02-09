@@ -8,7 +8,8 @@ def func(xx, alpha):
     return np.exp(-alpha * xx)
 
 
-dd = np.linspace(0, 35, 70)
+# dd = np.linspace(0, 35, 70)
+dd = np.linspace(0, 35, 14)
 
 l_norm = [1, 0.5, 0]
 
@@ -52,7 +53,7 @@ plt.plot(dd, func(dd, curve_fit(func, doses_170_2um, l_norm)[0]), label='170 °C
 
 plt.xlabel(r'D, $\mu$C/cm$^2$')
 plt.ylabel(r'L/L$_0$')
-plt.xlim(0, 35)
+# plt.xlim(0, 35)
 plt.ylim(0, 1.2)
 plt.grid()
 plt.legend()

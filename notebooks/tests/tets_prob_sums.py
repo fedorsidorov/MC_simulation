@@ -1,6 +1,6 @@
 import importlib
 
-from MC_classes import Structure
+from _outdated.MC_classes_cm import Structure
 
 from numpy import random
 

@@ -1,18 +1,19 @@
 import importlib
 import os
 import numpy as np
-from mapping import mapping_3p3um_80nm as mapping
+from mapping import mapping_3p3um_80nm as mm
 import matplotlib.pyplot as plt
 from functions import MC_functions as mcf
+from scipy.optimize import curve_fit
 
-mapping = importlib.reload(mapping)
+mm = importlib.reload(mm)
 mcf = importlib.reload(mcf)
 
 
 # %%
-def create_datafile(yy_pre_pre, zz_pre_pre, mobs_pre_pre):  # xx and zz in um !!!
+def create_datafile_old(yy_pre_pre, zz_pre_pre, mobs_pre_pre):  # xx and zz in um !!!
 
-    l0 = (mapping.x_max - mapping.x_min) * 1e-3
+    l0 = (mm.x_max - mm.x_min) * 1e-3
     n_periods_y = 4
 
     yy_list = []
@@ -232,65 +233,73 @@ def create_datafile(yy_pre_pre, zz_pre_pre, mobs_pre_pre):  # xx and zz in um !!
         myfile.write(file)
 
 
-def create_datafile_non_period(yy_pre_pre, zz_pre_pre, l0, mobs_pre_pre):  # xx and zz in um !!!
+def create_datafile_non_period(yy_pre_pre, zz_pre_pre, mobs_pre):  # xx and zz in um !!!
 
-    l0 = (mapping.x_max - mapping.x_min) * 1e-3
+    # plt.figure(dpi=300)
+    # plt.plot(yy_pre_pre, zz_pre_pre)
+    # plt.show()
 
-    # n_periods_y = 4
-    # yy_list = []
-    # zz_list = []
-    # mob_list = []
+    yy_pre = np.linspace(-mm.lx / 40, mm.lx / 40, 20)
+    yy_beg = np.linspace(-mm.lx / 2, -mm.lx / 40 - 1, 40)
+    yy_end = np.linspace(mm.lx / 40 + 1, mm.lx / 2, 40)
+    yy_pre = np.concatenate([yy_beg, yy_pre, yy_end]) * 1e-3
 
-    # for n in range(-int(n_periods_y / 2), int(n_periods_y / 2) + 1):
-    #     yy_list.append(yy_pre_pre + l0 * n)
-    #     zz_list.append(zz_pre_pre)
-    #     mob_list.append(mobs_pre_pre)
+    zz_pre = mcf.lin_lin_interp(yy_pre_pre, zz_pre_pre * 1e-3)(yy_pre / 1e-3)
+    # mobs = mcf.lin_log_interp(yy_pre_pre, mobs_pre_pre)(yy_pre)
+    z_max = np.max(zz_pre)
 
-    # yy_pre = np.concatenate(yy_list)
-    # zz_pre = np.concatenate(zz_list)
-    # mobs_pre = np.concatenate(mob_list)
+    def exp_gauss(x, a, b, c):
+        return np.exp(a + b / c * np.exp(-x ** 2 / c ** 2))
 
-    yy = yy_pre_pre
-    zz_1d = zz_pre_pre
-    mobs = mobs_pre_pre
+    # popt = curve_fit(exp_gauss, yy_pre, mobs)[0]
+    popt = curve_fit(exp_gauss, yy_pre_pre, mobs_pre, p0=[-30, 378, 150])[0]
+    a, b, c = popt
 
-    nx = ny = len(yy)
-    lx = ly = yy.max() - yy.min()
+    # plt.figure(dpi=300)
+    # plt.plot(yy_pre_pre, mobs_pre, 'o-')
+    # plt.plot(yy_pre_pre, exp_gauss(yy_pre_pre, *popt))
+    # plt.plot(yy_pre, exp_gauss(yy_pre, -30.4, 658, 200))
+    # plt.show()
 
-    xx = np.linspace(-ly / 2, ly / 2, nx)
+    ny = len(yy_pre)
+    nx = 2
+
+    xx = np.linspace(-mm.ly / 2, mm.ly / 2, nx) * 1e-3
+    yy = yy_pre
     zz = np.zeros((nx, ny))
 
     for i in range(len(xx)):
-        zz[i, :] = zz_1d
+        zz[i, :] = zz_pre
+
+    # plt.figure(dpi=300)
+    # plt.plot(yy, zz_pre)
+    # plt.show()
 
     volume = 0
 
-    # plt.figure(dpi=300)
-    # plt.plot(yy, zz[0, :], '.-')
-    # plt.show()
-
-    for i in range(len(xx)):
+    for i in range(len(xx) - 1):
         volume += np.trapz(zz[i, :], x=yy) * (xx[1] - xx[0])
 
-    # vertices
     n_vertices = nx * ny * 2
-    VV = np.zeros((n_vertices, 1 + 3 + 1))
+    VV = np.zeros((n_vertices, 1 + 3))
     VV_inv = np.zeros((2, nx, ny), dtype=int)
     cnt = 1
 
     for i, x in enumerate(xx):
         for j, y in enumerate(yy):
-            VV[cnt - 1, :] = cnt, x, y, 0, mobs[j]
-            VV[nx * ny + cnt - 1, :] = nx * ny + cnt, x, y, zz[i, j], mobs[j]
+            VV[cnt - 1, :] = cnt, x, y, 0
+            VV[nx * ny + cnt - 1, :] = nx * ny + cnt, x, y, zz[i, j]
             VV_inv[0, i, j] = cnt
             VV_inv[1, i, j] = nx * ny + cnt
             cnt += 1
 
-    # edges
+    # % edges
     n_edges = ((nx - 1) * ny + (ny - 1) * nx) * 2 + nx * 2 + ny * 2 - 4
     EE = np.zeros((n_edges, 1 + 2), dtype=int)
     VV_EE = np.zeros((2, nx, ny, 6), dtype=int)
 
+    # fig = plt.figure(dpi=300)
+    # ax = fig.add_subplot(111, projection='3d')  # sdf
     cnt = 1
 
     for i in range(nx - 1):  # lower layer >
@@ -330,7 +339,7 @@ def create_datafile_non_period(yy_pre_pre, zz_pre_pre, l0, mobs_pre_pre):  # xx 
             VV_EE[1, i, j, 5] = cnt
             cnt += 1
 
-    # faces
+    # % faces
     n_faces = (nx - 1) * (ny - 1) * 2 + (nx - 1) * 2 + (ny - 1) * 2
     FF = np.zeros((n_faces, 1 + 4), dtype=int)
 
@@ -338,18 +347,18 @@ def create_datafile_non_period(yy_pre_pre, zz_pre_pre, l0, mobs_pre_pre):  # xx 
 
     for i in range(nx - 1):  # bottom
         for j in range(ny - 1):
-            FF[cnt-1, :] = cnt, VV_EE[0, i, j, 1], VV_EE[0, i, j + 1, 0],\
-                           -VV_EE[0, i + 1, j, 1], -VV_EE[0, i, j, 0]
+            FF[cnt - 1, :] = cnt, VV_EE[0, i, j, 1], VV_EE[0, i, j + 1, 0], \
+                             -VV_EE[0, i + 1, j, 1], -VV_EE[0, i, j, 0]
             cnt += 1
 
     for i in range(nx - 1):  # top
         for j in range(ny - 1):
-            FF[cnt-1, :] = cnt, VV_EE[1, i, j, 0], VV_EE[1, i + 1, j, 1],\
-                           -VV_EE[1, i, j + 1, 0], -VV_EE[1, i, j, 1]
+            FF[cnt - 1, :] = cnt, VV_EE[1, i, j, 0], VV_EE[1, i + 1, j, 1], \
+                             -VV_EE[1, i, j + 1, 0], -VV_EE[1, i, j, 1]
             cnt += 1
 
     for i in range(nx - 1):  # front
-        FF[cnt - 1, :] = cnt, VV_EE[0, i, 0, 0], VV_EE[0, i + 1, 0, 4],\
+        FF[cnt - 1, :] = cnt, VV_EE[0, i, 0, 0], VV_EE[0, i + 1, 0, 4], \
                          -VV_EE[1, i + 1, 0, 2], -VV_EE[1, i, 0, 5]
         cnt += 1
 
@@ -377,12 +386,17 @@ def create_datafile_non_period(yy_pre_pre, zz_pre_pre, l0, mobs_pre_pre):  # xx 
             '0     vmob  0\n' + \
             '0     0  vmob\n\n'
 
-    file += 'PARAMETER cnt = 0' + '\n'
-    file += 'PARAMETER mobsum = 0' + '\n'
-    file += 'PARAMETER lx = ' + str(lx) + '\n'
-    file += 'PARAMETER ly = ' + str(ly) + '\n'
+    # file += 'PARAMETER lx = ' + str(mm.ly * 1e-3) + '\n'
+    # file += 'PARAMETER ly = ' + str(mm.lx * 1e-3) + '\n'
+    file += 'PARAMETER lx = 0.02' + '\n'
+    file += 'PARAMETER ly = 3.3' + '\n'
+    file += 'PARAMETER z_max = ' + str(z_max) + '\n'
     file += 'PARAMETER angle_surface = 55' + '\n'
     file += 'PARAMETER angle_mirror = 90' + '\n'
+
+    file += 'PARAMETER par_a = ' + str(a) + '\n'
+    file += 'PARAMETER par_b = ' + str(b) + '\n'
+    file += 'PARAMETER par_c = ' + str(c) + '\n'
 
     file += 'PARAMETER TENS_r = 33.5e-2' + '\n'
     file += 'PARAMETER TENS_s = -TENS_r*cos((angle_surface)*pi/180)' + '\n'
@@ -405,6 +419,9 @@ def create_datafile_non_period(yy_pre_pre, zz_pre_pre, l0, mobs_pre_pre):  # xx 
     file += 'constraint 44\n'
     file += 'formula: y = ly/2\n\n'
 
+    file += 'constraint 5 nonpositive\n'
+    file += 'formula: z = z_max\n\n'
+
     file += '/*--------------------CONSTRAINTS END--------------------*/\n\n'
 
     # % vertices
@@ -412,8 +429,7 @@ def create_datafile_non_period(yy_pre_pre, zz_pre_pre, l0, mobs_pre_pre):  # xx 
     file += 'vertices\n'
 
     for line in VV:
-        # file += str(int(line[0])) + '\t' + str(line[1:])[1:-1] + '\n'
-        file += str(int(line[0])) + '\t' + str(line[1:-1])[1:-1] + '\t vmob ' + str(line[-1]) + '\n'
+        file += str(int(line[0])) + '\t' + str(line[1:])[1:-1] + '\n'
 
     file += '/*--------------------VERTICES END--------------------*/\n\n'
 
@@ -422,7 +438,7 @@ def create_datafile_non_period(yy_pre_pre, zz_pre_pre, l0, mobs_pre_pre):  # xx 
     file += 'edges' + '\n'
 
     for line in EE:
-        file += str(line[0]) + '\t' + str(line[1:])[1:-1] + '\n'
+        file += str(line[0]) + '\t' + str(line[1:])[1:-1] + ' color red' + '\n'
 
     file += '/*--------------------EDGES END--------------------*/\n\n'
 
@@ -446,11 +462,14 @@ def create_datafile_non_period(yy_pre_pre, zz_pre_pre, l0, mobs_pre_pre):  # xx 
 
     file += '\n/*--------------------BODIES END--------------------*/\n\n'
 
-    with open('notebooks/SE/SIM/datafile_ending.txt', 'r') as myfile:
+    with open('notebooks/SE/set_SE_constraints.txt', 'r') as myfile:
         file += myfile.read()
 
+    file += '\n' + 'defmob_y := {foreach vertex vv do set vv vmob ' \
+                   'exp(par_a + par_b / par_c * exp(-(vv.y*1e+3)^2 / par_c^2))}' + '\n\n'
+
     # % write to file
-    with open('notebooks/SE/SIM/DEBER_datafile.fe', 'w') as myfile:
+    with open('notebooks/SE/SE_input_3D_DEBER.fe', 'w') as myfile:
         myfile.write(file)
 
 

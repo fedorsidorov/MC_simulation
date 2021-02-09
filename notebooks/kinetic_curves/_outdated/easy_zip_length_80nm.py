@@ -36,8 +36,8 @@ n_files_required = int(n_electrons_required / 100)
 
 # 125 C
 # data = np.loadtxt('notebooks/kinetic_curves/data/kin_curve_125C_80nm.txt')
-# weight = 0.275
-# zip_length = 600  # from initial slope
+weight = 0.275
+zip_length = 600  # from initial slope
 # zip_length = 300  # from end point
 
 # 150 C
@@ -47,11 +47,10 @@ n_files_required = int(n_electrons_required / 100)
 # zip_length = 500  # from end point
 
 # 170 C
-data = np.loadtxt('notebooks/kinetic_curves/data/kin_curve_170C_80nm.txt')
-weight = 0.315
+# data = np.loadtxt('notebooks/kinetic_curves/data/kin_curve_170C_80nm.txt')
+# weight = 0.315
 # zip_length = 4500  # from initial slope
-zip_length = 1000  # from end point
-
+# zip_length = 1000  # from end point
 
 n_primaries_in_file = 100
 
@@ -114,7 +113,7 @@ for file_cnt in range(n_files_required):
 plt.figure(dpi=300)
 
 plt.plot(dose_list, L_norm_list, label='sim, zip length = ' + str(zip_length))
-plt.plot(data[:, 0], data[:, 1], 'o-', label='experiment')
+# plt.plot(data[:, 0], data[:, 1], 'o-', label='experiment')
 plt.xlabel('D, $\mu$C/cm$^2$')
 plt.ylabel('L/L$_0$')
 plt.xlim(0, 20)

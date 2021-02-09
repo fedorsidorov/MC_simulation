@@ -3,9 +3,9 @@ read
 
 defmob_1 := {foreach vertex vv do set vv vmob 1}
 
-defmob_y := {
-	foreach vertex vv do set vv vmob 1 + exp(5 * exp(-vv.y^2 / 30))
-	}
+//defmob_y := {
+//	foreach vertex vv do set vv vmob 1 + exp(5 * exp(-vv.y^2 / 30))
+//	}
 
 //loopit := {g50; w 0.0005; w 0.0005; V}
 
@@ -133,7 +133,7 @@ prepare_surface := {
 	color_TENS_s_faces;
 	color_TENS_r_faces;
 	area_normalization;
-	defmob_1;
+	//defmob_1;
 	prepare_save
 	}
 

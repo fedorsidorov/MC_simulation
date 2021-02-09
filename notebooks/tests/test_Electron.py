@@ -3,9 +3,9 @@ import importlib
 
 import numpy as np
 
-import MC_classes
+from _outdated import MC_classes_cm
 
-MC_classes = importlib.reload(MC_classes)
+MC_classes = importlib.reload(MC_classes_cm)
 
 
 # %%

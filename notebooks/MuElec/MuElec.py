@@ -19,6 +19,10 @@ for n in range(6):
     inds = np.where(np.logical_and(grid.EE > EE_raw.min(), grid.EE < EE_raw.max()))[0]
     sigma[inds, n] = util.log_log_interp(EE_raw, sigma_raw[:, n])(grid.EE[inds])
 
+plt.figure(dpi=300)
+plt.loglog(grid.EE, sigma)
+plt.show()
+
 # %% sigmadiff
 diff_arr = np.loadtxt('data/MuElec/microelec/sigmadiff_inelastic_e_Si.dat')
 diff_arr = diff_arr[np.where(diff_arr[:, 0] <= 30e+3)]  # cut higher energies
@@ -50,8 +54,11 @@ for n in range(6):
         if np.sum(diff_sigma_6[n, i, :]) != 0:
             diff_sigma_6_norm[n, i, :] = diff_sigma_6[n, i, :] / np.sum(diff_sigma_6[n, i, :])
 
+np.save('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/diff_sigma_6.npy', diff_sigma_6)
+# np.save('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/diff_sigma_6_norm.npy', diff_sigma_6_norm)
+
 # %% test DIIMFP
-plt.imshow(diff_sigma_6[5])
+plt.imshow(diff_sigma_6[1])
 plt.show()
 
 # %%
@@ -60,6 +67,7 @@ sigma_test = np.zeros(np.shape(sigma))
 for n in range(6):
     for i, E in enumerate(grid.EE):
         inds = np.where(grid.EE < E)
+        # inds = np.where(grid.EE < E / 2)
         sigma_test[i, n] = np.trapz(diff_sigma_6[n, i, inds], x=grid.EE[inds])
 
 # %% test IMFP
@@ -68,6 +76,8 @@ plt.figure(dpi=300)
 for n in range(6):
     plt.loglog(grid.EE, sigma[:, n], 'o')
     plt.loglog(grid.EE, sigma_test[:, n])
+
+plt.ylim(1e-3, 1e+3)
 
 plt.show()
 
@@ -84,5 +94,5 @@ for n in range(6):
             sigma_corr[i, n] = sigma[i, n]
 
 #%%
-np.save('Resources/MuElec/Si_MuElec_IIMFP.npy', sigma_corr)
-np.save('Resources/MuElec/Si_MuElec_DIIMFP_norm.npy', diff_sigma_6_norm)
+# np.save('Resources/MuElec/Si_MuElec_IIMFP.npy', sigma_corr)
+# np.save('Resources/MuElec/Si_MuElec_DIIMFP_norm.npy', diff_sigma_6_norm)

@@ -109,4 +109,4 @@ def get_zip_len_term_trans(T_C):
     zip_len_term = func(T_C + 273, *popt_k_d) / func(T_C + 273, *popt_k_t)
     zip_len_trans = func(T_C + 273, *popt_k_d) / func(T_C + 273, *popt_k_f)
 
-    return zip_len_trans, zip_len_term
+    return int(zip_len_trans), int(zip_len_term)

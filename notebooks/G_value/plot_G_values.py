@@ -24,17 +24,19 @@ GG = Gf.get_G(TT)
 # plt.show()
 
 # %%
-weights = 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325
+# weights = 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325
+weights = 0.15, 0.325
 GG_sim = np.zeros(len(weights))
 GG_theor = np.zeros(len(weights))
 
-sample = '2'
+sample = '1'
 
 plt.figure(dpi=300)
 
 markers = 'v-', '^-', '*-'
 
-for n, sample in enumerate(['1', '2', '3']):
+# for n, sample in enumerate(['1', '2', '3']):
+for n, sample in enumerate(['1']):
 
     for i, weight in enumerate(weights):
 
