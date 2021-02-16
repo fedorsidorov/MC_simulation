@@ -3,7 +3,7 @@ import importlib
 from collections import deque
 import numpy as np
 from tqdm import tqdm
-import arrays
+from _outdated import arrays
 import constants as const
 import grid as grid
 import indexes as indxs

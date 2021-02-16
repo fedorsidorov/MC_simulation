@@ -2,8 +2,6 @@ import importlib
 import constants
 import matplotlib.pyplot as plt
 import numpy as np
-from tqdm import tqdm
-import copy
 from mapping import mapping_3p3um_80nm as mapping
 from functions import array_functions as af
 from functions import e_matrix_functions as emf
@@ -11,7 +9,7 @@ from functions import MC_functions as mcf
 from functions import DEBER_functions as deber
 from functions import mapping_functions as mf
 from functions import diffusion_functions as df
-from functions import reflow_functions_hard as rf
+from functions._outdated import reflow_functions_hard as rf
 from functions import plot_functions as pf
 from functions import SE_functions as ef
 from functions import scission_functions as sf

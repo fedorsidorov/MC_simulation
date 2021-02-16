@@ -34,24 +34,29 @@ def get_PMMA_U_polaron(E, C_inv_nm, gamma):
 
 #%%
 u_ph = get_PMMA_U_phonon(grid.EE)
+# u_pol = get_PMMA_U_polaron(grid.EE, 1.5, 0.14)
 u_pol = get_PMMA_U_polaron(grid.EE, 0.07, 0.1)
 
+# np.save('Resources/PhPol/PMMA_polaron_IMFP_0p07_0p1.npy', u_pol)
 np.save('Resources/PhPol/PMMA_polaron_IMFP_0p07_0p1.npy', u_pol)
 
 # %%
-u_ph_0 = np.load('Resources/PhPol/PMMA_phonon_IMFP.npy')
-u_pol_0 = np.load('Resources/PhPol/PMMA_polaron_IMFP_0p1_0p15.npy')
+# u_ph_0 = np.load('Resources/PhPol/PMMA_phonon_IMFP.npy')
+# u_pol_0 = np.load('Resources/PhPol/PMMA_polaron_IMFP_0p1_0p15.npy')
 
 plt.figure(dpi=300)
 
-plt.loglog(grid.EE, u_ph)
-plt.loglog(grid.EE, u_pol)
+# plt.loglog(grid.EE, u_ph)
+# plt.loglog(grid.EE, u_pol)
 
-plt.loglog(grid.EE, u_ph_0, '--')
-plt.loglog(grid.EE, u_pol_0, '--')
+plt.semilogx(grid.EE, u_ph)
+plt.semilogx(grid.EE, u_pol)
 
-plt.xlim(1, 1e+4)
-plt.ylim(1e+1, 1e+9)
+# plt.loglog(grid.EE, u_ph_0, '--')
+# plt.loglog(grid.EE, u_pol_0, '--')
+
+# plt.xlim(1, 1e+4)
+# plt.ylim(1e+1, 1e+9)
 
 plt.show()
 

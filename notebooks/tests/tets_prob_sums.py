@@ -4,7 +4,7 @@ from _outdated.MC_classes_cm import Structure
 
 from numpy import random
 
-import arrays
+from _outdated import arrays
 import constants as const
 import grid as grid
 import indexes as indxs

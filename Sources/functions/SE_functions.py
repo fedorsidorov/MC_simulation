@@ -255,11 +255,11 @@ def create_datafile_non_period(yy_pre_pre, zz_pre_pre, mobs_pre):  # xx and zz i
     popt = curve_fit(exp_gauss, yy_pre_pre, mobs_pre, p0=[-30, 378, 150])[0]
     a, b, c = popt
 
-    # plt.figure(dpi=300)
-    # plt.plot(yy_pre_pre, mobs_pre, 'o-')
-    # plt.plot(yy_pre_pre, exp_gauss(yy_pre_pre, *popt))
-    # plt.plot(yy_pre, exp_gauss(yy_pre, -30.4, 658, 200))
-    # plt.show()
+    plt.figure(dpi=300)
+    plt.plot(yy_pre_pre, mobs_pre, 'o-')
+    plt.plot(yy_pre_pre, exp_gauss(yy_pre_pre, *popt))
+    plt.plot(yy_pre, exp_gauss(yy_pre, -30.4, 658, 200))
+    plt.show()
 
     ny = len(yy_pre)
     nx = 2

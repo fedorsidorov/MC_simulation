@@ -29,10 +29,10 @@ Q = D * mm.area_cm2
 # weight = 0.25
 
 # T = 118 C
-weight = 0.27
+# weight = 0.27
 
 # T = 125 C
-# weight = 0.275
+weight = 0.275
 
 # T = 150 C
 # weight = 0.301
@@ -49,9 +49,8 @@ weight = 0.27
 
 # %%
 n_electrons_required = Q / const.e_SI
-n_files_required = int(n_electrons_required / 100)
-
 n_primaries_in_file = 100
+n_files_required = int(n_electrons_required / n_primaries_in_file)
 
 # %%
 now_z_vac = 0

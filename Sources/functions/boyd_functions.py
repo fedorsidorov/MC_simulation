@@ -97,7 +97,7 @@ def RK4_PCH(gw, y_0, tau):
     return y_sol
 
 
-def get_zip_len_term_trans(T_C):
+def get_zip_len_term_trans(T_C):  # mita1990.pdf
 
     def func(TT, A, k):
         return A * np.exp(k / TT)

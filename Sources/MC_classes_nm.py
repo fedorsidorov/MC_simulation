@@ -118,6 +118,10 @@ class Electron:
             cos_theta = np.dot(self.get_flight_vector_list(), [0., 0., -1.])
 
             if np.random.random() < self.get_T_PMMA(self.E * cos_theta ** 2):  # electron emerges
+
+                if self.E * cos_theta ** 2 < constants.Wf_PMMA:
+                    print('Wf problems', self.E, cos_theta)
+
                 self.make_simple_step(free_path)
             else:  # electron scatters from PMMA-vacuum surface
                 # scale_factor = self.coords[2, 0] / np.abs(delta_r[2, 0])  # z / dz

@@ -22,10 +22,10 @@ chain_lens = np.load('/Volumes/ELEMENTS/chains_viscosity_80nm/' + bin_size + '/p
 hist_10nm = np.load('/Volumes/ELEMENTS/chains_viscosity_80nm/' + bin_size + '/rot_sh_sn_chains_1/hist_10nm.npy')
 n_mon_cell_max = int(np.max(hist_10nm))
 
-plt.figure(dpi=300)
-plt.imshow(np.average(hist_10nm, axis=1).transpose())
-plt.colorbar()
-plt.show()
+# plt.figure(dpi=300)
+# plt.imshow(np.average(hist_10nm, axis=1).transpose())
+# plt.colorbar()
+# plt.show()
 
 # %% create arrays
 pos_matrix = np.zeros(mapping.hist_10nm_shape, dtype=np.uint32)

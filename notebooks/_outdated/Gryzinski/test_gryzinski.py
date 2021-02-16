@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import grid as grid
 import gryzinski as gryz
 import constants as c
-import arrays as a
+from _outdated import arrays as a
 from functions import MC_functions as u
 
 a = importlib.reload(a)

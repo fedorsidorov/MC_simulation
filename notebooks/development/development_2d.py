@@ -7,7 +7,7 @@ from tqdm import tqdm
 import constants as const
 import indexes
 import mapping_aktary as mapping
-from functions import development_functions_2d as df
+from functions._outdated import development_functions_2d as df
 from functions import mapping_functions as mf
 
 mapping = importlib.reload(mapping)

@@ -6,7 +6,7 @@ import numpy as np
 
 import grid as grid
 import constants as c
-import arrays as a
+from _outdated import arrays as a
 from functions import MC_functions as u
 
 a = importlib.reload(a)

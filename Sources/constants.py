@@ -48,11 +48,15 @@ V_mon_cm3 = 1 / n_MMA  # cc
 V_mon_nm3 = V_mon_cm3 * 1e+21
 
 K_occup = 2
-val_E_bind_PMMA = 15  # dapor 2017.pdf
+
+val_E_bind_PMMA = 0
+# val_E_bind_PMMA = 15  # dapor 2017.pdf
+
 K_Ebind_C, K_Ebind_O = 284.2, 543.1  # devera2011.pdf
 Zs_C, Zs_O = 5.7, 7.7
 
-Wf_PMMA = 4.68  # dapor2015.pdf
+Wf_PMMA = 4.05  # PhD_thesis_Dapor.pdf
+# Wf_PMMA = 4.68  # dapor2015.pdf
 W_phonon = 0.1  # dapor2015.pdf
 
 CC_bond_length = 0.28  # nm
@@ -63,10 +67,15 @@ u_Si = 28.086
 rho_Si = 2.33
 n_Si = rho_Si * Na / u_Si
 
+Si_val_E_bind = 15
 #               plasm    3p     3s      2p      2s      1s
-Si_MuElec_E_bind = [0, 6.52, 13.63, 107.98, 151.55, 1828.5]
-Si_MuElec_E_plasmon = 16.65
-Si_MuElec_occup = [4, 2, 2, 6, 2, 2]
+# Si_MuElec_E_bind = [0, 6.52, 13.63, 107.98, 151.55, 1828.5]
+Si_MuElec_E_bind = [0, Si_val_E_bind, Si_val_E_bind, 107.98, 151.55, 1828.5]
+
+# Si_MuElec_E_plasmon = 16.7
+Si_MuElec_E_plasmon = 20
+
+# Si_MuElec_occup = [4, 2, 2, 6, 2, 2]
 
 # %%
 nm3_to_cm_3 = 1e-7 ** 3

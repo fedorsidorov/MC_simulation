@@ -30,7 +30,8 @@ def plot_e_DATA(e_DATA, d_PMMA, xx, zz_vac, E_cut=5, proj='xz', limits=None):
             print('specify projection: \'xy\', \'yz\' or \'yz\'')
             return
         # ax.plot(now_e_DATA_cut[:, xx_ind], now_e_DATA_cut[:, yy_ind])
-        ax.plot(e_DATA_cut[inds, xx_ind], e_DATA_cut[inds, yy_ind], '.-', linewidth='1')
+        # ax.plot(e_DATA_cut[inds, xx_ind], e_DATA_cut[inds, yy_ind], '.-', linewidth='1')
+        ax.plot(e_DATA_cut[inds, xx_ind], e_DATA_cut[inds, yy_ind], '-', linewidth='1')
 
     if proj != 'xy' and d_PMMA != 0:
         points = np.linspace(-d_PMMA * 2, d_PMMA * 2, 100)

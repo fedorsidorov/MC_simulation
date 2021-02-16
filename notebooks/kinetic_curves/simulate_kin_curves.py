@@ -23,9 +23,9 @@ nn = np.arange(1, 50000)
 Pn = nn**z_0 * np.exp(-nn / y_0)
 Pn /= np.sum(nn**z_0 * np.exp(-nn / y_0))
 
-plt.figure(dpi=300)
-plt.semilogx(nn, Pn, '-o')
-plt.show()
+# plt.figure(dpi=300)
+# plt.semilogx(nn, Pn, '-o')
+# plt.show()
 
 M1_0 = np.sum(Pn * nn)
 
@@ -179,14 +179,16 @@ plt.xlim(0, 10)
 plt.legend()
 plt.legend(fontsize=font_size)
 
+plt.title('d$_{PMMA}$ = 80 нм, 200 c - 16 мкКл/см$^2$')
 plt.xlabel('t, с', fontsize=font_size)
 plt.ylabel('L$_{norm}$', fontsize=font_size)
+
 plt.xlim(0, 200)
 plt.ylim(0, 1)
 plt.grid()
-# plt.show()
+plt.show()
 
-plt.savefig('for_report.tiff', bbox_inches='tight')
+# plt.savefig('for_report.tiff', bbox_inches='tight')
 
 # # %% plot curves for transfer
 # plt.figure(dpi=300)

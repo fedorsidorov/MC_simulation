@@ -13,26 +13,23 @@ pf = importlib.reload(pf)
 
 # %%
 r_beam = 0
+
+# E0 = 1e+2
+# E0 = 1e+3
 E0 = 10e+3
 
 d_PMMA = 0
 
 xx = mm.x_centers_5nm
 zz_vac = np.zeros(len(xx))
-# zz_vac = np.ones(len(xx)) * 79
-# zz_vac = np.ones(len(xx)) * ((1 + np.cos(xx * np.pi / (lx_cm / 2))) * d_PMMA) / 5
 
-# plt.figure(dpi=300)
-# plt.plot(xx, zz_vac)
-# plt.plot(xx, np.ones(len(xx)) * d_PMMA)
-# plt.show()
-
-# %%
 n_primaries_in_file = 100
 # n_primaries_in_file = 10
 
-n_files = 500
+n_files = 50
+# n_files = 1
 
+# for i in range(49, 50):
 for i in range(n_files):
 
     print(i)
@@ -55,11 +52,10 @@ for i in range(n_files):
     simulator.start_simulation()
 
     e_DATA = simulator.get_total_history()
-    # e_DATA_PMMA = e_DATA[np.where(e_DATA[:, ind.e_DATA_layer_id_ind] == ind.PMMA_ind)]
-    # e_DATA_PMMA_val = \
-    #     e_DATA_PMMA[np.where(e_DATA_PMMA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
 
-    np.save('data/Si_10keV/e_DATA_' + str(i) + '.npy', e_DATA)
+    # np.save('data/Si_100eV/e_DATA_' + str(i) + '.npy', e_DATA)
+    # np.save('data/Si_1keV/e_DATA_' + str(i) + '.npy', e_DATA)
+    np.save('data/MC_Si/10keV_15eV_Epl_20eV_GNT/e_DATA_' + str(i) + '.npy', e_DATA)
 
 # %%
 pf.plot_e_DATA(e_DATA, d_PMMA, xx, zz_vac)
