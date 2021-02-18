@@ -1,9 +1,10 @@
-# %%
 import numpy as np
 from numpy import sin, cos, arccos
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 
+# %%
 class VectorVect:
 
     def __init__(self, phi, theta):
@@ -11,12 +12,17 @@ class VectorVect:
         self.theta = theta
 
     def scatter(self, phi, theta):
-
+        
         if self.theta == 0:
             print('round theta, was', self.theta)
             self.theta = 1e-10
-
+        
         new_theta = arccos(cos(self.theta) * cos(theta) + sin(self.theta) * sin(theta) * cos(phi))
+        # new_theta = arccos(cos(self.theta) * cos(theta) - sin(self.theta) * sin(theta) * cos(phi))
+                
+        if new_theta == 0:
+            new_theta = 1e-10
+        
         cos_delta_phi = (cos(theta) - cos(new_theta) * cos(self.theta)) / (sin(self.theta) * sin(new_theta))
 
         if cos_delta_phi < -1:
@@ -28,7 +34,8 @@ class VectorVect:
 
         delta_phi = arccos(cos_delta_phi)
 
-        if sin(theta) * sin(phi) / sin(new_theta) < 0:
+        # if sin(theta) * sin(phi) / sin(new_theta) < 0:
+        if sin(theta) * sin(phi) < 0:  # sin new_theta > 0 always
             delta_phi *= -1
 
         new_phi = self.phi + delta_phi
@@ -62,6 +69,7 @@ class VectorMat:
         return np.array((ort_mat[0, 0], ort_mat[1, 0], ort_mat[2, 0]))
 
 
+# %
 def get_angles(chain_arr):
     def dotproduct(v1, v2):
         return sum((a * b) for a, b in zip(v1, v2))
@@ -83,20 +91,65 @@ def get_angles(chain_arr):
     return np.array(angles)
 
 
-# %%
+# %
 size = 10
 angle_pairs = [[np.pi/50*i, np.pi/4] for i in range(size)]
 
-vector = VectorVect(0, 0)
-# vector = VectorMat(np.mat(np.eye(3)))
-coords = np.zeros((size+1, 3))
-now_coords = np.array((0., 0., 0.))
-coords[0, :] = now_coords
+vector_V = VectorVect(0, 0)
+vector_M = VectorMat(np.mat(np.eye(3)))
 
+coords_V = np.zeros((size+1, 3))
+now_coords_V = np.array((0., 0., 0.))
+coords_V[0, :] = now_coords_V
+
+coords_M = np.zeros((size+1, 3))
+now_coords_M = np.array((0., 0., 0.))
+coords_M[0, :] = now_coords_M
+
+
+# %
 for i, pair in enumerate(angle_pairs):
-    vector.scatter(pair[0], pair[1])
-    now_coords += vector.get_ort()
-    coords[i+1, :] = now_coords
+    
+    vector_V.scatter(pair[0], pair[1])
+    now_coords_V += vector_V.get_ort()
+    coords_V[i+1, :] = now_coords_V
+    
+    vector_M.scatter(pair[0], pair[1])
+    now_coords_M += vector_M.get_ort()
+    coords_M[i+1, :] = now_coords_M
 
-vv_angles = get_angles(coords)
-print(np.max(np.abs(vv_angles - 135)))
+vv_angles_V = get_angles(coords_V)
+vv_angles_M = get_angles(coords_M)
+
+# %%
+print(np.max(np.abs(vv_angles_V - 135)))
+
+#%%
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+plt.plot(coords_V[:, 0], coords_V[:, 1], coords_V[:, 2])
+plt.plot(coords_M[:, 0], coords_M[:, 1], coords_M[:, 2])
+
+plt.grid()
+# plt.show()
+
+# %%
+vv = VectorVect(0, 0)
+vm = VectorMat(np.mat(np.eye(3)))
+
+vv.scatter(np.pi/2, np.pi/4)
+vm.scatter(np.pi/2, np.pi/4)
+
+# vv.scatter(np.pi/2, 0)
+# vm.scatter(np.pi/2, 0)
+
+print(vv.get_ort())
+print(vm.get_ort())
+
+
+
+
+
+
+

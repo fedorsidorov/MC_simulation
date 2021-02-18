@@ -1,16 +1,17 @@
-# %% Import
 import importlib
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import integrate
 
-import grid as g
-import constants as c
-from functions import MC_functions as u
+from tqdm import tqdm
 
-u = importlib.reload(u)
-c = importlib.reload(c)
-g = importlib.reload(g)
+import grid as grid
+import constants as const
+from functions import MC_functions as mcf
+
+mcf = importlib.reload(mcf)
+const = importlib.reload(const)
+grid = importlib.reload(grid)
 
 # %% parameters
 PMMA_params = [  # [hwi, hgi, Ai] from devera2011.pdf
@@ -25,14 +26,14 @@ inv_A = 1e+8  # cm^-1
 
 # %% Lindhard and Mermin functions
 def get_eps_L(q, hw_eV_complex, Epl_eV):  # gamma is energy!
-    n = (Epl_eV * c.eV / c.hbar) ** 2 * c.m / (4 * np.pi * c.e ** 2)
+    n = (Epl_eV * const.eV / const.hbar) ** 2 * const.m / (4 * np.pi * const.e ** 2)
     kF = (3 * np.pi ** 2 * n) ** (1 / 3)
-    vF = c.hbar * kF / c.m
-    qF = c.hbar * kF
-    EF = c.m * vF ** 2 / 2
+    vF = const.hbar * kF / const.m
+    qF = const.hbar * kF
+    EF = const.m * vF ** 2 / 2
     z = q / (2 * qF)
-    x = hw_eV_complex * c.eV / EF
-    chi_2 = c.e ** 2 / (np.pi * c.hbar * vF)
+    x = hw_eV_complex * const.eV / EF
+    chi_2 = const.e ** 2 / (np.pi * const.hbar * vF)
 
     def f(xx, zz):
         res = 1 / 2 + 1 / (8 * zz) * (1 - (zz - xx / (4 * zz)) ** 2) * \
@@ -65,17 +66,22 @@ eps_M_1p0 = np.zeros(len(HW), dtype=complex)
 eps_M_10p = np.zeros(len(HW), dtype=complex)
 
 for i, hw in enumerate(HW):
-    eps_M_0p1[i] = get_eps_M(1.0 * c.p_au, hw + 0.1j, 20)
-    eps_M_1p0[i] = get_eps_M(1.0 * c.p_au, hw + 1j, 20)
-    eps_M_10p[i] = get_eps_M(1.0 * c.p_au, hw + 10j, 20)
+    eps_M_0p1[i] = get_eps_M(1.0 * const.P_au, hw + 0.1j, 20)
+    eps_M_1p0[i] = get_eps_M(1.0 * const.P_au, hw + 1j, 20)
+    eps_M_10p[i] = get_eps_M(1.0 * const.P_au, hw + 10j, 20)
 
 plt.figure(dpi=300)
-# plt.plot(HW, np.imag(-1/eps_M_0p1))
-# plt.plot(HW, np.imag(-1/eps_M_1p0))
-# plt.plot(HW, np.imag(-1/eps_M_10p))
+plt.plot(HW, np.imag(-1/eps_M_0p1))
+plt.plot(HW, np.imag(-1/eps_M_1p0))
+plt.plot(HW, np.imag(-1/eps_M_10p))
 
 book = np.loadtxt('data/Dapor/mermin_book.txt')
 plt.plot(book[:, 0], book[:, 1], '.')
+
+plt.xlim(0, 80)
+plt.ylim(0, 1.2)
+
+plt.grid()
 plt.show()
 
 # %% 2 test ELF - OK
@@ -89,12 +95,12 @@ eps_M_1p0 = np.zeros(len(HW), dtype=complex)
 eps_M_1p5 = np.zeros(len(HW), dtype=complex)
 
 for i, hw in enumerate(HW):
-    eps_L_0p5[i] = get_eps_L(0.5 * c.p_au, hw + 1e-100j, 20)
-    eps_L_1p0[i] = get_eps_L(1.0 * c.p_au, hw + 1e-100j, 20)
-    eps_L_1p5[i] = get_eps_L(1.5 * c.p_au, hw + 1e-100j, 20)
-    eps_M_0p5[i] = get_eps_M(0.5 * c.p_au, hw + 5j, 20)
-    eps_M_1p0[i] = get_eps_M(1.0 * c.p_au, hw + 5j, 20)
-    eps_M_1p5[i] = get_eps_M(1.5 * c.p_au, hw + 5j, 20)
+    eps_L_0p5[i] = get_eps_L(0.5 * const.P_au, hw + 1e-100j, 20)
+    eps_L_1p0[i] = get_eps_L(1.0 * const.P_au, hw + 1e-100j, 20)
+    eps_L_1p5[i] = get_eps_L(1.5 * const.P_au, hw + 1e-100j, 20)
+    eps_M_0p5[i] = get_eps_M(0.5 * const.P_au, hw + 5j, 20)
+    eps_M_1p0[i] = get_eps_M(1.0 * const.P_au, hw + 5j, 20)
+    eps_M_1p5[i] = get_eps_M(1.5 * const.P_au, hw + 5j, 20)
 
 plt.figure(dpi=300)
 plt.plot(HW, np.imag(-1 / eps_L_0p5))
@@ -109,6 +115,11 @@ book_M = np.loadtxt('data/Dapor/book_M.txt')
 
 plt.plot(book_L[:, 0], book_L[:, 1], '.')
 plt.plot(book_M[:, 0], book_M[:, 1], '.')
+
+plt.xlim(0, 80)
+plt.ylim(0, 3)
+
+plt.grid()
 plt.show()
 
 
@@ -160,12 +171,12 @@ def get_PMMA_OLF_D(hw_eV, params_hw_hg_A):
 
 # %% test PMMA OLF - OK
 # EE = np.linspace(1, 100, 100)
-EE = g.EE
+EE = grid.EE
 OLF_M = np.zeros(len(EE))
 OLF_D = np.zeros(len(EE))
 
 for i, E in enumerate(EE):
-    OLF_M[i] = get_PMMA_ELF(5e-2 * inv_A * c.hbar, E, PMMA_params, kind='M')
+    OLF_M[i] = get_PMMA_ELF(5e-2 * inv_A * const.hbar, E, PMMA_params, kind='M')
     OLF_D[i] = get_PMMA_OLF_D(E, PMMA_params)
 
 plt.figure(dpi=300)
@@ -180,11 +191,11 @@ plt.ylim(1e-5, 1e+1)
 plt.xlabel('E, eV')
 plt.ylabel('PMMA OLF')
 # plt.title('k = 5*10$^{-3}$ $\AA^{-1}$')
-plt.title('k = 5*10$^{-2}$ $\AA^{-1}$')
+plt.title(r'k = 5*10$^{-2}$ $\AA^{-1}$')
 plt.grid()
 plt.legend()
-# plt.show()
-plt.savefig('PMMA_OLF_low_E_5e-2.png', dpi=300)
+plt.show()
+# plt.savefig('PMMA_OLF_low_E_5e-2.png', dpi=300)
 
 # %% test PMMA ELF - OK
 EE = np.linspace(1, 80, 100)
@@ -192,8 +203,8 @@ ELF_2_M = np.zeros(len(EE))
 ELF_4_M = np.zeros(len(EE))
 
 for i, E in enumerate(EE):
-    ELF_2_M[i] = get_PMMA_ELF(2 * inv_A * c.hbar, E, PMMA_params, 'M')
-    ELF_4_M[i] = get_PMMA_ELF(4 * inv_A * c.hbar, E, PMMA_params, 'M')
+    ELF_2_M[i] = get_PMMA_ELF(2 * inv_A * const.hbar, E, PMMA_params, 'M')
+    ELF_4_M[i] = get_PMMA_ELF(4 * inv_A * const.hbar, E, PMMA_params, 'M')
 
 plt.figure(dpi=300)
 plt.plot(EE, ELF_2_M, label='my Mermin 2 A-1')
@@ -203,33 +214,40 @@ DM2 = np.loadtxt('data/Dapor/Dapor_M_2A-1.txt')
 DM4 = np.loadtxt('data/Dapor/Dapor_M_4A-1.txt')
 plt.plot(DM2[:, 0], DM2[:, 1], 'o')
 plt.plot(DM4[:, 0], DM4[:, 1], 'o')
+
+plt.xlim(0, 100)
+plt.ylim(0, 0.5)
+
+plt.legend()
+plt.grid()
+
 plt.show()
 
 
-# %% calculate DIIMFP
+# %% calculate DIIMFP_prec
 def get_PMMA_DIIMFP(E_eV, hw_eV, exchange=False):
     if hw_eV > E_eV:
         return 0
 
-    E = E_eV * c.eV
-    hw = hw_eV * c.eV
+    E = E_eV * const.eV
+    hw = hw_eV * const.eV
 
     def get_Y(k):
 
         if exchange:
-            v = np.sqrt(E_eV * c.eV / c.m)
-            frac = (c.hbar * k) / (c.m * v)
-            return (1 + frac ** 4 - frac ** 2) * get_PMMA_ELF(k * c.hbar, hw_eV, PMMA_params, 'M') / k
+            v = np.sqrt(E_eV * const.eV / const.m)
+            frac = (const.hbar * k) / (const.m * v)
+            return (1 + frac ** 4 - frac ** 2) * get_PMMA_ELF(k * const.hbar, hw_eV, PMMA_params, 'M') / k
 
-        return get_PMMA_ELF(k * c.hbar, hw_eV, PMMA_params, 'M') / k
+        return get_PMMA_ELF(k * const.hbar, hw_eV, PMMA_params, 'M') / k
 
-    km, kp = u.get_km_kp(E, hw)
+    km, kp = mcf.get_km_kp(E, hw)
     integral = integrate.quad(get_Y, km, kp)[0]
 
-    return 1 / (np.pi * c.a0 * E_eV) * integral  # cm^-1 * eV^-1
+    return 1 / (np.pi * const.a0 * E_eV) * integral  # cm^-1 * eV^-1
 
 
-# %% test PMMA DIIMFP - OK
+# %% test PMMA DIIMFP_prec - OK
 EE_D = [50, 100, 200, 300, 400, 500, 1000]
 EE = np.linspace(1, 80, 100)
 
@@ -237,7 +255,7 @@ DIIMFP = np.zeros((len(EE_D), len(EE)))
 
 for i, E_D in enumerate(EE_D):
     for j, E in enumerate(EE):
-        u.progress_bar(i, len(EE_D))
+        # u.progress_bar(i, len(EE_D))
         DIIMFP[i, j] = get_PMMA_DIIMFP(E_D, E)
 
 # %%
@@ -250,4 +268,24 @@ Dapor_DIIMFP = np.loadtxt('data/Dapor/Dapor_DIIMFP.txt')
 plt.plot(Dapor_DIIMFP[:, 0], Dapor_DIIMFP[:, 1], '.')
 plt.xlim(0, 100)
 plt.ylim(0, 0.008)
+plt.grid()
 plt.show()
+
+# %%
+EE_50 = grid.EE[::50]
+
+# DIIMFP_xchg = np.zeros((len(grid.EE), len(grid.EE)))
+DIIMFP_50 = np.zeros((len(EE_50), len(grid.EE)))
+
+progress_bar = tqdm(total=len(EE_50), position=0)
+
+for i, E in enumerate(EE_50):
+    for j, hw in enumerate(grid.EE):
+
+        # DIIMFP_xchg[i, j] = get_PMMA_DIIMFP(E, hw, exchange=True)
+        DIIMFP_50[i, j] = get_PMMA_DIIMFP(E, hw, exchange=False)
+
+    progress_bar.update()
+
+
+

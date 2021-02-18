@@ -14,7 +14,8 @@ pf = importlib.reload(pf)
 
 # %%
 # E0_arr = [100, 200, 300, 400, 500, 600, 800, 1000]
-E0_arr = [100, 200, 300, 400, 500, 600]
+# E0_arr = [100, 200, 300, 400, 500, 600]
+E0_arr = [100, 200, 300, 400]
 # E0_arr = [800, 1000]
 # E0_arr = [200]
 
@@ -28,11 +29,11 @@ zz_vac = np.zeros(len(xx))
 n_primaries_in_file = 100
 
 # n_files = 50
-n_files = 6
+n_files = 10
 
-model = '0p1_0p15_0eV_4p05'
+model = '0p1_0p15_0eV_4p05_scale'
 
-for i in range(n_files):
+for i in range(1, n_files):
 
     for E0 in E0_arr:
 

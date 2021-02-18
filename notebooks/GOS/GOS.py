@@ -4,23 +4,24 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import integrate
 from tqdm.auto import trange
-import grid as g
-import constants as c
-from functions import MC_functions as u
+import grid
+import constants as const
+from functions import MC_functions as mcf
+from mpl_toolkits.mplot3d import Axes3D
 
-u = importlib.reload(u)
-c = importlib.reload(c)
-g = importlib.reload(g)
+mcf = importlib.reload(mcf)
+const = importlib.reload(const)
+grid = importlib.reload(grid)
 
 
 # %% GOS for individual atoms
 def get_df_dW_K(k, hw_eV, el):  # BOOK
     if el == 'C':
-        Zs = c.Zs_C
-        edge = c.K_Ebind_C
+        Zs = const.Zs_C
+        edge = const.K_Ebind_C
     elif el == 'O':
-        Zs = c.Zs_O
-        edge = c.K_Ebind_O
+        Zs = const.Zs_O
+        edge = const.K_Ebind_O
     else:
         print('Specify atom type - C or O')
         return -1
@@ -28,9 +29,9 @@ def get_df_dW_K(k, hw_eV, el):  # BOOK
     if hw_eV < edge:
         return 0
 
-    E = hw_eV * c.eV
-    Qp = (k * c.a0 / Zs) ** 2
-    kH2 = hw_eV * c.eV / (Zs ** 2 * c.Ry) - 1
+    E = hw_eV * const.eV
+    Qp = (k * const.a0 / Zs) ** 2
+    kH2 = hw_eV * const.eV / (Zs ** 2 * const.Ry) - 1
 
     if kH2 > 0:
         kH = np.sqrt(kH2)
@@ -41,13 +42,13 @@ def get_df_dW_K(k, hw_eV, el):  # BOOK
             beta_p += np.pi
 
         num = 256 * E * (Qp + kH2 ** 2 / 3 + 1 / 3) * np.exp(-2 * beta_p / kH)
-        den = Zs ** 4 * c.Ry ** 2 * ((Qp - kH2 + 1) ** 2 + 4 * kH2) ** 3 * (1 - np.exp(-2 * np.pi / kH))
+        den = Zs ** 4 * const.Ry ** 2 * ((Qp - kH2 + 1) ** 2 + 4 * kH2) ** 3 * (1 - np.exp(-2 * np.pi / kH))
 
     else:
         y = -(-kH2) ** (-1 / 2) * np.log(
             (Qp + 1 - kH2 + 2 * (-kH2) ** (1 / 2)) / (Qp + 1 - kH2 - 2 * (-kH2) ** (1 / 2)))
         num = 256 * E * (Qp + kH2 / 3 + 1 / 3) * np.exp(y)
-        den = Zs ** 4 * c.Ry ** 2 * ((Qp - kH2 + 1) ** 2 + 4 * kH2) ** 3
+        den = Zs ** 4 * const.Ry ** 2 * ((Qp - kH2 + 1) ** 2 + 4 * kH2) ** 3
 
     return num / den
 
@@ -62,9 +63,9 @@ ax = fig.add_subplot(111, projection='3d')
 
 for i, Ei in enumerate(EE):
     for j, ki in enumerate(kk):
-        FF[i, j] = get_df_dW_K(ki * 1e+8, Ei, 'C') * c.eV * 1e+3
+        FF[i, j] = get_df_dW_K(ki * 1e+8, Ei, 'C') * const.eV * 1e+3
 
-    ax.plot(np.ones(len(kk)) * EE[i], np.log((kk * 1e+8 * c.a0) ** 2), FF[i, :])
+    ax.plot(np.ones(len(kk)) * EE[i], np.log((kk * 1e+8 * const.a0) ** 2), FF[i, :])
 
 ax.view_init(30, 30)
 plt.grid()
@@ -79,9 +80,9 @@ plt.show()
 
 # %% PMMA ELF
 def get_GOS_ELF(k, hw_eV, el):
-    factor = 2 * np.pi ** 2 * c.e ** 2 * c.hbar ** 2 * c.n_MMA / (c.m * hw_eV * c.eV)
-    C_GOS = factor * get_df_dW_K(k, hw_eV, 'C') * c.N_C_MMA
-    O_GOS = factor * get_df_dW_K(k, hw_eV, 'O') * c.N_O_MMA
+    factor = 2 * np.pi ** 2 * const.e ** 2 * const.hbar ** 2 * const.n_MMA / (const.m * hw_eV * const.eV)
+    C_GOS = factor * get_df_dW_K(k, hw_eV, 'C') * const.N_C_MMA
+    O_GOS = factor * get_df_dW_K(k, hw_eV, 'O') * const.N_O_MMA
 
     if el == 'C':
         return C_GOS
@@ -95,7 +96,7 @@ def get_GOS_ELF(k, hw_eV, el):
 
 
 # %% test PMMA OLF
-EE = g.EE
+EE = grid.EE
 OLF_PMMA = np.zeros(len(EE))
 
 for i, Ei in enumerate(EE):
@@ -113,16 +114,16 @@ def get_PMMA_DIIMFP_GOS(T_eV, hw_eV, el='PMMA'):
     if hw_eV > T_eV:
         return 0
 
-    T = T_eV * c.eV
-    hw = hw_eV * c.eV
+    T = T_eV * const.eV
+    hw = hw_eV * const.eV
 
     def get_Y(k):
         return get_GOS_ELF(k, hw_eV, el) / k
 
-    km, kp = u.get_km_kp(T, hw)
+    km, kp = mcf.get_km_kp(T, hw)
     integral = integrate.quad(get_Y, km, kp)[0]
 
-    return 1 / (np.pi * c.a0 * T_eV) * integral  # cm^-1 * eV^-1
+    return 1 / (np.pi * const.a0 * T_eV) * integral  # cm^-1 * eV^-1
 
 
 def get_GOS_IIMFP(T_eV, el):
@@ -132,7 +133,7 @@ def get_GOS_IIMFP(T_eV, el):
 
 
 # %%
-EE = g.EE
+EE = grid.EE
 
 DIIMFP_C = np.zeros((len(EE), len(EE)))
 DIIMFP_O = np.zeros((len(EE), len(EE)))
@@ -154,29 +155,56 @@ DIIMFP_PMMA = DIIMFP_C + DIIMFP_O
 # %%
 np.save('Resources/GOS/DIIMFP_GOS_C.npy', DIIMFP_C)
 np.save('Resources/GOS/DIIMFP_GOS_O.npy', DIIMFP_O)
-np.save('Resources/GOS/DIIMFP_GOS_PMMA.npy', DIIMFP_PMMA)
+# np.save('Resources/GOS/DIIMFP_GOS_PMMA.npy', DIIMFP_PMMA)
 
-np.save('Resources/GOS/C_GOS_IIMFP.npy', IIMFP_C)
-np.save('Resources/GOS/O_GOS_IIMFP.npy', IIMFP_O)
-np.save('Resources/GOS/IIMFP_GOS_PMMA.npy', IIMFP_PMMA)
+# np.save('Resources/GOS/C_GOS_IIMFP.npy', IIMFP_C)
+# np.save('Resources/GOS/O_GOS_IIMFP.npy', IIMFP_O)
+# np.save('Resources/GOS/IIMFP_GOS_PMMA.npy', IIMFP_PMMA)
+
+
+# %%
+# DIIMFP_C_norm = np.zeros((len(EE), len(EE)))
+# DIIMFP_O_norm = np.zeros((len(EE), len(EE)))
+# DIIMFP_PMMA_norm = np.zeros((len(EE), len(EE)))
+#
+# for i in range(len(EE)):
+#     if not np.sum(DIIMFP_C[i, :]) == 0:
+#         DIIMFP_C_norm[i, :] = DIIMFP_C[i, :] / np.sum(DIIMFP_C[i, :])
+#
+#     if not np.sum(DIIMFP_O[i, :]) == 0:
+#         DIIMFP_O_norm[i, :] = DIIMFP_O[i, :] / np.sum(DIIMFP_O[i, :])
+#
+#     if not np.sum(DIIMFP_C[i, :]) == 0:
+#         DIIMFP_PMMA_norm[i, :] = DIIMFP_PMMA[i, :] / np.sum(DIIMFP_PMMA[i, :])
 
 
 # %%
-DIIMFP_C_norm = np.zeros((len(EE), len(EE)))
-DIIMFP_O_norm = np.zeros((len(EE), len(EE)))
-DIIMFP_PMMA_norm = np.zeros((len(EE), len(EE)))
+def get_cumulated_DIIMFP(DIIMFP):
 
-for i in range(len(EE)):
-    if not np.sum(DIIMFP_C[i, :]) == 0:
-        DIIMFP_C_norm[i, :] = DIIMFP_C[i, :] / np.sum(DIIMFP_C[i, :])
+    DIIMFP_cumulated = np.zeros(np.shape(DIIMFP))
 
-    if not np.sum(DIIMFP_O[i, :]) == 0:
-        DIIMFP_O_norm[i, :] = DIIMFP_O[i, :] / np.sum(DIIMFP_O[i, :])
+    for i, E in enumerate(grid.EE):
 
-    if not np.sum(DIIMFP_C[i, :]) == 0:
-        DIIMFP_PMMA_norm[i, :] = DIIMFP_PMMA[i, :] / np.sum(DIIMFP_PMMA[i, :])
+        inds = np.where(grid.EE < E / 2)[0]
+        now_integral = np.trapz(DIIMFP_C[i, inds], x=grid.EE[inds])
+
+        if now_integral == 0:
+            continue
+
+        now_cumulated_array = np.ones(len(grid.EE))
+
+        for j in inds:
+            now_cumulated_array[j] = np.trapz(DIIMFP[i, :j + 1], x=grid.EE[:j + 1]) / now_integral
+
+        DIIMFP_cumulated[i, :] = now_cumulated_array
+
+    return DIIMFP_cumulated
+
 
 # %%
-np.save('Resources/GOS/C_GOS_DIIMFP_norm.npy', DIIMFP_C_norm)
-np.save('Resources/GOS/O_GOS_DIIMFP_norm.npy', DIIMFP_O_norm)
-np.save('Resources/GOS/DIIMFP_GOS_PMMA_norm.npy', DIIMFP_PMMA_norm)
+DIIMFP_C_cumulated = get_cumulated_DIIMFP(DIIMFP_C)
+DIIMFP_O_cumulated = get_cumulated_DIIMFP(DIIMFP_O)
+
+# %%
+np.save('Resources/GOS/C_GOS_DIIMFP_cumulated.npy', DIIMFP_C_cumulated)
+np.save('Resources/GOS/O_GOS_DIIMFP_cumulated.npy', DIIMFP_O_cumulated)

@@ -57,7 +57,7 @@ for n in range(6):
 np.save('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/diff_sigma_6.npy', diff_sigma_6)
 # np.save('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/diff_sigma_6_norm.npy', diff_sigma_6_norm)
 
-# %% test DIIMFP
+# %% test DIIMFP_prec
 plt.imshow(diff_sigma_6[1])
 plt.show()
 

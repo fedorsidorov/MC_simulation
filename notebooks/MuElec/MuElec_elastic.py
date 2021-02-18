@@ -80,7 +80,7 @@ for i in range(len(grid.EE)):
 np.save('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/elastic_diff_sigma_sin_norm.npy', diff_sigma_norm)
 # np.save('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/diff_sigma_6_norm.npy', diff_sigma_6_norm)
 
-# %% test DIIMFP
+# %% test DIIMFP_prec
 plt.imshow(diff_sigma)
 plt.show()
 
