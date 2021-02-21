@@ -186,7 +186,7 @@ def get_cumulated_DIIMFP(DIIMFP):
     for i, E in enumerate(grid.EE):
 
         inds = np.where(grid.EE < E / 2)[0]
-        now_integral = np.trapz(DIIMFP_C[i, inds], x=grid.EE[inds])
+        now_integral = np.trapz(DIIMFP[i, inds], x=grid.EE[inds])
 
         if now_integral == 0:
             continue
@@ -208,3 +208,14 @@ DIIMFP_O_cumulated = get_cumulated_DIIMFP(DIIMFP_O)
 # %%
 np.save('Resources/GOS/C_GOS_DIIMFP_cumulated.npy', DIIMFP_C_cumulated)
 np.save('Resources/GOS/O_GOS_DIIMFP_cumulated.npy', DIIMFP_O_cumulated)
+
+# %%
+arr_C = np.load('Resources/GOS/C_GOS_DIIMFP_cumulated.npy')
+arr_O = np.load('Resources/GOS/O_GOS_DIIMFP_cumulated.npy')
+
+plt.figure(dpi=300)
+
+for i in range(0, 1000, 50):
+    plt.semilogx(grid.EE, arr_O[i, :])
+
+plt.show()

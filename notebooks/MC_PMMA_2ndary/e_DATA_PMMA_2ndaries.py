@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import importlib
-import MC_classes_nm as mcc
+# import MC_classes_nm as mcc
+import MC_classes_new as mcc
 from mapping import mapping_viscosity_80nm as mm
 from functions import plot_functions as pf
 import indexes as ind
@@ -15,9 +16,9 @@ pf = importlib.reload(pf)
 # %%
 # E0_arr = [100, 200, 300, 400, 500, 600, 800, 1000]
 # E0_arr = [100, 200, 300, 400, 500, 600]
-E0_arr = [100, 200, 300, 400]
+# E0_arr = [100, 200, 300, 400]
 # E0_arr = [800, 1000]
-# E0_arr = [200]
+E0_arr = [200]
 
 d_PMMA = 1e+7
 
@@ -25,15 +26,15 @@ xx = mm.x_centers_5nm
 zz_vac = np.zeros(len(xx))
 
 # %%
-# n_primaries_in_file = 1
-n_primaries_in_file = 100
+n_primaries_in_file = 10
+# n_primaries_in_file = 100
 
 # n_files = 50
-n_files = 10
+n_files = 1
 
 model = '0p1_0p15_0eV_4p05_scale'
 
-for i in range(1, n_files):
+for i in range(n_files):
 
     for E0 in E0_arr:
 
@@ -65,7 +66,7 @@ for i in range(1, n_files):
         if not os.path.exists(dest_dir):
             os.makedirs(dest_dir)
 
-        np.save(dest_dir + '/e_DATA_outer_' + str(i) + '.npy', e_DATA_outer)
+        # np.save(dest_dir + '/e_DATA_outer_' + str(i) + '.npy', e_DATA_outer)
 
 # %%
 pf.plot_e_DATA(e_DATA, 0, xx, zz_vac)

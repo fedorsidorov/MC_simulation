@@ -56,13 +56,13 @@ def get_km_kp(E, hw):
 
 
 # %% Monte-Carlo functions
-def get_cumulated_array(array):
+def get_cumulated_array(array, x):
     result = np.zeros((len(array)))
 
     for i in range(len(array)):
         if np.all(array == 0):
             continue
-        result[i] = np.sum(array[:i + 1])
+        result[i] = np.trapz(array[:i + 1], x=x[:i + 1])
 
     return result
 

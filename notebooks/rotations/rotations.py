@@ -40,8 +40,8 @@ def get_Rz_s(phi):
     return mat
 
 
-# def get_rot_mat(now_angles, rot_angles):
 def get_new_ort(now_angles, rot_angles):
+# def get_rot_mat(now_angles, rot_angles):
     now_phi, now_theta = now_angles
     phi_rot, theta_rot = rot_angles
 
@@ -72,12 +72,15 @@ def get_ort(angles):
 
 # %%
 phi, theta = sp.symbols('phi, theta')
+u, v, w = sp.symbols('u, v, w')
 
-vect = sp.Matrix([
-    [sp.sin(theta) * sp.cos(phi)],
-    [sp.sin(theta) * sp.sin(phi)],
-    [sp.cos(theta)]
-])
+vect = sp.Matrix([[u], [v], [w]])
+
+# vect = sp.Matrix([
+#     [sp.sin(theta) * sp.cos(phi)],
+#     [sp.sin(theta) * sp.sin(phi)],
+#     [sp.cos(theta)]
+# ])
 
 sp.simplify(get_Ry_s(-theta) * get_Rz_s(-phi) * vect)
 
