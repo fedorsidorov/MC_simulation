@@ -14,7 +14,7 @@ D_exp = np.loadtxt('notebooks/MC_PMMA_2ndary/Dapor_exp.txt')
 #%%
 def get_2ndary_yield(model, n_primaries=100):
     
-    source_folder = os.path.join('data/2ndaries', model)
+    source_folder = os.path.join('data/2ndaries_sin', model)
     E_str_list = os.listdir(source_folder)
     # E_str_list = '100', '200'
 
@@ -44,11 +44,13 @@ def get_2ndary_yield(model, n_primaries=100):
                 continue
             
             DATA = np.load(os.path.join(source, fname))
+            DATA[:, -1] -= 4.68
 
             if n_primaries == 0:
                 break
 
             n_2nd += len(np.where(DATA[:, -1] < 50)[0])
+            # n_2nd += len(np.where(DATA[:, -1] > 50)[0])
             n_total += n_primaries
 
         my_2ndary_yield = n_2nd / n_total
@@ -60,10 +62,7 @@ def get_2ndary_yield(model, n_primaries=100):
 
 
 # %%
-# now_model = '0p1_0p15_0eV_4p68'
-# now_model = '0p1_0p15_0eV_4p05'
-now_model = '0p1_0p15_0eV_4p05_scale'
-# now_model = '0p07_0p1_0eV'
+now_model = '0p1_0p15'
 
 energies, delta = get_2ndary_yield(now_model)
 
@@ -72,7 +71,7 @@ plt.figure(dpi=300)
 plt.plot(D_sim[:, 0], D_sim[:, 1], 'o-', label='Dapor')
 plt.plot(D_exp[:, 0], D_exp[:, 1], 'o-', label='experiment')
 
-plt.plot(energies, delta, '*-', label=now_model)
+plt.plot(energies, delta, '*-', label='my simulation')
 
 plt.xlabel('incident e energy, eV')
 plt.ylabel('secondary electron yield')
@@ -84,6 +83,7 @@ plt.grid()
 plt.ylim(0, 3)
 
 plt.show()
+# plt.savefig('2ndary_yield.jpg', dpi=300)
 
 # %%
 ans = np.load('data/2ndaries/1p5_0p14_0eV/100/e_DATA_outer_92.npy')

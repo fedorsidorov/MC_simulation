@@ -57,7 +57,8 @@ for n in range(6):
 
     for i, E in enumerate(grid.EE):
 
-        inds = np.where(grid.EE < E / 2)[0]
+        # inds = np.where(grid.EE < E / 2)[0]
+        inds = np.where(grid.EE < E)[0]
         now_integral = np.trapz(DIIMFP[i, inds], x=grid.EE[inds])
 
         if now_integral == 0:
@@ -73,8 +74,8 @@ for n in range(6):
     diff_sigma_6_cumulated[n] = DIIMFP_cumulated
 
 # %%
-np.save('Resources/MuElec/diff_sigma_6.npy', diff_sigma_6)
-np.save('Resources/MuElec/diff_sigma_6_cumulated.npy', diff_sigma_6_cumulated)
+np.save('Resources/MuElec/diff_sigma_6_E.npy', diff_sigma_6)
+np.save('Resources/MuElec/diff_sigma_6_E_cumulated.npy', diff_sigma_6_cumulated)
 
 # %% test DIIMFP_prec
 plt.imshow(diff_sigma_6_cumulated[5])

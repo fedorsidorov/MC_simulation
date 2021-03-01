@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import importlib
-import MC_classes_nm as mcc
+import MC_classes_new as mcc
 from mapping import mapping_viscosity_80nm as mm
 from functions import plot_functions as pf
 import indexes as ind
@@ -24,12 +24,11 @@ xx = mm.x_centers_5nm
 zz_vac = np.zeros(len(xx))
 
 n_primaries_in_file = 100
-# n_primaries_in_file = 10
+# n_primaries_in_file = 1
 
-n_files = 50
+n_files = 100
 # n_files = 1
 
-# for i in range(49, 50):
 for i in range(n_files):
 
     print(i)
@@ -53,9 +52,7 @@ for i in range(n_files):
 
     e_DATA = simulator.get_total_history()
 
-    # np.save('data/Si_100eV/e_DATA_' + str(i) + '.npy', e_DATA)
-    # np.save('data/Si_1keV/e_DATA_' + str(i) + '.npy', e_DATA)
-    np.save('data/MC_Si/10keV_15eV_Epl_20eV_GNT/e_DATA_' + str(i) + '.npy', e_DATA)
+    np.save('data/MC_Si_sin/10keV_GNT/e_DATA_' + str(i) + '.npy', e_DATA)
 
 # %%
-pf.plot_e_DATA(e_DATA, d_PMMA, xx, zz_vac)
+pf.plot_e_DATA(e_DATA, 0, xx, zz_vac)

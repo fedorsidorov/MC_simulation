@@ -27,15 +27,16 @@ PMMA_el_DIMFP_cumulated = \
 # plt.show()
 
 # %%
-Si_el_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/Si/Si_muffin_u.npy') * 1e-7
-Si_el_IMFP[:inds.Si_E_cut_ind] = 0  # no life below plasmon energy!
-Si_el_DIMFP_cumulated = \
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/Si/Si_diff_cs_cumulated_muffin.npy')
-
-# Si_el_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/elastic_u.npy') * 1e-7
+# Si_el_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/Si/Si_muffin_u.npy') * 1e-7
 # Si_el_IMFP[:inds.Si_E_cut_ind] = 0  # no life below plasmon energy!
+# Si_el_DIMFP_cumulated = \
+#     np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/Si/Si_diff_cs_cumulated_muffin.npy')
 
-# Si_el_DIMFP_norm = np.load('Resources/MuElec/elastic_diff_sigma_sin_norm.npy')
+Si_el_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/elastic_u.npy') * 1e-7
+Si_el_IMFP[:inds.Si_E_cut_ind] = 0  # no life below plasmon energy!
+
+Si_el_DIMFP_cumulated = np.load('Resources/MuElec/elastic_diff_sigma_cumulated.npy')
+Si_el_DIMFP_cumulated[:inds.Si_E_cut_ind, :] = 0  # no life below plasmon energy!
 
 # plt.figure(dpi=300)
 # plt.loglog(grid.EE, Si_el_IMFP_ELSEPA)
@@ -43,8 +44,8 @@ Si_el_DIMFP_cumulated = \
 # plt.show()
 
 # plt.figure(dpi=300)
-# for i in range(1, 1000, 100):
-#     plt.semilogx(grid.EE, Si_el_DIMFP_norm[i, :])
+# for i in range(1, 1000, 20):
+#     plt.semilogx(grid.THETA_rad, Si_el_DIMFP_cumulated[i, :])
 # plt.show()
 
 #%% PMMA e-e
@@ -80,6 +81,8 @@ Si_ee_IMFP_6 = \
     np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/Si_MuElec_IIMFP.npy') * 1e-7
 Si_ee_DIMFP_6_cumulated = \
     np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/diff_sigma_6_cumulated.npy')
+# Si_ee_DIMFP_6_cumulated = \
+#     np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/diff_sigma_6_E_cumulated.npy')
 
 # %% PMMA phonon, polaron
 PMMA_ph_IMFP = \

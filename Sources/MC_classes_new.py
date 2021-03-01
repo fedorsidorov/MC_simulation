@@ -69,23 +69,52 @@ class Electron:
     def get_parent_e_id(self):
         return self.parent_e_id
 
+    # def get_scattered_flight_ort(self, phi_scat, theta_scat):
+    #     u, v, w = self.flight_ort
+    #
+    #     if w == 1:
+    #         w -= 1e-10
+    #     elif w == -1:
+    #         w += 1e-10
+    #
+    #     u_new = u * np.cos(theta_scat) +\
+    #         np.sin(theta_scat) / np.sqrt(1 - w**2) * (u * w * np.cos(phi_scat) - v * np.sin(phi_scat))
+    #
+    #     v_new = v * np.cos(theta_scat) +\
+    #         np.sin(theta_scat) / np.sqrt(1 - w**2) * (v * w * np.cos(phi_scat) + u * np.sin(phi_scat))
+    #
+    #     w_new = w * np.cos(theta_scat) - np.sqrt(1 - w**2) * np.sin(theta_scat) * np.cos(phi_scat)
+    #
+    #     return np.array((u_new, v_new, w_new))
+
     def get_scattered_flight_ort(self, phi_scat, theta_scat):
         u, v, w = self.flight_ort
 
         if w == 1:
-            w -= 1e-10
+            u_new = np.sin(theta_scat) * np.cos(phi_scat)
+            v_new = np.sin(theta_scat) * np.sin(phi_scat)
+            w_new = np.cos(theta_scat)
+
         elif w == -1:
-            w += 1e-10
+            u_new = -np.sin(theta_scat) * np.cos(phi_scat)
+            v_new = -np.sin(theta_scat) * np.sin(phi_scat)
+            w_new = -np.cos(theta_scat)
 
-        u_new = u * np.cos(theta_scat) +\
-            np.sin(theta_scat) / np.sqrt(1 - w**2) * (u * w * np.cos(phi_scat) - v * np.sin(phi_scat))
+        else:
+            u_new = u * np.cos(theta_scat) + \
+                    np.sin(theta_scat) / np.sqrt(1 - w ** 2) * (u * w * np.cos(phi_scat) - v * np.sin(phi_scat))
 
-        v_new = v * np.cos(theta_scat) +\
-            np.sin(theta_scat) / np.sqrt(1 - w**2) * (v * w * np.cos(phi_scat) + u * np.sin(phi_scat))
+            v_new = v * np.cos(theta_scat) + \
+                    np.sin(theta_scat) / np.sqrt(1 - w ** 2) * (v * w * np.cos(phi_scat) + u * np.sin(phi_scat))
 
-        w_new = w * np.cos(theta_scat) - np.sqrt(1 - w**2) * np.sin(theta_scat) * np.cos(phi_scat)
+            w_new = w * np.cos(theta_scat) - np.sqrt(1 - w ** 2) * np.sin(theta_scat) * np.cos(phi_scat)
 
-        return np.array((u_new, v_new, w_new))
+        scattered_flight_ort = np.array((u_new, v_new, w_new))
+
+        if np.linalg.norm(scattered_flight_ort) != 1:
+            scattered_flight_ort = scattered_flight_ort / np.linalg.norm(scattered_flight_ort)
+
+        return scattered_flight_ort
 
     def scatter(self, phi_scat, theta_scat):
         self.flight_ort = self.get_scattered_flight_ort(phi_scat, theta_scat)
@@ -220,17 +249,20 @@ class Structure:
 
         if electron.get_layer_ind() == indexes.Si_ind and subshell_ind == indexes.sim_MuElec_plasmon_ind:
             hw = constants.Si_MuElec_E_plasmon
-            phi_2nd = 2 * np.pi * np.random.random()
+            # phi_2nd = 2 * np.pi * np.random.random()
         else:
             now_rnd = np.random.random()
             hw_ind = np.argmin(np.abs(
                 self.ee_DIMFP_cumulated[electron.get_layer_ind()][subshell_ind, electron.get_E_ind(), :] - now_rnd))
             hw = grid.EE[hw_ind]
-            phi_2nd = phi + np.pi
+            # phi_2nd = phi + np.pi
+
+        phi_2nd = phi + np.pi
 
         theta = np.arcsin(np.sqrt(hw / electron.get_E()))
         # TODO
-        theta_2nd = np.pi * np.random.random()
+        # theta_2nd = np.pi * np.random.random()  # Dapor thoughts
+        theta_2nd = np.arcsin(np.sqrt(1 - hw / electron.get_E()))
 
         return phi, theta, hw, phi_2nd, theta_2nd
 
@@ -270,7 +302,7 @@ class Structure:
         elif x < np.min(self.xx):
             return self.zz_vac[0]
         else:
-            return interpolate.interp1d(self.xx, self.zz_vac)(x)
+            return np.float(interpolate.interp1d(self.xx, self.zz_vac)(x))
 
     def set_xx_zz(self, xx, zz_vac):
         self.xx = xx

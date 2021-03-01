@@ -15,7 +15,7 @@ e_SI = 1.6021766209e-19
 
 # %% relativity
 # c = const.c * 1e+2
-c = 29979245800.0
+c = 29979245800
 
 # %% quantum physics
 # eV = const.e * 1e+7
@@ -55,8 +55,8 @@ val_E_bind_PMMA = 0
 K_Ebind_C, K_Ebind_O = 284.2, 543.1  # devera2011.pdf
 Zs_C, Zs_O = 5.7, 7.7
 
-Wf_PMMA = 4.05  # PhD_thesis_Dapor.pdf
-# Wf_PMMA = 4.68  # dapor2015.pdf
+# Wf_PMMA = 4.05  # PhD_thesis_Dapor.pdf
+Wf_PMMA = 4.68  # dapor2015.pdf
 W_phonon = 0.1  # dapor2015.pdf
 
 CC_bond_length = 0.28  # nm
@@ -64,6 +64,7 @@ CC_bond_length = 0.28  # nm
 # %% Si
 Z_Si = 14
 u_Si = 28.086
+M_Si_atom = u_Si / Na  # g
 rho_Si = 2.33
 n_Si = rho_Si * Na / u_Si
 

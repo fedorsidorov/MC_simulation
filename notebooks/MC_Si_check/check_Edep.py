@@ -14,15 +14,12 @@ n_e_total = 0
 
 bin_centrers = (bins[:-1] + bins[1:])/2
 
-n_files = 50
+n_files = 100
 progress_bar = tqdm(total=n_files, position=0)
 
 for i in range(n_files):
 
-    # now_data = np.load('data/Si_100eV/e_DATA_' + str(i) + '.npy')
-    # now_data = np.load('data/Si_1keV/e_DATA_' + str(i) + '.npy')
-    now_data = np.load('data/MC_Si/10keV_15eV_Epl_20eV_LSP/e_DATA_' + str(i) + '.npy')
-    # now_data = np.load('data/MC_Si/10keV_15eV_Epl_20eV_GNT/e_DATA_' + str(i) + '.npy')
+    now_data = np.load('data/MC_Si_sin/10keV_GNT/e_DATA_' + str(i) + '.npy')
 
     n_electrons = int(np.max(now_data[:, 0]))
 
@@ -48,7 +45,7 @@ plt.figure(dpi=300)
 
 # plt.loglog(bin_centrers, hist_dE_100 / 100 / 100, label='my 100 eV')
 # plt.loglog(bin_centrers, hist_dE_1 / 100 / 100, label='my 1 keV')
-plt.loglog(bin_centrers, hist_dE_10 / 31 / 100, label='my 10 keV')
+plt.loglog(bin_centrers, hist_dE_10 / 100 / 100, label='my 10 keV')
 
 # plt.loglog(paper_100eV[:, 0], paper_100eV[:, 1], 'o', label='paper 100 eV')
 # plt.loglog(paper_1keV[:, 0], paper_1keV[:, 1], 'o', label='paper 1 keV')
@@ -62,5 +59,6 @@ plt.ylabel('dose, eV/nm')
 
 plt.legend()
 plt.grid()
-plt.show()
-# plt.savefig('E_dep.jpg')
+# plt.show()
+
+plt.savefig('E_dep_new.jpg')

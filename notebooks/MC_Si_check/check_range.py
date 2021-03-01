@@ -14,12 +14,11 @@ hist_n = np.zeros(n_bins)
 hist_z = np.zeros(n_bins)
 hist_n_z = np.zeros(n_bins)
 
-n_files = 50
+n_files = 100
 progress_bar = tqdm(total=n_files, position=0)
 
 for i in range(n_files):
-    now_data = np.load('data/MC_Si/10keV_15eV_Epl_20eV_LSP/e_DATA_' + str(i) + '.npy')
-    # now_data = np.load('data/MC_Si/10keV_15eV_Epl_20eV_GNT/e_DATA_' + str(i) + '.npy')
+    now_data = np.load('data/MC_Si_sin/10keV_GNT/e_DATA_' + str(i) + '.npy')
 
     n_electrons = int(np.max(now_data[:, 0]))
 
@@ -53,16 +52,17 @@ bin_centrers = (bins[:-1] + bins[1:])/2
 
 plt.figure(dpi=300)
 
-plt.loglog(bin_centrers, hist / hist_n, label='my')
-plt.loglog(bin_centrers, hist_z / hist_n_z, label='my z')
+plt.loglog(bin_centrers, hist / hist_n, 'r', label='my range')
+plt.loglog(bin_centrers, hist_z / hist_n_z, 'b', label='my z range')
 
-plt.loglog(paper_range[:, 0], paper_range[:, 1], 'ro', label='paper')
-plt.loglog(paper_range_z[:, 0], paper_range_z[:, 1], 'ro', label='paper z')
+plt.loglog(paper_range[:, 0], paper_range[:, 1], 'ro', label='paper range')
+plt.loglog(paper_range_z[:, 0], paper_range_z[:, 1], 'bo', label='paper z range')
 
 plt.xlabel('electron energy, eV')
 plt.ylabel('electron range, nm')
 
 plt.legend()
 plt.grid()
+
 plt.show()
-# plt.savefig('projected_range.jpg')
+# plt.savefig('projected_range_new.jpg')

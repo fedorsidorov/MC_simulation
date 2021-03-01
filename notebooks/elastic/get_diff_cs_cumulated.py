@@ -23,13 +23,13 @@ for kind in ['easy', 'atomic', 'muffin']:
     diff_cs_MMA = const.N_H_MMA * diff_cs_H + const.N_C_MMA * diff_cs_C + const.N_O_MMA * diff_cs_O
     
     diff_cs_MMA_plane = np.zeros(np.shape(diff_cs_MMA))
-    diff_cs_Si_plane = np.zeros(np.shape(diff_cs_Si ))
+    diff_cs_Si_plane = np.zeros(np.shape(diff_cs_Si))
     
     diff_cs_MMA_plane_norm = np.zeros(np.shape(diff_cs_MMA))
-    diff_cs_Si_plane_norm = np.zeros(np.shape(diff_cs_Si ))
+    diff_cs_Si_plane_norm = np.zeros(np.shape(diff_cs_Si))
     
     diff_cs_MMA_plane_norm_cumulated = np.zeros(np.shape(diff_cs_MMA))
-    diff_cs_Si_plane_norm_cumulated = np.zeros(np.shape(diff_cs_Si ))
+    diff_cs_Si_plane_norm_cumulated = np.zeros(np.shape(diff_cs_Si))
 
     for i in range(len(grid.EE)):
         

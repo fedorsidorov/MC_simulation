@@ -75,7 +75,7 @@ plt.plot(HW, np.imag(-1/eps_M_0p1))
 plt.plot(HW, np.imag(-1/eps_M_1p0))
 plt.plot(HW, np.imag(-1/eps_M_10p))
 
-book = np.loadtxt('data/Dapor/mermin_book.txt')
+book = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/data/Dapor/mermin_book.txt')
 plt.plot(book[:, 0], book[:, 1], '.')
 
 plt.xlim(0, 80)
@@ -110,8 +110,8 @@ plt.plot(HW, np.imag(-1 / eps_M_0p5))
 plt.plot(HW, np.imag(-1 / eps_M_1p0))
 plt.plot(HW, np.imag(-1 / eps_M_1p5))
 
-book_L = np.loadtxt('data/Dapor/book_L.txt')
-book_M = np.loadtxt('data/Dapor/book_M.txt')
+book_L = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/data/Dapor/book_L.txt')
+book_M = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/data/Dapor/book_M.txt')
 
 plt.plot(book_L[:, 0], book_L[:, 1], '.')
 plt.plot(book_M[:, 0], book_M[:, 1], '.')
@@ -183,7 +183,7 @@ plt.figure(dpi=300)
 plt.loglog(EE, OLF_M, '*', label='Mermin')
 plt.loglog(EE, OLF_D, label='Drude')
 
-ritsko = np.loadtxt('data/Dapor/Ritsko_dashed.txt')
+ritsko = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/data/Dapor/Ritsko_dashed.txt')
 plt.loglog(ritsko[:, 0], ritsko[:, 1], '.', label='Ritsko')
 
 plt.xlim(1, 1e+4)
@@ -210,8 +210,8 @@ plt.figure(dpi=300)
 plt.plot(EE, ELF_2_M, label='my Mermin 2 A-1')
 plt.plot(EE, ELF_4_M, label='my Mermin 4 A-1')
 
-DM2 = np.loadtxt('data/Dapor/Dapor_M_2A-1.txt')
-DM4 = np.loadtxt('data/Dapor/Dapor_M_4A-1.txt')
+DM2 = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/data/Dapor/Dapor_M_2A-1.txt')
+DM4 = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/data/Dapor/Dapor_M_4A-1.txt')
 plt.plot(DM2[:, 0], DM2[:, 1], 'o')
 plt.plot(DM4[:, 0], DM4[:, 1], 'o')
 
@@ -264,7 +264,7 @@ plt.figure(dpi=300)
 for i in range(len(EE_D)):
     plt.plot(EE, DIIMFP[i, :] * 1e-8)
 
-Dapor_DIIMFP = np.loadtxt('data/Dapor/Dapor_DIIMFP.txt')
+Dapor_DIIMFP = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/data/Dapor/Dapor_DIIMFP.txt')
 plt.plot(Dapor_DIIMFP[:, 0], Dapor_DIIMFP[:, 1], '.')
 plt.xlim(0, 100)
 plt.ylim(0, 0.008)

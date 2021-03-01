@@ -41,7 +41,6 @@ def get_Rz_s(phi):
 
 
 def get_new_ort(now_angles, rot_angles):
-# def get_rot_mat(now_angles, rot_angles):
     now_phi, now_theta = now_angles
     phi_rot, theta_rot = rot_angles
 
@@ -57,7 +56,37 @@ def get_new_ort(now_angles, rot_angles):
     return rot_mat
 
 
-def get_ort(angles):
+def get_scattered_flight_ort(flight_ort, phi_scat, theta_scat):
+    u, v, w = flight_ort
+
+    if w == 1:
+        u_new = np.sin(theta_scat) * np.cos(phi_scat)
+        v_new = np.sin(theta_scat) * np.sin(phi_scat)
+        v_new = np.cos(theta_scat)
+
+    if w == -1:
+        u_new = -np.sin(theta_scat) * np.cos(phi_scat)
+        v_new = -np.sin(theta_scat) * np.sin(phi_scat)
+        w_new = -np.cos(theta_scat)
+
+    else:
+        u_new = u * np.cos(theta_scat) +\
+            np.sin(theta_scat) / np.sqrt(1 - w**2) * (u * w * np.cos(phi_scat) - v * np.sin(phi_scat))
+
+        v_new = v * np.cos(theta_scat) +\
+            np.sin(theta_scat) / np.sqrt(1 - w**2) * (v * w * np.cos(phi_scat) + u * np.sin(phi_scat))
+
+        w_new = w * np.cos(theta_scat) - np.sqrt(1 - w**2) * np.sin(theta_scat) * np.cos(phi_scat)
+
+    scattered_flight_ort = np.array((u_new, v_new, w_new))
+
+    if np.linalg.norm(scattered_flight_ort) != 1:
+        scattered_flight_ort = scattered_flight_ort / np.linalg.norm(scattered_flight_ort)
+
+    return scattered_flight_ort
+
+
+def get_ort(now_angles):
 
     now_phi, now_theta = now_angles
 
@@ -85,10 +114,10 @@ vect = sp.Matrix([[u], [v], [w]])
 sp.simplify(get_Ry_s(-theta) * get_Rz_s(-phi) * vect)
 
 # %%
-now_angles = 0, 0
+# now_angles = 0, 0
+flight_ort = np.array((0, 0, 1))
 
-now_ort = get_ort(now_angles)
+now_ort = get_scattered_flight_ort(flight_ort, np.pi/4, np.pi/4)
 
-new_ort = get_new_ort(now_angles, [np.pi/2, np.pi/4])
 
 

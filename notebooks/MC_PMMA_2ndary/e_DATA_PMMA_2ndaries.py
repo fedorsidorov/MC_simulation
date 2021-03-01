@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import importlib
-# import MC_classes_nm as mcc
 import MC_classes_new as mcc
 from mapping import mapping_viscosity_80nm as mm
 from functions import plot_functions as pf
@@ -15,10 +14,10 @@ pf = importlib.reload(pf)
 
 # %%
 # E0_arr = [100, 200, 300, 400, 500, 600, 800, 1000]
-# E0_arr = [100, 200, 300, 400, 500, 600]
+E0_arr = [50, 100, 150, 200, 250, 300, 400, 500]
 # E0_arr = [100, 200, 300, 400]
 # E0_arr = [800, 1000]
-E0_arr = [200]
+# E0_arr = [200]
 
 d_PMMA = 1e+7
 
@@ -26,13 +25,13 @@ xx = mm.x_centers_5nm
 zz_vac = np.zeros(len(xx))
 
 # %%
-n_primaries_in_file = 10
-# n_primaries_in_file = 100
+# n_primaries_in_file = 5
+n_primaries_in_file = 100
 
-# n_files = 50
-n_files = 1
+n_files = 50
+# n_files = 1
 
-model = '0p1_0p15_0eV_4p05_scale'
+model = '0p1_0p15'
 
 for i in range(n_files):
 
@@ -61,12 +60,12 @@ for i in range(n_files):
         e_DATA_outer = e_DATA[np.where(np.logical_and(e_DATA[:, ind.e_DATA_z_ind] < 0,
                                                       e_DATA[:, ind.e_DATA_E_ind] > 0))]
 
-        dest_dir = os.path.join('data/2ndaries', model, str(E0))
+        dest_dir = os.path.join('data/2ndaries_sin', model, str(E0))
 
         if not os.path.exists(dest_dir):
             os.makedirs(dest_dir)
 
-        # np.save(dest_dir + '/e_DATA_outer_' + str(i) + '.npy', e_DATA_outer)
+        np.save(dest_dir + '/e_DATA_outer_' + str(i) + '.npy', e_DATA_outer)
 
 # %%
 pf.plot_e_DATA(e_DATA, 0, xx, zz_vac)
