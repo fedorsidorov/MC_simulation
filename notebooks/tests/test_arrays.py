@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import importlib
 
-import arrays_nm as arr
+from _outdated import arrays_nm as arr
 
 arr = importlib.reload(arr)
 

@@ -153,6 +153,31 @@ def get_Si_DIIMFP(E_eV, hw_eV, n_shell):
         if n_shell == 1:
             return get_ELF_for_int_1(hw_eV, q) / q
         elif n_shell == 2:
+            return get_ELF_for_int_2(hw_eV, q) / q
+        elif n_shell == 3:
+            return get_ELF_for_int_3(hw_eV, q) / q
+        elif n_shell == 4:
+            return get_ELF_for_int_4(hw_eV, q) / q
+        elif n_shell == 5:
+            return get_ELF_for_int_5(hw_eV, q) / q
+
+    qm, qp = get_qm_qp(E, hw)
+    integral = integrate.quad(get_Y, qm, qp)[0]
+
+    return 1 / (np.pi * const.a0 * E_eV) * integral  # cm^-1 * eV^-1
+
+
+def get_Si_DIIMFP_no_edge(E_eV, hw_eV, n_shell):
+    if hw_eV > E_eV:
+        return 0
+
+    E = E_eV * const.eV
+    hw = hw_eV * const.eV
+
+    def get_Y(q):
+        if n_shell == 1:
+            return get_ELF_for_int_1(hw_eV, q) / q
+        elif n_shell == 2:
             return get_ELF_for_int_2_no_edge(hw_eV, q) / q
         elif n_shell == 3:
             return get_ELF_for_int_3_no_edge(hw_eV, q) / q
@@ -194,8 +219,11 @@ for n_shell in [1, 2, 3, 4, 5]:
 
         progress_bar.update()
 
-    np.save('notebooks/OLF_Si/DIIMFP_5osc/DIIMFP_' + str(n_shell) + '.npy', DIIMFP)
-    np.save('notebooks/OLF_Si/DIIMFP_5osc/DIIMFP_prec' + str(n_shell) + '.npy', DIIMFP_prec)
+    np.save('notebooks/OLF_Si/DIIMFP_5osc_edge/DIIMFP_' + str(n_shell) + '.npy', DIIMFP)
+    np.save('notebooks/OLF_Si/DIIMFP_5osc_edge/DIIMFP_prec' + str(n_shell) + '.npy', DIIMFP_prec)
+
+    # np.save('notebooks/OLF_Si/DIIMFP_5osc/DIIMFP_' + str(n_shell) + '.npy', DIIMFP)
+    # np.save('notebooks/OLF_Si/DIIMFP_5osc/DIIMFP_prec' + str(n_shell) + '.npy', DIIMFP_prec)
 
 # %%
 u_test = np.zeros(len(grid.EE_prec))

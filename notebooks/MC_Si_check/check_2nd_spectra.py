@@ -12,7 +12,7 @@ bins = np.linspace(0, 4, n_bins)
 progress_bar = tqdm(total=n_files, position=0)
 
 for i in range(n_files):
-    now_data = np.load('data/MC_Si/10keV_GNT_E_15eV/e_DATA_' + str(i) + '.npy')
+    now_data = np.load('data/MC_Si/10keV/e_DATA_' + str(i) + '.npy')
     e_2nd_arr = now_data[np.where(now_data[:, 8] != 0)[0], 8]
     hist += np.histogram(e_2nd_arr / 1000, bins=bins)[0]
     progress_bar.update()
@@ -20,7 +20,7 @@ for i in range(n_files):
 bin_centrers = (bins[:-1] + bins[1:])/2
 
 # %%
-paper_plot = np.loadtxt('notebooks/MC_Si_check/2ndary_spectra.txt')
+paper_plot = np.loadtxt('notebooks/MC_Si_check/curves/2ndary_spectra.txt')
 paper_x = paper_plot[:, 0]
 paper_y = paper_plot[:, 1]
 
@@ -36,8 +36,8 @@ plt.grid()
 plt.xlim(0, 4)
 plt.legend()
 
-# plt.show()
-plt.savefig('2ndary_spectra_new.jpg')
+plt.show()
+# plt.savefig('2ndary_spectra_new.jpg')
 
 # %%
 now_data = np.load('data/MC_Si/10keV_15eV/e_DATA_0.npy')

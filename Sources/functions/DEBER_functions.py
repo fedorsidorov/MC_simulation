@@ -1,9 +1,6 @@
 import importlib
 import numpy as np
-from scipy import interpolate
-from tqdm import tqdm
-import matplotlib.pyplot as plt
-import MC_classes_nm as mcc
+from _outdated import MC_classes_nm as mcc
 import constants as const
 import indexes as ind
 from mapping import mapping_3p3um_80nm as mm

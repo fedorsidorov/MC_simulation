@@ -4,7 +4,7 @@ import warnings
 import matplotlib.pyplot as plt
 import numpy as np
 
-import MC_classes_nm as mcc
+from _outdated import MC_classes_nm as mcc
 from mapping import mapping_3p3um_80nm as mm
 from functions import DEBER_functions as deber
 from functions import diffusion_functions as df

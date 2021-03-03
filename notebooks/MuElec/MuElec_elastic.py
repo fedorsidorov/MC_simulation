@@ -29,7 +29,7 @@ plt.figure(dpi=300)
 plt.loglog(grid.EE, sigma * 1e-18 * const.n_Si, '.-')
 plt.show()
 
-# np.save('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/elastic_u.npy', sigma * 1e-18 * const.n_Si)
+np.save('notebooks/MuElec/MuElec_elastic_arrays/u.npy', sigma * 1e-18 * const.n_Si)
 
 # %% sigmadiff
 diff_arr = np.loadtxt('notebooks/MuElec/microelec/sigmadiff_elastic_e_Si.dat')

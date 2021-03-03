@@ -3,9 +3,11 @@ import importlib
 import matplotlib.pyplot as plt
 import numpy as np
 import grid as grid
+import constants as const
 from functions import MC_functions as mcf
 
 grid = importlib.reload(grid)
+const = importlib.reload(const)
 mcf = importlib.reload(mcf)
 
 # %% sigma
@@ -13,14 +15,28 @@ arr = np.loadtxt('data/MuElec/microelec/sigma_inelastic_e_Si.dat')
 EE_raw = arr[:, 0]
 sigma_raw = arr[:, 1:]
 
+plt.figure(dpi=300)
+plt.loglog(EE_raw, sigma_raw, 'o')
+plt.show()
+
+# %%
 sigma = np.zeros((len(grid.EE), np.shape(sigma_raw)[1]))
 
 for n in range(6):
     inds = np.where(np.logical_and(grid.EE > EE_raw.min(), grid.EE < EE_raw.max()))[0]
     sigma[inds, n] = mcf.log_log_interp(EE_raw, sigma_raw[:, n])(grid.EE[inds])
 
+# np.save('notebooks/MuElec/MuElec_inelastic_arrays/u_ee_6.npy', sigma * 1e-18 * const.n_Si)
+
+# %%
+paper = np.loadtxt('notebooks/OLF_Si/curves/Akkerman_u_KLM.txt')
+
 plt.figure(dpi=300)
-plt.loglog(grid.EE, sigma)
+
+plt.loglog(grid.EE, sigma[:, 0] + sigma[:, 1] + sigma[:, 2])
+plt.loglog(grid.EE, sigma[:, 3] + sigma[:, 4])
+plt.loglog(grid.EE, sigma[:, 5])
+plt.loglog(paper[:, 0], paper[:, 1], 'o')
 plt.show()
 
 # %% sigmadiff
@@ -30,15 +46,32 @@ EE_unique = np.unique(diff_arr[:, 0])
 
 diff_sigma_6_pre = np.zeros((6, len(EE_unique), len(grid.EE)))
 
+# plt.figure(dpi=300)
+
 for i, E in enumerate(EE_unique):
     inds = np.where(diff_arr[:, 0] == E)[0]
     hw = diff_arr[inds, 1]
     now_diff_arr = diff_arr[inds, 2:]
 
+    # plt.loglog(hw, now_diff_arr, 'o')
+
     for n in range(6):
         inds = np.where(np.logical_and(grid.EE > hw.min(), grid.EE < hw.max()))[0]
         diff_sigma_6_pre[n, i, inds] = mcf.log_log_interp(hw, now_diff_arr[:, n])(grid.EE[inds])
 
+# plt.ylim(1e-9, 1e+3)
+# plt.show()
+
+# %%
+plt.figure(dpi=300)
+
+for i in range(0, 49, 5):
+    plt.loglog(grid.EE, diff_sigma_6_pre[0, i, :])
+
+plt.ylim(1e-5, 1e+3)
+plt.show()
+
+# %%
 diff_sigma_6 = np.zeros((6, len(grid.EE), len(grid.EE)))
 
 for n in range(6):
@@ -84,10 +117,11 @@ plt.show()
 # %%
 sigma_test = np.zeros(np.shape(sigma))
 
+
 for n in range(6):
     for i, E in enumerate(grid.EE):
-        inds = np.where(grid.EE < E)
-        # inds = np.where(grid.EE < E/2)
+        # inds = np.where(grid.EE < E)
+        inds = np.where(grid.EE < E/2)
         sigma_test[i, n] = np.trapz(diff_sigma_6[n, i, inds], x=grid.EE[inds])
 
 # %% test IMFP

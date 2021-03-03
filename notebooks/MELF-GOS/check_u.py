@@ -4,7 +4,7 @@ import numpy as np
 from functions import MC_functions as mcf
 import indexes as inds
 import grid
-import arrays_nm as arr
+from _outdated import arrays_nm as arr
 
 import matplotlib.pyplot as plt
 

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import importlib
 
 import grid as grid
-import arrays_nm as arr
+from _outdated import arrays_nm as arr
 import constants as const
 
 arr = importlib.reload(arr)

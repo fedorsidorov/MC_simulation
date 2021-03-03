@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import importlib
-import MC_classes_new as mcc
+import MC_classes as mcc
 from mapping import mapping_viscosity_80nm as mm
 from functions import plot_functions as pf
 import indexes as ind

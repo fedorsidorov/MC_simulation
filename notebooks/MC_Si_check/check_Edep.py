@@ -19,7 +19,7 @@ progress_bar = tqdm(total=n_files, position=0)
 
 for i in range(n_files):
 
-    now_data = np.load('data/MC_Si_sin/10keV_GNT/e_DATA_' + str(i) + '.npy')
+    now_data = np.load('data/MC_Si/1keV/e_DATA_' + str(i) + '.npy')
 
     n_electrons = int(np.max(now_data[:, 0]))
 
@@ -37,9 +37,9 @@ for i in range(n_files):
     progress_bar.update()
 
 # %%
-paper_100eV = np.loadtxt('notebooks/MC_Si_check/Si_Edep_100eV.txt')
-paper_1keV = np.loadtxt('notebooks/MC_Si_check/Si_Edep_1keV.txt')
-paper_10keV = np.loadtxt('notebooks/MC_Si_check/Si_Edep_10keV.txt')
+paper_100eV = np.loadtxt('notebooks/MC_Si_check/curves/Si_Edep_100eV.txt')
+paper_1keV = np.loadtxt('notebooks/MC_Si_check/curves/Si_Edep_1keV.txt')
+paper_10keV = np.loadtxt('notebooks/MC_Si_check/curves/Si_Edep_10keV.txt')
 
 plt.figure(dpi=300)
 
@@ -59,6 +59,6 @@ plt.ylabel('dose, eV/nm')
 
 plt.legend()
 plt.grid()
-# plt.show()
+plt.show()
 
-plt.savefig('E_dep_new.jpg')
+# plt.savefig('E_dep_new.jpg')

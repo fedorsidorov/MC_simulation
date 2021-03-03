@@ -20,39 +20,6 @@ EE_bind = [E1, E2, E3, E4, E5]
 
 
 # %%
-def get_u(n_shell):
-
-    DIIMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/OLF_Si/DIIMFP_5osc/DIIMFP_' +
-                     str(n_shell) + '.npy')
-
-    u = np.zeros(len(grid.EE))
-
-    for i, E in enumerate(grid.EE):
-
-        if n_shell == 1:
-            inds = np.where(
-                np.logical_and(
-                    # grid.EE > EE_bind[n_shell - 1],
-                    # grid.EE > 2.5,
-                    grid.EE > 0,
-                    grid.EE < (E + EE_bind[n_shell - 1]) / 2
-                )
-            )
-
-        else:
-            inds = np.where(
-                np.logical_and(
-                    grid.EE > EE_bind[n_shell - 1],
-                    # grid.EE > 2.5,
-                    grid.EE < (E + EE_bind[n_shell - 1]) / 2
-                )
-            )
-
-        u[i] = np.trapz(DIIMFP[i, inds], x=grid.EE[inds])
-
-    return u
-
-
 def get_u_prec(n_shell):
 
     DIIMFP_prec = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/OLF_Si/DIIMFP_5osc/DIIMFP_prec_' +
@@ -65,8 +32,6 @@ def get_u_prec(n_shell):
         if n_shell == 1:
             inds = np.where(
                 np.logical_and(
-                    # grid.EE_prec > EE_bind[n_shell - 1],
-                    # grid.EE_prec > 2.5,
                     grid.EE_prec > 0,
                     grid.EE_prec < (E + EE_bind[n_shell - 1]) / 2
                 )
@@ -76,7 +41,6 @@ def get_u_prec(n_shell):
             inds = np.where(
                 np.logical_and(
                     grid.EE_prec > EE_bind[n_shell - 1],
-                    # grid.EE_prec > 2.5,
                     grid.EE_prec < (E + EE_bind[n_shell - 1]) / 2
                 )
             )
@@ -87,20 +51,10 @@ def get_u_prec(n_shell):
 
 
 # %%
-paper_KLM = np.loadtxt('notebooks/OLF_Si/curves/Akkerman_KLM.txt')
-
-u_1 = get_u(1)
-u_2 = get_u(2)
-u_3 = get_u(3)
-u_4 = get_u(4)
-u_5 = get_u(5)
-
-u_K = u_5
-u_L = u_3 + u_4
-u_M = u_1 + u_2
+paper_KLM_u = np.loadtxt('notebooks/OLF_Si/curves/Akkerman_u_KLM.txt')
 
 plt.figure(dpi=300)
-plt.loglog(paper_KLM[:, 0], paper_KLM[:, 1] * 1e-18 * const.n_Si, 'ro')
+plt.loglog(paper_KLM_u[:, 0], paper_KLM_u[:, 1] * 1e-18 * const.n_Si, 'ro')
 
 # plt.loglog(grid.EE, get_u(5))
 # plt.loglog(grid.EE, get_u(3) + get_u(4))
@@ -110,9 +64,82 @@ plt.loglog(grid.EE_prec, get_u_prec(5))
 plt.loglog(grid.EE_prec, get_u_prec(3) + get_u_prec(4))
 plt.loglog(grid.EE_prec, get_u_prec(1) + get_u_prec(2))
 
-plt.xlim(1e+1, 1e+4)
+plt.xlim(1e+1, 2e+4)
 plt.ylim(1e+1, 1e+8)
 
+plt.grid()
 plt.show()
 
+# %%
+# u_0 = mcf.log_log_interp(grid.EE_prec, get_u_prec(1))(grid.EE)
+# u_1 = mcf.log_log_interp(grid.EE_prec, get_u_prec(2))(grid.EE)
+# u_2 = mcf.log_log_interp(grid.EE_prec, get_u_prec(3))(grid.EE)
+# u_3 = mcf.log_log_interp(grid.EE_prec, get_u_prec(4))(grid.EE)
+# u_4 = mcf.log_log_interp(grid.EE_prec, get_u_prec(5))(grid.EE)
+
+u_0 = np.load('notebooks/OLF_Si/IIMFP_5osc/u_0.npy')
+u_1 = np.load('notebooks/OLF_Si/IIMFP_5osc/u_1.npy')
+u_2 = np.load('notebooks/OLF_Si/IIMFP_5osc/u_2.npy')
+u_3 = np.load('notebooks/OLF_Si/IIMFP_5osc/u_3.npy')
+u_4 = np.load('notebooks/OLF_Si/IIMFP_5osc/u_4.npy')
+
+plt.figure(dpi=300)
+plt.loglog(paper_KLM_u[:, 0], paper_KLM_u[:, 1] * 1e-18 * const.n_Si, 'ro')
+
+plt.loglog(grid.EE, u_4)
+plt.loglog(grid.EE, u_2 + u_3)
+plt.loglog(grid.EE, u_0 + u_1)
+
+plt.xlim(1e+1, 2e+4)
+plt.ylim(1e+1, 1e+8)
+
+plt.grid()
+plt.show()
+
+#%%
+# np.save('notebooks/OLF_Si/IIMFP_5osc/u_0.npy', u_0)
+# np.save('notebooks/OLF_Si/IIMFP_5osc/u_1.npy', u_1)
+# np.save('notebooks/OLF_Si/IIMFP_5osc/u_2.npy', u_2)
+# np.save('notebooks/OLF_Si/IIMFP_5osc/u_3.npy', u_3)
+# np.save('notebooks/OLF_Si/IIMFP_5osc/u_4.npy', u_4)
+
+
+# %%
+def get_S_prec(n_shell):
+
+    DIIMFP_prec = np.load(
+        '/Users/fedor/PycharmProjects/MC_simulation/notebooks/OLF_Si/DIIMFP_5osc/DIIMFP_prec_' +
+        str(n_shell) + '.npy')
+
+    S = np.zeros(len(grid.EE_prec))
+
+    for i, E in enumerate(grid.EE_prec):
+
+        inds = np.where(
+            np.logical_and(
+                grid.EE_prec > 0,
+                grid.EE_prec < E / 2
+            )
+        )
+
+        S[i] = np.trapz(DIIMFP_prec[i, inds] * grid.EE_prec[inds], x=grid.EE_prec[inds])
+
+    return S
+
+
+# %%
+paper_KLM_S = np.loadtxt('notebooks/OLF_Si/curves/Akkerman_S_KLM.txt')
+
+plt.figure(dpi=300)
+plt.loglog(paper_KLM_S[:, 0], paper_KLM_S[:, 1] * 1e+7, 'ro')
+
+plt.loglog(grid.EE_prec, get_S_prec(5))
+plt.loglog(grid.EE_prec, get_S_prec(3) + get_S_prec(4))
+plt.loglog(grid.EE_prec, get_S_prec(1) + get_S_prec(2))
+
+# plt.xlim(1e+1, 2e+4)
+plt.ylim(1e+4, 1e+10)
+
+plt.grid()
+plt.show()
 

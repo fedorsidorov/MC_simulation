@@ -2,8 +2,7 @@
 # PMMA_E_cut_ind = 1
 PMMA_E_cut_ind = 135  # PMMA work function
 
-# Si_E_cut_ind = 278  # plasmon energy
-Si_E_cut_ind = 296  # plasmon energy
+Si_E_cut_ind = 278  # plasmon energy
 
 # %% simulation indexes
 vacuum_ind = 2
