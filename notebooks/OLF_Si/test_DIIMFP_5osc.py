@@ -23,7 +23,7 @@ EE_bind = [E1, E2, E3, E4, E5]
 def get_u_prec(n_shell):
 
     DIIMFP_prec = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/OLF_Si/DIIMFP_5osc/DIIMFP_prec_' +
-                     str(n_shell) + '.npy')
+                          str(n_shell) + '.npy')
 
     u = np.zeros(len(grid.EE_prec))
 
@@ -54,21 +54,30 @@ def get_u_prec(n_shell):
 paper_KLM_u = np.loadtxt('notebooks/OLF_Si/curves/Akkerman_u_KLM.txt')
 
 plt.figure(dpi=300)
-plt.loglog(paper_KLM_u[:, 0], paper_KLM_u[:, 1] * 1e-18 * const.n_Si, 'ro')
+plt.loglog(paper_KLM_u[:, 0], paper_KLM_u[:, 1] * 1e-18 * const.n_Si, 'ro', label='paper K, L, M')
 
 # plt.loglog(grid.EE, get_u(5))
 # plt.loglog(grid.EE, get_u(3) + get_u(4))
 # plt.loglog(grid.EE, get_u(1) + get_u(2))
 
-plt.loglog(grid.EE_prec, get_u_prec(5))
-plt.loglog(grid.EE_prec, get_u_prec(3) + get_u_prec(4))
-plt.loglog(grid.EE_prec, get_u_prec(1) + get_u_prec(2))
+plt.loglog(grid.EE_prec, get_u_prec(1) + get_u_prec(2), label='my M')
+plt.loglog(grid.EE_prec, get_u_prec(3) + get_u_prec(4), label='my L')
+plt.loglog(grid.EE_prec, get_u_prec(5), label='my K')
 
+plt.loglog(grid.EE_prec, get_u_prec(1), '--', label='1', linewidth=1)
+plt.loglog(grid.EE_prec, get_u_prec(2), '--', label='2', linewidth=1)
+plt.loglog(grid.EE_prec, get_u_prec(3), '--', label='3', linewidth=1)
+plt.loglog(grid.EE_prec, get_u_prec(4), '--', label='4', linewidth=1)
+plt.loglog(grid.EE_prec, get_u_prec(5), '--', label='5', linewidth=1)
+
+plt.xlabel('E, eV')
+plt.ylabel(r'$\mu$, cm$^{-1}$')
 plt.xlim(1e+1, 2e+4)
 plt.ylim(1e+1, 1e+8)
-
+plt.legend()
 plt.grid()
-plt.show()
+# plt.show()
+plt.savefig('u_K_L_M.jpg')
 
 # %%
 # u_0 = mcf.log_log_interp(grid.EE_prec, get_u_prec(1))(grid.EE)
@@ -92,9 +101,8 @@ plt.loglog(grid.EE, u_0 + u_1)
 
 plt.xlim(1e+1, 2e+4)
 plt.ylim(1e+1, 1e+8)
-
 plt.grid()
-plt.show()
+# plt.show()
 
 #%%
 # np.save('notebooks/OLF_Si/IIMFP_5osc/u_0.npy', u_0)
@@ -131,15 +139,17 @@ def get_S_prec(n_shell):
 paper_KLM_S = np.loadtxt('notebooks/OLF_Si/curves/Akkerman_S_KLM.txt')
 
 plt.figure(dpi=300)
-plt.loglog(paper_KLM_S[:, 0], paper_KLM_S[:, 1] * 1e+7, 'ro')
+plt.loglog(paper_KLM_S[:, 0], paper_KLM_S[:, 1] * 1e+7, 'ro', label='paper')
 
-plt.loglog(grid.EE_prec, get_S_prec(5))
-plt.loglog(grid.EE_prec, get_S_prec(3) + get_S_prec(4))
-plt.loglog(grid.EE_prec, get_S_prec(1) + get_S_prec(2))
+plt.loglog(grid.EE_prec, get_S_prec(1) + get_S_prec(2), label='my M')
+plt.loglog(grid.EE_prec, get_S_prec(3) + get_S_prec(4), label='my L')
+plt.loglog(grid.EE_prec, get_S_prec(5), label='my K')
 
-# plt.xlim(1e+1, 2e+4)
-plt.ylim(1e+4, 1e+10)
-
+plt.xlabel('E, eV')
+plt.ylabel('dE/ds, eV/cm')
+plt.xlim(1e+1, 2e+4)
+plt.ylim(1e+5, 1e+9)
+plt.legend()
 plt.grid()
-plt.show()
-
+# plt.show()
+plt.savefig('SP_K_L_M.jpg')

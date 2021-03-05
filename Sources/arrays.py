@@ -75,25 +75,28 @@ PMMA_val_DIMFP_cumulated = \
 PMMA_ee_DIMFP_3_cumulated = np.array((PMMA_val_DIMFP_cumulated, C_K_ee_DIMFP_cumulated, O_K_ee_DIMFP_cumulated))
 
 # %% Si e-e
-# Si_ee_IMFP_6 = \
-#     np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/Si_MuElec_IIMFP.npy') * 1e-7
-# Si_ee_DIMFP_6_cumulated = \
-#     np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/diff_sigma_6_cumulated.npy')
+Si_ee_IMFP_6 = \
+    np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/MuElec/MuElec_inelastic_arrays/u_ee_6.npy') * 1e-7
+Si_ee_DIMFP_6_cumulated = \
+    np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/MuElec/' +
+            'MuElec_inelastic_arrays/u_diff_cumulated_6.npy')
 
-Si_ee_IMFP_5 = np.zeros([len(grid.EE), 5])
-for n in range(5):
-    Si_ee_IMFP_5[:, n] = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/OLF_Si/IIMFP_5osc/u_' +
-                                 str(n) + '.npy') * 1e-7
+Si_E_bind = [16.65, 6.52, 13.63, 107.98, 151.55, 1828.5]
 
-Si_ee_IMFP_5[:inds.Si_E_cut_ind] = 0  # no life below plasmon energy!
+# Si_ee_IMFP_5 = np.zeros([len(grid.EE), 5])
+# for n in range(5):
+#     Si_ee_IMFP_5[:, n] = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/OLF_Si/IIMFP_5osc/u_' +
+#                                  str(n) + '.npy') * 1e-7
 
-Si_ee_DIMFP_5_cumulated = np.zeros([5, len(grid.EE), len(grid.EE)])
-for n in range(5):
-    Si_ee_DIMFP_5_cumulated[n, :, :] =\
-        np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/OLF_Si/DIIMFP_5osc_cumulated/DIIMFP_' +
-                str(n) + '_cumulated.npy')
+# Si_ee_IMFP_5[:inds.Si_E_cut_ind] = 0  # no life below plasmon energy!
 
-Si_ee_DIMFP_5_cumulated[:, inds.Si_E_cut_ind, :] = 0  # no life below plasmon energy!
+# Si_ee_DIMFP_5_cumulated = np.zeros([5, len(grid.EE), len(grid.EE)])
+# for n in range(5):
+#     Si_ee_DIMFP_5_cumulated[n, :, :] =\
+#         np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/OLF_Si/DIIMFP_5osc_cumulated/DIIMFP_' +
+#                 str(n) + '_cumulated.npy')
+
+# Si_ee_DIMFP_5_cumulated[:, inds.Si_E_cut_ind, :] = 0  # no life below plasmon energy!
 
 # %% PMMA phonon, polaron
 PMMA_ph_IMFP = \
@@ -118,6 +121,7 @@ PMMA_IMFP = np.vstack((PMMA_el_IMFP, PMMA_val_IMFP, C_K_ee_IMFP, O_K_ee_IMFP,
 PMMA_IMFP_norm = mcf.norm_2d_array(PMMA_IMFP)
 PMMA_total_IMFP = np.sum(PMMA_IMFP, axis=1)
 
-Si_IMFP = np.vstack((Si_el_IMFP, Si_ee_IMFP_5.transpose())).transpose()
+Si_IMFP = np.vstack((Si_el_IMFP, Si_ee_IMFP_6.transpose())).transpose()
+# Si_IMFP = np.vstack((Si_el_IMFP, Si_ee_IMFP_5.transpose())).transpose()
 Si_IMFP_norm = mcf.norm_2d_array(Si_IMFP)
 Si_total_IMFP = np.sum(Si_IMFP, axis=1)

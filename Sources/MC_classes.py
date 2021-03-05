@@ -69,24 +69,6 @@ class Electron:
     def get_parent_e_id(self):
         return self.parent_e_id
 
-    # def get_scattered_flight_ort(self, phi_scat, theta_scat):
-    #     u, v, w = self.flight_ort
-    #
-    #     if w == 1:
-    #         w -= 1e-10
-    #     elif w == -1:
-    #         w += 1e-10
-    #
-    #     u_new = u * np.cos(theta_scat) +\
-    #         np.sin(theta_scat) / np.sqrt(1 - w**2) * (u * w * np.cos(phi_scat) - v * np.sin(phi_scat))
-    #
-    #     v_new = v * np.cos(theta_scat) +\
-    #         np.sin(theta_scat) / np.sqrt(1 - w**2) * (v * w * np.cos(phi_scat) + u * np.sin(phi_scat))
-    #
-    #     w_new = w * np.cos(theta_scat) - np.sqrt(1 - w**2) * np.sin(theta_scat) * np.cos(phi_scat)
-    #
-    #     return np.array((u_new, v_new, w_new))
-
     def get_scattered_flight_ort(self, phi_scat, theta_scat):
         u, v, w = self.flight_ort
 
@@ -221,7 +203,8 @@ class Structure:
         self.IMFP_norm = [arrays.PMMA_IMFP_norm, arrays.Si_IMFP_norm]
         self.total_IMFP = [arrays.PMMA_total_IMFP, arrays.Si_total_IMFP]
         self.elastic_DIMFP_cumulated = [arrays.PMMA_el_DIMFP_cumulated, arrays.Si_el_DIMFP_cumulated]
-        self.ee_DIMFP_cumulated = [arrays.PMMA_ee_DIMFP_3_cumulated, arrays.Si_ee_DIMFP_5_cumulated]
+        # self.ee_DIMFP_cumulated = [arrays.PMMA_ee_DIMFP_3_cumulated, arrays.Si_ee_DIMFP_5_cumulated]
+        self.ee_DIMFP_cumulated = [arrays.PMMA_ee_DIMFP_3_cumulated, arrays.Si_ee_DIMFP_6_cumulated]
 
         self.E_bind = [
             [constants.val_E_bind_PMMA, constants.K_Ebind_C, constants.K_Ebind_O],
@@ -247,17 +230,20 @@ class Structure:
     def get_ee_scat_phi_theta_hw_phi2_theta2(self, electron, subshell_ind):
         phi = 2 * np.pi * np.random.random()
 
-        if electron.get_layer_ind() == indexes.Si_ind and subshell_ind == indexes.sim_MuElec_plasmon_ind:
-            hw = constants.Si_MuElec_E_plasmon
-            # phi_2nd = 2 * np.pi * np.random.random()
-        else:
-            now_rnd = np.random.random()
-            hw_ind = np.argmin(np.abs(
-                self.ee_DIMFP_cumulated[electron.get_layer_ind()][subshell_ind, electron.get_E_ind(), :] - now_rnd))
-            hw = grid.EE[hw_ind]
-            # phi_2nd = phi + np.pi
+        # if electron.get_layer_ind() == indexes.Si_ind and subshell_ind == indexes.sim_MuElec_plasmon_ind:
+        #     hw = constants.Si_MuElec_E_plasmon
+        # else:
+        #     now_rnd = np.random.random()
+        #     hw_ind = np.argmin(np.abs(
+        #         self.ee_DIMFP_cumulated[electron.get_layer_ind()][subshell_ind, electron.get_E_ind(), :] - now_rnd))
+        #     hw = grid.EE[hw_ind]
 
-        phi_2nd = phi + np.pi
+        now_rnd = np.random.random()
+        hw_ind = np.argmin(np.abs(
+            self.ee_DIMFP_cumulated[electron.get_layer_ind()][subshell_ind, electron.get_E_ind(), :] - now_rnd))
+        hw = grid.EE[hw_ind]
+
+        phi_2nd = phi - np.pi
 
         theta = np.arcsin(np.sqrt(hw / electron.get_E()))
         # TODO
