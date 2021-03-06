@@ -2,6 +2,7 @@ import importlib
 import numpy as np
 from collections import deque
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 import grid
 grid = importlib.reload(grid)
@@ -25,7 +26,6 @@ Si_ee_DIMFP_cumulated = np.load('/Users/fedor/PycharmProjects/MC_simulation/note
 # Si_el_IMFP[:Si_E_cut_ind] = 0  # no life below plasmon energy!
 # Si_el_DIMFP_cumulated[:Si_E_cut_ind, :] = 0  # no life below plasmon energy!
 
-# %%
 Si_IMFP = np.vstack((Si_el_IMFP, Si_ee_IMFP.transpose())).transpose()
 
 # norm IMFP array
@@ -38,32 +38,32 @@ Si_total_IMFP = np.sum(Si_IMFP, axis=1)
 process_indexes = list(range(len(Si_IMFP[0, :])))
 
 # %% plot cross sections
-plt.figure(dpi=300)
-
-for j in range(len(Si_IMFP[0])):
-    plt.loglog(grid.EE, Si_IMFP[:, j])
-
-plt.loglog(grid.EE, Si_total_IMFP, 'o')
-plt.loglog(grid.EE, np.sum(Si_ee_IMFP, axis=1), 'o')
-
-plt.grid()
-plt.xlabel('E, eV')
-plt.ylabel(r'$\mu$, nm$^{-1}$')
-plt.ylim(1e-5, 1e+1)
-plt.show()
+# plt.figure(dpi=300)
+#
+# for j in range(len(Si_IMFP[0])):
+#     plt.loglog(grid.EE, Si_IMFP[:, j])
+#
+# plt.loglog(grid.EE, Si_total_IMFP, 'o')
+# plt.loglog(grid.EE, np.sum(Si_ee_IMFP, axis=1), 'o')
+#
+# plt.grid()
+# plt.xlabel('E, eV')
+# plt.ylabel(r'$\mu$, nm$^{-1}$')
+# plt.ylim(1e-5, 1e+1)
+# plt.show()
 
 
 # %%
-def plot_e_DATA(e_DATA):
+def plot_e_DATA(e_DATA_arr):
     fig, ax = plt.subplots(dpi=300)
 
-    for e_id in range(int(np.max(e_DATA[:, 0]) + 1)):
-        inds = np.where(e_DATA[:, 0] == e_id)[0]
+    for e_id in range(int(np.max(e_DATA_arr[:, 0]) + 1)):
+        inds = np.where(e_DATA_arr[:, 0] == e_id)[0]
 
         if len(inds) == 0:
             continue
 
-        ax.plot(e_DATA[inds, 3], e_DATA[inds, 5], '-', linewidth='1')
+        ax.plot(e_DATA_arr[inds, 3], e_DATA_arr[inds, 5], '-', linewidth='1')
 
     ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
     ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
@@ -107,14 +107,18 @@ def track_electron(e_id, par_id, E0, coords_0, flight_ort_0):
     coords = coords_0
     flight_ort = flight_ort_0
 
-    history = deque()
+    e_DATA_deque = deque()
 
-    history_line = [e_id, par_id, -1, *coords_0, 0, 0, E]
-    history.append(history_line)
+    e_DATA_line = [e_id, par_id, -1, *coords_0, 0, 0, E]
+    e_DATA_deque.append(e_DATA_line)
 
     e_2nd_deque = deque()
+    next_e_2nd_id = 0
 
     while E > Si_E_pl:
+
+        if coords[-1] < 0:
+            break
 
         E_ind = np.argmin(np.abs(grid.EE - E))
 
@@ -167,29 +171,75 @@ def track_electron(e_id, par_id, E0, coords_0, flight_ort_0):
 
             E_2nd = delta_E
 
-            e_2nd_list = [e_id, E_2nd, *coords, *flight_ort_2nd]
+            e_2nd_list = [next_e_2nd_id, e_id, E_2nd, *coords, *flight_ort_2nd]
             e_2nd_deque.append(e_2nd_list)
+            next_e_2nd_id += 1
 
             E -= hw
             flight_ort = new_flight_ort
 
-        history_line = [e_id, par_id, proc_ind, *coords, E_bind, E_2nd, E]
-        history.append(history_line)
+        e_DATA_line = [e_id, par_id, proc_ind, *coords, E_bind, E_2nd, E]
+        e_DATA_deque.append(e_DATA_line)
 
-    history_arr = np.vstack(history)
+    # history_arr = np.vstack(e_DATA)
 
-    return np.around(history_arr, decimals=5), e_2nd_deque
+    e_DATA_line = [e_id, par_id, -2, *coords, E, 0, 0]
+    e_DATA_deque.append(e_DATA_line)
+
+    return e_DATA_deque, e_2nd_deque
+    # return np.around(np.vstack(e_DATA_deque), decimals=4), e_2nd_deque
 
 
-def
+def track_all_electrons(n_electrons, E0):
+
+    e_deque = deque()
+
+    total_e_DATA = deque()
+    # total_e_DATA = np.zeros((1, 9))
+
+    next_e_id = 0
+
+    for _ in range(n_electrons):
+        e_deque.append([
+            next_e_id,
+            -1,
+            E0,
+            0, 0, 0,
+            0, 0, 1]
+        )
+        next_e_id += 1
+
+    progress_bar = tqdm(total=n_electrons, position=0)
+
+    while e_deque:
+
+        now_e_id, now_par_id, now_E0, now_x0, now_y0, now_z0, now_ort_x, now_ort_y, now_ort_z = e_deque.popleft()
+
+        if now_par_id == -1:
+            progress_bar.update()
+
+        now_e_DATA, now_e_2nd_deque = track_electron(
+            now_e_id, now_par_id, now_E0,
+            np.array([now_x0, now_y0, now_z0]),
+            np.array([now_ort_x, now_ort_y, now_ort_z])
+        )
+
+        for e_2nd_line in now_e_2nd_deque:
+            e_2nd_line[0] += next_e_id
+
+        next_e_id += len(now_e_2nd_deque)
+
+        total_e_DATA = total_e_DATA + now_e_DATA
+        # total_e_DATA = np.vstack((total_e_DATA, now_e_DATA))
+
+        # e_deque.appendleft(*now_e_2nd_deque)
+        e_deque = now_e_2nd_deque + e_deque
+
+    return np.around(np.vstack(total_e_DATA), decimals=4)
 
 
 # %%
-e_DATA, e_2nd_arr = track_electron(0, -1, 10000, np.array([0, 0, 0]), np.array([0, 0, 1]))
+# e_DATA = track_all_electrons(10, 10e+3)
 
 # %%
-plot_e_DATA(e_DATA)
-
-# %%
-ans = np.vstack(e_2nd_arr)
-
+# plot_e_DATA(e_DATA)
