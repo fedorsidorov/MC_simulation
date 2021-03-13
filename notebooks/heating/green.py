@@ -4,8 +4,11 @@ from collections import deque
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
+from functions import MC_functions as mcf
 import grid
+
 grid = importlib.reload(grid)
+mcf = importlib.reload(mcf)
 
 # %%
 k_1, k_2 = 0.002, 0.014  # W / cm / K
@@ -86,6 +89,8 @@ def get_green_xyz(x, xp, y, yp, z, zp, t, tp):
     return green_x * green_y * green_z
 
 
+# %%
+paper = np.loadtxt('')
 
 
 
