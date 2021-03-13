@@ -1,8 +1,5 @@
-#%% Import
 import numpy as np
-import os
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import importlib
 
 import grid
@@ -37,16 +34,22 @@ kind = 'muffin'
 # diff_cs_pnc = np.load('data/ELSEPA/Si_muffin_diff_cs_plane_norm_cumulated.npy')
 
 # diff_cs = np.load('Resources/ELSEPA/Si/Si_muffin_diff_cs_plane_norm.npy')
-diff_cs = np.load('Resources/ELSEPA/PMMA/MMA_muffin_DEMFP_plane_norm.npy')
-diff_cs_pnc = np.zeros(np.shape(diff_cs))
+# diff_cs = np.load('Resources/ELSEPA/PMMA/MMA_muffin_DEMFP_plane_norm.npy')
+# diff_cs_cumulated = np.zeros(np.shape(diff_cs))
 
+diff_cs_cumulated = np.load('notebooks/elastic/final_arrays/Si/Si_muffin_diff_cs_plane_norm_cumulated.npy')
 
-for i in range(len(diff_cs_pnc[:, 0])):
-    diff_cs_pnc[i, :] = mcf.get_cumulated_array(diff_cs[i, :])
+# for i in range(len(grid.EE)):
+#     for j in range(len(grid.THETA_rad)):
+#         diff_cs_cumulated[i, j] = np.trapz(diff_cs[i, :j + 1] * 2 * np.pi * np.sin(grid.THETA_rad[:j + 1]),
+#                                            x=grid.THETA_rad[:j + 1])
+
+# for i in range(len(diff_cs_pnc[:, 0])):
+#     diff_cs_pnc[i, :] = mcf.get_cumulated_array(diff_cs[i, :], x=grid.THETA_rad)
 
 
 for i, ind in enumerate([ind_500eV, ind_1keV, ind_2keV]):
-    now_diff_cs_pnc = diff_cs_pnc[ind, :]
+    now_diff_cs_pnc = diff_cs_cumulated[ind, :]
     plt.plot(grid.THETA_deg, now_diff_cs_pnc, label='my ' + EE[i])
 
 

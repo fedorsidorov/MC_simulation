@@ -10,18 +10,17 @@ grid = importlib.reload(grid)
 # %% load arrays
 Si_E_pl = 16.7
 Si_E_cut_ind = 278
-Si_E_bind = [16.65, 6.52, 13.63, 107.98, 151.55, 1828.5]
+Si_E_bind = [0, 20.1, 102, 151.1, 1828.9]
 
-Si_el_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/' +
-                     'simple_MC/arrays/MuElec_elastic_arrays/u.npy') * 1e-7
-Si_el_DIMFP_cumulated = \
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_MC/arrays/' +
-            'MuElec_elastic_arrays/u_diff_cumulated.npy')
+Si_el_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_MC/arrays/MuElec_elastic_arrays/' +
+                     'u.npy') * 1e-7
+Si_el_DIMFP_cumulated = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_MC/arrays/' +
+                                'MuElec_elastic_arrays/u_diff_cumulated.npy')
 
-Si_ee_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/' +
-                     'simple_MC/arrays/MuElec_inelastic_arrays/u_ee_6.npy') * 1e-7
-Si_ee_DIMFP_cumulated = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/' +
-                                'simple_MC/arrays/MuElec_inelastic_arrays/u_diff_cumulated_6.npy')
+Si_ee_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_MC/arrays/' +
+                     '5_osc/Si_ee_IMFP_5osc_nm.npy')
+Si_ee_DIMFP_cumulated = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_MC/arrays/' +
+                                '5_osc/Si_ee_DIMFP_cumulated_5osc.npy')
 
 Si_IMFP = np.vstack((Si_el_IMFP, Si_ee_IMFP.transpose())).transpose()
 
@@ -35,19 +34,19 @@ Si_total_IMFP = np.sum(Si_IMFP, axis=1)
 process_indexes = list(range(len(Si_IMFP[0, :])))
 
 # %% plot cross sections
-# plt.figure(dpi=300)
-#
-# for j in range(len(Si_IMFP[0])):
-#     plt.loglog(grid.EE, Si_IMFP[:, j])
-#
-# plt.loglog(grid.EE, Si_total_IMFP, 'o')
-# plt.loglog(grid.EE, np.sum(Si_ee_IMFP, axis=1), 'o')
-#
-# plt.grid()
-# plt.xlabel('E, eV')
-# plt.ylabel(r'$\mu$, nm$^{-1}$')
-# plt.ylim(1e-5, 1e+1)
-# plt.show()
+plt.figure(dpi=300)
+
+for j in range(len(Si_IMFP[0])):
+    plt.loglog(grid.EE, Si_IMFP[:, j])
+
+plt.loglog(grid.EE, Si_total_IMFP, 'o')
+plt.loglog(grid.EE, np.sum(Si_ee_IMFP, axis=1), 'o')
+
+plt.grid()
+plt.xlabel('E, eV')
+plt.ylabel(r'$\mu$, nm$^{-1}$')
+plt.ylim(1e-5, 1e+1)
+plt.show()
 
 
 # %%
@@ -98,9 +97,9 @@ def get_scattered_flight_ort(flight_ort, phi, theta):
     return new_flight_ort
 
 
-def track_electron(e_id, par_id, E0, coords_0, flight_ort_0):
+def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
 
-    E = E0
+    E = E_0
     coords = coords_0
     flight_ort = flight_ort_0
 
@@ -135,11 +134,21 @@ def track_electron(e_id, par_id, E0, coords_0, flight_ort_0):
             theta = grid.THETA_rad[theta_ind]
             new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
 
-            flight_ort = new_flight_ort
+            # flight_ort = new_flight_ort
+            hw = 0
             E_bind = 0
             E_2nd = 0
 
-        # elif proc_ind == 1:  # plasmon
+        elif proc_ind == 1:  # plasmon
+            hw = Si_E_pl
+            E_bind = Si_E_pl
+
+            phi = 2 * np.pi * np.random.random()
+            sin2 = Si_E_pl / E
+            theta = np.arcsin(np.sqrt(sin2))
+            new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
+
+            E_2nd = 0
 
         else:  # e-e scattering
             ss_ind = proc_ind - 1
@@ -176,8 +185,8 @@ def track_electron(e_id, par_id, E0, coords_0, flight_ort_0):
             e_2nd_deque.append(e_2nd_list)
             next_e_2nd_id += 1
 
-            E -= hw
-            flight_ort = new_flight_ort
+        E -= hw
+        flight_ort = new_flight_ort
 
         e_DATA_line = [e_id, par_id, proc_ind, *coords, E_bind, E_2nd, E]
         e_DATA_deque.append(e_DATA_line)
@@ -242,8 +251,8 @@ for n in range(n_files):
     print('File #' + str(n))
 
     e_DATA = track_all_electrons(n_electrons_in_file, E0)
-    np.save('data/si_si_si/10keV/e_DATA_' + str(n) + '.npy', e_DATA)
+    np.save('data/si_si_si/10keV_5osc/e_DATA_' + str(n) + '.npy', e_DATA)
 
 
 # %%
-# plot_e_DATA(e_DATA)
+plot_e_DATA(e_DATA)
