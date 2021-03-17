@@ -24,7 +24,7 @@ def get_2ndary_hist(folder, n_files, n_primaries_in_file, E_2nd_index):
 # %%
 # ans = np.load('data/si_si_si/10keV/e_DATA_0.npy')
 
-xx_sim, yy_sim = get_2ndary_hist('data/si_si_si/10keV_5osc_ELSEPA', 100, 100, 7)
+xx_sim, yy_sim = get_2ndary_hist('data/si_si_si/10000', 100, 100, 7)
 # xx_sim_old, yy_sim_old = get_2ndary_hist('/Volumes/Transcend/MC_Si/10keV', 100, 100, 8)
 
 # %%
@@ -44,8 +44,8 @@ plt.xlim(0, 4)
 plt.ylim(1e-4, 1e+3)
 plt.legend()
 
-plt.show()
-# plt.savefig('2ndary_spectra_my_and_geant4.jpg')
+# plt.show()
+plt.savefig('2ndary_spectra_my_and_geant4.jpg')
 
 # %%
 ans = np.load('data/si_si_si/10keV/e_DATA_0.npy')

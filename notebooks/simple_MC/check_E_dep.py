@@ -64,8 +64,8 @@ plt.ylabel('Dose, eV/nm')
 
 plt.legend()
 plt.grid()
-plt.show()
-# plt.savefig('E_dep.jpg')
+# plt.show()
+plt.savefig('E_dep.jpg')
 
 # %%
 ans = np.load('data/si_si_si/10000/e_DATA_0.npy')

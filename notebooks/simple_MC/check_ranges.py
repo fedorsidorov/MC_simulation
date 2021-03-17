@@ -36,8 +36,11 @@ paper_range_z = np.loadtxt('notebooks/MC_Si_check/curves/Si_projected_range.txt'
 paper_range_z_livermore = np.loadtxt('notebooks/OLF_Si/curves/Si_Livermore.txt')
 
 # %%
-E0_arr = [20, 40, 50, 60, 70, 80, 100, 200, 500, 700, 1000, 2000, 5000, 7000, 10000]
-n_elec = [5000, 2000, 5000, 2000, 2000, 2000, 2000, 2000, 2000, 100, 100, 100, 100, 100, 100]
+# E0_arr = [20, 40, 50, 60, 70, 80, 100, 200, 500, 700, 1000, 2000, 5000, 7000, 10000]
+# n_elec = [5000, 2000, 5000, 2000, 2000, 2000, 2000, 2000, 2000, 100, 100, 100, 100, 100, 100]
+
+E0_arr = [20, 40, 60, 80, 100, 200, 500, 700, 1000, 2000, 5000, 7000, 10000]
+n_elec = [5000, 2000, 2000, 2000, 2000, 2000, 2000, 100, 100, 100, 100, 100, 100]
 
 true_ranges = []
 z_ranges = []
@@ -51,11 +54,11 @@ for i, E0 in enumerate(E0_arr):
 # %%
 plt.figure(dpi=300)
 
-plt.loglog(paper_range[:, 0], paper_range[:, 1], 'o', label='paper range')
+# plt.loglog(paper_range[:, 0], paper_range[:, 1], 'o', label='paper range')
 plt.loglog(paper_range_z[:, 0], paper_range_z[:, 1], 'o', label='paper z range')
 plt.loglog(paper_range_z_livermore[:, 0], paper_range_z_livermore[:, 1], 'o', label='paper z range Livermore')
 
-plt.loglog(E0_arr, true_ranges, '*-', label='true range sim')
+# plt.loglog(E0_arr, true_ranges, '*-', label='true range sim')
 plt.loglog(E0_arr, z_ranges, 'v-', label='z range_sim')
 
 plt.xlabel('electron energy, eV')
@@ -64,5 +67,7 @@ plt.ylabel('electron range, nm')
 plt.legend()
 plt.grid()
 
-plt.show()
-# plt.savefig('true_z_ranges.jpg')
+plt.xlim(10, 2e+4)
+
+# plt.show()
+plt.savefig('z_range.jpg')
