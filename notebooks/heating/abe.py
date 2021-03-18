@@ -16,22 +16,20 @@ mcf = importlib.reload(mcf)
 e = eV = 1.6e-19
 
 rho = 1200  # kg / m^3
-# D = 0.2  # W / m / K
 k = 0.2  # W / m / K
 Cv = 1500  # J / kg / K
 alpha = k / (Cv * rho)
-# K_2 = D / (Cv * rho)
-# K = np.sqrt(K_2)
 
 V = 40e+3
 j = 100 * 1e+4  # A / m^2
 Q = 100e-6 * 1e+4  # C / m^2
-d = 1e-6  # m
 theta = 1e-6
 Rg = 20e-6  # m
 lambda_z_Rg = 1
 
-lx = ly = 0.5e-6  # m
+# a = b = 0.5e-6  # m
+a = b = 1e-6  # m
+d = 1e-6  # m
 
 
 # %%
@@ -68,38 +66,17 @@ def G(x, y, z, t, xp, yp, zp, tp):
 
 
 def h(xp, yp, zp, tp):
-    if np.abs(xp) > lx/2 or np.abs(yp) > ly/2 or zp > d or tp > theta:
+    if np.abs(xp) > a/2 or np.abs(yp) > b/2 or zp > d or tp > theta:
         return 0
     else:
         return V * Q * lambda_z_Rg / (Rg * theta)
 
 
 # %%
-nmc = 100000
+nmc = 10000
 
-t_coefs = [0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.01, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0]
+t_coefs = np.linspace(0.01, 4.01, 40)
 results = np.zeros(len(t_coefs))
-
-
-# %% nquad
-progress_bar = tqdm(total=len(t_coefs), position=0)
-
-for i, coef in enumerate(t_coefs):
-
-    x, y, z, t = 0, 0, 0, theta * coef
-    domainsize = lx * ly * d * t
-
-    def integrand(xp, yp, zp, tp):
-        return G(x, y, z, t, xp, yp, zp, tp) * h(xp, yp, zp, tp)
-
-    results[i] = nquad(integrand, [
-        [-lx, lx],
-        [-ly, ly],
-        [0, d],
-        [0, t]
-    ])[0]
-
-    progress_bar.update()
 
 
 # %% mcint
@@ -107,7 +84,8 @@ progress_bar = tqdm(total=len(t_coefs), position=0)
 
 for i, coef in enumerate(t_coefs):
 
-    x, y, z, t = 0, 0, 0, theta * coef
+    x_f, y_f, z_f, t_f = 0, 0, 0, theta * coef
+    domainsize = a * b * d * t_f
 
     def integrand(xx):
         xp = xx[0]
@@ -115,14 +93,14 @@ for i, coef in enumerate(t_coefs):
         zp = xx[2]
         tp = xx[3]
 
-        return G(x, y, z, t, xp, yp, zp, tp) * h(xp, yp, zp, tp)
+        return G(x_f, y_f, z_f, t_f, xp, yp, zp, tp) * h(xp, yp, zp, tp)
 
     def sampler():
         while True:
-            xp = random.uniform(-lx / 2, lx / 2)
-            yp = random.uniform(-ly / 2, ly / 2)
+            xp = random.uniform(-a / 2, a / 2)
+            yp = random.uniform(-b / 2, b / 2)
             zp = random.uniform(0, d)
-            tp = random.uniform(0, t)
+            tp = random.uniform(0, t_f)
             yield (xp, yp, zp, tp)
 
     results[i] = mcint.integrate(integrand, sampler(), measure=domainsize, n=nmc)[0]
