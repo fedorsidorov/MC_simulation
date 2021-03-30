@@ -28,7 +28,7 @@ n_mon_cell_max = int(np.max(hist_2nm))
 plt.imshow(np.average(hist_2nm, axis=0))
 plt.show()
 
-# %% create arrays
+# %% create arrays_Si
 pos_matrix = np.zeros(mapping.hist_2nm_shape, dtype=np.uint32)
 resist_matrix = -np.ones((*mapping.hist_2nm_shape, n_mon_cell_max, 3), dtype=np.uint32)
 chain_tables = deque()

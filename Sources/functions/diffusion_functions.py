@@ -11,7 +11,6 @@ const = importlib.reload(const)
 mcf = importlib.reload(mcf)
 mm = importlib.reload(mm)
 
-
 # %%
 # D = 3.16e-7 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
 D = 3.16e-6 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
@@ -37,20 +36,16 @@ def get_D(dT, wp=1):  # in cm^2 / s
     return 10**log_D
 
 
-def get_dt_dx_dz(T_C, wp=1, dt=0.1):  # nanometers!!!
+def get_dt_dx_dz(T_C, wp, dt):  # nanometers!!!
     D = get_D(T_C, wp)  # in cm^2 / s
-    # sigma = 5e-7  # bin size in cm
-    # dt = sigma**2 / 4 / D
-    # dt = 0.1
     sigma = np.sqrt(2 * D * dt)
-    # print(sigma)
     xx = np.linspace(-3 * sigma, 3 * sigma, 1000)
     probs = 1 / (sigma * np.sqrt(2 * np.pi)) * np.exp(-xx ** 2 / (2 * sigma ** 2))
     probs_norm = probs / np.sum(probs)
     return dt, np.random.choice(xx, p=probs_norm) * 1e+7, np.random.choice(xx, p=probs_norm) * 1e+7  # nanometers!!!
 
 
-def track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt):  # nanometers!!!
+def track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dt):  # nanometers!!!
 
     def get_z_vac_for_x(x):
         if x > np.max(xx):
@@ -63,16 +58,11 @@ def track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt):  # nanomete
     now_x = x0
     now_z = z0
 
-    # history = np.zeros((100000, 2))
-    # cnt = 0
-    # history[cnt, :] = now_x, now_z
-    # cnt += 1
-
     total_time = 0
 
     while total_time < t_step:
 
-        dt, dx, dz = get_dt_dx_dz(dT, wp, dt=dtdt)
+        dt, dx, dz = get_dt_dx_dz(dT, wp=wp, dt=dt)
         total_time += dt
         now_x += dx
 
@@ -81,23 +71,18 @@ def track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt):  # nanomete
         else:
             now_z += dz
 
-        # history[cnt, :] = now_x, now_z
-        # cnt += 1
-
-        if now_z < zz_vac.min():
+        if now_z < zz_vac.max():
             if now_z < get_z_vac_for_x(now_x):
                 return now_x, 0, total_time
-                # return now_x, 0, total_time, history[np.where(history[:, 0] != 0)]
 
-    return now_x, now_z, total_time
-    # return now_x, now_z, total_time, history[np.where(history[:, 0] != 0)]
+    return now_x, now_z, t_step
 
 
 def exp_gauss(xx, A, B, s):
     return np.exp(A - B*np.exp(-xx**2 / s**2))
 
 
-def track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt, n_hack):
+def track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp, t_step, dt, n_portion):
 
     monomer_matrix_2d_final = np.zeros((np.shape(monomer_matrix_2d)))
     non_zero_inds = np.array(np.where(monomer_matrix_2d != 0)).transpose()
@@ -107,28 +92,33 @@ def track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp, t_step, dt
     for line in non_zero_inds:
 
         ind_x, ind_z = line
-        x0, z0 = mm.x_centers_10nm[ind_x], mm.z_centers_10nm[ind_z]  # nanometers!!!
+        x0, z0 = mm.x_centers_5nm[ind_x], mm.z_centers_5nm[ind_z]  # nanometers!!!
 
-        n_monomer_portions = int(np.round(monomer_matrix_2d[ind_x, ind_z] / n_hack))
+        n_monomer_portions = int(np.round(monomer_matrix_2d[ind_x, ind_z] / n_portion))
 
         for n in range(n_monomer_portions):
-            x_final, z_final, total_time = track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dtdt)
+
+            x_final, z_final, total_time = track_monomer(
+                x0=x0,
+                z0=z0,
+                xx=xx,
+                zz_vac=zz_vac,
+                d_PMMA=d_PMMA,
+                dT=dT,
+                wp=wp,
+                t_step=t_step, dt=dt
+            )
+
+            track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dt)
+
             monomer_matrix_2d_final += np.histogramdd(
                 sample=np.array((x_final, z_final)).reshape((1, 2)),
-                bins=(mm.x_bins_10nm, mm.z_bins_10nm)
-            )[0] * n_hack
+                bins=(mm.x_bins_5nm, mm.z_bins_5nm)
+            )[0] * n_portion
 
         progress_bar.update()
 
     return monomer_matrix_2d_final
-
-
-def move_10nm_to_50nm(array):
-    return np.histogram(mm.x_centers_10nm, bins=mm.x_bins_50nm, weights=array)[0]
-
-
-def move_10nm_to_100nm(array):
-    return np.histogram(mm.x_centers_10nm, bins=mm.x_bins_100nm, weights=array)[0]
 
 
 # def get_zz_vac_10nm_monomer_matrix(zz_vac_old_10nm, mon_matrix_2d, n_hack):
@@ -241,14 +231,3 @@ def get_profile_after_diffusion(scission_matrix, zip_length, xx, zz_vac, d_PMMA,
     return zz_vac_new
 
 
-# %%
-# hx, hz, time = track_monomer(50, 50, xx*1e+7, zz_vac*1e+7, d_PMMA*1e+7, T_C, 1, 10)
-#
-# inds = np.where(hz != 0)[0]
-#
-# plt.figure(dpi=300)
-# plt.plot(hx[inds], hz[inds])
-# plt.show()
-
-arr_10nm = np.ones(len(mm.x_bins_10nm) - 1)
-arr_50nm = move_10nm_to_50nm(arr_10nm)

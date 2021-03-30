@@ -14,7 +14,7 @@ const = importlib.reload(const)
 indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 
-# %% load arrays
+# %% load arrays_Si
 folder_name = 'combine_chains'
 deg_path = 'series_1_4nm'
 

@@ -31,6 +31,8 @@ lambda_z_Rg = 1
 a = b = 1e-6  # m
 d = 1e-6  # m
 
+n_terms = 50
+
 
 # %%
 def f(x, t, xp, tp):
@@ -47,7 +49,7 @@ def g(z, t, zp, tp):
 
     total_sum = 0
 
-    for m in range(1, 11):
+    for m in range(1, n_terms + 1):
         term_1 = np.exp(-(2 * m * d - z - zp)**2 / (4 * alpha * (t - tp)))
         term_2 = np.exp(-(2 * m * d + z - zp)**2 / (4 * alpha * (t - tp)))
         term_3 = np.exp(-(-2 * m * d + z - zp)**2 / (4 * alpha * (t - tp)))
@@ -77,7 +79,6 @@ nmc = 10000
 
 t_coefs = np.linspace(0.01, 4.01, 40)
 results = np.zeros(len(t_coefs))
-
 
 # %% mcint
 progress_bar = tqdm(total=len(t_coefs), position=0)

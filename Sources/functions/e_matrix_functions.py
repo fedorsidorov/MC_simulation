@@ -36,11 +36,10 @@ def get_e_id_e_DATA(e_DATA, n_primaries_in_file, e_id):
     return e_DATA[get_e_id_e_DATA_ind_range(e_DATA, n_primaries_in_file, e_id), :]
 
 
-def rotate_DATA(e_DATA, phi=2 * np.pi * np.random.random()):
+def rotate_DATA(e_DATA, x_ind, z_ind, phi=2 * np.pi * np.random.random()):
     rot_mat = np.mat([[np.cos(phi), -np.sin(phi)],
                       [np.sin(phi), np.cos(phi)]])
-    e_DATA[:, ind.e_DATA_x_ind:ind.e_DATA_z_ind] = \
-        np.dot(rot_mat, e_DATA[:, ind.e_DATA_x_ind:ind.e_DATA_z_ind].transpose()).transpose()
+    e_DATA[:, x_ind:z_ind] = np.dot(rot_mat, e_DATA[:, x_ind:z_ind].transpose()).transpose()
 
 
 def add_uniform_xy_shift_to_e_DATA(e_DATA, x_range, y_range):

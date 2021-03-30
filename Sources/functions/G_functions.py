@@ -11,8 +11,8 @@ def linear_func(xx, k, b):
     return k * xx + b
 
 
-def fit_gamma_G_value():
-    data = np.loadtxt('data/G_values/gamma.txt')
+# def fit_gamma_G_value():
+#     data = np.loadtxt('data/G_values/gamma.txt')
 
 
 def fit_e_G_value():

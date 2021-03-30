@@ -14,10 +14,10 @@ mcf = importlib.reload(mcf)
 
 # %% elastic
 PMMA_el_IMFP = \
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/PMMA/PMMA_muffin_EIMFP.npy') * 1e-7
+    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/PMMA/MMA_muffin_u.npy') * 1e-7
 PMMA_el_IMFP[:228] = PMMA_el_IMFP[228]  # no extrapolation
 PMMA_el_DIMFP_cumulated = \
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/PMMA/MMA_diff_cs_cumulated_muffin.npy')
+    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/PMMA/PMMA_el_DIMFP_cumulated.npy')
 
 # plt.figure(dpi=300)
 # plt.loglog(grid.EE, PMMA_el_IMFP)
@@ -48,14 +48,14 @@ Si_el_DIMFP_cumulated[:inds.Si_E_cut_ind, :] = 0  # no life below plasmon energy
 
 #%% PMMA e-e
 C_K_ee_IMFP = \
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/C_GOS_IIMFP.npy') * 1e-7
+    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/C_IIMFP.npy') * 1e-7
 C_K_ee_DIMFP_cumulated = \
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/C_GOS_DIIMFP_cumulated.npy')
+    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/C_DIIMFP_cumulated.npy')
 
 O_K_ee_IMFP = \
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/O_GOS_IIMFP.npy') * 1e-7
+    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/O_IIMFP.npy') * 1e-7
 O_K_ee_DIMFP_cumulated = \
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/O_GOS_DIIMFP_cumulated.npy')
+    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/GOS/O_DIIMFP_cumulated.npy')
 
 PMMA_val_IMFP = \
     np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/Mermin/IIMFP_Mermin_PMMA.npy') * 1e-7

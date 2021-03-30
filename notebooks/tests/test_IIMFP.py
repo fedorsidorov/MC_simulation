@@ -14,7 +14,7 @@ c = importlib.reload(c)
 grid = importlib.reload(grid)
 u = importlib.reload(u)
 
-# %% test PMMA arrays
+# %% test PMMA arrays_Si
 plt.figure(dpi=300)
 plt.loglog(grid.EE, a.PMMA_el_IMFP, label='elastic')
 plt.loglog(grid.EE, a.PMMA_val_IMFP, label='valence')
@@ -33,7 +33,7 @@ plt.legend()
 plt.grid()
 plt.show()
 
-# %% test Si arrays
+# %% test Si arrays_Si
 plt.figure(dpi=300)
 plt.loglog(grid.EE, a.Si_el_IMFP, label='elastic')
 

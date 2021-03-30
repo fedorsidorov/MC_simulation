@@ -19,7 +19,7 @@ for weight in ['all']:
 
     print(weight)
 
-    # load arrays
+    # load arrays_Si
     scission_matrix = np.load('data/choi_weight/e_matrix_val_ion_sci_' + weight + '.npy')
 
     resist_matrix = np.load('data/G_calibration/resist_matrix_5nm.npy')

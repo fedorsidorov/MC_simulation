@@ -23,7 +23,7 @@ n_mon_cell_max = int(np.max(hist_10nm))
 plt.imshow(np.average(hist_10nm, axis=1).transpose())
 plt.show()
 
-# %% create arrays
+# %% create arrays_Si
 pos_matrix = np.zeros(mapping.hist_10nm_shape, dtype=np.uint32)
 resist_matrix = -np.ones((*mapping.hist_10nm_shape, n_mon_cell_max, 3), dtype=np.uint32)
 chain_tables = []

@@ -34,7 +34,7 @@ kind = 'muffin'
 # diff_cs_pnc = np.load('data/ELSEPA/Si_muffin_diff_cs_plane_norm_cumulated.npy')
 
 # diff_cs = np.load('Resources/ELSEPA/Si/Si_muffin_diff_cs_plane_norm.npy')
-# diff_cs = np.load('Resources/ELSEPA/PMMA/MMA_muffin_DEMFP_plane_norm.npy')
+# diff_cs = np.load('Resources/ELSEPA/PMMA/MMA_muffin_diff_cs_plane_norm.npy')
 # diff_cs_cumulated = np.zeros(np.shape(diff_cs))
 
 diff_cs_cumulated = np.load('notebooks/elastic/final_arrays/Si/Si_muffin_diff_cs_plane_norm_cumulated.npy')
@@ -67,7 +67,7 @@ plt.show()
 # plt.savefig('Si_compare.pdf')
 
 # %%
-u_P = np.load('Resources/ELSEPA/PMMA/PMMA_muffin_EIMFP.npy')
+u_P = np.load('Resources/ELSEPA/PMMA/MMA_muffin_u.npy')
 u_Si = np.load('Resources/ELSEPA/Si/Si_muffin_u.npy')
 
 plt.figure(dpi=300)

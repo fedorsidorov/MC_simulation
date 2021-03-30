@@ -6,15 +6,15 @@ import constants as const
 
 const = importlib.reload(const)
 
-# C_sim = np.loadtxt('notebooks/MC_PMMA_2ndary/ciappa2010.txt')
-D_sim = np.loadtxt('notebooks/MC_PMMA_2ndary/Dapor_sim.txt')
-D_exp = np.loadtxt('notebooks/MC_PMMA_2ndary/Dapor_exp.txt')
+# C_sim = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/MC_PMMA_2ndary/ciappa2010.txt')
+D_sim = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/MC_PMMA_2ndary/Dapor_sim.txt')
+D_exp = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/MC_PMMA_2ndary/Dapor_exp.txt')
 
 
 #%%
 def get_2ndary_yield(model, n_primaries=100):
     
-    source_folder = os.path.join('data/2ndaries_sin', model)
+    source_folder = os.path.join('/Users/fedor/PycharmProjects/MC_simulation/data/si_pmma_si', model)
     E_str_list = os.listdir(source_folder)
     # E_str_list = '100', '200'
 
@@ -44,7 +44,6 @@ def get_2ndary_yield(model, n_primaries=100):
                 continue
             
             DATA = np.load(os.path.join(source, fname))
-            DATA[:, -1] -= 4.68
 
             if n_primaries == 0:
                 break
@@ -62,14 +61,14 @@ def get_2ndary_yield(model, n_primaries=100):
 
 
 # %%
-now_model = '0p1_0p15'
+now_model = 'easy'
 
 energies, delta = get_2ndary_yield(now_model)
 
 plt.figure(dpi=300)
 # plt.plot(C_sim[:, 0], C_sim[:, 1], 'o-', label='Ciappa')
-plt.plot(D_sim[:, 0], D_sim[:, 1], 'o-', label='Dapor')
-plt.plot(D_exp[:, 0], D_exp[:, 1], 'o-', label='experiment')
+# plt.plot(D_sim[:, 0], D_sim[:, 1], 'o-', label='Dapor')
+# plt.plot(D_exp[:, 0], D_exp[:, 1], 'o-', label='experiment')
 
 plt.plot(energies, delta, '*-', label='my simulation')
 
@@ -80,7 +79,7 @@ plt.legend()
 plt.grid()
 
 # plt.xlim(0, 1600)
-plt.ylim(0, 3)
+# plt.ylim(0, 3)
 
 plt.show()
 # plt.savefig('2ndary_yield.jpg', dpi=300)

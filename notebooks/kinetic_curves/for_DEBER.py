@@ -91,5 +91,5 @@ plt.legend()
 plt.show()
 
 # %%
-np.save('notebooks/kinetic_curves/arrays/tau.npy', tau)
-np.save('notebooks/kinetic_curves/arrays/Mw_125.npy', Mw_125)
+np.save('notebooks/kinetic_curves/arrays_Si/tau.npy', tau)
+np.save('notebooks/kinetic_curves/arrays_Si/Mw_125.npy', Mw_125)

@@ -11,7 +11,7 @@ const = importlib.reload(const)
 indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 
-# %% load arrays
+# %% load arrays_Si
 scission_matrix = np.load('data/e_matrix/exp_80_3/scission_matrix_snaked.npy')
 E_dep_matrix = np.load('data/e_matrix/exp_80_3/E_dep_matrix_snaked.npy')
 

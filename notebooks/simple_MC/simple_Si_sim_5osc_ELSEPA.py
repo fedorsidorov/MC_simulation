@@ -7,18 +7,18 @@ from tqdm import tqdm
 import grid
 grid = importlib.reload(grid)
 
-# %% load arrays
+# %% load arrays_Si
 Si_E_pl = 16.7
 Si_E_cut_ind = 278
 Si_E_bind = [0, 20.1, 102, 151.1, 1828.9]
 
 Si_el_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/Si/Si_muffin_u.npy') * 1e-7
 Si_el_DIMFP_cumulated = np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/Si/' +
-                                'Si_diff_cs_cumulated_muffin.npy')
+                                'Si_el_DIMFP_cumulated.npy')
 
-Si_ee_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_MC/arrays/' +
+Si_ee_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_MC/arrays_Si/' +
                      '5_osc/Si_ee_IMFP_5osc_nm.npy')
-Si_ee_DIMFP_cumulated = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_MC/arrays/' +
+Si_ee_DIMFP_cumulated = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_MC/arrays_Si/' +
                                 '5_osc/Si_ee_DIMFP_cumulated_5osc.npy')
 
 Si_IMFP = np.vstack((Si_el_IMFP, Si_ee_IMFP.transpose())).transpose()

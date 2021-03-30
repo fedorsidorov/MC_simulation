@@ -203,7 +203,7 @@ class Structure:
         self.IMFP_norm = [arrays.PMMA_IMFP_norm, arrays.Si_IMFP_norm]
         self.total_IMFP = [arrays.PMMA_total_IMFP, arrays.Si_total_IMFP]
         self.elastic_DIMFP_cumulated = [arrays.PMMA_el_DIMFP_cumulated, arrays.Si_el_DIMFP_cumulated]
-        # self.ee_DIMFP_cumulated = [arrays.PMMA_ee_DIMFP_3_cumulated, arrays.Si_ee_DIMFP_5_cumulated]
+        # self.ee_DIMFP_cumulated = [arrays_Si.PMMA_ee_DIMFP_3_cumulated, arrays_Si.Si_ee_DIMFP_5_cumulated]
         self.ee_DIMFP_cumulated = [arrays.PMMA_ee_DIMFP_3_cumulated, arrays.Si_ee_DIMFP_6_cumulated]
 
         self.E_bind = [

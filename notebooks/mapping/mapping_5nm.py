@@ -14,7 +14,7 @@ const = importlib.reload(const)
 indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 
-# %% load arrays
+# %% load arrays_Si
 e_matrix_val_exc_sci = np.load('data/e_matrix/harris/C-C2:4_C-C\':2/e_matrix_val_exc_sci_5nm.npy')
 e_matrix_val_ion_sci = np.load('data/e_matrix/harris/C-C2:4_C-C\':2/e_matrix_val_ion_sci_5nm.npy')
 

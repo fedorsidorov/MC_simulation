@@ -95,7 +95,7 @@ for _ in range(n_files_required):
         now_prim_e_val_DATA = \
             now_prim_e_DATA[np.where(now_prim_e_DATA[:, ind.DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
 
-        scissions = sf.get_scissions(now_prim_e_val_DATA, deg_paths, weight=weight)
+        scissions = sf.get_scissions(now_prim_e_val_DATA, weight=weight)
 
         e_matrix_val_sci += np.histogramdd(
             sample=now_prim_e_val_DATA[:, ind.DATA_coord_inds],

@@ -35,7 +35,7 @@ plt.show()
 
 # %%
 PMMA_el_IMFP = \
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/PMMA/PMMA_muffin_EIMFP.npy') * 1e-7
+    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/PMMA/MMA_muffin_u.npy') * 1e-7
 
 plt.figure(dpi=300)
 

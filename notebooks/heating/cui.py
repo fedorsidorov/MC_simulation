@@ -127,65 +127,65 @@ def get_Y(x, y, z, t, xp, yp, zp, tp, a, b, t_e):
 
 
 # %% MC integration - t
-nmc = 10000
-
-# a = b = 0.5e-6  # m
-t_e = 1e-6  # s
-tt = np.linspace(0.01, 4.01, 20) * 1e-6
-results = np.zeros(len(tt))
-
-# tt_e = np.array([0.5e-6, 1e-6, 1.5e-6, 3e-6])
-ab_arr = np.array([0.25e-6, 0.5e-6, 1e-6, 1.5e-6])
-T_total = np.zeros([len(ab_arr), len(tt)])
-
-for i, now_ab in enumerate(ab_arr):
-
-    print(now_ab)
-    a, b = now_ab, now_ab
-    progress_bar = tqdm(total=len(tt), position=0)
-
-    for j, now_t in enumerate(tt):
-
-        x_f, y_f, z_f, t_f = 0, 0, 0, now_t
-        domainsize = a * b * d * t_f
-
-        def integrand(xx):
-            xp = xx[0]
-            yp = xx[1]
-            zp = xx[2]
-            tp = xx[3]
-            return get_Y(x_f, y_f, z_f, t_f, xp, yp, zp, tp, a, b, t_e)
-
-        def sampler():
-            while True:
-                xp = random.uniform(-a / 2, a / 2)
-                yp = random.uniform(-b / 2, b / 2)
-                zp = random.uniform(0, d)
-                tp = random.uniform(0, t_f)
-                yield (xp, yp, zp, tp)
-
-        T_total[i, j] = mcint.integrate(integrand, sampler(), measure=domainsize, n=nmc)[0]
-
-        progress_bar.update()
+# nmc = 10000
+#
+# # a = b = 0.5e-6  # m
+# t_e = 1e-6  # s
+# tt = np.linspace(0.01, 4.01, 20) * 1e-6
+# results = np.zeros(len(tt))
+#
+# # tt_e = np.array([0.5e-6, 1e-6, 1.5e-6, 3e-6])
+# ab_arr = np.array([0.25e-6, 0.5e-6, 1e-6, 1.5e-6])
+# T_total = np.zeros([len(ab_arr), len(tt)])
+#
+# for i, now_ab in enumerate(ab_arr):
+#
+#     print(now_ab)
+#     a, b = now_ab, now_ab
+#     progress_bar = tqdm(total=len(tt), position=0)
+#
+#     for j, now_t in enumerate(tt):
+#
+#         x_f, y_f, z_f, t_f = 0, 0, 0, now_t
+#         domainsize = a * b * d * t_f
+#
+#         def integrand(xx):
+#             xp = xx[0]
+#             yp = xx[1]
+        #     zp = xx[2]
+        #     tp = xx[3]
+        #     return get_Y(x_f, y_f, z_f, t_f, xp, yp, zp, tp, a, b, t_e)
+        #
+        # def sampler():
+        #     while True:
+        #         xp = random.uniform(-a / 2, a / 2)
+        #         yp = random.uniform(-b / 2, b / 2)
+        #         zp = random.uniform(0, d)
+        #         tp = random.uniform(0, t_f)
+        #         yield (xp, yp, zp, tp)
+        #
+        # T_total[i, j] = mcint.integrate(integrand, sampler(), measure=domainsize, n=nmc)[0]
+        #
+        # progress_bar.update()
 
 # %% 3a
-paper = np.loadtxt('notebooks/heating/curves/cui_3_a.txt')
-
-plt.figure(dpi=300)
-
-for i in range(len(ab_arr)):
-    plt.plot(tt * 1e+6, T_total[i, :], label='sim, a, b = ' + str(ab_arr[i] * 1e+6) + r' $\mu$m')
-
-plt.plot(paper[:, 0], paper[:, 1], '.', label='paper')
-
-plt.xlim(0, 2)
-plt.ylim(0, 300)
-plt.legend()
-plt.xlabel(r'time, $\mu$s')
-plt.ylabel(r'T, °C')
-plt.grid()
-# plt.show()
-plt.savefig('figure_3a.jpg')
+# paper = np.loadtxt('notebooks/heating/curves/cui_3_a.txt')
+#
+# plt.figure(dpi=300)
+#
+# for i in range(len(ab_arr)):
+#     plt.plot(tt * 1e+6, T_total[i, :], label='sim, a, b = ' + str(ab_arr[i] * 1e+6) + r' $\mu$m')
+#
+# plt.plot(paper[:, 0], paper[:, 1], '.', label='paper')
+#
+# plt.xlim(0, 2)
+# plt.ylim(0, 300)
+# plt.legend()
+# plt.xlabel(r'time, $\mu$s')
+# plt.ylabel(r'T, °C')
+# plt.grid()
+# # plt.show()
+# plt.savefig('figure_3a.jpg')
 
 # %% 3b
 # paper = np.loadtxt('notebooks/heating/curves/cui_3_b.txt')
@@ -207,52 +207,72 @@ plt.savefig('figure_3a.jpg')
 # plt.savefig('figure_3a.jpg')
 
 # %% MC integration - z
-# nmc = 100000
-#
-# a = b = 0.5e-6  # m
-# zz = np.linspace(0, 1.5, 20) * 1e-6
-# results = np.zeros(len(zz))
-#
-# progress_bar = tqdm(total=len(zz), position=0)
-#
-# for i, now_z in enumerate(zz):
-#
-#     x_f, y_f, z_f, t_f = 0, 0, now_z, t_e
-#     domainsize = a * b * d * t_f
-#
-#     def integrand(xx):
-#         xp = xx[0]
-#         yp = xx[1]
-#         zp = xx[2]
-#         tp = xx[3]
-#         return get_Y(x_f, y_f, z_f, t_f, xp, yp, zp, tp)
-#
-#     def sampler():
-#         while True:
-#             xp = random.uniform(-a / 2, a / 2)
-#             yp = random.uniform(-b / 2, b / 2)
-#             zp = random.uniform(0, d)
-#             tp = random.uniform(0, t_f)
-#             yield (xp, yp, zp, tp)
-#
-#     results[i] = mcint.integrate(integrand, sampler(), measure=domainsize, n=nmc)[0]
-#
-#     progress_bar.update()
+nmc = 100000
+
+a = b = 0.5e-6  # m
+t_e = 1e-6  # s
+zz = np.linspace(0, 1.5, 20) * 1e-6
+results = np.zeros(len(zz))
+
+progress_bar = tqdm(total=len(zz), position=0)
+
+for i, now_z in enumerate(zz):
+
+    x_f, y_f, z_f, t_f = 0, 0, now_z, t_e
+    domainsize = a * b * d * t_f
+
+    def integrand(xx):
+        xp = xx[0]
+        yp = xx[1]
+        zp = xx[2]
+        tp = xx[3]
+        return get_Y(x_f, y_f, z_f, t_f, xp, yp, zp, tp, a, b, t_e)
+
+    def sampler():
+        while True:
+            xp = random.uniform(-a / 2, a / 2)
+            yp = random.uniform(-b / 2, b / 2)
+            zp = random.uniform(0, d)
+            tp = random.uniform(0, t_f)
+            yield (xp, yp, zp, tp)
+
+    results[i] = mcint.integrate(integrand, sampler(), measure=domainsize, n=nmc)[0]
+
+    progress_bar.update()
 
 # %% print z
-# paper = np.loadtxt('notebooks/heating/curves/cui_2.txt')
-#
-# plt.figure(dpi=300)
-#
-# plt.plot(zz * 1e+6, results, 'o-', label='simulation')
-# plt.plot(paper[:, 0], paper[:, 1], 'o-', label='paper')
-# plt.plot(np.ones(10), np.linspace(0, 150, 10), '--')
-#
-# plt.xlim(0, 1.5)
-# plt.ylim(0, 150)
-# plt.legend()
-# plt.xlabel(r'depth, $\mu$m')
-# plt.ylabel(r'T, °C')
-# plt.grid()
-# plt.show()
+paper = np.loadtxt('notebooks/heating/curves/cui_2.txt')
+
+plt.figure(dpi=300)
+
+plt.plot(zz * 1e+6, results, 'o-', label='simulation')
+plt.plot(paper[:, 0], paper[:, 1], 'o-', label='paper')
+plt.plot(np.ones(10), np.linspace(0, 150, 10), '--')
+
+plt.xlim(0, 1.5)
+plt.ylim(0, 150)
+plt.legend()
+plt.xlabel(r'depth, $\mu$m')
+plt.ylabel(r'T, °C')
+plt.grid()
+plt.show()
 # plt.savefig('figure_2.jpg')
+
+# %%
+xx = np.arange(-a/2, a/2 + 1e-9, 50e-9)
+zz = np.arange(0, d + 1e-9, 50e-9)
+
+test_h = np.zeros([len(xx), len(zz)])
+test_h_MC = np.zeros([len(xx), len(zz)])
+
+for i, x in enumerate(xx):
+    for j, z in enumerate(zz):
+        test_h[i, j] = get_h(x, 0, z, 0, a, b, t_e)
+
+# %%
+plt.figure(dpi=300)
+plt.imshow(test_h)
+plt.show()
+
+
+

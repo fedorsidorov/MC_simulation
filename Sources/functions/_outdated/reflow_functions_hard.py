@@ -9,7 +9,7 @@ from mapping import mapping_3p3um_80nm as mapping
 mapping = importlib.reload(mapping)
 mcf = importlib.reload(mcf)
 
-# %% load many arrays, move scissions per (5 nm)^3 to (10 nm)^3
+# %% load many arrays_Si, move scissions per (5 nm)^3 to (10 nm)^3
 sci_500 = np.load('notebooks/viscosity/final_1/sci_500.npy') * 8
 sci_700 = np.load('notebooks/viscosity/final_1/sci_700.npy') * 8
 sci_1000 = np.load('notebooks/viscosity/final_1/sci_1000.npy') * 8

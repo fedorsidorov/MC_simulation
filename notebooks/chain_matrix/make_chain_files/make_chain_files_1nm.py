@@ -29,7 +29,7 @@ plt.show()
 n_chains = 754
 n_mon_cell_max = int(np.max(hist_1nm))
 
-# %% create arrays
+# %% create arrays_Si
 pos_matrix = np.zeros(mapping.hist_1nm_shape, dtype=np.uint32)
 resist_matrix = -np.ones((*mapping.hist_1nm_shape, n_mon_cell_max, 3), dtype=np.uint32)
 chain_tables = []

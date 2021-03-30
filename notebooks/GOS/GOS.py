@@ -73,9 +73,7 @@ ax.set_xlabel('E, eV')
 ax.set_ylabel('ln(ka$_0$)')
 ax.set_zlabel('df/dW * 10$^3$, eV$^{-1}$')
 plt.show()
-
-
-# plt.savefig('GOS.png', dpi=300)
+# plt.savefig('GOS.png')
 
 
 # %% PMMA ELF
@@ -106,8 +104,6 @@ plt.figure(dpi=300)
 plt.loglog(EE, OLF_PMMA)
 plt.show()
 
-# np.save('Resources/GOS/PMMA_GOS_OLF_k=1e-100.npy', OLF)
-
 
 # %%
 def get_PMMA_DIIMFP_GOS(T_eV, hw_eV, el='PMMA'):
@@ -127,9 +123,17 @@ def get_PMMA_DIIMFP_GOS(T_eV, hw_eV, el='PMMA'):
 
 
 def get_GOS_IIMFP(T_eV, el):
+
+    E_bind = 0
+
+    if el == 'C':
+        E_bind = const.K_Ebind_C
+    elif el == 'O':
+        E_bind = const.K_Ebind_O
+
     def get_Y(hw_eV):
         return get_PMMA_DIIMFP_GOS(T_eV, hw_eV, el)
-    return integrate.quad(get_Y, 0, T_eV / 2)[0]
+    return integrate.quad(get_Y, E_bind / 2, (E_bind + T_eV) / 2)[0]
 
 
 # %%
@@ -149,52 +153,42 @@ for i in trange(len(EE), position=0):
         DIIMFP_C[i, j] = get_PMMA_DIIMFP_GOS(E, hw, 'C')
         DIIMFP_O[i, j] = get_PMMA_DIIMFP_GOS(E, hw, 'O')
 
-IIMFP_PMMA = IIMFP_C + IIMFP_O
-DIIMFP_PMMA = DIIMFP_C + DIIMFP_O
-
 # %%
-np.save('Resources/GOS/DIIMFP_GOS_C.npy', DIIMFP_C)
-np.save('Resources/GOS/DIIMFP_GOS_O.npy', DIIMFP_O)
-# np.save('Resources/GOS/DIIMFP_GOS_PMMA.npy', DIIMFP_PMMA)
+np.save('Resources/GOS/C_DIIMFP_E_bind.npy', DIIMFP_C)
+np.save('Resources/GOS/O_DIIMFP_E_bind.npy', DIIMFP_O)
 
-# np.save('Resources/GOS/C_GOS_IIMFP.npy', IIMFP_C)
-# np.save('Resources/GOS/O_GOS_IIMFP.npy', IIMFP_O)
-# np.save('Resources/GOS/IIMFP_GOS_PMMA.npy', IIMFP_PMMA)
+np.save('Resources/GOS/C_IIMFP_E_bind.npy', IIMFP_C)
+np.save('Resources/GOS/O_IIMFP_E_bind.npy', IIMFP_O)
 
 
 # %%
-# DIIMFP_C_norm = np.zeros((len(EE), len(EE)))
-# DIIMFP_O_norm = np.zeros((len(EE), len(EE)))
-# DIIMFP_PMMA_norm = np.zeros((len(EE), len(EE)))
-#
-# for i in range(len(EE)):
-#     if not np.sum(DIIMFP_C[i, :]) == 0:
-#         DIIMFP_C_norm[i, :] = DIIMFP_C[i, :] / np.sum(DIIMFP_C[i, :])
-#
-#     if not np.sum(DIIMFP_O[i, :]) == 0:
-#         DIIMFP_O_norm[i, :] = DIIMFP_O[i, :] / np.sum(DIIMFP_O[i, :])
-#
-#     if not np.sum(DIIMFP_C[i, :]) == 0:
-#         DIIMFP_PMMA_norm[i, :] = DIIMFP_PMMA[i, :] / np.sum(DIIMFP_PMMA[i, :])
+def get_cumulated_DIIMFP(DIIMFP, el):
 
+    E_bind = 0
 
-# %%
-def get_cumulated_DIIMFP(DIIMFP):
+    if el == 'C':
+        E_bind = const.K_Ebind_C
+    elif el == 'O':
+        E_bind = const.K_Ebind_O
 
-    DIIMFP_cumulated = np.zeros(np.shape(DIIMFP))
+    DIIMFP_cumulated = np.ones(np.shape(DIIMFP)) * 2
 
     for i, E in enumerate(grid.EE):
 
-        inds = np.where(grid.EE < E / 2)[0]
+        inds = np.where(np.logical_and(
+            grid.EE > E_bind,
+            grid.EE < (E_bind + E) / 2)
+        )[0]
+
         now_integral = np.trapz(DIIMFP[i, inds], x=grid.EE[inds])
 
         if now_integral == 0:
             continue
 
-        now_cumulated_array = np.ones(len(grid.EE))
+        now_cumulated_array = np.ones(len(grid.EE)) * 2
 
         for j in inds:
-            now_cumulated_array[j] = np.trapz(DIIMFP[i, :j + 1], x=grid.EE[:j + 1]) / now_integral
+            now_cumulated_array[j] = np.trapz(DIIMFP[i, inds[0]:j + 1], x=grid.EE[inds[0]:j + 1]) / now_integral
 
         DIIMFP_cumulated[i, :] = now_cumulated_array
 
@@ -202,16 +196,16 @@ def get_cumulated_DIIMFP(DIIMFP):
 
 
 # %%
-DIIMFP_C_cumulated = get_cumulated_DIIMFP(DIIMFP_C)
-DIIMFP_O_cumulated = get_cumulated_DIIMFP(DIIMFP_O)
+DIIMFP_C_cumulated = get_cumulated_DIIMFP(DIIMFP_C, 'C')
+DIIMFP_O_cumulated = get_cumulated_DIIMFP(DIIMFP_O, 'O')
 
 # %%
-np.save('Resources/GOS/C_GOS_DIIMFP_cumulated.npy', DIIMFP_C_cumulated)
-np.save('Resources/GOS/O_GOS_DIIMFP_cumulated.npy', DIIMFP_O_cumulated)
+np.save('Resources/GOS/PMMA_C_DIIMFP_cumulated_E_bind.npy', DIIMFP_C_cumulated)
+np.save('Resources/GOS/PMMA_O_DIIMFP_cumulated_E_bind.npy', DIIMFP_O_cumulated)
 
 # %%
-arr_C = np.load('Resources/GOS/C_GOS_DIIMFP_cumulated.npy')
-arr_O = np.load('Resources/GOS/O_GOS_DIIMFP_cumulated.npy')
+arr_C = np.load('Resources/GOS/C_DIIMFP_cumulated.npy')
+arr_O = np.load('Resources/GOS/O_DIIMFP_cumulated.npy')
 
 plt.figure(dpi=300)
 
