@@ -118,8 +118,11 @@ def get_Y(x, y, z, t, xp, yp, zp, tp, a, b, t_e):
 # %% MC integration
 nmc = 10000
 
-a = b = 0.2e-6  # m
-t_exp = 1e-9
+a = 0.2e-6  # m
+b = 0.2e-5
+
+# t_exp = 1e-9
+t_exp = 5e-9
 # t_exp = 1.64e-9
 tt = np.linspace(0.001, 5, 20) * t_exp
 
@@ -163,12 +166,12 @@ plt.semilogy(tt * 1e+6, T_total, 'o-', label='MC integral')
 plt.semilogy(tt * 1e+6, T_total + err_total, 'v-', label='upper limit')
 plt.semilogy(tt * 1e+6, T_total - err_total, '^-', label='lower limit')
 
-plt.title(str(Q_uC_cm2) + r' $\mu$C/cm$^2$,' + ' t$_{exp} = $' + str(int(t_exp * 1e+9)) + r' ns, a = b = 200 nm')
+plt.title(str(Q_uC_cm2) + r' $\mu$C/cm$^2$,' + ' t$_{exp} = $' + str(int(t_exp * 1e+9)) + r' ns, a = 200 nm, b = 2 um')
 plt.xlabel(r't, $\mu$s')
 plt.ylabel('T, °C')
 
 plt.xlim(0, tt[-1] * 1e+6)
-plt.ylim(0, 10)
+# plt.ylim(0, 10)
 plt.legend()
 plt.grid()
 plt.show()

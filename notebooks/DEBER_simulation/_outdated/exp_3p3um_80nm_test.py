@@ -11,7 +11,7 @@ from functions import mapping_functions as mf
 from functions import diffusion_functions as df
 from functions import reflow_functions as rf
 from functions import plot_functions as pf
-from functions import SE_functions as ef
+from functions._outdated import SE_functions as ef
 
 from scipy.optimize import curve_fit
 

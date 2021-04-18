@@ -11,10 +11,10 @@ const = importlib.reload(const)
 # %%
 arr = np.loadtxt('notebooks/OLF_Si/Fano/Fano.txt')
 
-# plt.figure(dpi=300)
-# plt.loglog(arr[:, 0], arr[:, 1])
-# plt.grid()
-# plt.show()
+plt.figure(dpi=300)
+plt.loglog(arr[:, 0], arr[:, 1])
+plt.grid()
+plt.show()
 
 # %%
 ph_OLF = const.n_Si * const.c * arr[:, 1] * const.M_Si_atom / (arr[:, 0] * const.eV * 1000 / const.hbar)

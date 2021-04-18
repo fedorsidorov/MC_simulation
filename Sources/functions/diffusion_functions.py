@@ -109,7 +109,11 @@ def track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp, t_step, dt
                 t_step=t_step, dt=dt
             )
 
-            track_monomer(x0, z0, xx, zz_vac, d_PMMA, dT, wp, t_step, dt)
+            if x_final < mm.x_bins_5nm[0]:
+                x_final += mm.lx
+
+            if x_final > mm.x_bins_5nm[-1]:
+                x_final -= mm.lx
 
             monomer_matrix_2d_final += np.histogramdd(
                 sample=np.array((x_final, z_final)).reshape((1, 2)),

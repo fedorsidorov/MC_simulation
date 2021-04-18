@@ -42,17 +42,16 @@ def get_An(func, n, l0):
     def get_Y(x):
         return func(x) * np.cos(2 * np.pi * n * x / l0)
     return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
-    # return 2 / l0 * quad(get_Y, 0, l0)[0]
 
 
 def get_Bn(func, n, l0):
     def get_Y(x):
         return func(x) * np.sin(2 * np.pi * n * x / l0)
     return 2 / l0 * quad(get_Y, -l0 / 2, l0 / 2)[0]
-    # return 2 / l0 * quad(get_Y, 0, l0)[0]
 
 
 def get_An_array(xx, zz, l0, N):
+
     def func(x):
         return mcf.lin_lin_interp(xx, zz)(x)
 
@@ -69,6 +68,7 @@ def get_An_array(xx, zz, l0, N):
 
 
 def get_Bn_array(xx, zz, l0, N):
+
     def func(x):
         return mcf.lin_lin_interp(xx, zz)(x)
 

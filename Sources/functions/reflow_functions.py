@@ -9,32 +9,6 @@ from mapping import mapping_3p3um_80nm as mapping
 mapping = importlib.reload(mapping)
 mcf = importlib.reload(mcf)
 
-# %%
-# sci_500 = np.load('notebooks/viscosity/final_1/sci_500.npy') * 8
-# sci_700 = np.load('notebooks/viscosity/final_1/sci_700.npy') * 8
-# sci_1000 = np.load('notebooks/viscosity/final_1/sci_1000.npy') * 8
-# sci_1500 = np.load('notebooks/viscosity/final_1/sci_1500.npy') * 8
-#
-# sci_500[0] = 0
-# sci_700[0] = 0
-# sci_1000[0] = 0
-# sci_1500[0] = 0
-#
-# mobs_120_500 = np.load('notebooks/viscosity/final_1/mobs_120/mobs_500.npy')
-# mobs_120_700 = np.load('notebooks/viscosity/final_1/mobs_120/mobs_700.npy')
-# mobs_120_1000 = np.load('notebooks/viscosity/final_1/mobs_120/mobs_1000.npy')
-# mobs_120_1500 = np.load('notebooks/viscosity/final_1/mobs_120/mobs_1500.npy')
-#
-# mobs_140_500 = np.load('notebooks/viscosity/final_1/mobs_140/mobs_500.npy')
-# mobs_140_700 = np.load('notebooks/viscosity/final_1/mobs_140/mobs_700.npy')
-# mobs_140_1000 = np.load('notebooks/viscosity/final_1/mobs_140/mobs_1000.npy')
-# mobs_140_1500 = np.load('notebooks/viscosity/final_1/mobs_140/mobs_1500.npy')
-#
-# mobs_160_500 = np.load('notebooks/viscosity/final_1/mobs_160/mobs_500.npy')
-# mobs_160_700 = np.load('notebooks/viscosity/final_1/mobs_160/mobs_700.npy')
-# mobs_160_1000 = np.load('notebooks/viscosity/final_1/mobs_160/mobs_1000.npy')
-# mobs_160_1500 = np.load('notebooks/viscosity/final_1/mobs_160/mobs_1500.npy')
-
 
 # %%
 def gauss(xx, a, b, c):
@@ -62,10 +36,10 @@ def get_viscosity_PMMA_6N(T_C):  # aho2008.pdf
 
 
 def get_SE_mobility(eta):
-    k = 1.0043796246664092
-    b = -3.8288826121816815
-    time2scale = np.exp(np.log(eta) * k + b)
-    mobility = 1/time2scale
+    C = 0.0381
+    k = 0.9946
+    time2scale = C * eta**k
+    mobility = 1 / time2scale
     return mobility
 
 

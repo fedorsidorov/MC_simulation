@@ -8,27 +8,24 @@ mf = importlib.reload(mf)
 rf = importlib.reload(rf)
 
 # %%
-SE = np.loadtxt('notebooks/SE/SIM/vlist_SIM.txt')[1:, :]
+SE = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist.txt')
 
-times = []
-profiles = []
-beg = -1
+SE = SE[np.where(
+        np.logical_or(
+            SE[:, 0] == 0,
+            SE[:, 1] == -100
+        ))]
 
-for i, line in enumerate(SE):
-    if line[1] == line[2] == -100:
-        now_time = line[0]
-        times.append(now_time)
-        profile = SE[beg+1:i, 1:]
-        # profile = profile[profile[:, 1].argsort()]
-        # profile = profile[profile[:, 0].argsort()]
-        profile = profile[np.where(np.abs(profile[:, 0]) < 5)]
-        profile = profile[np.where(profile[:, 1] > 0.02)]
-        profile[:, 1] -= (np.max(profile[:, 1]) + np.min(profile[:, 1]))/2 - 0.05
-        profiles.append(profile)
-        beg = i
-
-# %%
 plt.figure(dpi=300)
-plt.plot(profiles[0][:, 0], profiles[0][:, 1], '.')
-plt.plot(profiles[1][:, 0], profiles[1][:, 1], '.')
+
+inds = np.where(SE[:, 1] == -100)[0]
+
+now_pos = 0
+
+for ind in inds:
+    now_data = SE[(now_pos + 1):ind, :]
+    plt.plot(now_data[:, 1], now_data[:, 2], '.')
+    now_pos = ind
+
+plt.ylim(0.02, 0.06)
 plt.show()

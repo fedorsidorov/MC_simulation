@@ -9,9 +9,8 @@ from functions import MC_functions as mcf
 from functions import DEBER_functions as deber
 from functions import mapping_functions as mf
 from functions import diffusion_functions as df
-from functions._outdated import reflow_functions_hard as rf
+from functions._outdated import reflow_functions_hard as rf, SE_functions as ef
 from functions import plot_functions as pf
-from functions import SE_functions as ef
 from functions import scission_functions as sf
 
 import indexes as ind

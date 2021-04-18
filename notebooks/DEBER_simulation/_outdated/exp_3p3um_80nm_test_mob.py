@@ -3,7 +3,6 @@ import constants
 import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
-import copy
 from mapping import mapping_3p3um_80nm as mapping
 from functions import MC_functions as mcf
 from functions import DEBER_functions as deber
@@ -11,7 +10,7 @@ from functions import mapping_functions as mf
 from functions import diffusion_functions as df
 from functions import reflow_functions as rf
 from functions import plot_functions as pf
-from functions import SE_functions as ef
+from functions._outdated import SE_functions as ef
 
 from scipy.optimize import curve_fit
 
