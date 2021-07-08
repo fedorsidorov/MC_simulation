@@ -141,6 +141,7 @@ for i in range(len(monomer_matrix_2d)):
 # %%
 monomer_array_final = monomer_matrix_2d_final[:, 0]
 # np.save('notebooks/DEBER_simulation/scission_matrix_10s_5nm.npy', monomer_array_final)
+monomer_array_final = np.load('notebooks/DEBER_simulation/scission_matrix_10s_5nm.npy')
 
 plt.figure(dpi=300)
 plt.plot(monomer_array_final)

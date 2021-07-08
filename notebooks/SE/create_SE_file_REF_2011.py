@@ -31,6 +31,7 @@ plt.show()
 # %% make SE files
 width = 200
 path = 'notebooks/SE/datafile_REF.fe'
+# path = 'notebooks/SE/datafile_REF_mob_5.fe'
 
 yy_SE = np.linspace(yy_nm.min(), yy_nm.max(), 200)
 zz_SE = mcf.lin_lin_interp(yy_nm, zz_nm)(yy_SE)
@@ -40,6 +41,7 @@ yy_SE *= 1e-3
 zz_SE *= 1e-3
 
 mobilities = np.ones(len(yy_SE))
+# mobilities = np.ones(len(yy_SE)) * 5
 
 # plt.figure(dpi=300)
 # plt.plot(yy_SE, zz_SE, '.')

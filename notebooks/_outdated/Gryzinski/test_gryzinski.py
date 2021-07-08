@@ -30,7 +30,7 @@ for n in trange(5, position=0):
 plt.figure(dpi=300)
 
 for n in range(5):
-    plt.loglog(grid.EE, Si_gryz_IIMFP[:, n], label='Si e-e ' + str(n))
+    plt.loglog(grid.EE, Si_gryz_IIMFP[:, n], label='simple_Si_MC e-e ' + str(n))
 
 plt.grid()
 plt.show()

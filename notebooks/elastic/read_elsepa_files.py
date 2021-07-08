@@ -75,8 +75,8 @@ EE = np.array([
 a02 = 2.8e-17  # cm
 
 
-for el in ['H', 'C', 'O', 'Si']:
-# for el in ['Si']:
+for el in ['H', 'C', 'O', 'simple_Si_MC']:
+# for el in ['simple_Si_MC']:
 
     folder_ea = 'raw_data/easy/' + el
     folder_at = 'raw_data/atomic/' + el
@@ -145,12 +145,12 @@ for el in ['H', 'C', 'O', 'Si']:
 
 
 #%%
-# el = 'Si'
+# el = 'simple_Si_MC'
 # 
 # EE, cs_at  = get_elsepa_EE_cs('atomic/' + el)
 # EE, cs_muf = get_elsepa_EE_cs('muffin/' + el)
 # 
-# ioffe = np.load('_outdated/Ioffe/Si/u.npy') / mc.n_Si
+# ioffe = np.load('_outdated/Ioffe/simple_Si_MC/u.npy') / mc.n_Si
 #
 # plt.loglog(EE, cs_at)
 # plt.loglog(EE, cs_muf)

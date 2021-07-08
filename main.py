@@ -1,7 +1,7 @@
 import importlib
 import numpy as np
 from mapping import mapping_harris as mapping
-from _outdated import MC_classes_nm as mcd
+from _outdated import MC_classes as mcd
 
 mcd = importlib.reload(mcd)
 mapping = importlib.reload(mapping)

@@ -26,12 +26,12 @@ paper = np.loadtxt('notebooks/MELF-GOS/MELF-GOS.txt')
 
 plt.figure(dpi=300)
 
-plt.loglog(grid.EE, 1/IIMFP_int * 1e+8, label='my IMFP')
-plt.loglog(DB[:, 0], DB[:, 1], '.', label='Dapor IMFP')
-plt.loglog(paper[:, 0], paper[:, 1] * 10, '.', label='Dapor IMFP 2015')
+plt.semilogx(grid.EE, 1/IIMFP_int * 1e+8, label='my IMFP')
+plt.semilogx(DB[:, 0], DB[:, 1], '.', label='Dapor IMFP')
+plt.semilogx(paper[:, 0], paper[:, 1] * 10, '.', label='Dapor IMFP 2015')
 
-# plt.xlim(1e+1, 1e+3)
-# plt.ylim(0, 40)
+plt.xlim(1e+1, 1e+3)
+plt.ylim(0, 40)
 
 plt.grid()
 plt.legend()

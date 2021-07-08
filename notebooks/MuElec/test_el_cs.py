@@ -10,7 +10,7 @@ grid = importlib.reload(grid)
 
 # %% total cs
 g4_el_u = np.load('Resources/MuElec/elastic_u.npy')
-my_el_u = np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/Si/Si_muffin_u.npy')
+my_el_u = np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/simple_Si_MC/Si_muffin_u.npy')
 
 plt.figure(dpi=300)
 plt.loglog(grid.EE, g4_el_u)

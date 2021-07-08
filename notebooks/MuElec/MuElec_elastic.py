@@ -102,7 +102,7 @@ for i, E in enumerate(grid.EE):
     diff_sigma_cumulated[i, :] = now_cumulated_array
 
 # %%
-diff_sigma_LSP = np.load('Resources/ELSEPA/Si/Si_el_DIMFP_cumulated.npy')
+diff_sigma_LSP = np.load('Resources/ELSEPA/simple_Si_MC/Si_el_DIMFP_cumulated.npy')
 
 plt.figure(dpi=300)
 plt.plot(grid.THETA_deg, diff_sigma_cumulated[500, :])

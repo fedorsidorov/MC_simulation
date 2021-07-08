@@ -17,9 +17,9 @@ PMMA_el_IMFP = np.load('Resources/ELSEPA/PMMA/MMA_muffin_u.npy')
 PMMA_el_IMFP[:228] = PMMA_el_IMFP[228]  # no extrapolation
 PMMA_el_DIMFP_norm = np.load('Resources/ELSEPA/PMMA/MMA_muffin_diff_cs_plane_norm.npy')
 
-Si_el_IMFP = np.load('Resources/ELSEPA/Si/Si_muffin_u.npy')
+Si_el_IMFP = np.load('Resources/ELSEPA/simple_Si_MC/Si_muffin_u.npy')
 Si_el_IMFP[:inds.Si_E_cut_ind] = 0  # no life below plasmon energy!
-Si_el_DIMFP_norm = np.load('Resources/ELSEPA/Si/Si_muffin_diff_cs_plane_norm.npy')
+Si_el_DIMFP_norm = np.load('Resources/ELSEPA/simple_Si_MC/Si_muffin_diff_cs_plane_norm.npy')
 
 # electron-electron interaction
 C_K_ee_IMFP = np.load('Resources/GOS/C_IIMFP.npy')

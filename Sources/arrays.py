@@ -16,12 +16,17 @@ mcf = importlib.reload(mcf)
 PMMA_el_IMFP = \
     np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/PMMA/MMA_muffin_u.npy') * 1e-7
 PMMA_el_IMFP[:228] = PMMA_el_IMFP[228]  # no extrapolation
-PMMA_el_DIMFP_cumulated = \
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/PMMA/PMMA_el_DIMFP_cumulated.npy')
+# PMMA_el_DIMFP_cumulated = \
+#     np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/PMMA/PMMA_el_DIMFP_cumulated.npy')
 
-# plt.figure(dpi=300)
-# plt.loglog(grid.EE, PMMA_el_IMFP)
-# plt.show()
+elastic_kind = 'muffin'
+PMMA_el_IMFP_new = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/elastic/final_arrays/PMMA/PMMA_'
+                       + elastic_kind + '_u.npy') * 1e-7
+
+plt.figure(dpi=300)
+plt.loglog(grid.EE, PMMA_el_IMFP)
+plt.loglog(grid.EE, PMMA_el_IMFP_new)
+plt.show()
 
 # plt.figure(dpi=300)
 # for i in range(1, 1000, 100):
@@ -74,7 +79,7 @@ PMMA_val_DIMFP_cumulated = \
 
 PMMA_ee_DIMFP_3_cumulated = np.array((PMMA_val_DIMFP_cumulated, C_K_ee_DIMFP_cumulated, O_K_ee_DIMFP_cumulated))
 
-# %% Si e-e
+# %% simple_Si_MC e-e
 Si_ee_IMFP_6 = \
     np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/MuElec/MuElec_inelastic_arrays/u_ee_6.npy') * 1e-7
 Si_ee_DIMFP_6_cumulated = \

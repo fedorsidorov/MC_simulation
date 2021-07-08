@@ -13,7 +13,7 @@ import grid
 grid = importlib.reload(grid)
 mcf = importlib.reload(mcf)
 
-# %% Si
+# %% simple_Si_MC
 e = eV = 1.6e-19
 
 rho = 2330  # kg / m^3

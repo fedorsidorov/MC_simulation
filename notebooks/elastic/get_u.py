@@ -16,7 +16,7 @@ for kind in ['easy', 'atomic', 'muffin']:
     cs_H = np.load('final_arrays/' + kind + '/H/H_' + kind + '_cs_extrap.npy')
     cs_C = np.load('final_arrays/' + kind + '/C/C_' + kind + '_cs_extrap.npy')
     cs_O = np.load('final_arrays/' + kind + '/O/O_' + kind + '_cs_extrap.npy')
-    cs_Si = np.load('final_arrays/' + kind + '/Si/Si_' + kind + '_cs_extrap.npy')
+    cs_Si = np.load('final_arrays/' + kind + '/simple_Si_MC/Si_' + kind + '_cs_extrap.npy')
 
     cs_MMA = const.N_H_MMA * cs_H + const.N_C_MMA * cs_C + const.N_O_MMA * cs_O
     
@@ -28,5 +28,5 @@ for kind in ['easy', 'atomic', 'muffin']:
     np.save('final_arrays/PMMA/MMA_' + kind + '_cs.npy', cs_MMA)
     np.save('final_arrays/PMMA/PMMA_' + kind + '_u.npy', u_PMMA)
     
-    np.save('final_arrays/Si/Si_' + kind + '_cs.npy', cs_Si)
-    np.save('final_arrays/Si/Si_' + kind + '_u.npy', u_Si)
+    np.save('final_arrays/simple_Si_MC/Si_' + kind + '_cs.npy', cs_Si)
+    np.save('final_arrays/simple_Si_MC/Si_' + kind + '_u.npy', u_Si)

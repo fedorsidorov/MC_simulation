@@ -38,23 +38,39 @@ def get_elsepa_diff_cs(fname):
 
 
 #%%
-D = np.loadtxt('Au_1keV/Dapor.txt')
-N = np.loadtxt('Au_1keV/NIST.txt')
+# D = np.loadtxt('Au_1keV/Dapor.txt')
+Pei_PMMA = np.loadtxt('notebooks/elastic/curves/Pei/PMMA_500eV.txt')
 
-e1 = get_elsepa_diff_cs('Au_1keV/MELEC3.dat')
-e2 = get_elsepa_diff_cs('Au_1keV/MELEC3_IHEF0.dat')
-e3 = get_elsepa_diff_cs('Au_1keV/easy.dat')
+# N = np.loadtxt('Au_1keV/NIST.txt')
+N_H = np.loadtxt('notebooks/elastic/curves/DCS_H_500_eV.txt')
+N_C = np.loadtxt('notebooks/elastic/curves/DCS_C_500_eV.txt')
+N_O = np.loadtxt('notebooks/elastic/curves/DCS_O_500_eV.txt')
+
+N_PMMA = np.zeros(np.shape(N_C))
+
+N_PMMA[:, 0] = N_H[:, 0]
+
+N_PMMA[:, 1] = N_H[:, 1] * 8# + N_C[:, 1] * 5 + N_O[:, 1] * 2
+N_PMMA[:, 1] *= 2.8e-21 * 1e+4
+
+# e1 = get_elsepa_diff_cs('Au_1keV/MELEC3.dat')
+# e2 = get_elsepa_diff_cs('Au_1keV/MELEC3_IHEF0.dat')
+# e3 = get_elsepa_diff_cs('Au_1keV/easy.dat')
 # e3 = get_elsepa_diff_cs('Au_1keV/MELEC3_IHEF0_MUFFIN1.dat')
 # e4 = get_elsepa_diff_cs('Au_1keV/MELEC3_IHEF0_MUFFIN_my.dat')
-e4 = get_elsepa_diff_cs('Au_1keV/test.dat')
+# e4 = get_elsepa_diff_cs('Au_1keV/test.dat')
 
-plt.semilogy(D[:, 0], D[:, 1] * 1e-16, '.', label='Dapor')
-plt.semilogy(N[:, 0], N[:, 1] * 2.8e-17, '-', label='NIST')
-plt.semilogy(e3[:, 0], e3[:, 1], '--', label='elsepa, no parameters')
-plt.semilogy(e1[:, 0], e1[:, 1], label='elsepa, MELEC=3')
+plt.figure(dpi=300)
+plt.semilogy(Pei_PMMA[:, 0], Pei_PMMA[:, 1], label='Pei PMMA')
+plt.semilogy(N_PMMA[:, 0], N_PMMA[:, 1], label='NIST PMMA')
+
+# plt.semilogy(D[:, 0], D[:, 1] * 1e-16, '.', label='Dapor')
+# plt.semilogy(N[:, 0], N[:, 1] * 2.8e-17, '-', label='NIST')
+# plt.semilogy(e3[:, 0], e3[:, 1], '--', label='elsepa, no parameters')
+# plt.semilogy(e1[:, 0], e1[:, 1], label='elsepa, MELEC=3')
 # plt.semilogy(e2[:, 0], e2[:, 1], '--', label='elsepa, MELEC=3, IHEF=0')
 # plt.semilogy(e3[:, 0], e3[:, 1], '--', label='elsepa, MELEC=3, IHEF=0, MUFFIN=1')
-plt.semilogy(e4[:, 0], e4[:, 1], '--', label='elsepa, MELEC=3, IHEF=0, MUFFIN=1.59$\AA$')
+# plt.semilogy(e4[:, 0], e4[:, 1], '--', label='elsepa, MELEC=3, IHEF=0, MUFFIN=1.59$\AA$')
 
 plt.grid()
 plt.legend()
@@ -63,8 +79,10 @@ plt.title('Differential elastic cross-section for Au, 1 keV')
 plt.xlabel('theta, deg')
 plt.ylabel('DESCS, cm$^2$/sr')
 
-plt.xlim(0, 180)
-plt.ylim(1e-19, 1e-14)
+# plt.xlim(0, 180)
+# plt.ylim(1e-19, 1e-14)
+
+plt.show()
 
 # plt.savefig('elastic_compare.jpg', dpi=500)
 # plt.savefig('elastic_compare.pdf')

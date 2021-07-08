@@ -33,20 +33,20 @@ plt.legend()
 plt.grid()
 plt.show()
 
-# %% test Si arrays_Si
+# %% test simple_Si_MC arrays_Si
 plt.figure(dpi=300)
 plt.loglog(grid.EE, a.Si_el_IMFP, label='elastic')
 
 for n in range(6):
-    plt.loglog(grid.EE, a.Si_ee_IMFP_6[:, n], label='Si e-e ' + str(n))
+    plt.loglog(grid.EE, a.Si_ee_IMFP_6[:, n], label='simple_Si_MC e-e ' + str(n))
 
 # Si_gryz_IIMFP_5 = np.load('notebooks/Gryzinski/Si_Gryzinski_IMFP_5.npy')
 # for n in range(5):
-#     plt.loglog(grid.EE, Si_gryz_IIMFP_5[:, n], '.', label='Si Gryzinski ' + str(n))
+#     plt.loglog(grid.EE, Si_gryz_IIMFP_5[:, n], '.', label='simple_Si_MC Gryzinski ' + str(n))
 
 plt.loglog(grid.EE, np.sum(a.Si_ee_IMFP_6, axis=1), '--', label='total inelastic')
 
-plt.title('Si IIMFP')
+plt.title('simple_Si_MC IIMFP')
 plt.xlabel('E, eV')
 plt.ylabel('IIMFP, cm$^{-1}$')
 plt.xlim(1, 1e+4)

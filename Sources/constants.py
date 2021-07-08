@@ -23,6 +23,7 @@ eV = 1.602176634e-12
 eV_SI = eV * 1e-7
 # hbar = const.hbar * 1e+7
 hbar = 1.0545718176461565e-27
+h = hbar * 2 * np.pi
 # a0 = const.physical_constants['Bohr radius'][0] * 1e+2  # Bohr radius
 a0 = 5.2917721090299995e-09
 # r0 = const.physical_constants['classical electron radius'][0] * 1e+2  # classical electron radius
@@ -61,7 +62,7 @@ W_phonon = 0.1  # dapor2015.pdf
 
 CC_bond_length = 0.28  # nm
 
-# %% Si
+# %% simple_Si_MC
 Z_Si = 14
 u_Si = 28.086
 M_Si_atom = u_Si / Na  # g

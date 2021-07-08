@@ -30,14 +30,14 @@ ind_2keV = 750
 
 kind = 'muffin'
 
-# diff_cs_pnc = np.load('notebooks/elastic/final_arrays/Si/Si_' + kind + '_diff_cs_plane_norm_cumulated.npy')
+# diff_cs_pnc = np.load('notebooks/elastic/final_arrays/simple_Si_MC/Si_' + kind + '_diff_cs_plane_norm_cumulated.npy')
 # diff_cs_pnc = np.load('data/ELSEPA/Si_muffin_diff_cs_plane_norm_cumulated.npy')
 
-# diff_cs = np.load('Resources/ELSEPA/Si/Si_muffin_diff_cs_plane_norm.npy')
+# diff_cs = np.load('Resources/ELSEPA/simple_Si_MC/Si_muffin_diff_cs_plane_norm.npy')
 # diff_cs = np.load('Resources/ELSEPA/PMMA/MMA_muffin_diff_cs_plane_norm.npy')
 # diff_cs_cumulated = np.zeros(np.shape(diff_cs))
 
-diff_cs_cumulated = np.load('notebooks/elastic/final_arrays/Si/Si_muffin_diff_cs_plane_norm_cumulated.npy')
+diff_cs_cumulated = np.load('notebooks/elastic/final_arrays/simple_Si_MC/Si_muffin_diff_cs_plane_norm_cumulated.npy')
 
 # for i in range(len(grid.EE)):
 #     for j in range(len(grid.THETA_rad)):
@@ -68,12 +68,12 @@ plt.show()
 
 # %%
 u_P = np.load('Resources/ELSEPA/PMMA/MMA_muffin_u.npy')
-u_Si = np.load('Resources/ELSEPA/Si/Si_muffin_u.npy')
+u_Si = np.load('Resources/ELSEPA/simple_Si_MC/Si_muffin_u.npy')
 
 plt.figure(dpi=300)
 
 plt.loglog(grid.EE, u_P, label='PMMA')
-plt.loglog(grid.EE, u_Si, label='Si')
+plt.loglog(grid.EE, u_Si, label='simple_Si_MC')
 
 plt.grid()
 plt.legend()

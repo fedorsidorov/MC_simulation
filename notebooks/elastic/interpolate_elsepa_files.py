@@ -101,7 +101,7 @@ THETA_deg_raw = np.load('raw_arrays/elsepa_theta.npy')
 
 for kind in ['easy', 'atomic', 'muffin']:
 
-    for el in ['H', 'C', 'O', 'Si']:
+    for el in ['H', 'C', 'O', 'simple_Si_MC']:
         
         print(el)
         
@@ -140,7 +140,7 @@ for kind in ['easy', 'atomic', 'muffin']:
 # plt.savefig('elastic_interpolation_polar.jpg', dpi=500)
 
 #%%
-# plt.title('Differential elastic cross-section for Si')
+# plt.title('Differential elastic cross-section for simple_Si_MC')
 # plt.xlabel('E, eV')
 # plt.ylabel('DESCS, cm$^2$/sr')
 

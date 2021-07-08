@@ -28,7 +28,7 @@ Cv_1 = 1500  # J / kg / K
 k_1 = D_1 / (Cv_1 * rho_1)
 Rg_1 = 4.57e-5 / rho_1 * (E0 / 1e+3) ** 1.75
 
-# 2 - Si
+# 2 - simple_Si_MC
 D_2 = 150  # W / m / K
 rho_2 = 2330  # kg / m^3
 Cv_2 = 700  # J / kg / K

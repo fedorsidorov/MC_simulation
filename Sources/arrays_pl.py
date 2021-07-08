@@ -74,7 +74,7 @@ PMMA_val_DIMFP_cumulated = \
 
 PMMA_ee_DIMFP_3_cumulated = np.array((PMMA_val_DIMFP_cumulated, C_K_ee_DIMFP_cumulated, O_K_ee_DIMFP_cumulated))
 
-# %% Si e-e
+# %% simple_Si_MC e-e
 Si_ee_IMFP_6 = \
     np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/MuElec/MuElec_inelastic_arrays/u_ee_6.npy') * 1e-7
 Si_ee_DIMFP_6_cumulated = \

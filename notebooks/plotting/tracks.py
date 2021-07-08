@@ -34,7 +34,7 @@ if d_PMMA != 0:
 
 # plt.text(-1000, 320, 'PMMA', fontsize=font_size)
 plt.text(-1250, 320, 'ПММА', fontsize=font_size)
-plt.text(-1250, 1300, 'Si', fontsize=font_size)
+plt.text(-1250, 1300, 'simple_Si_MC', fontsize=font_size)
 
 # ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
 # ax.yaxis.get_major_formatter().set_powerlimits((0, 1))

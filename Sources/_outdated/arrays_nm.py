@@ -27,10 +27,10 @@ PMMA_el_DIMFP_cumulated = \
 # plt.show()
 
 # %%
-Si_el_IMFP_ELSEPA = np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/Si/Si_muffin_u.npy') * 1e-7
+Si_el_IMFP_ELSEPA = np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/simple_Si_MC/Si_muffin_u.npy') * 1e-7
 Si_el_IMFP_ELSEPA[:inds.Si_E_cut_ind] = 0  # no life below plasmon energy!
 Si_el_DIMFP_cumulated = \
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/Si/Si_el_DIMFP_cumulated.npy')
+    np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/ELSEPA/simple_Si_MC/Si_el_DIMFP_cumulated.npy')
 
 Si_el_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/elastic_u.npy') * 1e-7
 Si_el_IMFP[:inds.Si_E_cut_ind] = 0  # no life below plasmon energy!
@@ -75,7 +75,7 @@ PMMA_val_DIMFP_cumulated = \
 
 PMMA_ee_DIMFP_norm_3 = np.array((PMMA_val_DIMFP_norm, C_K_ee_DIMFP_norm, O_K_ee_DIMFP_norm))
 
-# %% Si e-e
+# %% simple_Si_MC e-e
 Si_ee_IMFP_6 = \
     np.load('/Users/fedor/PycharmProjects/MC_simulation/Resources/MuElec/Si_MuElec_IIMFP.npy') * 1e-7
 Si_ee_DIMFP_norm_6 = \
