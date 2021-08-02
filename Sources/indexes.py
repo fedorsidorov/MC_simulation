@@ -40,3 +40,18 @@ free_monomer, gone_monomer = 10, 20
 # %% chain_table
 x_pos, y_pos, z_pos = 0, 1, 2
 monomer_type_ind = -1
+
+# %%
+E_10 = 227
+E_100 = 454
+E_500 = 613
+E_1000 = 681
+E_5000 = 840
+E_10000 = 908
+E_15000 = 948
+E_20000 = 977
+
+
+
+
+

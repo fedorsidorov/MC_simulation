@@ -11,8 +11,8 @@ plt.plot(p_1[:, 0], p_1[:, 1], label='initial')
 plt.plot(p_2[:, 0] + 3900, p_2[:, 1] - 10, label='14 hours')
 
 plt.grid()
-plt.xlabel('x, um')
-plt.ylabel('z, um')
+plt.xlabel('x, nm')
+plt.ylabel('z, nm')
 plt.legend()
 
 # plt.xlim(0, 20)

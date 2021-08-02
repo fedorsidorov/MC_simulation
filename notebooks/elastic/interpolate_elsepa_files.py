@@ -2,153 +2,141 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 import importlib
-
+import grid
+from scipy import interpolate
 import constants as const
+import indexes
 from functions import MC_functions as mcf
 
+indexes = importlib.reload(indexes)
 const = importlib.reload(const)
 mcf = importlib.reload(mcf)
 
 
 #%%
-def interpolate_diff_cs(diff_cs_raw, EE_raw, THETA_deg_raw, extrap=False):
-    
-    diff_cs_pre_dummy = np.concatenate((diff_cs_raw[:1, :]*0,
-                                        diff_cs_raw, diff_cs_raw[-1:, :]*0), axis=0)
-    
-    EE_raw_ext = np.concatenate((const.EE[:1], EE_raw, const.EE[-1:]))
-    
+def interpolate_diff_cs(EE_raw, THETA_deg_raw, diff_cs_raw, extrap):
+
+    EE_raw_ext = np.concatenate((grid.EE[:1], EE_raw, grid.EE[-1:]))
+    diff_cs_ext = np.concatenate((diff_cs_raw[:1, :],
+                                  diff_cs_raw, diff_cs_raw[-1:, :]), axis=0)
+
     if extrap:
-        
-        diff_cs_pre_dummy[0, :] = np.exp(
+        diff_cs_ext[0, :] = np.exp(
             np.log(EE_raw_ext[0]/EE_raw_ext[1]) /
             np.log(EE_raw_ext[1]/EE_raw_ext[2]) *
-            np.log(diff_cs_pre_dummy[1, :]/diff_cs_pre_dummy[2, :])
-            ) * diff_cs_pre_dummy[1, :]
+            np.log(diff_cs_ext[1, :]/diff_cs_ext[2, :])
+            ) * diff_cs_ext[1, :]
         
-        diff_cs_pre_dummy[-1, :] = np.exp(
+        diff_cs_ext[-1, :] = np.exp(
             np.log(EE_raw_ext[-1]/EE_raw_ext[-2]) /
             np.log(EE_raw_ext[-2]/EE_raw_ext[-3]) *
-            np.log(diff_cs_pre_dummy[-2]/diff_cs_pre_dummy[-3, :])
-            ) * diff_cs_pre_dummy[-2, :]
-    
-    else:
-        
-        diff_cs_pre_dummy[0, :] = diff_cs_pre_dummy[1, :]
-        diff_cs_pre_dummy[-1, :] = diff_cs_pre_dummy[-2, :]
+            np.log(diff_cs_ext[-2]/diff_cs_ext[-3, :])
+            ) * diff_cs_ext[-2, :]
 
-    diff_cs_pre = np.zeros((len(const.EE), len(THETA_deg_raw)))
-    
-    for j in range(len(THETA_deg_raw)):
-        diff_cs_pre[:, j] = mcf.log_interp1d(EE_raw_ext, diff_cs_pre_dummy[:, j])(const.EE)
-    
-    diff_cs = np.zeros((len(const.EE), len(const.THETA_deg)))
-    
-    for i in range(len(const.EE)):
-        
-        now_diff_cs_pre = [diff_cs_pre[i, 0]]
-        now_THETA_deg_raw = [THETA_deg_raw[0]]
-    
-        for j in range(1, len(THETA_deg_raw) - 1):
-            
-            if diff_cs_pre[i, j] != now_diff_cs_pre[-1]:
-                
-                now_diff_cs_pre.append(diff_cs_pre[i, j])
-                now_THETA_deg_raw.append(THETA_deg_raw[j])
-
-        now_diff_cs_pre.append(diff_cs_pre[i, -1])
-        now_THETA_deg_raw.append(THETA_deg_raw[-1])
-        
-        diff_cs[i, :] = mcf.semilogy_interp1d(now_THETA_deg_raw,
-                                              now_diff_cs_pre)(const.THETA_deg)
+    diff_cs_pre =\
+        np.power(10, interpolate.interp1d(THETA_deg_raw, np.log10(diff_cs_ext), axis=1)(grid.THETA_deg))
+    diff_cs = np.power(10, interpolate.interp1d(EE_raw_ext, np.log10(diff_cs_pre), axis=0)(grid.EE))
 
     return diff_cs
 
 
-def interpolate_cs(cs_raw, EE_raw, extrap=False):
+def interpolate_cs(EE_raw, cs_raw, extrap):
     
-    cs_dummy = np.concatenate((cs_raw[:1]*0, cs_raw, cs_raw[-1:]*0), axis=0)
-    EE_raw_ext = np.concatenate((const.EE[:1], EE_raw, const.EE[-1:]))
+    EE_raw_ext = np.concatenate((grid.EE[:1], EE_raw, grid.EE[-1:]))
+    cs_ext = np.concatenate((cs_raw[:1], cs_raw, cs_raw[-1:]), axis=0)
 
     if extrap:
-        
-        cs_dummy[0] = np.exp(
+        cs_ext[0] = np.exp(
             np.log(EE_raw_ext[0]/EE_raw_ext[1]) /
             np.log(EE_raw_ext[1]/EE_raw_ext[2]) *
-            np.log(cs_dummy[1]/cs_dummy[2])
-            ) * cs_dummy[1]
+            np.log(cs_ext[1]/cs_ext[2])
+            ) * cs_ext[1]
         
-        cs_dummy[-1] = np.exp(
+        cs_ext[-1] = np.exp(
             np.log(EE_raw_ext[-1]/EE_raw_ext[-2]) /
             np.log(EE_raw_ext[-2]/EE_raw_ext[-3]) *
-            np.log(cs_dummy[-2]/cs_dummy[-3])
-            ) * cs_dummy[-2]
-    
-    else:
-        
-        cs_dummy[0] = cs_dummy[1]
-        cs_dummy[-1] = cs_dummy[-2]
+            np.log(cs_ext[-2]/cs_ext[-3])
+            ) * cs_ext[-2]
 
-    cs = mcf.log_interp1d(EE_raw_ext, cs_dummy)(const.EE)
+    cs = mcf.log_log_interp(EE_raw_ext, cs_ext)(grid.EE)
     
     return cs
 
 
 #%%
-EE_raw = np.load('raw_arrays/elsepa_EE.npy')
-THETA_deg_raw = np.load('raw_arrays/elsepa_theta.npy')
+EE_raw = np.load('notebooks/elastic/raw_arrays/elsepa_EE.npy')
+THETA_deg_raw = np.load('notebooks/elastic/raw_arrays/elsepa_theta.npy')
 
-
-for kind in ['easy', 'atomic', 'muffin']:
-
-    for el in ['H', 'C', 'O', 'simple_Si_MC']:
+for model in ['easy', 'atomic', 'muffin']:
+    for element in ['H', 'C', 'O', 'Si']:
         
-        print(el)
+        print(element)
         
         diff_cs_raw = np.load(os.path.join(
-            'raw_arrays', kind, el, el + '_' + kind + '_diff_cs.npy'
+            'notebooks/elastic/raw_arrays', model, element, element + '_' + model + '_diff_cs.npy'
             ))
         
         cs_raw = np.load(os.path.join(
-            'raw_arrays', kind, el, el + '_' + kind + '_cs.npy'
+            'notebooks/elastic/raw_arrays', model, element, element + '_' + model + '_cs.npy'
             ))
         
-        diff_cs = interpolate_diff_cs(diff_cs_raw, EE_raw, THETA_deg_raw)
+        diff_cs = interpolate_diff_cs(EE_raw, THETA_deg_raw, diff_cs_raw, extrap=False)
+        diff_cs_extrap = interpolate_diff_cs(EE_raw, THETA_deg_raw, diff_cs_raw, extrap=True)
+
+        cs = interpolate_cs(EE_raw, cs_raw, extrap=False)
+        cs_extrap = interpolate_cs(EE_raw, cs_raw, extrap=True)
         
-        cs = interpolate_cs(cs_raw, EE_raw)
-        cs_extrap = interpolate_cs(cs_raw, EE_raw, extrap=True)
-        
-        # np.save(os.path.join( 'final_arrays', kind, el, el + '_' + kind + '_diff_cs.npy'), diff_cs)
-        # np.save(os.path.join( 'final_arrays', kind, el, el + '_' + kind + '_cs.npy'), cs)
-        # np.save(os.path.join('final_arrays', kind, el, el + '_' + kind + '_cs_extrap.npy'), cs_extrap)
-        
+        np.save(os.path.join('notebooks/elastic/final_arrays', model, element,
+                             element + '_' + model + '_diff_cs.npy'), diff_cs)
+        np.save(os.path.join('notebooks/elastic/final_arrays', model, element,
+                             element + '_' + model + '_diff_cs_extrap.npy'), diff_cs_extrap)
 
-#%%
-# for i in range(228, len(mc.EE), 100):
-    
-#     E_str = "{:6.1f}".format(mc.EE[i])
-    
-#     plt.semilogy(THETA_deg_raw, ans[i, :], label=E_str + ' eV')
-#     plt.semilogy(mc.THETA_deg[::50], bns[i, ::50], '.')
-    
-#     now_x = np.concatenate((-np.deg2rad(THETA_deg_raw), np.deg2rad(THETA_deg_raw)))
-#     now_y = np.concatenate((np.log10(ans[i, :]), np.log10(ans[i, :])))
-    
-#     plt.polar(now_x, now_y)
+        np.save(os.path.join('notebooks/elastic/final_arrays', model, element,
+                             element + '_' + model + '_cs.npy'), cs)
+        np.save(os.path.join('notebooks/elastic/final_arrays', model, element,
+                             element + '_' + model + '_cs_extrap.npy'), cs_extrap)
 
+# %% check cs interpolation
+element = 'Si'
 
-# plt.savefig('elastic_interpolation_polar.jpg', dpi=500)
+raw_cs = np.load('notebooks/elastic/raw_arrays/easy/' + element + '/' + element + '_easy_cs.npy')
+final_cs = np.load('notebooks/elastic/final_arrays/easy/'
+                        + element + '/' + element + '_easy_cs_extrap.npy')
 
-#%%
-# plt.title('Differential elastic cross-section for simple_Si_MC')
-# plt.xlabel('E, eV')
-# plt.ylabel('DESCS, cm$^2$/sr')
+plt.figure(dpi=300)
+plt.loglog(EE_raw, raw_cs)
+plt.loglog(grid.EE, final_cs, '--')
+plt.show()
 
-# plt.xlim(0, 180)
-# plt.ylim(1e-22, 1e-14)
+# %% check diff cs interpolation
+element = 'Si'
 
-# plt.legend()
-# plt.grid()
+diff_cs_raw = np.load('notebooks/elastic/raw_arrays/easy/' + element + '/' + element + '_easy_diff_cs.npy')
+final_diff_cs = np.load('notebooks/elastic/final_arrays/easy/'
+                        + element + '/' + element + '_easy_diff_cs_extrap.npy')
 
+EE_raw = np.load('notebooks/elastic/raw_arrays/elsepa_EE.npy')
+THETA_deg_raw = np.load('notebooks/elastic/raw_arrays/elsepa_theta.npy')
+# diff_cs_raw = np.load('notebooks/elastic/raw_arrays/easy/H/H_easy_diff_cs.npy')
 
-# plt.savefig('elastic_interpolation_polar.jpg', dpi=500)
+ans = interpolate_diff_cs(EE_raw, THETA_deg_raw, diff_cs_raw, extrap=False)
+
+plt.figure(dpi=300)
+
+plt.semilogy(THETA_deg_raw, diff_cs_raw[21], '-')
+plt.semilogy(grid.THETA_deg, ans[indexes.E_100], '--')
+
+plt.semilogy(THETA_deg_raw, diff_cs_raw[34], '-')
+plt.semilogy(grid.THETA_deg, ans[indexes.E_1000], '--')
+
+plt.semilogy(THETA_deg_raw, diff_cs_raw[42], '-')
+plt.semilogy(grid.THETA_deg, ans[indexes.E_5000], '--')
+
+plt.semilogy(THETA_deg_raw, diff_cs_raw[47], '-')
+plt.semilogy(grid.THETA_deg, ans[indexes.E_10000], '--')
+
+plt.semilogy(THETA_deg_raw, diff_cs_raw[57], '-')
+plt.semilogy(grid.THETA_deg, ans[indexes.E_20000], '--')
+
+plt.grid()
+plt.show()
