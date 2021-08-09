@@ -198,8 +198,8 @@ resist_volume = resist_area * 1  # nm^3 per nm
 resist_n_monomers = resist_volume / const.V_mon_nm3
 
 # %%
-tau_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/kinetic_curves/arrays/tau.npy')
-Mw_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/kinetic_curves/arrays/Mw_125.npy')
+tau_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/tau.npy')
+Mw_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/Mw_125.npy')
 
 i = 31
 k_s_exp_50nm = scission_array_50nm / resist_n_monomers_50nm / ((i + 1) * time_step)

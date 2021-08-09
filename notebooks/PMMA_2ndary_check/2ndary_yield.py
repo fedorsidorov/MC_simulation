@@ -45,12 +45,12 @@ def get_2ndary_yield(source_folder, n_primaries=100):
                 break
 
             DATA_outer = DATA_outer[np.where(DATA_outer[:, 5] < 0)]
-            DATA_outer_2nd = DATA_outer[np.where(
-                np.logical_and(
-                    DATA_outer[:, -1] > 0,
-                    DATA_outer[:, -1] < 50))]
+            # DATA_outer_2nd = DATA_outer[np.where(
+            #     np.logical_and(
+            #         DATA_outer[:, -1] > 0,
+            #         DATA_outer[:, -1] < 50))]
 
-            n_2nd += len(DATA_outer_2nd)
+            n_2nd += len(DATA_outer)
             n_total += n_primaries
 
         my_2ndary_yield = n_2nd / n_total
@@ -62,7 +62,15 @@ def get_2ndary_yield(source_folder, n_primaries=100):
 
 
 # %%
-now_folder = 'data/2ndaries/PMMA_2011_outer_faсtor_no_pol'
+# now_folder = 'data/2ndaries/2011_faсtor_no_pol'
+# now_folder = 'data/2ndaries/2015_uniform'
+# now_folder = 'data/2ndaries/2015_faсtor_no_pol'
+# now_folder = 'data/2ndaries/2015_factor_NEW'
+# now_folder = 'data/2ndaries/2015_faсtor_no_pol_uniform'
+# now_folder = 'data/2ndaries/2015_faсtor_no_pol_uniform_extrap'
+# now_folder = 'data/2ndaries/2015_faсtor_no_pol_uniform_no_el_below_10eV'
+now_folder = 'data/2ndaries/2015_faсtor_uniform_no_el_below_10eV'
+# now_folder = 'data/2ndaries/2015_faсtor_no_el_below_10eV'
 
 energies, delta = get_2ndary_yield(now_folder)
 
@@ -84,6 +92,3 @@ plt.grid()
 
 plt.show()
 # plt.savefig('2ndary_yield.jpg', dpi=300)
-
-# %%
-ans = np.load('data/2ndaries/PMMA_2015_outer_factor/200/e_DATA_16.npy')

@@ -14,6 +14,8 @@ extrap = ''  # '', 'extrap_'
 PMMA_el_u = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/elastic/final_arrays/PMMA/'
                     'PMMA_' + model + '_u_' + extrap + 'nm.npy')
 
+PMMA_el_u[:228] = 0
+
 PMMA_el_diff_u_cumulated =\
     np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/elastic/final_arrays/PMMA/'
             'PMMA_diff_cs_cumulated_' + model + '_' + extrap + '+1.npy')
@@ -45,8 +47,8 @@ PMMA_pol_u = C_pol * np.exp(-gamma_pol * grid.EE)
 # %%
 hw_phonon = 0.1
 
-# PMMA_E_cut = Wf_PMMA
-PMMA_E_cut = 50  # CASINO
+PMMA_E_cut = Wf_PMMA
+# PMMA_E_cut = 50  # CASINO
 
 PMMA_u = np.vstack((PMMA_el_u, PMMA_ee_u, PMMA_ph_u, PMMA_pol_u)).transpose()
 
@@ -59,24 +61,30 @@ for i in range(len(PMMA_u)):
 PMMA_total_u = np.sum(PMMA_u, axis=1)
 process_indexes = list(range(len(PMMA_u[0, :])))
 
+
 # %% plot cross sections
 plt.figure(dpi=300)
 
-for j in range(len(PMMA_u[0])):
-    plt.loglog(grid.EE, PMMA_u[:, j])
+labels = 'elastic', 'e-e', 'phonon', 'polaron'
 
-plt.loglog(grid.EE, PMMA_total_u)
-plt.loglog(grid.EE, PMMA_ee_u)
+for j in range(len(PMMA_u[0])):
+    plt.loglog(grid.EE, PMMA_u[:, j], label=labels[j])
+
+# plt.loglog(grid.EE, PMMA_total_u)
+# plt.loglog(grid.EE, PMMA_ee_u)
 
 plt.xlabel('E, eV')
 plt.ylabel(r'$\mu$, nm$^{-1}$')
 plt.ylim(1e-5, 1e+2)
+plt.legend()
 plt.grid()
 plt.show()
 
 # %%
-dapor_P_100 = np.loadtxt('notebooks/Dapor_Mermin/curves/Dapor_P_100eV.txt')
-dapor_P_1000 = np.loadtxt('notebooks/Dapor_Mermin/curves/Dapor_P_1keV.txt')
+dapor_P_100 = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_Mermin/curves/'
+                         'Dapor_P_100eV.txt')
+dapor_P_1000 = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_Mermin/curves/'
+                          'Dapor_P_1keV.txt')
 
 E_ind_100 = 454
 E_ind_1000 = 681
@@ -105,25 +113,25 @@ plt.show()
 
 
 # %% functions
-def plot_e_DATA(e_DATA_arr):
-    fig, ax = plt.subplots(dpi=300)
-
-    for e_id in range(int(np.max(e_DATA_arr[:, 0]) + 1)):
-        inds = np.where(e_DATA_arr[:, 0] == e_id)[0]
-
-        if len(inds) == 0:
-            continue
-
-        ax.plot(e_DATA_arr[inds, 3], e_DATA_arr[inds, 5], '-', linewidth='1')
-
-    ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
-    ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
-    plt.gca().set_aspect('equal', adjustable='box')
-    plt.gca().invert_yaxis()
-    plt.xlabel('x, nm')
-    plt.ylabel('z, nm')
-    plt.grid()
-    plt.show()
+# def plot_e_DATA(e_DATA_arr):
+#     fig, ax = plt.subplots(dpi=300)
+#
+#     for e_id in range(int(np.max(e_DATA_arr[:, 0]) + 1)):
+#         inds = np.where(e_DATA_arr[:, 0] == e_id)[0]
+#
+#         if len(inds) == 0:
+#             continue
+#
+#         ax.plot(e_DATA_arr[inds, 3], e_DATA_arr[inds, 5], '-', linewidth='1')
+#
+#     ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
+#     ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
+#     plt.gca().set_aspect('equal', adjustable='box')
+#     plt.gca().invert_yaxis()
+#     plt.xlabel('x, nm')
+#     plt.ylabel('z, nm')
+#     plt.grid()
+#     plt.show()
 
 
 def get_scattered_flight_ort(flight_ort, phi, theta):
@@ -184,8 +192,9 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
     coords = coords_0
     flight_ort = flight_ort_0
 
+    # e_DATA_line: [e_id, par_id, proc_id, x_new, y_new, z_new, E_loss, E_new]
     e_DATA_deque = deque()
-    e_DATA_initial_line = [e_id, par_id, -1, *coords_0, 0, 0, E]
+    e_DATA_initial_line = [e_id, par_id, -1, *coords_0, 0, E]
     e_DATA_deque.append(e_DATA_initial_line)
 
     e_2nd_deque = deque()
@@ -193,9 +202,6 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
 
     #  main cycle
     while E > PMMA_E_cut:
-
-        E_bind = 0
-        E_2nd = 0
 
         E_ind = np.argmin(np.abs(grid.EE - E))
 
@@ -211,11 +217,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
                 if E * cos2_theta < Wf_PMMA:
                     print('Wf problems')
 
-                coords += delta_r
-
-                e_DATA_final_line = [e_id, par_id, -10, *coords, 0, 0, E]
-                e_DATA_deque.append(e_DATA_final_line)
-
+                coords += delta_r * 3
                 break
 
             else:  # electron scatters TODO different scattering models
@@ -223,7 +225,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
                 # factor = 0
                 coords += delta_r * factor  # reach surface
 
-                e_DATA_line = [e_id, par_id, -5, *coords, 0, 0, E]
+                e_DATA_line = [e_id, par_id, -5, *coords, 0, E]
                 e_DATA_deque.append(e_DATA_line)
 
                 delta_r[-1] *= -1
@@ -240,25 +242,25 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
             theta_ind = np.argmin(np.abs(PMMA_el_diff_u_cumulated[E_ind, :] - u2))
             theta = grid.THETA_rad[theta_ind]
             new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
-            hw = 0
+
+            e_DATA_line = [e_id, par_id, proc_ind, *coords, 0, E]
+            e_DATA_deque.append(e_DATA_line)
 
         elif proc_ind == 1:  # e-e scattering
             u2 = np.random.random()
             hw_ind = np.argmin(np.abs(PMMA_ee_diff_u_cumulated[E_ind, :] - u2))
             hw = grid.EE[hw_ind]
 
-            E_bind = 0
-            delta_E = hw - E_bind
-
-            if delta_E < 0:
+            if hw < 0:
                 print('delta E < 0 !!!')
 
             phi = 2 * np.pi * np.random.random()
             phi_2nd = phi - np.pi
+            # phi_2nd = np.random.random() * 2 * np.pi
 
-            sin2 = delta_E / E
+            sin2 = hw / E
             # TODO check uniform 2ndary angle distribution
-            sin2_2nd = 1 - delta_E / E
+            sin2_2nd = 1 - hw / E
 
             if sin2 > 1:
                 print('sin2 > 1 !!!', sin2)
@@ -273,20 +275,26 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
             new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
             flight_ort_2nd = get_scattered_flight_ort(flight_ort, phi_2nd, theta_2nd)
 
-            E_2nd = delta_E
+            E_2nd = hw
 
             e_2nd_list = [next_e_2nd_id, e_id, E_2nd, *coords, *flight_ort_2nd]
             e_2nd_deque.append(e_2nd_list)
             next_e_2nd_id += 1
             E -= hw
 
+            e_DATA_line = [e_id, par_id, proc_ind, *coords, hw, E]
+            e_DATA_deque.append(e_DATA_line)
+
         elif proc_ind == 2:  # phonon
             hw, phi, theta = get_phonon_scat_hw_phi_theta(E)
             new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
             E -= hw
 
+            e_DATA_line = [e_id, par_id, proc_ind, *coords, hw, E]
+            e_DATA_deque.append(e_DATA_line)
+
         elif proc_ind == 3:  # polaron
-            e_DATA_line = [e_id, par_id, proc_ind, *coords, E_bind, E_2nd, E]
+            e_DATA_line = [e_id, par_id, proc_ind, *coords, E, 0]
             e_DATA_deque.append(e_DATA_line)
             break
 
@@ -295,14 +303,13 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
 
         flight_ort = new_flight_ort
 
-        e_DATA_line = [e_id, par_id, proc_ind, *coords, hw, E_2nd, E]
-        e_DATA_deque.append(e_DATA_line)
+    if coords[-1] < 0:
+        e_DATA_final_line = [e_id, par_id, -2, *coords, 0, E]
+        e_DATA_deque.append(e_DATA_final_line)
 
-    # if E > 5:
-    #     print(E, coords[-1])
-
-    e_DATA_final_line = [e_id, par_id, -2, *coords, E, 0, 0]
-    e_DATA_deque.append(e_DATA_final_line)
+    elif E > 0:
+        e_DATA_final_line = [e_id, par_id, -2, *coords, E, 0]
+        e_DATA_deque.append(e_DATA_final_line)
 
     return e_DATA_deque, e_2nd_deque
 
@@ -351,14 +358,15 @@ def track_all_electrons(n_electrons, E0):
 
 
 # %%
-n_files = 1
-n_primaries_in_file = 10
+n_files = 100
+n_primaries_in_file = 100
 
-E_beam_arr = [1000]
+# E_beam_arr = [200]
 # E_beam_arr = [50, 100, 150, 200, 250, 300]
-# E_beam_arr = [500, 1000, 10000]
+# E_beam_arr = [400, 500, 700, 1000, 1400]
+E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 700, 1000, 1400]
 
-for n in range(n_files):
+for n in range(66, n_files):
     print('File #' + str(n))
 
     for E_beam in E_beam_arr:
@@ -366,16 +374,14 @@ for n in range(n_files):
         e_DATA = track_all_electrons(n_primaries_in_file, E_beam)
         # np.save('data/4CASINO/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA)
 
-        # e_DATA_outer = e_DATA[np.where(e_DATA[:, 5] < 0)]
-        # np.save('data/2ndaries/PMMA_2011_outer_faсtor_no_pol/' + \
-        #         str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
+        e_DATA_outer = e_DATA[np.where(e_DATA[:, 5] < 0)]
+        np.save('data/2ndaries/2015_faсtor_no_el_below_10eV/' +\
+                str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
 # %%
 # ans = np.load('data/4CASINO/1000/e_DATA_0.npy')
 
 # %%
-# plot_e_DATA(e_DATA)
-
 fig, ax = plt.subplots(dpi=300)
 
 for e_id in range(int(np.max(e_DATA[:, 0]) + 1)):
@@ -399,7 +405,8 @@ plt.ylabel('z, nm')
 plt.grid()
 plt.show()
 
-
+# %%
+print(len(np.where(e_DATA[:, 5] < 0)[0]) / 1000)
 
 
 

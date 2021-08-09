@@ -58,38 +58,38 @@ def get_z_max(folder, n_files, n_primaries, max_z, n_bins):
 
 
 # %%
-# bin_centers, hist = get_z_max_final('data/4CASINO/500', 100, 100, max_z=25, n_bins=20)
+bin_centers, hist = get_z_max('data/4CASINO/500', 100, 100, max_z=25, n_bins=20)
 # bin_centers, hist = get_z_max('data/4CASINO/1000', 100, 100, max_z=80, n_bins=20)
-bin_centers, hist = get_z_max('data/4CASINO/10000', 100, 100, max_z=3000, n_bins=20)
+# bin_centers, hist = get_z_max('data/4CASINO/10000', 100, 100, max_z=3000, n_bins=20)
 
 hist /= np.sum(hist)
 
 # %%
-# casino_casnati = np.loadtxt('notebooks/PMMA_distr_check/distributions/Casnati/0.5keV/z_max.dat')
-# casino_pouchou = np.loadtxt('notebooks/PMMA_distr_check/distributions/Pouchou/0.5keV/z_max.dat')
-# casino_powell = np.loadtxt('notebooks/PMMA_distr_check/distributions/Powell/0.5keV/z_max.dat')
+casino_casnati = np.loadtxt('notebooks/PMMA_distr_check/distributions/Casnati/0.5keV/z_max.dat')
+casino_pouchou = np.loadtxt('notebooks/PMMA_distr_check/distributions/Pouchou/0.5keV/z_max.dat')
+casino_powell = np.loadtxt('notebooks/PMMA_distr_check/distributions/Powell/0.5keV/z_max.dat')
 
 # casino_casnati = np.loadtxt('notebooks/PMMA_distr_check/distributions/Casnati/1keV/z_max.dat')
 # casino_pouchou = np.loadtxt('notebooks/PMMA_distr_check/distributions/Pouchou/1keV/z_max.dat')
 # casino_powell = np.loadtxt('notebooks/PMMA_distr_check/distributions/Powell/1keV/z_max.dat')
 
-casino_casnati = np.loadtxt('notebooks/PMMA_distr_check/distributions/Casnati/10keV/z_max.dat')
-casino_pouchou = np.loadtxt('notebooks/PMMA_distr_check/distributions/Pouchou/10keV/z_max.dat')
-casino_powell = np.loadtxt('notebooks/PMMA_distr_check/distributions/Powell/10keV/z_max.dat')
+# casino_casnati = np.loadtxt('notebooks/PMMA_distr_check/distributions/Casnati/10keV/z_max.dat')
+# casino_pouchou = np.loadtxt('notebooks/PMMA_distr_check/distributions/Pouchou/10keV/z_max.dat')
+# casino_powell = np.loadtxt('notebooks/PMMA_distr_check/distributions/Powell/10keV/z_max.dat')
 
 plt.figure(dpi=300)
 
-# plt.plot(casino_casnati[:, 0], casino_casnati[:, 1] * 50, label='Casnati')
-# plt.plot(casino_pouchou[:, 0], casino_pouchou[:, 1] * 40, label='Pouchou')
-# plt.plot(casino_powell[:, 0], casino_powell[:, 1] * 50, label='Powell')
+plt.plot(casino_casnati[:, 0], casino_casnati[:, 1] * 50, label='Casnati')
+plt.plot(casino_pouchou[:, 0], casino_pouchou[:, 1] * 40, label='Pouchou')
+plt.plot(casino_powell[:, 0], casino_powell[:, 1] * 50, label='Powell')
 
 # plt.plot(casino_casnati[:, 0], casino_casnati[:, 1] * 50, label='Casnati')
 # plt.plot(casino_pouchou[:, 0], casino_pouchou[:, 1] * 50, label='Pouchou')
 # plt.plot(casino_powell[:, 0], casino_powell[:, 1] * 50, label='Powell')
 
-plt.plot(casino_casnati[:, 0], casino_casnati[:, 1] * 40)
-plt.plot(casino_pouchou[:, 0], casino_pouchou[:, 1] * 40)
-plt.plot(casino_powell[:, 0], casino_powell[:, 1] * 40)
+# plt.plot(casino_casnati[:, 0], casino_casnati[:, 1] * 40)
+# plt.plot(casino_pouchou[:, 0], casino_pouchou[:, 1] * 40)
+# plt.plot(casino_powell[:, 0], casino_powell[:, 1] * 40)
 
 plt.plot(bin_centers, hist, label='my simulation')
 

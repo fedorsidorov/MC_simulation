@@ -37,11 +37,11 @@ xx_sim_10keV, yy_sim_10keV = get_E_dep('data/si_si_si/10000', 100, 100, z_ind=5,
 # xx_sim_old, yy_sim_old = get_E_dep('/Volumes/Transcend/MC_Si/10keV', n_files=100, z_ind=6, E_dep_ind=7)
 
 # %%
-paper_100eV = np.loadtxt('notebooks/MC_Si_check/curves/Si_Edep_100eV.txt')
-paper_1keV = np.loadtxt('notebooks/MC_Si_check/curves/Si_Edep_1keV.txt')
-paper_10keV = np.loadtxt('notebooks/MC_Si_check/curves/Si_Edep_10keV.txt')
+paper_100eV = np.loadtxt('notebooks/Si_distr_check/curves/Si_Edep_100eV.txt')
+paper_1keV = np.loadtxt('notebooks/Si_distr_check/curves/Si_Edep_1keV.txt')
+paper_10keV = np.loadtxt('notebooks/Si_distr_check/curves/Si_Edep_10keV.txt')
 
-# paper_10keV_old = np.loadtxt('notebooks/MC_Si_check/curves/Valentin_2010_10keV.txt')
+# paper_10keV_old = np.loadtxt('notebooks/Si_distr_check/curves/Valentin_2010_10keV.txt')
 
 plt.figure(dpi=300)
 

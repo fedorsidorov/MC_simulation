@@ -31,8 +31,8 @@ def get_true_proj_ranges(folder, n_files, n_primaries):
 
 
 # %%
-paper_range = np.loadtxt('notebooks/MC_Si_check/curves/Si_true_range.txt')
-paper_range_z = np.loadtxt('notebooks/MC_Si_check/curves/Si_projected_range.txt')
+paper_range = np.loadtxt('notebooks/Si_distr_check/curves/Si_true_range.txt')
+paper_range_z = np.loadtxt('notebooks/Si_distr_check/curves/Si_projected_range.txt')
 paper_range_z_livermore = np.loadtxt('notebooks/OLF_Si/curves/Si_Livermore.txt')
 
 # %%

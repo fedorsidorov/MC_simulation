@@ -57,8 +57,8 @@ beam_spot_n_electrons = line_n_electrons * mm.ly_cm / frame_lx_cm
 beam_spot_n_electrons_1s = beam_spot_n_electrons / t_exp
 beam_spot_n_electrons_10s = beam_spot_n_electrons_1s * 10
 
-tau_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/kinetic_curves/arrays/tau.npy')
-Mw_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/kinetic_curves/arrays/Mw_125.npy')
+tau_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/tau.npy')
+Mw_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/Mw_125.npy')
 
 # %%
 xx = mm.x_bins_5nm  # nm

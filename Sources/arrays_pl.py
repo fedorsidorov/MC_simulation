@@ -83,7 +83,7 @@ Si_ee_DIMFP_6_cumulated = \
 
 Si_E_bind = [16.65, 6.52, 13.63, 107.98, 151.55, 1828.5]
 
-paper = np.loadtxt('notebooks/MC_Si_check/curves/mfp_Val_2010.txt')
+paper = np.loadtxt('notebooks/Si_distr_check/curves/mfp_Val_2010.txt')
 
 plt.figure(dpi=300)
 plt.loglog(paper[:, 0], paper[:, 1], label='paper')

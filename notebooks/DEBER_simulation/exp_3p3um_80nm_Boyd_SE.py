@@ -57,8 +57,8 @@ time_s = 10
 
 y_0 = 3989
 
-tau_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/kinetic_curves/arrays_Si/tau.npy')
-Mw_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/kinetic_curves/arrays_Si/Mw_125.npy')
+tau_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/tau.npy')
+Mw_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/Mw_125.npy')
 
 # %%
 xx = mm.x_bins_10nm  # nm
@@ -131,8 +131,6 @@ for i in range(32):
             )[0]
 
     print('scission matrix is obtained, sum =', np.sum(scission_matrix))
-
-
 
     scission_array = np.sum(np.average(scission_matrix, axis=1), axis=1)
 

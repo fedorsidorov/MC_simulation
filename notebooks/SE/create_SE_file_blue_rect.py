@@ -10,16 +10,20 @@ ff = importlib.reload(ff)
 sf = importlib.reload(sf)
 
 # %% original profile in 2011' paper
-yy_um_0 = np.linspace(-15, -5 - 1e-4, 101)
-yy_um_1 = np.linspace(-5, 5, 101)
-yy_um_2 = np.linspace(5 + 1e-4, 15, 101)
+L_um = 22
+H_1_um = 0.440
+H_2_um = 0.335
 
-zz_um_0 = np.ones(101) * 0.450
-zz_um_1 = np.ones(101) * 0.350
-zz_um_2 = np.ones(101) * 0.450
+yy_1_um = np.linspace(-30, -L_um / 2 - 1e-4, 201)
+yy_2_um = np.linspace(-L_um / 2, L_um / 2, 201)
+yy_3_um = np.linspace(L_um / 2 + 1e-4, 30, 201)
 
-yy_um = np.concatenate((yy_um_0, yy_um_1, yy_um_2))
-zz_um = np.concatenate((zz_um_0, zz_um_1, zz_um_2))
+zz_1_um = np.ones(201) * H_1_um
+zz_2_um = np.ones(201) * H_2_um
+zz_3_um = np.ones(201) * H_1_um
+
+yy_um = np.concatenate((yy_1_um, yy_2_um, yy_3_um))
+zz_um = np.concatenate((zz_1_um, zz_2_um, zz_3_um))
 
 plt.figure(dpi=300)
 plt.plot(yy_um, zz_um)
@@ -27,9 +31,10 @@ plt.show()
 
 # %% make SE files
 width_um = 1
-path = 'notebooks/SE/datafile_blue_rect.fe'
+path = 'notebooks/SE/datafile_blue_rect_vmob_1p7e-3.fe'
 
-mobilities = np.ones(len(yy_um)) * 2e-7
+# mobilities = np.ones(len(yy_um)) * 1
+mobilities = np.ones(len(yy_um)) * 1.7e-3
 
 # %%
 sf.create_datafile_no_mob_fit(yy_um, zz_um, width_um, mobilities, path)
@@ -39,22 +44,22 @@ SE = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist.t
 
 SE = SE[np.where(
         np.logical_or(
-            SE[:, 0] == 0,
+            np.abs(SE[:, 0]) < 0.1,
             SE[:, 1] == -100
         ))]
-
-plt.figure(dpi=300)
 
 inds = np.where(SE[:, 1] == -100)[0]
 
 now_pos = 0
+
+plt.figure(dpi=300)
 
 for ind in inds:
     now_data = SE[(now_pos + 1):ind, :]
     plt.plot(now_data[:, 1], now_data[:, 2], '.')
     now_pos = ind
 
-plt.ylim(0.02, 0.06)
+# plt.ylim(0.425, 0.475)
 plt.show()
 
 

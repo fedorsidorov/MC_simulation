@@ -6,30 +6,18 @@ import constants as const
 from mapping import mapping_3p3um_80nm as mm
 from functions import array_functions as af
 from functions import e_matrix_functions as emf
-from functions import MC_functions as mcf
-from functions import DEBER_functions as deber
-from functions import mapping_functions as mf
-from functions import diffusion_functions as df
-from functions import reflow_functions as rf
-from functions import plot_functions as pf
-from functions._outdated import SE_functions as ef
 from functions import scission_functions as sf
+from functions import reflow_functions as rf
 
 import indexes as ind
 
-deber = importlib.reload(deber)
 const = importlib.reload(const)
 emf = importlib.reload(emf)
-mcf = importlib.reload(mcf)
 ind = importlib.reload(ind)
 mm = importlib.reload(mm)
 af = importlib.reload(af)
-mf = importlib.reload(mf)
-df = importlib.reload(df)
-ef = importlib.reload(ef)
-rf = importlib.reload(rf)
-pf = importlib.reload(pf)
 sf = importlib.reload(sf)
+rf = importlib.reload(rf)
 
 # %%
 lx = mm.lx * 1e-7
@@ -57,8 +45,8 @@ time_s = 10
 
 y_0 = 3989
 
-tau_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays_Si/tau.npy')
-Mw_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays_Si/Mw_125.npy')
+tau_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/tau.npy')
+Mw_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/Mw_125.npy') * 100
 
 # %%
 xx = mm.x_bins_10nm  # nm
@@ -82,15 +70,11 @@ monomer_matrix_2d = np.zeros(np.shape(np.sum(scission_matrix, axis=1)))
 
 time_step = 10  # s
 
+Mw_matrix = np.zeros((32, 330))
+
 for i in range(32):
-    # i = 0
 
-    # plt.figure(dpi=300)
-    # plt.plot(xx, zz_vac)
-    # plt.title('suda herachat electrons, i = ' + str(i))
-    # plt.show()
-
-    print('!!!!!!!!!', i, '!!!!!!!!!')
+    # print('!!!!!!!!!', i, '!!!!!!!!!')
 
     for _ in range(8):
         now_DATA = np.load(source + 'e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
@@ -114,13 +98,6 @@ for i in range(32):
                 xyz_max=[mm.x_max, mm.y_max, np.inf]
             )
 
-            for pos, line in enumerate(now_prim_e_DATA):  # delete events that are out of resist layer
-
-                now_x, now_z = line[ind.e_DATA_x_ind], line[ind.e_DATA_z_ind]
-
-                if now_z < mcf.lin_lin_interp(xx, zz_vac)(now_x):
-                    now_prim_e_DATA[pos, ind.e_DATA_process_id_ind] = 0  # change type to simulate zz_vac
-
             now_prim_e_val_DATA = \
                 now_prim_e_DATA[np.where(now_prim_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind)]
 
@@ -130,49 +107,72 @@ for i in range(32):
                 weights=sf.get_scissions(now_prim_e_val_DATA, weight=weight)
             )[0]
 
-    print('scission matrix is obtained, sum =', np.sum(scission_matrix))
+    # print('scission matrix is obtained, sum =', np.sum(scission_matrix))
 
+    scission_array = np.sum(np.average(scission_matrix, axis=1), axis=1)
+
+    # print('scission array sum =', np.sum(scission_array))
+
+    # now it is all about 10nm-depth profile !!!
+
+    zz_vac_area = np.zeros(len(scission_array))
+
+    for ii in range(len(zz_vac_area)):
+        zz_vac_area[ii] = (zz_vac[ii] + zz_vac[ii + 1]) / 2 * mm.step_10nm
+
+    resist_area = np.ones(len(zz_vac_area)) * d_PMMA * mm.step_10nm - zz_vac_area
+    resist_volume = resist_area * mm.step_10nm  # nm^3
+    resist_n_monomers = resist_volume / const.V_mon_nm3
+
+    k_s_exp = scission_array / resist_n_monomers / ((i + 1) * time_step)
+
+    tau_exp_array = y_0 * k_s_exp * (i * time_step)
+    Mw_array = np.zeros(len(tau_exp_array))
+
+    for ii in range(len(Mw_array)):
+        tau_ind = np.argmin(np.abs(tau_125 - tau_exp_array[ii]))
+        Mw_array[ii] = Mw_125[tau_ind]
+
+    Mw_matrix[i, :] = Mw_array
+
+    # mobs_array = rf.move_Mw_to_mob(T_C, Mw_array)
+
+    # scission_array_100nm = df.move_10nm_to_100nm(scission_array)
+    # sci_fit_params = rf.get_fit_params_sci_arr(mm.x_centers_100nm, scission_array_100nm)
+    # scission_array_50nm_fit = rf.gauss(mm.x_centers_50nm, *sci_fit_params)
 
 # %%
-scission_array = np.sum(np.average(scission_matrix, axis=1), axis=1)
+tt = np.arange(0, 320, 10)
+Mw = Mw_matrix[:, 164]
 
-print('scission array sum =', np.sum(scission_array))
+fig, ax = plt.subplots(dpi=600)
+# fig = plt.gcf()
+fig.set_size_inches(3.5, 3.5)
 
-# now it is all about 10nm-depth profile !!!
+font_size = 8
 
-zz_vac_area = np.zeros(len(scission_array))
+# plt.figure(dpi=300)
 
-for ii in range(len(zz_vac_area)):
-    zz_vac_area[ii] = (zz_vac[ii] + zz_vac[ii + 1]) / 2 * mm.step_10nm
+plt.plot(tt, Mw)
+# plt.semilogy(tt, rf.get_viscosity_W(125, Mw))
 
-resist_area = np.ones(len(zz_vac_area)) * d_PMMA * mm.step_10nm - zz_vac_area
-resist_volume = resist_area * mm.step_10nm  # nm^3
-resist_n_monomers = resist_volume / const.V_mon_nm3
+# ax = plt.gca()
+for tick in ax.xaxis.get_major_ticks():
+    tick.label.set_fontsize(font_size)
+for tick in ax.yaxis.get_major_ticks():
+    tick.label.set_fontsize(font_size)
 
-k_s_exp = scission_array / resist_n_monomers / ((i + 1) * time_step)
-
-tau_exp_array = y_0 * k_s_exp * (i * time_step)
-Mw_array = np.zeros(len(tau_exp_array))
-
-for ii in range(len(Mw_array)):
-    tau_ind = np.argmin(np.abs(tau_125 - tau_exp_array[ii]))
-    Mw_array[ii] = Mw_125[tau_ind]
-
-mobs_array = rf.move_Mw_to_mob(T_C, Mw_array)
-
-# %%
-plt.figure(dpi=300)
-
-# plt.plot(mm.x_centers_10nm, tau_exp_array)
-plt.plot(mm.x_centers_10nm, Mw_array)
-# plt.semilogy(mm.x_centers_10nm, mobs_array)
-
-plt.ylim(0, 7000)
-
+# plt.legend(fontsize=font_size)
+plt.xlim(0, 300)
+# plt.ylim(40, 80)
+ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
+plt.xlabel('$x$, нм', fontsize=font_size)
+plt.ylabel('$z$, нм', fontsize=font_size)
 plt.grid()
-plt.xlabel('x, nm')
-plt.ylabel('Mw')
-# plt.ylabel('vertex mobility')
 
-plt.show()
-# plt.savefig('mobility.png')
+# plt.show()
+plt.savefig('Mw.tiff', dpi=600)
+
+
+
+

@@ -28,7 +28,7 @@ xx_sim, yy_sim = get_2ndary_hist('data/si_si_si/10000', 100, 100, 7)
 # xx_sim_old, yy_sim_old = get_2ndary_hist('/Volumes/Transcend/MC_Si/10keV', 100, 100, 8)
 
 # %%
-paper = np.loadtxt('notebooks/MC_Si_check/curves/2ndary_spectra.txt')
+paper = np.loadtxt('notebooks/Si_distr_check/curves/2ndary_spectra.txt')
 
 plt.figure(dpi=300)
 
