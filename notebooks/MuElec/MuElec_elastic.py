@@ -113,7 +113,7 @@ plt.show()
 np.save('Resources/MuElec/elastic_diff_sigma_cumulated.npy', diff_sigma_cumulated)
 # np.save('Resources/MuElec/diff_sigma_6_norm.npy', diff_sigma_6_norm)
 
-# %% test DIIMFP_prec
+# %% test u_diff_prec
 plt.imshow(diff_sigma)
 plt.show()
 

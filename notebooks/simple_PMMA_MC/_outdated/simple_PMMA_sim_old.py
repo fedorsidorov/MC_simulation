@@ -30,9 +30,9 @@ PMMA_el_diff_u_cumulated =\
             'PMMA_diff_cs_cumulated_' + model + '_' + extrap + '+1.npy')
 
 # %%
-PMMA_ee_u = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_Mermin/u_arrays/u_nm.npy')
+PMMA_ee_u = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_PMMA_Mermin/final_arrays/u_nm.npy')
 PMMA_ee_diff_u_cumulated =\
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_Mermin/u_arrays/diff_u_cumulated.npy')
+    np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_PMMA_Mermin/final_arrays/diff_u_cumulated.npy')
 
 # PMMA_C_IMFP = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_PMMA_MC/PMMA/arrays_PMMA/'
 #                       'PMMA_C_IMFP_E_bind_nm.npy')

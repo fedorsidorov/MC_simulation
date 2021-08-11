@@ -29,17 +29,19 @@ def get_2ndary_yield(source_folder, n_primaries=100):
     for E in sorted(E_list):
     
         source = os.path.join(source_folder, str(E))
-        filenames = os.listdir(source)
+        # filenames = os.listdir(source)
 
         n_total = 0
         n_2nd = 0
         
-        for fname in filenames:
+        # for fname in filenames:
+        for i in range(50):
             
-            if fname == '.DS_Store':
-                continue
+            # if fname == '.DS_Store':
+            #     continue
             
-            DATA_outer = np.load(os.path.join(source, fname))
+            # DATA_outer = np.load(os.path.join(source, fname))
+            DATA_outer = np.load(os.path.join(source, 'e_DATA_' + str(i) + '.npy'))
 
             if n_primaries == 0:
                 break
@@ -62,15 +64,7 @@ def get_2ndary_yield(source_folder, n_primaries=100):
 
 
 # %%
-# now_folder = 'data/2ndaries/2011_faсtor_no_pol'
-# now_folder = 'data/2ndaries/2015_uniform'
-# now_folder = 'data/2ndaries/2015_faсtor_no_pol'
-# now_folder = 'data/2ndaries/2015_factor_NEW'
-# now_folder = 'data/2ndaries/2015_faсtor_no_pol_uniform'
-# now_folder = 'data/2ndaries/2015_faсtor_no_pol_uniform_extrap'
-# now_folder = 'data/2ndaries/2015_faсtor_no_pol_uniform_no_el_below_10eV'
-now_folder = 'data/2ndaries/2015_faсtor_uniform_no_el_below_10eV'
-# now_folder = 'data/2ndaries/2015_faсtor_no_el_below_10eV'
+now_folder = 'data/2ndaries/0.02'
 
 energies, delta = get_2ndary_yield(now_folder)
 

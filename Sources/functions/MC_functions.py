@@ -11,22 +11,22 @@ grid = importlib.reload(grid)
 
 
 # %% interpolation
-def lin_lin_interp(xp, yp, kind='linear'):
-    interp = interpolate.interp1d(xp, yp, kind=kind)
+def lin_lin_interp(xp, yp, kind='linear', axis=-1):
+    interp = interpolate.interp1d(xp, yp, kind=kind, axis=axis)
     def func(x): return interp(x)
     return func
 
 
-def lin_log_interp(xp, yp, kind='linear'):
+def lin_log_interp(xp, yp, kind='linear', axis=-1):
     log_yp = np.log10(yp)
-    interp = interpolate.interp1d(xp, log_yp, kind=kind)
+    interp = interpolate.interp1d(xp, log_yp, kind=kind, axis=axis)
     def func(x): return np.power(10.0, interp(x))
     return func
 
 
-def log_lin_interp(xp, yp, kind='linear'):
+def log_lin_interp(xp, yp, kind='linear', axis=-1):
     log_xp = np.log10(xp)
-    interp = interpolate.interp1d(log_xp, yp, kind=kind)
+    interp = interpolate.interp1d(log_xp, yp, kind=kind, axis=axis)
     def func(x): return interp(np.log10(x))
     return func
 
@@ -63,6 +63,12 @@ def log_log_log_interp_2d(xp, yp, zp, kind='linear'):
     return func
 
 
+def lin_lin_lin_interp_2d(xp, yp, zp, kind='linear'):
+    interp = interpolate.interp2d(xp, yp, zp, kind=kind)
+    def func(x, y): return interp(x, y)
+    return func
+
+
 # %% ELF utilities
 def get_km_kp(E, hw):
     km = np.sqrt(2 * const.m / const.hbar ** 2) * (np.sqrt(E) - np.sqrt(E - hw))
@@ -71,39 +77,39 @@ def get_km_kp(E, hw):
 
 
 # %% Monte-Carlo functions
-def get_cumulated_array(array, x):
-    result = np.zeros((len(array)))
-
-    for i in range(len(array)):
-        if np.all(array == 0):
-            continue
-        result[i] = np.trapz(array[:i + 1], x=x[:i + 1])
-
-    return result
-
-
-def norm_2d_array(array):
-    result = np.zeros(np.shape(array))
-
-    for i in range(len(array)):
-        if np.sum(array[i, :]) != 0:
-            result[i, :] = array[i, :] / np.sum(array[i, :])
-
-    return result
-
-
-def get_IEMFP_from_DEIMFP(DIEMFP):
-    IEMFP = np.zeros(grid.EE)
-    for i, _ in enumerate(grid.EE):
-        IEMFP[i, :] = np.trapz(DIEMFP[i, :] * 2 * np.pi * np.sin(grid.THETA_rad), x=grid.THETA_rad)
-
-    return IEMFP
+# def get_cumulated_array(array, x):
+#     result = np.zeros((len(array)))
+#
+#     for i in range(len(array)):
+#         if np.all(array == 0):
+#             continue
+#         result[i] = np.trapz(array[:i + 1], x=x[:i + 1])
+#
+#     return result
+#
+#
+# def norm_2d_array(array):
+#     result = np.zeros(np.shape(array))
+#
+#     for i in range(len(array)):
+#         if np.sum(array[i, :]) != 0:
+#             result[i, :] = array[i, :] / np.sum(array[i, :])
+#
+#     return result
 
 
-def get_IIMFP_from_DIIMFP(DIIMFP):
-    IIMFP = np.zeros(grid.EE)
-    for i, E in enumerate(grid.EE):
-        inds = np.where(grid.EE < E)
-        IIMFP[i, :] = np.trapz(DIIMFP[i, inds], x=grid.EE[inds])
-
-    return IIMFP
+# def get_IEMFP_from_DEIMFP(DIEMFP):
+#     IEMFP = np.zeros(grid.EE)
+#     for i, _ in enumerate(grid.EE):
+#         IEMFP[i, :] = np.trapz(DIEMFP[i, :] * 2 * np.pi * np.sin(grid.THETA_rad), x=grid.THETA_rad)
+#
+#     return IEMFP
+#
+#
+# def get_IIMFP_from_DIIMFP(DIIMFP):
+#     IIMFP = np.zeros(grid.EE)
+#     for i, E in enumerate(grid.EE):
+#         inds = np.where(grid.EE < E)
+#         IIMFP[i, :] = np.trapz(DIIMFP[i, inds], x=grid.EE[inds])
+#
+#     return IIMFP

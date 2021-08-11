@@ -90,7 +90,7 @@ Si_E_bind = [16.65, 6.52, 13.63, 107.98, 151.55, 1828.5]
 
 # Si_ee_IMFP_5 = np.zeros([len(grid.EE), 5])
 # for n in range(5):
-#     Si_ee_IMFP_5[:, n] = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/OLF_Si/IIMFP_5osc/u_' +
+#     Si_ee_IMFP_5[:, n] = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Akkerman_Si_5osc/u/u_' +
 #                                  str(n) + '.npy') * 1e-7
 
 # Si_ee_IMFP_5[:inds.Si_E_cut_ind] = 0  # no life below plasmon energy!
@@ -98,7 +98,7 @@ Si_E_bind = [16.65, 6.52, 13.63, 107.98, 151.55, 1828.5]
 # Si_ee_DIMFP_5_cumulated = np.zeros([5, len(grid.EE), len(grid.EE)])
 # for n in range(5):
 #     Si_ee_DIMFP_5_cumulated[n, :, :] =\
-#         np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/OLF_Si/DIIMFP_5osc_cumulated/DIIMFP_' +
+#         np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Akkerman_Si_5osc/u_diff_cumulated/DIIMFP_' +
 #                 str(n) + '_cumulated.npy')
 
 # Si_ee_DIMFP_5_cumulated[:, inds.Si_E_cut_ind, :] = 0  # no life below plasmon energy!

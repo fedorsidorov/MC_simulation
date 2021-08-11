@@ -24,9 +24,9 @@ plt.loglog(grid.EE, a.PMMA_ph_IMFP, label='phonon')
 plt.loglog(grid.EE, a.PMMA_pol_IMFP, label='polaron')
 plt.loglog(grid.EE, a.PMMA_val_IMFP + a.C_K_ee_IMFP + a.O_K_ee_IMFP + a.PMMA_ph_IMFP + a.PMMA_pol_IMFP,
            '--', label='total inelastic')
-plt.title('PMMA IIMFP')
+plt.title('PMMA u')
 plt.xlabel('E, eV')
-plt.ylabel('IIMFP, cm$^{-1}$')
+plt.ylabel('u, cm$^{-1}$')
 plt.xlim(1, 1e+4)
 plt.ylim(1e+2, 1e+9)
 plt.legend()
@@ -46,9 +46,9 @@ for n in range(6):
 
 plt.loglog(grid.EE, np.sum(a.Si_ee_IMFP_6, axis=1), '--', label='total inelastic')
 
-plt.title('simple_Si_MC IIMFP')
+plt.title('simple_Si_MC u')
 plt.xlabel('E, eV')
-plt.ylabel('IIMFP, cm$^{-1}$')
+plt.ylabel('u, cm$^{-1}$')
 plt.xlim(1, 1e+4)
 plt.ylim(1e+2, 1e+9)
 plt.legend()

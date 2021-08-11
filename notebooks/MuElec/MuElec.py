@@ -29,7 +29,7 @@ for n in range(6):
 # np.save('notebooks/MuElec/MuElec_inelastic_arrays/u_ee_6.npy', sigma * 1e-18 * const.n_Si)
 
 # %%
-paper = np.loadtxt('notebooks/OLF_Si/curves/Akkerman_u_KLM.txt')
+paper = np.loadtxt('notebooks/Akkerman_Si_5osc/curves/Akkerman_u_KLM.txt')
 
 plt.figure(dpi=300)
 
@@ -110,7 +110,7 @@ for n in range(6):
 np.save('Resources/MuElec/diff_sigma_6_E.npy', diff_sigma_6)
 np.save('Resources/MuElec/diff_sigma_6_E_cumulated.npy', diff_sigma_6_cumulated)
 
-# %% test DIIMFP_prec
+# %% test u_diff_prec
 plt.imshow(diff_sigma_6_cumulated[5])
 plt.show()
 

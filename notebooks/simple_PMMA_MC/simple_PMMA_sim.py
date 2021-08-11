@@ -14,16 +14,24 @@ extrap = ''  # '', 'extrap_'
 PMMA_el_u = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/elastic/final_arrays/PMMA/'
                     'PMMA_' + model + '_u_' + extrap + 'nm.npy')
 
-PMMA_el_u[:228] = 0
+PMMA_el_u[:228] = PMMA_el_u[228] * 0.1
+
+# u_0 = PMMA_el_u[228] * 1e-1
+#
+# PMMA_el_u[:228] = np.exp(
+#     np.log(u_0) +
+#     (np.log(grid.EE[:228]) - np.log(grid.EE[0])) *
+#     (np.log(PMMA_el_u[228]) - np.log(u_0)) / (np.log(grid.EE[228]) - np.log(grid.EE[0]))
+# )
 
 PMMA_el_diff_u_cumulated =\
     np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/elastic/final_arrays/PMMA/'
             'PMMA_diff_cs_cumulated_' + model + '_' + extrap + '+1.npy')
 
 # e-e
-PMMA_ee_u = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_Mermin/u_arrays/u_nm.npy')
+PMMA_ee_u = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_PMMA_Mermin/final_arrays/u_nm.npy')
 PMMA_ee_diff_u_cumulated =\
-    np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_Mermin/u_arrays/diff_u_cumulated.npy')
+    np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_PMMA_Mermin/final_arrays/diff_u_cumulated.npy')
 
 # phonon
 PMMA_ph_u = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_PMMA_MC/'
@@ -34,17 +42,9 @@ Wf_PMMA = 4.68
 C_pol = 0.1  # nm^-1
 gamma_pol = 0.15  # eV^-1
 
-# 2011
-# C_pol = 1.5  # nm^-1
-# gamma_pol = 0.14  # eV^-1
-# Wf_PMMA = 1
-
-# C_pol = 0  # nm^-1
-# gamma_pol = 0.14  # eV^-1
-
 PMMA_pol_u = C_pol * np.exp(-gamma_pol * grid.EE)
 
-# %%
+# %
 hw_phonon = 0.1
 
 PMMA_E_cut = Wf_PMMA
@@ -62,16 +62,13 @@ PMMA_total_u = np.sum(PMMA_u, axis=1)
 process_indexes = list(range(len(PMMA_u[0, :])))
 
 
-# %% plot cross sections
+# % plot cross sections
 plt.figure(dpi=300)
 
 labels = 'elastic', 'e-e', 'phonon', 'polaron'
 
 for j in range(len(PMMA_u[0])):
     plt.loglog(grid.EE, PMMA_u[:, j], label=labels[j])
-
-# plt.loglog(grid.EE, PMMA_total_u)
-# plt.loglog(grid.EE, PMMA_ee_u)
 
 plt.xlabel('E, eV')
 plt.ylabel(r'$\mu$, nm$^{-1}$')
@@ -81,9 +78,9 @@ plt.grid()
 plt.show()
 
 # %%
-dapor_P_100 = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_Mermin/curves/'
+dapor_P_100 = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_PMMA_Mermin/curves/'
                          'Dapor_P_100eV.txt')
-dapor_P_1000 = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_Mermin/curves/'
+dapor_P_1000 = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_PMMA_Mermin/curves/'
                           'Dapor_P_1keV.txt')
 
 E_ind_100 = 454
@@ -92,16 +89,6 @@ E_ind_1000 = 681
 plt.figure(dpi=300)
 plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[E_ind_100, :], label='my Mermin 100')
 plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[E_ind_1000, :], label='my Mermin 1000')
-
-# plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[100, :])
-# plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[200, :])
-# plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[300, :])
-# plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[400, :])
-# plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[500, :])
-# plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[600, :])
-# plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[700, :])
-# plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[800, :])
-# plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[900, :])
 
 plt.semilogx(dapor_P_100[:, 0], dapor_P_100[:, 1], '--', label='Dapor Drude 100')
 plt.semilogx(dapor_P_1000[:, 0], dapor_P_1000[:, 1], '--', label='Dapor Drude 1000')
@@ -358,15 +345,15 @@ def track_all_electrons(n_electrons, E0):
 
 
 # %%
-n_files = 100
+n_files = 50
 n_primaries_in_file = 100
 
 # E_beam_arr = [200]
-# E_beam_arr = [50, 100, 150, 200, 250, 300]
+E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500]
 # E_beam_arr = [400, 500, 700, 1000, 1400]
-E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 700, 1000, 1400]
+# E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 700, 1000, 1400]
 
-for n in range(66, n_files):
+for n in range(n_files):
     print('File #' + str(n))
 
     for E_beam in E_beam_arr:
@@ -375,7 +362,7 @@ for n in range(66, n_files):
         # np.save('data/4CASINO/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA)
 
         e_DATA_outer = e_DATA[np.where(e_DATA[:, 5] < 0)]
-        np.save('data/2ndaries/2015_faсtor_no_el_below_10eV/' +\
+        np.save('data/2ndaries/0.1/' +\
                 str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
 # %%
