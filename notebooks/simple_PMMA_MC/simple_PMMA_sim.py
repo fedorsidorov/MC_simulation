@@ -24,13 +24,13 @@ PMMA_el_u[:228] = PMMA_el_u[228] * 0.1
 #     (np.log(PMMA_el_u[228]) - np.log(u_0)) / (np.log(grid.EE[228]) - np.log(grid.EE[0]))
 # )
 
-PMMA_el_diff_u_cumulated =\
+PMMA_el_u_diff_cumulated =\
     np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/elastic/final_arrays/PMMA/'
             'PMMA_diff_cs_cumulated_' + model + '_' + extrap + '+1.npy')
 
 # e-e
 PMMA_ee_u = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_PMMA_Mermin/final_arrays/u_nm.npy')
-PMMA_ee_diff_u_cumulated =\
+PMMA_ee_u_diff_cumulated =\
     np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_PMMA_Mermin/final_arrays/diff_u_cumulated.npy')
 
 # phonon
@@ -58,7 +58,7 @@ for i in range(len(PMMA_u)):
     if np.sum(PMMA_u[i, :]) != 0:
         PMMA_u_norm[i, :] = PMMA_u[i, :] / np.sum(PMMA_u[i, :])
 
-PMMA_total_u = np.sum(PMMA_u, axis=1)
+PMMA_u_total = np.sum(PMMA_u, axis=1)
 process_indexes = list(range(len(PMMA_u[0, :])))
 
 
@@ -87,8 +87,8 @@ E_ind_100 = 454
 E_ind_1000 = 681
 
 plt.figure(dpi=300)
-plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[E_ind_100, :], label='my Mermin 100')
-plt.semilogx(grid.EE, PMMA_ee_diff_u_cumulated[E_ind_1000, :], label='my Mermin 1000')
+plt.semilogx(grid.EE, PMMA_ee_u_diff_cumulated[E_ind_100, :], label='my Mermin 100')
+plt.semilogx(grid.EE, PMMA_ee_u_diff_cumulated[E_ind_1000, :], label='my Mermin 1000')
 
 plt.semilogx(dapor_P_100[:, 0], dapor_P_100[:, 1], '--', label='Dapor Drude 100')
 plt.semilogx(dapor_P_1000[:, 0], dapor_P_1000[:, 1], '--', label='Dapor Drude 1000')
@@ -100,27 +100,6 @@ plt.show()
 
 
 # %% functions
-# def plot_e_DATA(e_DATA_arr):
-#     fig, ax = plt.subplots(dpi=300)
-#
-#     for e_id in range(int(np.max(e_DATA_arr[:, 0]) + 1)):
-#         inds = np.where(e_DATA_arr[:, 0] == e_id)[0]
-#
-#         if len(inds) == 0:
-#             continue
-#
-#         ax.plot(e_DATA_arr[inds, 3], e_DATA_arr[inds, 5], '-', linewidth='1')
-#
-#     ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
-#     ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
-#     plt.gca().set_aspect('equal', adjustable='box')
-#     plt.gca().invert_yaxis()
-#     plt.xlabel('x, nm')
-#     plt.ylabel('z, nm')
-#     plt.grid()
-#     plt.show()
-
-
 def get_scattered_flight_ort(flight_ort, phi, theta):
     u, v, w = flight_ort
 
@@ -193,7 +172,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
         E_ind = np.argmin(np.abs(grid.EE - E))
 
         u1 = np.random.random()
-        free_path = -1 / PMMA_total_u[E_ind] * np.log(u1)
+        free_path = -1 / PMMA_u_total[E_ind] * np.log(u1)
         delta_r = flight_ort * free_path
 
         if coords[-1] + delta_r[-1] < 0:  # PMMA surface crossing
@@ -226,7 +205,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
         if proc_ind == 0:  # elastic scattering
             phi = 2 * np.pi * np.random.random()
             u2 = np.random.random()
-            theta_ind = np.argmin(np.abs(PMMA_el_diff_u_cumulated[E_ind, :] - u2))
+            theta_ind = np.argmin(np.abs(PMMA_el_u_diff_cumulated[E_ind, :] - u2))
             theta = grid.THETA_rad[theta_ind]
             new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
 
@@ -235,7 +214,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
 
         elif proc_ind == 1:  # e-e scattering
             u2 = np.random.random()
-            hw_ind = np.argmin(np.abs(PMMA_ee_diff_u_cumulated[E_ind, :] - u2))
+            hw_ind = np.argmin(np.abs(PMMA_ee_u_diff_cumulated[E_ind, :] - u2))
             hw = grid.EE[hw_ind]
 
             if hw < 0:
@@ -345,25 +324,27 @@ def track_all_electrons(n_electrons, E0):
 
 
 # %%
-n_files = 50
+n_files = 100
+# n_files = 1
 n_primaries_in_file = 100
+# n_primaries_in_file = 10
 
-# E_beam_arr = [200]
-E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500]
+# E_beam_arr = [1000]
+# E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500]
 # E_beam_arr = [400, 500, 700, 1000, 1400]
-# E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 700, 1000, 1400]
+E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 700, 1000, 1400]
 
 for n in range(n_files):
+
     print('File #' + str(n))
 
     for E_beam in E_beam_arr:
+
         print(E_beam)
         e_DATA = track_all_electrons(n_primaries_in_file, E_beam)
-        # np.save('data/4CASINO/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA)
-
         e_DATA_outer = e_DATA[np.where(e_DATA[:, 5] < 0)]
-        np.save('data/2ndaries/0.1/' +\
-                str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
+
+        np.save('data/2ndaries/0.1/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
 # %%
 # ans = np.load('data/4CASINO/1000/e_DATA_0.npy')
@@ -391,10 +372,3 @@ plt.xlabel('x, nm')
 plt.ylabel('z, nm')
 plt.grid()
 plt.show()
-
-# %%
-print(len(np.where(e_DATA[:, 5] < 0)[0]) / 1000)
-
-
-
-
