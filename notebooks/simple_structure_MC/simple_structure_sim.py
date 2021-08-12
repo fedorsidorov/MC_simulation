@@ -322,7 +322,6 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
         E_ind = np.argmin(np.abs(grid.EE - E))  # get E_ind
 
         u1 = np.random.random()
-        # free_path = -1 / structure_u_total[layer_ind][E_ind] * np.log(u1)
         free_path = -1 / structure_u_total[layer_ind][E_ind] * np.log(1 - u1)  # (1 - u1) !!!
         delta_r = flight_ort * free_path
 
