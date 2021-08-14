@@ -10,8 +10,9 @@ grid = importlib.reload(grid)
 # mcf = importlib.reload(mcf)
 
 # %% constants
-d_PMMA = 100
+# d_PMMA = 100
 # d_PMMA = 1e+10
+d_PMMA = 0
 arr_size = 1000
 
 
@@ -315,6 +316,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
             layer_ind = 1
         else:
             layer_ind = 0
+            print('0')
 
         if E < E_cut[layer_ind]:  # check energy
             break
@@ -386,11 +388,17 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
             osc_ind = proc_ind - 1
 
             if layer_ind == 0:  # PMMA
+                print('PMMA')
                 hw_ind = np.argmin(np.abs(PMMA_electron_u_diff_cumulated[E_ind, :] - u2))
-            else:  # Si
-                hw_ind = np.argmin(np.abs(Si_electron_u_diff_cumulated[osc_ind, E_ind, :] - u2))
+                hw = grid.EE[hw_ind]
 
-            hw = grid.EE[hw_ind]
+            else:  # Si
+                if osc_ind == 0:
+                    hw = Si_E_pl
+
+                else:
+                    hw_ind = np.argmin(np.abs(Si_electron_u_diff_cumulated[osc_ind, E_ind, :] - u2))
+                    hw = grid.EE[hw_ind]
 
             Eb = ee_E_bind[layer_ind][osc_ind]
             delta_E = hw - Eb
@@ -508,9 +516,9 @@ def track_all_electrons(n_electrons, E0):
 
 #%%
 n_files = 1
-n_primaries_in_file = 10
+n_primaries_in_file = 1
 
-E_beam_arr = [20000]
+E_beam_arr = [1000]
 # E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500]
 # E_beam_arr = [400, 500, 700, 1000, 1400]
 # E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 700, 1000, 1400]

@@ -219,20 +219,20 @@ zz_vac = (np.cos(xx_vac * 2 * np.pi / 2000) + 1) * 40 * 0
 xx_vac_final = np.concatenate(([-1e+6], xx_vac, [1e+6]))
 zz_vac_final = np.concatenate(([zz_vac[0]], zz_vac, [zz_vac[-1]]))
 
-fig, ax = plt.subplots(dpi=300)
+# fig, ax = plt.subplots(dpi=300)
 
-ax.plot(xx_vac_final, zz_vac_final)
-ax.plot(xx_vac_final, np.ones(len(xx_vac_final)) * d_PMMA)
+# ax.plot(xx_vac_final, zz_vac_final)
+# ax.plot(xx_vac_final, np.ones(len(xx_vac_final)) * d_PMMA)
 
-plt.xlim(-1000, 1000)
-plt.ylim(-50, 150)
+# plt.xlim(-1000, 1000)
+# plt.ylim(-50, 150)
 
-plt.gca().set_aspect('equal', adjustable='box')
-plt.gca().invert_yaxis()
-plt.xlabel('x, nm')
-plt.ylabel('z, nm')
-plt.grid()
-plt.show()
+# plt.gca().set_aspect('equal', adjustable='box')
+# plt.gca().invert_yaxis()
+# plt.xlabel('x, nm')
+# plt.ylabel('z, nm')
+# plt.grid()
+# plt.show()
 
 
 # %% functions
@@ -323,7 +323,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
         else:
             layer_ind = 2
 
-        if E < E_cut[layer_ind]:  # check energy
+        if E <= E_cut[layer_ind]:  # check energy
             break
 
         if layer_ind == 0:
@@ -409,10 +409,15 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
 
             if layer_ind == 0:  # PMMA
                 hw_ind = np.argmin(np.abs(PMMA_electron_u_diff_cumulated[E_ind, :] - u2))
-            else:  # Si
-                hw_ind = np.argmin(np.abs(Si_electron_u_diff_cumulated[osc_ind, E_ind, :] - u2))
+                hw = grid.EE[hw_ind]
 
-            hw = grid.EE[hw_ind]
+            else:  # Si
+                if osc_ind == 0:
+                    hw = Si_E_pl
+
+                else:
+                    hw_ind = np.argmin(np.abs(Si_electron_u_diff_cumulated[osc_ind, E_ind, :] - u2))
+                    hw = grid.EE[hw_ind]
 
             Eb = ee_E_bind[layer_ind][osc_ind]
             delta_E = hw - Eb
@@ -422,7 +427,6 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
 
             phi = 2 * np.pi * np.random.random()
             phi_2nd = phi - np.pi
-            # phi_2nd = np.random.random() * 2 * np.pi
 
             sin2 = delta_E / E
             sin2_2nd = 1 - delta_E / E
@@ -435,16 +439,16 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
 
             theta = np.arcsin(np.sqrt(sin2))
             theta_2nd = np.arcsin(np.sqrt(sin2_2nd))
-            # theta_2nd = np.pi * np.random.random()
 
             new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
             flight_ort_2nd = get_scattered_flight_ort(flight_ort, phi_2nd, theta_2nd)
 
             E_2nd = delta_E
 
-            e_2nd_list = [next_e_2nd_id, e_id, E_2nd, *coords, *flight_ort_2nd]
-            e_2nd_deque.append(e_2nd_list)
-            next_e_2nd_id += 1
+            if osc_ind > 0:
+                e_2nd_list = [next_e_2nd_id, e_id, E_2nd, *coords, *flight_ort_2nd]
+                e_2nd_deque.append(e_2nd_list)
+                next_e_2nd_id += 1
 
             E -= hw
 
@@ -537,8 +541,8 @@ def track_all_electrons(n_electrons, E0):
 n_files = 100
 n_primaries_in_file = 100
 
-# E_beam_arr = [10000]
 E_beam_arr = [100]
+# E_beam_arr = [100]
 # E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500]
 # E_beam_arr = [400, 500, 700, 1000, 1400]
 # E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 700, 1000, 1400]
@@ -555,7 +559,7 @@ for n in range(n_files):
         # e_DATA_outer = e_DATA[np.where(e_DATA[:, 6] < 0)]
         # np.save('data/2ndaries/0.08/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
-        np.save('data/4Akkerman/100eV/e_DATA_' + str(n) + '.npy', e_DATA)
+        np.save('data/4Akkerman/100eV_pl/e_DATA_' + str(n) + '.npy', e_DATA)
 
 # %%
 fig, ax = plt.subplots(dpi=300)
@@ -571,11 +575,11 @@ for e_id in range(int(np.max(e_DATA[:, 0]) + 1)):
 ax.plot(xx_vac_final, zz_vac_final)
 ax.plot(xx_vac_final, np.ones(len(xx_vac_final)) * d_PMMA)
 
-# plt.xlim(-1000, 1000)
-# plt.ylim(-500, 1500)
+plt.xlim(-1000, 1000)
+plt.ylim(-500, 1500)
 
-plt.xlim(-250, -150)
-plt.ylim(-50, 50)
+# plt.xlim(-250, -150)
+# plt.ylim(-50, 50)
 
 # ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
 # ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
