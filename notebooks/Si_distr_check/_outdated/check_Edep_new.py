@@ -14,18 +14,21 @@ n_e_total = 0
 
 bin_centrers = (bins[:-1] + bins[1:])/2
 
-n_files = 100
+n_files = 33
 progress_bar = tqdm(total=n_files, position=0)
 
-for i in range(n_files):
+# for i in range(n_files):
+for i in range(1):
 
-    now_data = np.load('/Volumes/Transcend/MC_Si_geant4/100eV/e_DATA_' + str(i) + '.npy')
+    # now_data = np.load('/Volumes/Transcend/MC_Si_geant4/100eV/e_DATA_' + str(i) + '.npy')
     # now_data = np.load('/Volumes/Transcend/MC_Si_geant4/1keV/e_DATA_' + str(i) + '.npy')
     # now_data = np.load('/Volumes/Transcend/MC_Si_geant4/10keV/e_DATA_' + str(i) + '.npy')
+    now_data = np.load('data/4Akkerman/10keV/e_DATA_' + str(i) + '.npy')
 
     n_electrons = int(np.max(now_data[:, 0]))
 
     for n_el in range(n_electrons):
+        print(n_el)
         now_e_data = now_data[np.where(now_data[:, 0] == n_el)]
         now_e_z = now_e_data[1:, 6]
         now_e_dE = now_e_data[1:, 7]
@@ -49,9 +52,9 @@ plt.figure(dpi=300)
 # plt.loglog(bin_centrers, hist_dE_1 / 100 / 100, label='my 1 keV')
 plt.loglog(bin_centrers, hist_dE_10 / 100 / 100, label='my 10 keV')
 
-plt.loglog(paper_100eV[:, 0], paper_100eV[:, 1], 'o', label='paper 100 eV')
+# plt.loglog(paper_100eV[:, 0], paper_100eV[:, 1], 'o', label='paper 100 eV')
 # plt.loglog(paper_1keV[:, 0], paper_1keV[:, 1], 'o', label='paper 1 keV')
-# plt.loglog(paper_10keV[:, 0], paper_10keV[:, 1], 'o', label='paper 10 keV')
+plt.loglog(paper_10keV[:, 0], paper_10keV[:, 1], 'o', label='paper 10 keV')
 
 plt.xlim(1e+0, 5e+3)
 plt.ylim(1e-2, 1e+3)

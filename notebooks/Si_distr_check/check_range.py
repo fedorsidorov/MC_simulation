@@ -11,7 +11,7 @@ def get_true_proj_ranges(folder, n_files, n_primaries):
 
     for n in range(n_files):
 
-        data = np.load(folder + '/e_DATA_' + str(n) + '.npy')
+        data = np.load(folder + 'e_DATA_' + str(n) + '.npy')
 
         for n_pr in range(n_primaries):
 
