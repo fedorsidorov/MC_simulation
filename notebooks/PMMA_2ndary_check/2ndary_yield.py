@@ -54,7 +54,7 @@ def get_2ndary_yield(source_folder, n_primaries=100):
 
 # %%
 # now_folder = 'data/2ndaries/0.08'
-now_folder = 'data/2ndaries/0.1'
+now_folder = 'data/2ndaries/0.1_new'
 
 energies, delta = get_2ndary_yield(now_folder)
 

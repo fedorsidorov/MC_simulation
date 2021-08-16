@@ -33,7 +33,7 @@ paper_range_z_L = np.loadtxt('notebooks/Si_distr_check/curves/Si_z_range_Livermo
 
 # %%
 n_primaries = 100
-EE = [25, 45, 49, 50, 51, 100, 250]
+EE = [25, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 100, 250]
 # EE = [25, 45, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000]
 
 true_ranges = np.zeros(len(EE))

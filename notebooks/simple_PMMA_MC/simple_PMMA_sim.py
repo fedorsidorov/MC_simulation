@@ -330,9 +330,9 @@ n_primaries_in_file = 100
 # n_primaries_in_file = 10
 
 # E_beam_arr = [1000]
-# E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500]
+E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500]
 # E_beam_arr = [400, 500, 700, 1000, 1400]
-E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 700, 1000, 1400]
+# E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 700, 1000, 1400]
 
 for n in range(n_files):
 
@@ -344,7 +344,7 @@ for n in range(n_files):
         e_DATA = track_all_electrons(n_primaries_in_file, E_beam)
         e_DATA_outer = e_DATA[np.where(e_DATA[:, 5] < 0)]
 
-        np.save('data/2ndaries/0.1/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
+        np.save('data/2ndaries/0.1_new/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
 # %%
 # ans = np.load('data/4CASINO/1000/e_DATA_0.npy')

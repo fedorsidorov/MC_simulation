@@ -10,32 +10,27 @@ grid = importlib.reload(grid)
 mcf = importlib.reload(mcf)
 
 # %% constants
-# d_PMMA = 100
-# d_PMMA = 1e+10
-d_PMMA = 0
 arr_size = 1000
 
-# %% energies
 Wf_PMMA = 4.68
 PMMA_E_cut = 3
-PMMA_ee_E_bind = [0]
+PMMA_electron_E_bind = [0]
 
 Si_E_pl = 16.7
 Si_E_cut = Si_E_pl
-Si_ee_E_bind = [Si_E_pl, 20.1, 102, 151.1, 1828.9]
+Si_electron_E_bind = [Si_E_pl, 20.1, 102, 151.1, 1828.9]
 
-E_cut = [PMMA_E_cut, Si_E_cut]
-ee_E_bind = [PMMA_ee_E_bind, Si_ee_E_bind]
-PMMA_ee_E_bind = [0]
+structure_E_cut = [PMMA_E_cut, Si_E_cut]
+structure_electron_E_bind = [PMMA_electron_E_bind, Si_electron_E_bind]
 
-
-# %% load arrays
 elastic_model = 'easy'  # 'easy', 'atomic', 'muffin'
 # elastic_model = 'muffin'  # 'easy', 'atomic', 'muffin'
 elastic_extrap = ''  # '', 'extrap_'
 PMMA_elastic_mult = 0.1
 E_10eV_ind = 228
 
+
+# %% load arrays
 PMMA_elastic_u = np.load(
     '/Users/fedor/PycharmProjects/MC_simulation/notebooks/elastic/final_arrays/PMMA/PMMA_'
     + elastic_model + '_u_' + elastic_extrap + 'nm.npy'
@@ -120,47 +115,9 @@ structure_u_total = [PMMA_u_total, Si_u_total]
 structure_u_norm = [PMMA_processes_u_norm, Si_processes_u_norm]
 
 structure_elastic_u_diff_cumulated = [PMMA_elastic_u_diff_cumulated, Si_elastic_u_diff_cumulated]
+structure_electron_u_diff_cumulated = [PMMA_electron_u_diff_cumulated, Si_electron_u_diff_cumulated]
 
 structure_process_indexes = [PMMA_process_indexes, Si_process_indexes]
-
-# %% plot PMMA cross sections
-# plt.figure(dpi=300)
-#
-# labels = 'elastic', 'e-e', 'phonon', 'polaron'
-#
-# for j in range(len(PMMA_processes_u[0])):
-#     plt.loglog(grid.EE, PMMA_processes_u[:, j], label=labels[j])
-#
-# plt.xlabel('E, eV')
-# plt.ylabel(r'$\mu$, nm$^{-1}$')
-# plt.ylim(1e-5, 1e+2)
-# plt.legend()
-# plt.grid()
-# plt.show()
-
-# %% plot Si cross sections
-# plt.figure(dpi=300)
-#
-# labels = 'elastic', 'e-e 0', 'e-e 1', 'e-e 2', 'e-e 3', 'e-e 4'
-#
-# for j in range(len(Si_processes_u[0])):
-#     plt.loglog(grid.EE, Si_processes_u[:, j], label=labels[j])
-#
-# plt.xlabel('E, eV')
-# plt.ylabel(r'$\mu$, nm$^{-1}$')
-# plt.ylim(1e-5, 1e+2)
-# plt.legend()
-# plt.grid()
-# plt.show()
-
-
-# %% imshow
-# plt.figure(dpi=300)
-# plt.imshow(PMMA_elastic_u_diff_cumulated)
-# plt.imshow(Si_elastic_u_diff_cumulated)
-# plt.imshow(PMMA_electron_u_diff_cumulated)
-# plt.imshow(Si_electron_u_diff_cumulated[4])
-# plt.show()
 
 
 # %% zz_vac
@@ -171,13 +128,10 @@ xx_vac_final = np.concatenate(([-1e+6], xx_vac, [1e+6]))
 zz_vac_final = np.concatenate(([zz_vac[0]], zz_vac, [zz_vac[-1]]))
 
 # fig, ax = plt.subplots(dpi=300)
-
 # ax.plot(xx_vac_final, zz_vac_final)
 # ax.plot(xx_vac_final, np.ones(len(xx_vac_final)) * d_PMMA)
-
 # plt.xlim(-1000, 1000)
 # plt.ylim(-50, 150)
-
 # plt.gca().set_aspect('equal', adjustable='box')
 # plt.gca().invert_yaxis()
 # plt.xlabel('x, nm')
@@ -268,8 +222,7 @@ def get_ee_phi_theta_phi2nd_theta2nd(delta_E, E):
     return phi, theta, phi_2nd, theta_2nd
 
 
-
-def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
+def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA):
     E = E_0
     coords = coords_0
     flight_ort = flight_ort_0
@@ -298,7 +251,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
         else:
             layer_ind = 2
 
-        if E <= E_cut[layer_ind]:  # check energy
+        if E <= structure_E_cut[layer_ind]:  # check energy
             break
 
         E_ind = np.argmin(np.abs(grid.EE - E))  # get E_ind
@@ -376,11 +329,22 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
         # e-e scattering
         elif (layer_ind == 0 and proc_ind == 1) or (layer_ind == 1 and proc_ind >= 1):
             u2 = np.random.random()
+            
+            if layer_ind == 1 and proc_ind == 1:
+                hw = Si_E_pl
+                Eb = Si_E_pl
 
-            if layer_ind == 0:  # PMMA
-                hw_ind = np.argmin(np.abs(PMMA_electron_u_diff_cumulated[E_ind, :] - u2))
+                phi, theta, phi_2nd, theta_2nd = get_ee_phi_theta_phi2nd_theta2nd(hw, E)
+                new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
+
+                E_2nd = 0
+
+            else:
+                hw_ind = np.argmin(
+                    np.abs(structure_electron_u_diff_cumulated[layer_ind][proc_ind - 1, E_ind, :] - u2)
+                )
                 hw = grid.EE[hw_ind]
-                Eb = 0
+                Eb = structure_electron_E_bind[layer_ind][proc_ind - 1]
 
                 E_2nd = hw - Eb
 
@@ -392,35 +356,6 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
                 e_2nd_list = [next_e_2nd_id, e_id, E_2nd, *coords, *flight_ort_2nd]
                 e_2nd_deque.append(e_2nd_list)
                 next_e_2nd_id += 1
-
-            else:  # Si
-                osc_ind = proc_ind - 1
-
-                if osc_ind == 0:
-                    hw = Si_E_pl
-                    Eb = Si_E_pl
-
-                    E_2nd = 0
-
-                    phi, theta, phi_2nd, theta_2nd = get_ee_phi_theta_phi2nd_theta2nd(Si_E_pl, E)
-
-                    new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
-
-                else:
-                    hw_ind = np.argmin(np.abs(Si_electron_u_diff_cumulated[osc_ind, E_ind, :] - u2))
-                    hw = grid.EE[hw_ind]
-                    Eb = ee_E_bind[1][osc_ind]
-
-                    E_2nd = hw - Eb
-
-                    phi, theta, phi_2nd, theta_2nd = get_ee_phi_theta_phi2nd_theta2nd(E_2nd, E)
-
-                    new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
-                    flight_ort_2nd = get_scattered_flight_ort(flight_ort, phi_2nd, theta_2nd)
-
-                    e_2nd_list = [next_e_2nd_id, e_id, E_2nd, *coords, *flight_ort_2nd]
-                    e_2nd_deque.append(e_2nd_list)
-                    next_e_2nd_id += 1
 
             E -= hw
 
@@ -438,7 +373,6 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
 
         # polaron
         elif layer_ind == 0 and proc_ind == 3:
-            # new_flight_ort = np.array(([0, 0, 0]))
             e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, E, 0, 0]
             e_DATA_deque.append(e_DATA_line)
             break
@@ -454,18 +388,18 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
         e_DATA_final_line = [e_id, par_id, -1, -2, *coords, 0, 0, E]
         e_DATA_deque.append(e_DATA_final_line)
 
-    elif E > E_cut[layer_ind]:  # polaron
+    elif E > structure_E_cut[layer_ind]:  # polaron
         e_DATA_final_line = [e_id, par_id, layer_ind, 3, *coords, E, 0, 0]
         e_DATA_deque.append(e_DATA_final_line)
 
-    elif E < E_cut[layer_ind]:  # electron energy lower than E_cut
+    elif E < structure_E_cut[layer_ind]:  # electron energy lower than E_cut
         e_DATA_final_line = [e_id, par_id, layer_ind, -2, *coords, E, 0, 0]
         e_DATA_deque.append(e_DATA_final_line)
 
     return e_DATA_deque, e_2nd_deque
 
 
-def track_all_electrons(n_electrons, E0):
+def track_all_electrons(n_electrons, E0, d_PMMA):
     e_deque = deque()
     total_e_DATA_deque = deque()
 
@@ -496,7 +430,8 @@ def track_all_electrons(n_electrons, E0):
         now_e_DATA_deque, now_e_2nd_deque = track_electron(
             now_e_id, now_par_id, now_E0,
             np.array([now_x0, now_y0, now_z0]),
-            np.array([now_ort_x, now_ort_y, now_ort_z])
+            np.array([now_ort_x, now_ort_y, now_ort_z]),
+            d_PMMA
         )
 
         for e_2nd_line in now_e_2nd_deque:
@@ -511,13 +446,17 @@ def track_all_electrons(n_electrons, E0):
 
 
 # %%
+# d_PMMA = 100
+# d_PMMA = 1e+10
+d_PMMA = 0
+
 n_files = 100
 n_primaries_in_file = 100
 
-# E_beam_arr = [1000]
+E_beam_arr = [1000]
 # E_beam_arr = [40, 41, 42, 43, 44, 56, 57, 58, 59, 60]
 # E_beam_arr = [25, 50, 100, 250, 500]
-E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500]
+# E_beam_arr = [50, 100, 150, 200, 250, 300, 400]
 # E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 700, 1000, 1400]
 
 for n in range(n_files):
@@ -526,12 +465,13 @@ for n in range(n_files):
 
     for E_beam in E_beam_arr:
         print(E_beam)
-        e_DATA = track_all_electrons(n_primaries_in_file, E_beam)
+        e_DATA = track_all_electrons(n_primaries_in_file, E_beam, d_PMMA)
 
-        e_DATA_outer = e_DATA[np.where(e_DATA[:, 6] < 0)]
-        np.save('data/2ndaries/0.2/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
+        # e_DATA_outer = e_DATA[np.where(e_DATA[:, 6] < 0)]
+        # np.save('data/2ndaries/0.1_new/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
         # np.save('data/4Akkerman/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA)
+        np.save('data/4Akkerman/1keV/e_DATA_' + str(n) + '.npy', e_DATA)
 
 # %%
 fig, ax = plt.subplots(dpi=300)

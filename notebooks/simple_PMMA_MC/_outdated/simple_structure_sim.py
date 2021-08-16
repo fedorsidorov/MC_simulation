@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 import grid
-from notebooks.simple_PMMA_MC import simple_arrays as arr
+from notebooks.simple_PMMA_MC._outdated import simple_arrays as arr
 
 grid = importlib.reload(grid)
 arr = importlib.reload(arr)

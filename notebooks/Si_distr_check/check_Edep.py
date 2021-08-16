@@ -23,7 +23,8 @@ progress_bar = tqdm(total=n_files, position=0)
 for i in range(n_files):
 
     now_data_100 = np.load('data/4Akkerman/100/e_DATA_' + str(i) + '.npy')
-    now_data_1k = np.load('data/4Akkerman/1000/e_DATA_' + str(i) + '.npy')
+    # now_data_1k = np.load('data/4Akkerman/1000/e_DATA_' + str(i) + '.npy')
+    now_data_1k = np.load('data/4Akkerman/1keV/e_DATA_' + str(i) + '.npy')
     now_data_10k = np.load('data/4Akkerman/10000/e_DATA_' + str(i) + '.npy')
 
     now_z_100 = now_data_100[1:, 6]

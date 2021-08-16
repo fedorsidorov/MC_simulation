@@ -27,6 +27,12 @@ def get_OSC_edge(hw, E, A, w):
     return OLF
 
 
+def get_OSC_edge_single(hw, E, A, w):
+    if hw < E:
+        return 0
+    return get_OSC(hw, E, A, w)
+
+
 def get_OSC_edge_for_int(hw, E, A, w):
     if hw < E:
         return 0
@@ -41,6 +47,17 @@ def get_OLF(hw):
     OLF += get_OSC_edge(hw, E2, A2, w2)
     OLF += get_OSC_edge(hw, E3, A3, w3)
     OLF += get_OSC_edge(hw, E4, A4, w4)
+
+    return OLF
+
+
+def get_OLF_single(hw):
+    OLF = get_OSC(hw, E0, A0, w0)
+
+    OLF += get_OSC_edge_single(hw, E1, A1, w1)
+    OLF += get_OSC_edge_single(hw, E2, A2, w2)
+    OLF += get_OSC_edge_single(hw, E3, A3, w3)
+    OLF += get_OSC_edge_single(hw, E4, A4, w4)
 
     return OLF
 
@@ -227,6 +244,7 @@ for n_shell in [0, 1, 2, 3, 4]:
     # np.save('notebooks/Akkerman_Si_5osc/u_diff/u_diff_' + str(n_shell) + '.npy', u_diff)
     # np.save('notebooks/Akkerman_Si_5osc/u_diff/u_diff_prec' + str(n_shell) + '.npy', u_diff_prec)
 
+
 # %%
 u_test = np.zeros(len(grid.EE_prec))
 
@@ -235,7 +253,16 @@ for i, now_E in enumerate(grid.EE_prec):
     u_test = np.trapz(u_diff_prec[i, inds], x=grid.EE_prec[inds])
 
 
+# %% check Z, 1
+hwhw_eV = np.linspace(0, 1e+6, 1000000)
+hwhw_J = hwhw_eV * const.eV
+ww = hwhw_J / const.hbar
 
+OLFOLF = get_OLF(hwhw_eV)
 
+# plt.figure(dpi=300)
+# plt.loglog(hwhw, OLFOLF)
+# plt.show()
 
+np.trapz(2 / np.pi / (16.7 * const.eV)**2 * ww * OLFOLF, x=ww)
 
