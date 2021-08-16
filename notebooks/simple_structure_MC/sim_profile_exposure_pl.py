@@ -22,8 +22,7 @@ PMMA_ee_E_bind = [0]
 
 Si_E_pl = 16.7
 Si_E_cut = Si_E_pl
-# Si_E_cut = 30
-Si_ee_E_bind = [0, 20.1, 102, 151.1, 1828.9]
+Si_ee_E_bind = [Si_E_pl, 20.1, 102, 151.1, 1828.9]
 
 E_cut = [PMMA_E_cut, Si_E_cut]
 ee_E_bind = [PMMA_ee_E_bind, Si_ee_E_bind]
@@ -32,6 +31,7 @@ PMMA_ee_E_bind = [0]
 
 # %% load arrays
 elastic_model = 'easy'  # 'easy', 'atomic', 'muffin'
+# elastic_model = 'muffin'  # 'easy', 'atomic', 'muffin'
 elastic_extrap = ''  # '', 'extrap_'
 PMMA_elastic_mult = 0.08
 E_10eV_ind = 228
@@ -64,20 +64,9 @@ PMMA_electron_u = np.load(
 )
 
 PMMA_electron_u_diff_cumulated = np.load(
-    '/Users/fedor/PycharmProjects/MC_simulation/notebooks/Dapor_PMMA_Mermin/final_arrays/diff_u_cumulated.npy'
+    '/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_structure_MC/arrays/'
+    'PMMA_electron_u_diff_cumulated.npy'
 )
-
-PMMA_electron_u_diff_cumulated[np.where(np.abs(PMMA_electron_u_diff_cumulated - 1) < 1e-10)] = 1
-
-for i in range(arr_size):
-    for j in range(arr_size - 1):
-
-        if PMMA_electron_u_diff_cumulated[i, j] == 0 and PMMA_electron_u_diff_cumulated[i, j + 1] == 0:
-            PMMA_electron_u_diff_cumulated[i, j] = -2
-
-        if PMMA_electron_u_diff_cumulated[i, arr_size - j - 1] == 1 and \
-                PMMA_electron_u_diff_cumulated[i, arr_size - j - 2] == 1:
-            PMMA_electron_u_diff_cumulated[i, arr_size - j - 1] = -2
 
 Si_electron_u = np.zeros((arr_size, 5))
 
@@ -86,48 +75,10 @@ for j in range(5):
         '/Users/fedor/PycharmProjects/MC_simulation/notebooks/Akkerman_Si_5osc/u/u_' + str(j) + '_nm_precised.npy'
     )
 
-Si_electron_u_diff_cumulated = np.zeros((5, arr_size, arr_size))
-
-for n in range(5):
-    Si_electron_u_diff_cumulated[n, :, :] = np.load(
-        '/Users/fedor/PycharmProjects/MC_simulation/notebooks/Akkerman_Si_5osc/u_diff_cumulated/u_diff_'
-        + str(n) + '_cumulated_precised.npy'
-    )
-
-    Si_electron_u_diff_cumulated[np.where(np.abs(Si_electron_u_diff_cumulated - 1) < 1e-10)] = 1
-
-    for i in range(arr_size):
-        for j in range(arr_size - 1):
-
-            if Si_electron_u_diff_cumulated[n, i, j] == 0 and Si_electron_u_diff_cumulated[n, i, j + 1] == 0:
-                Si_electron_u_diff_cumulated[n, i, j] = -2
-
-            if Si_electron_u_diff_cumulated[n, i, arr_size - j - 1] == 1 and \
-                    Si_electron_u_diff_cumulated[n, i, arr_size - j - 2] == 1:
-                Si_electron_u_diff_cumulated[n, i, arr_size - j - 1] = -2
-
-    zero_inds = np.where(Si_electron_u_diff_cumulated[n, -1, :] == 0)[0]
-
-    if len(zero_inds) > 0:
-
-        zero_ind = zero_inds[0]
-
-        if grid.EE[zero_ind] < Si_ee_E_bind[n]:
-            Si_electron_u_diff_cumulated[n, :, zero_ind] = -2
-
-Si_electron_u_diff_cumulated[0, :4, 5] = -2
-
-Si_electron_u_diff_cumulated[1, :301, :297] = -2
-Si_electron_u_diff_cumulated[1, 300, 296] = 0
-
-Si_electron_u_diff_cumulated[2, :461, :457] = -2
-Si_electron_u_diff_cumulated[2, 460, 456] = 0
-
-Si_electron_u_diff_cumulated[3, :500, :496] = -2
-Si_electron_u_diff_cumulated[3, 499, 495] = 0
-
-Si_electron_u_diff_cumulated[4, :745, :742] = -2
-Si_electron_u_diff_cumulated[4, 744, 741] = 0
+Si_electron_u_diff_cumulated = np.load(
+    '/Users/fedor/PycharmProjects/MC_simulation/notebooks/simple_structure_MC/arrays/'
+    'Si_electron_u_diff_cumulated.npy'
+)
 
 # phonon, polaron
 PMMA_phonon_u = np.load(
@@ -301,10 +252,12 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
     coords = coords_0
     flight_ort = flight_ort_0
 
-    if coords[-1] > d_PMMA:  # get layer_ind at the very stary
+    if coords[-1] > d_PMMA:  # get layer_ind
         layer_ind = 1
-    else:
+    elif 0 < coords[-1] < d_PMMA:
         layer_ind = 0
+    else:
+        layer_ind = 2
 
     # e_DATA_line: [e_id, par_id, layer_ind, proc_id, x_new, y_new, z_new, E_loss, E_2nd, E_new]
     e_DATA_deque = deque()
@@ -405,50 +358,69 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
         elif (layer_ind == 0 and proc_ind == 1) or (layer_ind == 1 and proc_ind >= 1):
             u2 = np.random.random()
 
-            osc_ind = proc_ind - 1
-
             if layer_ind == 0:  # PMMA
+                print('WTF tut delaet PMMA ???')
                 hw_ind = np.argmin(np.abs(PMMA_electron_u_diff_cumulated[E_ind, :] - u2))
                 hw = grid.EE[hw_ind]
+                Eb = 0
+
+                phi = 2 * np.pi * np.random.random()
+
+                sin2 = hw / E
+                theta = np.arcsin(np.sqrt(sin2))
+
+                new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
 
             else:  # Si
+                osc_ind = proc_ind - 1
+
                 if osc_ind == 0:
                     hw = Si_E_pl
+                    Eb = Si_ee_E_bind[osc_ind]
+
+                    phi = 2 * np.pi * np.random.random()
+
+                    sin2 = hw / E
+                    theta = np.arcsin(np.sqrt(sin2))
+
+                    new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
+
+                    E_2nd = 0
 
                 else:
                     hw_ind = np.argmin(np.abs(Si_electron_u_diff_cumulated[osc_ind, E_ind, :] - u2))
                     hw = grid.EE[hw_ind]
+                    Eb = ee_E_bind[1][osc_ind]
+                    delta_E = hw - Eb
 
-            Eb = ee_E_bind[layer_ind][osc_ind]
-            delta_E = hw - Eb
+                    if delta_E < 0:
+                        print('delta E < 0 !!!')
 
-            if delta_E < 0:
-                print('delta E < 0 !!!')
+                    phi = 2 * np.pi * np.random.random()
 
-            phi = 2 * np.pi * np.random.random()
-            phi_2nd = phi - np.pi
+                    sin2 = delta_E / E
 
-            sin2 = delta_E / E
-            sin2_2nd = 1 - delta_E / E
+                    if sin2 > 1:
+                        print('sin2 > 1 !!!', sin2)
 
-            if sin2 > 1:
-                print('sin2 > 1 !!!', sin2)
+                    theta = np.arcsin(np.sqrt(sin2))
 
-            if sin2_2nd < 0:
-                print('sin2_2nd < 0 !!!')
+                    new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
 
-            theta = np.arcsin(np.sqrt(sin2))
-            theta_2nd = np.arcsin(np.sqrt(sin2_2nd))
+                    E_2nd = delta_E
 
-            new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
-            flight_ort_2nd = get_scattered_flight_ort(flight_ort, phi_2nd, theta_2nd)
+                    phi_2nd = phi - np.pi
+                    sin2_2nd = 1 - delta_E / E
 
-            E_2nd = delta_E
+                    if sin2_2nd < 0:
+                        print('sin2_2nd < 0 !!!')
 
-            if osc_ind > 0:
-                e_2nd_list = [next_e_2nd_id, e_id, E_2nd, *coords, *flight_ort_2nd]
-                e_2nd_deque.append(e_2nd_list)
-                next_e_2nd_id += 1
+                    theta_2nd = np.arcsin(np.sqrt(sin2_2nd))
+                    flight_ort_2nd = get_scattered_flight_ort(flight_ort, phi_2nd, theta_2nd)
+
+                    e_2nd_list = [next_e_2nd_id, e_id, E_2nd, *coords, *flight_ort_2nd]
+                    e_2nd_deque.append(e_2nd_list)
+                    next_e_2nd_id += 1
 
             E -= hw
 
@@ -466,6 +438,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0):
 
         # polaron
         elif layer_ind == 0 and proc_ind == 3:
+            # new_flight_ort = np.array(([0, 0, 0]))
             e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, E, 0, 0]
             e_DATA_deque.append(e_DATA_line)
             break
@@ -538,16 +511,15 @@ def track_all_electrons(n_electrons, E0):
 
 
 # %%
-n_files = 100
+n_files = 300
 n_primaries_in_file = 100
 
-E_beam_arr = [100]
-# E_beam_arr = [100]
-# E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500]
+# E_beam_arr = [25000]
+E_beam_arr = [51]
+# E_beam_arr = [25, 50, 100, 250, 500]
 # E_beam_arr = [400, 500, 700, 1000, 1400]
 # E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 700, 1000, 1400]
 
-# for n in range(1):
 for n in range(n_files):
 
     print('File #' + str(n))
@@ -559,7 +531,7 @@ for n in range(n_files):
         # e_DATA_outer = e_DATA[np.where(e_DATA[:, 6] < 0)]
         # np.save('data/2ndaries/0.08/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
-        np.save('data/4Akkerman/100eV_pl/e_DATA_' + str(n) + '.npy', e_DATA)
+        np.save('data/4Akkerman/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA)
 
 # %%
 fig, ax = plt.subplots(dpi=300)
