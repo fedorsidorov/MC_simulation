@@ -27,7 +27,7 @@ structure_electron_E_bind = [PMMA_electron_E_bind, Si_electron_E_bind]
 elastic_model = 'easy'  # 'easy', 'atomic', 'muffin'
 # elastic_model = 'muffin'  # 'easy', 'atomic', 'muffin'
 elastic_extrap = ''  # '', 'extrap_'
-PMMA_elastic_factor = 0.001
+PMMA_elastic_factor = 0.05
 E_10eV_ind = 228
 
 
@@ -130,8 +130,7 @@ structure_electron_u_diff_cumulated = [PMMA_electron_u_diff_cumulated, Si_electr
 structure_process_indexes = [PMMA_process_indexes, Si_process_indexes]
 
 
-# %%
-# % plot cross sections
+# %% plot cross sections
 plt.figure(dpi=300)
 
 labels = 'elastic', 'e-e', 'phonon', 'polaron'
@@ -249,7 +248,7 @@ def get_ee_phi_theta_phi2nd_theta2nd(delta_E, E):
     return phi, theta, phi_2nd, theta_2nd
 
 
-def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA):
+def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut):
     E = E_0
     coords = coords_0
     flight_ort = flight_ort_0
@@ -279,6 +278,9 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA):
             layer_ind = 2
 
         if E <= structure_E_cut[layer_ind]:  # check energy
+            break
+
+        if coords[-1] > z_cut:
             break
 
         E_ind = np.argmin(np.abs(grid.EE - E))  # get E_ind
@@ -329,8 +331,9 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA):
                 # print('e surface scattering')
                 now_z_vac = get_now_z_vac(coords[0], layer_ind)
 
-                factor = (coords[-1] - now_z_vac) / np.abs(delta_r[-1])
-                # factor = 0
+                # TODO factor ot not?
+                # factor = (coords[-1] - now_z_vac) / np.abs(delta_r[-1])
+                factor = 0
 
                 coords += delta_r * factor  # reach surface
 
@@ -340,6 +343,9 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA):
                 delta_r[-1] *= -1
                 coords += delta_r * (1 - factor)
                 flight_ort[-1] *= -1
+
+        else:
+            print('WTF else ???')
 
         proc_ind = np.random.choice(structure_process_indexes[layer_ind], p=structure_u_norm[layer_ind][E_ind, :])
 
@@ -429,7 +435,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA):
     return e_DATA_deque, e_2nd_deque
 
 
-def track_all_electrons(n_electrons, E0, d_PMMA):
+def track_all_electrons(n_electrons, E0, d_PMMA, z_cut):
     e_deque = deque()
     total_e_DATA_deque = deque()
 
@@ -461,7 +467,8 @@ def track_all_electrons(n_electrons, E0, d_PMMA):
             now_e_id, now_par_id, now_E0,
             np.array([now_x0, now_y0, now_z0]),
             np.array([now_ort_x, now_ort_y, now_ort_z]),
-            d_PMMA
+            d_PMMA,
+            z_cut
         )
 
         for e_2nd_line in now_e_2nd_deque:
@@ -480,26 +487,36 @@ def track_all_electrons(n_electrons, E0, d_PMMA):
 d_PMMA = 1e+10
 # d_PMMA = 0
 
-n_files = 100
+n_files = 200
 n_primaries_in_file = 100
 
-# E_beam_arr = [1000]
-# E_beam_arr = [40, 41, 42, 43, 44, 56, 57, 58, 59, 60]
-# E_beam_arr = [25, 50, 100, 250, 500]
-E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500]
-# E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 700, 1000, 1400]
+# E_beam_arr = [10000]
+
+# E_beam_arr = [700, 1000, 1400]
+E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 800, 1000, 1400]
+# z_max_arr = [23.58, 25.23, 28.8, 31.09, 37.10, 40, 43, 46.10]
+
+# E_beam_arr = [700, 1000, 1400]
+# z_max_arr = [46, 46, 46]
+
 
 for n in range(n_files):
 
     print('File #' + str(n))
 
-    for E_beam in E_beam_arr:
+    for i, E_beam in enumerate(E_beam_arr):
         print(E_beam, 'eV,', 'elastic factor =', PMMA_elastic_factor)
-        e_DATA = track_all_electrons(n_primaries_in_file, E_beam, d_PMMA)
+        e_DATA = track_all_electrons(
+            n_electrons=n_primaries_in_file,
+            E0=E_beam,
+            d_PMMA=d_PMMA,
+            z_cut=d_PMMA
+        )
+        # e_DATA = track_all_electrons(n_primaries_in_file, E_beam, d_PMMA, z_max_arr[i] / 2)
 
         e_DATA_outer = e_DATA[np.where(e_DATA[:, 6] < 0)]
 
-        np.save('data/2ndaries/' + str(PMMA_elastic_factor) + '/' + str(E_beam) +
+        np.save('data/2ndaries/no_factor/' + str(PMMA_elastic_factor) + '_new/' + str(E_beam) +
                 '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
         # np.save('data/2ndaries/log_rise_1e-5/' + str(E_beam) +
