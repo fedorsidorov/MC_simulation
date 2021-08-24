@@ -27,7 +27,7 @@ structure_electron_E_bind = [PMMA_electron_E_bind, Si_electron_E_bind]
 elastic_model = 'easy'  # 'easy', 'atomic', 'muffin'
 # elastic_model = 'muffin'  # 'easy', 'atomic', 'muffin'
 elastic_extrap = ''  # '', 'extrap_'
-PMMA_elastic_factor = 0.05
+PMMA_elastic_factor = 0.01
 E_10eV_ind = 228
 
 
@@ -487,13 +487,13 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut):
 d_PMMA = 1e+10
 # d_PMMA = 0
 
-n_files = 200
+n_files = 100
 n_primaries_in_file = 100
 
 # E_beam_arr = [10000]
 
-# E_beam_arr = [700, 1000, 1400]
-E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 800, 1000, 1400]
+E_beam_arr = [700, 1000, 1400]
+# E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 800, 1000, 1400]
 # z_max_arr = [23.58, 25.23, 28.8, 31.09, 37.10, 40, 43, 46.10]
 
 # E_beam_arr = [700, 1000, 1400]
@@ -516,7 +516,7 @@ for n in range(n_files):
 
         e_DATA_outer = e_DATA[np.where(e_DATA[:, 6] < 0)]
 
-        np.save('data/2ndaries/no_factor/' + str(PMMA_elastic_factor) + '_new/' + str(E_beam) +
+        np.save('data/2ndaries/no_factor/' + str(PMMA_elastic_factor) + '/' + str(E_beam) +
                 '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
         # np.save('data/2ndaries/log_rise_1e-5/' + str(E_beam) +
