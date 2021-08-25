@@ -406,12 +406,14 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut):
         e_DATA_final_line = [e_id, par_id, layer_ind, 10, *coords, E, 0, 0]
         e_DATA_deque.append(e_DATA_final_line)
 
-    return e_DATA_deque, e_2nd_deque
+    e_DATA = np.around(np.vstack(e_DATA_deque), decimals=4)
+
+    return e_DATA, e_2nd_deque
 
 
 def track_all_electrons(n_electrons, E0, d_PMMA, z_cut):
     e_deque = deque()
-    total_e_DATA_deque = deque()
+    e_DATA_deque = deque()
 
     next_e_id = 0
 
@@ -437,7 +439,7 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut):
         if now_par_id == -1:
             progress_bar.update()
 
-        now_e_DATA_deque, now_e_2nd_deque = track_electron(
+        now_e_DATA, now_e_2nd_deque = track_electron(
             now_e_id, now_par_id, now_E0,
             np.array([now_x0, now_y0, now_z0]),
             np.array([now_ort_x, now_ort_y, now_ort_z]),
@@ -452,15 +454,17 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut):
 
         # total_e_DATA_deque = total_e_DATA_deque + now_e_DATA_deque
 
-        for ed in now_e_DATA_deque:
-            total_e_DATA_deque.append(ed)
+        # for ed in now_e_DATA_deque:
+        #     total_e_DATA_deque.append(ed)
+
+        e_DATA_deque.append(now_e_DATA)
 
         # e_deque = now_e_2nd_deque + e_deque
 
         for e2d in now_e_2nd_deque:
             e_deque.appendleft(e2d)
 
-    return np.around(np.vstack(total_e_DATA_deque), decimals=4)
+    return np.concatenate(e_DATA_deque, axis=0)
 
 
 # %%
@@ -504,7 +508,7 @@ for n in range(n_files):
         # np.save('data/2ndaries/no_factor/' + str(PMMA_elastic_factor) + '/' + str(E_beam) +
         #         '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
-        np.save('data/4Harris/e_DATA_Pn' + str(n) + '.npy', e_DATA_Pn)
+        # np.save('data/4Harris/e_DATA_Pn' + str(n) + '.npy', e_DATA_Pn)
 
         # np.save('data/4Akkerman/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA)
         # np.save('data/4Akkerman/1keV/e_DATA_' + str(n) + '.npy', e_DATA)
