@@ -13,8 +13,8 @@ mcf = importlib.reload(mcf)
 arr_size = 1000
 
 Wf_PMMA = 4.68
-# PMMA_E_cut = 3
-PMMA_E_cut = Wf_PMMA
+PMMA_E_cut = 3.3  # Aktary
+# PMMA_E_cut = Wf_PMMA
 PMMA_electron_E_bind = [0]
 
 Si_E_pl = 16.7
@@ -27,7 +27,7 @@ structure_electron_E_bind = [PMMA_electron_E_bind, Si_electron_E_bind]
 elastic_model = 'easy'  # 'easy', 'atomic', 'muffin'
 # elastic_model = 'muffin'  # 'easy', 'atomic', 'muffin'
 elastic_extrap = ''  # '', 'extrap_'
-PMMA_elastic_factor = 0.01
+PMMA_elastic_factor = 0.02
 E_10eV_ind = 228
 
 
@@ -484,20 +484,19 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut):
 
 # %%
 # d_PMMA = 100
-d_PMMA = 1e+10
-# d_PMMA = 0
+# d_PMMA = 1e+10
+d_PMMA = 500
 
 n_files = 100
-n_primaries_in_file = 100
+n_primaries_in_file = 10
 
-# E_beam_arr = [10000]
+E_beam_arr = [10000]
 
-E_beam_arr = [700, 1000, 1400]
+# E_beam_arr = [700, 1000, 1400]
 # E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 800, 1000, 1400]
 # z_max_arr = [23.58, 25.23, 28.8, 31.09, 37.10, 40, 43, 46.10]
 
-# E_beam_arr = [700, 1000, 1400]
-# z_max_arr = [46, 46, 46]
+# z_max_arr = 1718.42
 
 
 for n in range(n_files):
@@ -510,17 +509,15 @@ for n in range(n_files):
             n_electrons=n_primaries_in_file,
             E0=E_beam,
             d_PMMA=d_PMMA,
-            z_cut=d_PMMA
+            z_cut=np.inf
         )
-        # e_DATA = track_all_electrons(n_primaries_in_file, E_beam, d_PMMA, z_max_arr[i] / 2)
 
-        e_DATA_outer = e_DATA[np.where(e_DATA[:, 6] < 0)]
+        # e_DATA_outer = e_DATA[np.where(e_DATA[:, 6] < 0)]
 
-        np.save('data/2ndaries/no_factor/' + str(PMMA_elastic_factor) + '/' + str(E_beam) +
-                '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
-
-        # np.save('data/2ndaries/log_rise_1e-5/' + str(E_beam) +
+        # np.save('data/2ndaries/no_factor/' + str(PMMA_elastic_factor) + '/' + str(E_beam) +
         #         '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
+
+        np.save('data/4Harris/e_DATA_' + str(n) + '.npy', e_DATA)
 
         # np.save('data/4Akkerman/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA)
         # np.save('data/4Akkerman/1keV/e_DATA_' + str(n) + '.npy', e_DATA)
