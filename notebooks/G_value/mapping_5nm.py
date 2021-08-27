@@ -1,4 +1,5 @@
 import importlib
+from collections import deque
 
 import numpy as np
 from tqdm import tqdm
@@ -13,20 +14,52 @@ const = importlib.reload(const)
 indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
 
-# %%
-sample = '3'
 
-for weight in [0.1, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35]:
+# %% from 0.01 to 0.03
+weights = [
+    0.010, 0.011, 0.012, 0.013, 0.014, 0.015, 0.016, 0.017, 0.018, 0.019, 0.020,
+    0.021, 0.022, 0.023, 0.024, 0.025, 0.026, 0.027, 0.028, 0.029, 0.030
+]
+
+for weight in weights:
 
     print(weight)
-    weight = str(weight)
 
-    scission_matrix = np.load('data/scission_mat_weight/' + sample + '/e_matrix_scissions_' + weight + '.npy')
+    e_matrix_val = np.load('/Users/fedor/PycharmProjects/MC_simulation/data/e_matrix_val.npy')
+    e_matrix_dE = np.load('data/e_matrix_E_dep.npy')
+
+    resist_shape = np.shape(e_matrix_val)
+
+    e_matrix_sci = np.zeros(resist_shape)
+
+    print('get scission matrix')
+    progress_bar = tqdm(total=resist_shape[0], position=0)
+
+    for x_ind in range(resist_shape[0]):
+        for y_ind in range(resist_shape[1]):
+            for z_ind in range(resist_shape[2]):
+
+                n_val = int(e_matrix_val[x_ind, y_ind, z_ind])
+
+                scissions = np.where(np.random.random(n_val) < weight)[0]
+                e_matrix_sci[x_ind, y_ind, z_ind] = len(scissions)
+
+        progress_bar.update()
+
+    np.save('data/G_calibration/3/scission_matrix_' + str(weight) + '.npy', e_matrix_sci)
+
+    sample = '3'
+
+# %%
+while True:
+
     resist_matrix = np.load('/Volumes/ELEMENTS/chains_harris/resist_matrix_' + sample + '.npy')
     chain_lens = np.load('/Volumes/ELEMENTS/chains_harris/prepared_chains_' + sample + '/chain_lens.npy')
     n_chains = len(chain_lens)
 
-    chain_tables = []
+    chain_tables = deque()
+
+    print('load chain tables')
     progress_bar = tqdm(total=n_chains, position=0)
 
     for n in range(n_chains):
@@ -35,6 +68,18 @@ for weight in [0.1, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35]:
         chain_tables.append(now_chain_table)
         progress_bar.update()
 
-    mf.process_mapping(scission_matrix, resist_matrix, chain_tables)
-    lens_final = mf.get_chain_lens(chain_tables)
-    np.save('data/G_calibration/' + sample + '/harris_lens_final_' + weight + '.npy', lens_final)
+    mf.process_mapping(e_matrix_sci, resist_matrix, chain_tables)
+
+    lens_final = mf.get_chain_lens_fast(chain_tables, count_monomers=False)
+
+    np.save('data/G_calibration/3/harris_lens_final_' + str(weight) + '.npy', lens_final)
+
+# %%
+Mn = np.average(chain_lens) * const.u_MMA
+Mf = np.average(lens_final) * const.u_MMA
+
+total_E_loss = np.sum(e_matrix_dE)
+GG_sim = (Mn / Mf - 1) * const.rho_PMMA * const.Na / (total_E_loss / mapping.volume_cm3 * Mn) * 100
+
+GG_theor = np.sum(e_matrix_sci) / total_E_loss * 100
+

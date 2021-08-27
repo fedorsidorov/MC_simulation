@@ -5,14 +5,14 @@ PMMA_E_cut_ind = 135  # PMMA work function
 Si_E_cut_ind = 278  # plasmon energy
 
 # %% simulation indexes
-vacuum_ind = 2
+# vacuum_ind = 2
 PMMA_ind = 0
 Si_ind = 1
 
 sim_elastic_ind = 0
 sim_PMMA_ee_val_ind = 1
-sim_PMMA_phonon_ind = 4
-sim_PMMA_polaron_ind = 5
+sim_PMMA_phonon_ind = 2
+sim_PMMA_polaron_ind = 3
 
 sim_MuElec_plasmon_ind = 0
 

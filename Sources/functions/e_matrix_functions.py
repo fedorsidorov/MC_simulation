@@ -32,14 +32,30 @@ def get_e_id_e_DATA_ind_range(e_DATA, n_primaries_in_file, e_id):
     return range(e_id_inds[0], next_e_id_inds[0])
 
 
+def get_e_id_e_DATA_simple(e_DATA, n_primaries_in_file, e_id):
+
+    ind_now_prim_e = np.where(e_DATA[:, 0] == e_id)[0][0]
+
+    if e_id < n_primaries_in_file - 1:
+        ind_next_prim_e =\
+            np.where(np.logical_and(
+                e_DATA[:, 0] > e_id,
+                e_DATA[:, 0] < n_primaries_in_file
+            ))[0][0]
+    else:
+        ind_next_prim_e = len(e_DATA)
+
+    return e_DATA[ind_now_prim_e:ind_next_prim_e, :]
+
+
 def get_e_id_e_DATA(e_DATA, n_primaries_in_file, e_id):
     return e_DATA[get_e_id_e_DATA_ind_range(e_DATA, n_primaries_in_file, e_id), :]
 
 
-def rotate_DATA(e_DATA, x_ind, z_ind, phi=2 * np.pi * np.random.random()):
+def rotate_DATA(e_DATA, x_ind, y_ind, phi=2 * np.pi * np.random.random()):
     rot_mat = np.mat([[np.cos(phi), -np.sin(phi)],
                       [np.sin(phi), np.cos(phi)]])
-    e_DATA[:, x_ind:z_ind] = np.dot(rot_mat, e_DATA[:, x_ind:z_ind].transpose()).transpose()
+    e_DATA[:, [x_ind, y_ind]] = np.dot(rot_mat, e_DATA[:, [x_ind, y_ind]].transpose()).transpose()
 
 
 def add_uniform_xy_shift_to_e_DATA(e_DATA, x_range, y_range):

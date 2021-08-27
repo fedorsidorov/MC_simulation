@@ -224,7 +224,7 @@ def get_ee_phi_theta_phi2nd_theta2nd(delta_E, E):
     return phi, theta, phi_2nd, theta_2nd
 
 
-def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut):
+def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn):
     E = E_0
     coords = coords_0
     flight_ort = flight_ort_0
@@ -238,6 +238,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut):
 
     # e_DATA_line: [e_id, par_id, layer_ind, proc_id, x_new, y_new, z_new, E_loss, E_2nd, E_new]
     e_DATA_deque = deque()
+
     e_DATA_initial_line = [e_id, par_id, layer_ind, -1, *coords_0, 0, 0, E]
     e_DATA_deque.append(e_DATA_initial_line)
 
@@ -310,8 +311,9 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut):
 
                 coords += delta_r * factor  # reach surface
 
-                e_DATA_line = [e_id, par_id, layer_ind, -5, *coords, 0, 0, E]
-                e_DATA_deque.append(e_DATA_line)
+                if not Pn:
+                    e_DATA_line = [e_id, par_id, layer_ind, -5, *coords, 0, 0, E]
+                    e_DATA_deque.append(e_DATA_line)
 
                 delta_r[-1] *= -1
                 coords += delta_r * (1 - factor)
@@ -332,8 +334,9 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut):
             theta = grid.THETA_rad[theta_ind]
             new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
 
-            e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, 0, 0, E]
-            e_DATA_deque.append(e_DATA_line)
+            if not Pn:
+                e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, 0, 0, E]
+                e_DATA_deque.append(e_DATA_line)
 
         # e-e scattering
         elif (layer_ind == 0 and proc_ind == 1) or (layer_ind == 1 and proc_ind >= 1):
@@ -368,8 +371,9 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut):
 
             E -= hw
 
-            e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, Eb, E_2nd, E]
-            e_DATA_deque.append(e_DATA_line)
+            if not (Pn and layer_ind == 1):
+                e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, Eb, E_2nd, E]
+                e_DATA_deque.append(e_DATA_line)
 
         # phonon
         elif layer_ind == 0 and proc_ind == 2:
@@ -393,7 +397,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut):
 
         flight_ort = new_flight_ort
 
-    if coords[-1] < 0:  # electron emerges from specimen
+    if coords[-1] < 0 and not Pn:  # electron emerges from specimen
         e_DATA_final_line = [e_id, par_id, -1, -10, *coords, 0, 0, E]
         e_DATA_deque.append(e_DATA_final_line)
 
@@ -484,7 +488,7 @@ E_beam_arr = [10000]
 # z_max_arr = 1718.42
 
 
-for n in range(n_files):
+for n in range(525, n_files):
 
     print('File #' + str(n))
 
@@ -494,7 +498,8 @@ for n in range(n_files):
             n_electrons=n_primaries_in_file,
             E0=E_beam,
             d_PMMA=d_PMMA,
-            z_cut=np.inf
+            z_cut=np.inf,
+            Pn=True
         )
 
         e_DATA_Pn = e_DATA[
@@ -508,7 +513,7 @@ for n in range(n_files):
         # np.save('data/2ndaries/no_factor/' + str(PMMA_elastic_factor) + '/' + str(E_beam) +
         #         '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
-        np.save('data/4Harris/e_DATA_Pn' + str(n) + '.npy', e_DATA_Pn)
+        np.save('data/4Harris/e_DATA_Pn_' + str(n) + '.npy', e_DATA_Pn)
 
         # np.save('data/4Akkerman/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA)
         # np.save('data/4Akkerman/1keV/e_DATA_' + str(n) + '.npy', e_DATA)

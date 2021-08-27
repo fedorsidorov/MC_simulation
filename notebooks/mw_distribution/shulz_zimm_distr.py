@@ -17,7 +17,7 @@ def get_beta_z(Mn, Mw):  # miyake1960.pdf
 
 
 # %%
-# harris
+# Harris
 mw = np.arange(100, 2e+7 + 0.1, 1)
 Mn = 5.63e+5
 Mw = 2.26e+6
@@ -34,8 +34,8 @@ mw_probs_n = (mw_distr / mw) / np.sum(mw_distr / mw)
 
 plt.figure(dpi=300)
 # plt.semilogx(mw[::1000], mw_distr[::1000])
-plt.semilogx(mw[::1000], mw_probs_n[::1000])
-# plt.semilogx(mw[::1000], mw_probs_m[::1000], '.-')
+# plt.semilogx(mw[::1000], mw_probs_n[::1000])
+plt.semilogx(mw[::1000], mw_probs_m[::1000], '.-')
 plt.show()
 
 # %%

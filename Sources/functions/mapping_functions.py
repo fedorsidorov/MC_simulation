@@ -16,27 +16,28 @@ def move_scissions(scission_matrix, x_ind, y_ind, z_ind, n_sci):
 
     scission_matrix[x_ind, y_ind, z_ind] -= n_sci
 
-    if x_ind + 1 < np.shape(scission_matrix)[0]:
+    if z_ind + 1 < np.shape(scission_matrix)[2]:
+        scission_matrix[x_ind, y_ind, z_ind + 1] += n_sci
+
+    elif x_ind + 1 < np.shape(scission_matrix)[0]:
         scission_matrix[x_ind + 1, y_ind, z_ind] += n_sci
+
     elif y_ind + 1 < np.shape(scission_matrix)[1]:
         scission_matrix[x_ind, y_ind + 1, z_ind] += n_sci
-    elif z_ind + 1 < np.shape(scission_matrix)[2]:
-        scission_matrix[x_ind, y_ind, z_ind + 1] += n_sci
+
     else:
         scission_matrix[x_ind, y_ind, z_ind] += n_sci
         print('no space for extra events, nowhere to move')
 
 
-def move_scissions_NEW(scission_matrix, x_ind, y_ind, z_ind, n_scissions):
+def move_scissions_z(scission_matrix, x_ind, y_ind, z_ind, n_scissions):
 
     scission_matrix[x_ind, y_ind, z_ind] -= n_scissions
-    new_z_ind = z_ind - 1
 
     if z_ind - 1 >= 0:
-        scission_matrix[x_ind, y_ind, new_z_ind] += n_scissions
-
+        scission_matrix[x_ind, y_ind, z_ind + 1] += n_scissions
     else:
-        # scission_matrix[x_ind, y_ind, z_ind] += n_scissions
+        #  scission_matrix[x_ind, y_ind, z_ind] += n_scissions
         print('no space for extra events, nowhere to move')
 
 
@@ -69,7 +70,7 @@ def process_scission(resist_matrix, chain_table, n_monomer):
 
         else:
             pass
-            # print('next monomer type error, next_monomer_type =', monomer_type, next_monomer_type)
+            print('next monomer type error, next_monomer_type =', monomer_type, next_monomer_type)
 
     elif monomer_type in [indexes.begin_monomer, indexes.end_monomer]:  # half-bonded monomer
         new_monomer_type = indexes.free_monomer
@@ -89,11 +90,11 @@ def process_scission(resist_matrix, chain_table, n_monomer):
 
         else:
             pass
-            # print('next monomer type error, next_monomer_type =', monomer_type, next_monomer_type)
+            print('next monomer type error, next_monomer_type =', monomer_type, next_monomer_type)
 
     else:
         pass
-        # print('monomer type error, monomer_type =', monomer_type)
+        print('monomer type error, monomer_type =', monomer_type)
 
 
 def process_mapping(scission_matrix, resist_matrix, chain_tables):
@@ -129,7 +130,7 @@ def process_mapping(scission_matrix, resist_matrix, chain_tables):
         progress_bar.update()
 
 
-def process_mapping_NEW(scission_matrix, resist_matrix, chain_tables):
+def process_mapping_z(scission_matrix, resist_matrix, chain_tables):
 
     resist_shape = np.shape(scission_matrix)
     progress_bar = tqdm(total=resist_shape[0], position=0)
@@ -150,7 +151,7 @@ def process_mapping_NEW(scission_matrix, resist_matrix, chain_tables):
                         )
 
                         if len(monomer_positions) == 0:  # move events to one of further bins
-                            move_scissions_NEW(scission_matrix, x_ind, y_ind, z_ind, n_scissions)
+                            move_scissions_z(scission_matrix, x_ind, y_ind, z_ind, n_scissions)
                             break
 
                         monomer_pos = np.random.choice(monomer_positions)
@@ -410,6 +411,35 @@ def get_chain_lens(chain_tables):
                 lens_final.append(cnt)
                 cnt = 0
         progress_bar.update()
+    return np.array(lens_final)
+
+
+def get_chain_lens_fast(chain_tables, count_monomers):
+    lens_final = deque()
+    progress_bar = tqdm(total=len(chain_tables), position=0)
+
+    for ct in chain_tables:
+
+        if len(ct) == 1:
+            lens_final.append(1)
+
+        else:
+            beg_inds = np.where(ct[:, -1] == indexes.begin_monomer)[0]
+            end_inds = np.where(ct[:, -1] == indexes.end_monomer)[0]
+
+            chain_lens = end_inds - beg_inds + 1
+
+            for cl in chain_lens:
+                lens_final.append(cl)
+
+        if count_monomers:
+            mon_inds = np.where(ct[:, -1] == indexes.free_monomer)[0]
+
+            for _ in mon_inds:
+                lens_final.append(1)
+
+        progress_bar.update()
+
     return np.array(lens_final)
 
 
