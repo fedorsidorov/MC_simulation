@@ -31,31 +31,41 @@ n_electrons = 0
 
 source = '/Users/fedor/PycharmProjects/MC_simulation/data/4Harris/'
 
+primary_electrons_in_file = 100
+# n_files = 700
 file_cnt = 0
+
 progress_bar = tqdm(total=n_electrons_required, position=0)
 
 while n_electrons < n_electrons_required:
 
-    n_files = 279
-    primary_electrons_in_file = 100
-
-    now_e_DATA = np.load(source + 'e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
+    # print(file_cnt)
+    now_e_DATA = np.load(source + 'e_DATA_Pn_' + str(file_cnt) + '.npy')
+    file_cnt += 1
 
     # check PMMA and inelastic events
     now_e_DATA = now_e_DATA[
         np.where(
-            np.logical_and(now_e_DATA[:, 2] == 0, now_e_DATA[:, 3] >= 1)
+            np.logical_and(now_e_DATA[:, 2] == 0, now_e_DATA[:, 3] == 1)
         )
     ]
 
-    file_cnt += 1
-
-    if file_cnt > n_files:
-        emf.rotate_DATA(now_e_DATA, x_ind=4, y_ind=5)
+    # if file_cnt > n_files:
+    #     emf.rotate_DATA(now_e_DATA, x_ind=4, y_ind=5)
 
     for primary_e_id in range(primary_electrons_in_file):
 
         now_prim_e_DATA = emf.get_e_id_e_DATA_simple(now_e_DATA, primary_electrons_in_file, primary_e_id)
+
+        # now_prim_e_DATA = now_prim_e_DATA[
+        #     np.where(
+        #         np.logical_and(now_prim_e_DATA[:, 2] == 0, now_prim_e_DATA[:, 3] == 1)
+        #     )
+        # ]
+
+        if now_prim_e_DATA is None:
+            print('file', file_cnt, 'e_id', primary_e_id, 'data is None')
+            continue
 
         emf.add_uniform_xy_shift_to_e_DATA(now_prim_e_DATA,
                                            [mapping.x_min, mapping.x_max], [mapping.y_min, mapping.y_max])
@@ -89,7 +99,7 @@ while n_electrons < n_electrons_required:
 # %%
 print(np.sum(e_matrix_val) / np.sum(e_matrix_E_dep) * 100)
 
-# np.save('data/e_matrix_val.npy', e_matrix_val)
+np.save('data/e_matrix_val_TRUE.npy', e_matrix_val)
 # np.save('data/e_matrix_E_dep.npy', e_matrix_E_dep)
 
 # %%
@@ -97,4 +107,13 @@ plt.figure(dpi=300)
 plt.imshow(np.sum(e_matrix_val, axis=1).transpose())
 plt.show()
 
-
+# %%
+# ans = np.load('data/4Harris/e_DATA_Pn_19.npy')
+#
+# bns = ans[
+#         np.where(
+#             np.logical_and(ans[:, 2] == 0, ans[:, 3] == 1)
+#         )
+#     ]
+#
+# cns = emf.get_e_id_e_DATA_simple(ans, primary_electrons_in_file, 36)

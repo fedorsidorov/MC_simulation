@@ -20,19 +20,30 @@ GG = Gf.get_G(TT)
 
 plt.figure(dpi=300)
 plt.plot(TT, GG, 'o-')
+
+plt.xlabel('T, °C')
+plt.ylabel('G value')
+
 plt.grid()
 plt.show()
 
 # %%
+# weights = [
+#     0.010, 0.011, 0.012, 0.013, 0.014, 0.015, 0.016, 0.017, 0.018, 0.019, 0.020,
+#     0.021, 0.022, 0.023, 0.024, 0.025, 0.026, 0.027, 0.028, 0.029, 0.030
+# ]
+
 weights = [
-    0.010, 0.011, 0.012, 0.013, 0.014, 0.015, 0.016, 0.017, 0.018, 0.019, 0.020,
-    0.021, 0.022, 0.023, 0.024, 0.025, 0.026, 0.027, 0.028, 0.029, 0.030
+    0.030, 0.035, 0.040, 0.045, 0.050, 0.055, 0.060, 0.065, 0.070, 0.075, 0.080,
+    0.085, 0.090, 0.095, 0.100, 0.105, 0.110, 0.115, 0.120, 0.125, 0.130, 0.135
 ]
+
+# weights = [0.082]
 
 GG_sim = np.zeros(len(weights))
 GG_theor = np.zeros(len(weights))
 
-sample = '1'
+# sample = '3'
 
 plt.figure(dpi=300)
 
@@ -43,9 +54,9 @@ for n, sample in enumerate(['3']):
 
     for i, weight in enumerate(weights):
 
-        scission_matrix = np.load('data/scission_mat_weight/' + sample + '/e_matrix_scissions_' + str(weight) + '.npy')
-        e_matrix_E_dep = np.load('data/scission_mat_weight/' + sample + '/e_matrix_dE_' + str(weight) + '.npy')
-        chain_lens_initial = np.load('/Volumes/ELEMENTS/chains_harris/prepared_chains_' + sample + '/chain_lens.npy')
+        scission_matrix = np.load('data/G_calibration/' + sample + '/scission_matrix_' + str(weight) + '.npy')
+        e_matrix_E_dep = np.load('data/e_matrix_E_dep.npy')
+        chain_lens_initial = np.load('data/chain_lens.npy')
         chain_lens_final = np.load('data/G_calibration/' + sample + '/harris_lens_final_' + str(weight) + '.npy')
 
         Mn = np.average(chain_lens_initial) * const.u_MMA
@@ -64,7 +75,7 @@ for n, sample in enumerate(['3']):
     plt.grid()
 
 plt.xlim(0, 200)
-# plt.ylim(0.254, 0.256)
+plt.ylim(0.02, 0.12)
 plt.xlabel('T, °C')
 plt.ylabel('w (remote scission probability)')
 plt.legend()

@@ -168,7 +168,7 @@ plt.plot(tt_170, L_norm_170, 'o', label='эксп. T = 170 C°')
 # plt.plot(dose2time(doses_125_1um * 1e-6, 1e-9), L_norm, 'o', label='exp T = 125 C°, 1 nA, 1000 nm')
 # plt.plot(dose2time(doses_150_1um * 1e-6, 1e-9), L_norm, 'o', label='exp T = 150 C°, 1 nA, 1000 nm')
 
-ax = plt.gca()
+# ax = plt.gca()
 for tick in ax.xaxis.get_major_ticks():
     tick.label.set_fontsize(font_size)
 for tick in ax.yaxis.get_major_ticks():
@@ -219,7 +219,7 @@ tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
 Mw_125 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mw_125.npy')
 
 plt.figure(dpi=300)
-plt.plot(tau, Mw_125)
+plt.semilogy(tau, Mw_125)
 plt.grid()
 plt.show()
 

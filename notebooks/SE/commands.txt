@@ -1,0 +1,6 @@
+prepare_surface
+m 0.1
+g 100
+save
+q
+q

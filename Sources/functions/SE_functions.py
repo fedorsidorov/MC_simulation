@@ -228,9 +228,10 @@ zz_nm = np.load('notebooks/DEBER_simulation/zz_evolver_nm.npy')
 
 
 # %%
-def run_evolver():
-    os.system('evolver -f/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/commands.txt ' +
-              '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/DEBER_datafile.fe')
+def run_evolver(file_full_path, commands_full_path):
+    os.system('evolver -f' + commands_full_path + ' ' + file_full_path)
+    # os.system('evolver -f/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/commands.txt ' +
+    #           '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/DEBER_datafile.fe')
 
 
 def get_evolver_times_profiles():

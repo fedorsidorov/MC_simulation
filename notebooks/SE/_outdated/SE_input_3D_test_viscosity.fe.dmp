@@ -1,0 +1,3232 @@
+// SE_input_3D_test_viscosity.fe.dmp: Dump of structure.
+
+// datafilename: SE_input_3D_test_viscosity.fe
+vertices_predicted       479
+edges_predicted         1429
+facets_predicted         953
+facetedges_predicted    2857
+bodies_predicted           2
+quantities_predicted            0
+method_instances_predicted      0
+// Total energy: 1463.92875768697
+SOAPFILM
+
+LINEAR
+
+SCALE:  1     FIXED
+
+PARAMETER lx = 50 
+PARAMETER ly = 200 
+PARAMETER z_max = 80 
+PARAMETER angle_surface = 55 
+PARAMETER angle_mirror = 90 
+PARAMETER TENS_r = 0.335 
+PARAMETER TENS_s = -0.1921481061776 
+PARAMETER TENS_m = -2.05128338857182e-17 
+PARAMETER cnt =  1 
+
+TOTAL_TIME 1100
+
+AREA_NORMALIZATION 
+
+CONSTRAINT_TOLERANCE: 1e-12
+
+
+//Extra attributes for elements
+
+define vertex attribute vmob real
+
+VIEW_MATRIX 
+ 0.028720041443511   0.006258801857346   0.008863988881647  -0.354559555265886  
+-0.006721812741091   0.029949988713955   0.000631735394079  -0.114214777897846  
+-0.008518223585771  -0.002531650735174   0.029387315147839  -1.652239746955475  
+ 0.000000000000000   0.000000000000000   0.000000000000000   1.000000000000000  
+slice_coeff = { 1.00000, 0.00000, 0.00000, 0.00000}
+
+MOBILITY_TENSOR
+ vmob 0 0
+ 0 vmob 0
+ 0 0 vmob
+
+
+CONSTRAINT 1  
+FUNCTION:  z
+
+CONSTRAINT 5    NONPOSITIVE
+FUNCTION:  z = z_max
+
+CONSTRAINT 11  
+FUNCTION:  x = -lx/2
+
+CONSTRAINT 22  
+FUNCTION:  y = -ly/2
+
+CONSTRAINT 33  
+FUNCTION:  x = lx/2
+
+CONSTRAINT 44  
+FUNCTION:  y = ly/2
+
+vertices        /*  coordinates  */    
+  1                -25              -100                 0  constraints 1 11 22  vmob  1
+  2                -25      -95.05263158                 0  constraints 1 11  vmob  1
+  3                -25      -90.10526316                 0  constraints 1 11  vmob  1
+  4                -25      -85.15789474                 0  constraints 1 11  vmob  1
+  5                -25      -80.21052632                 0  constraints 1 11  vmob  1
+  6                -25      -75.26315789                 0  constraints 1 11  vmob  1
+  7                -25      -70.31578947                 0  constraints 1 11  vmob  1
+  8                -25      -65.36842105                 0  constraints 1 11  vmob  1
+  9                -25      -60.42105263                 0  constraints 1 11  vmob  1
+ 10                -25      -55.47368421                 0  constraints 1 11  vmob  1
+ 11                -25      -50.52631579                 0  constraints 1 11  vmob  1
+ 12                -25      -45.57894737                 0  constraints 1 11  vmob  1
+ 13                -25      -40.63157895                 0  constraints 1 11  vmob  1
+ 14                -25      -35.68421053                 0  constraints 1 11  vmob  1
+ 15                -25      -30.73684211                 0  constraints 1 11  vmob  1
+ 16                -25      -25.78947368                 0  constraints 1 11  vmob  1
+ 17                -25      -20.84210526                 0  constraints 1 11  vmob  1
+ 18                -25      -15.89473684                 0  constraints 1 11  vmob  1
+ 19                -25      -10.94736842                 0  constraints 1 11  vmob  1
+ 20                -25 -5.99999999999994                 0  constraints 1 11  vmob  1
+ 21                -25 -4.99999999999943                 0  constraints 1 11  vmob  1
+ 22                -25 -4.47368421000137                 0  constraints 1 11  vmob  1
+ 23                -25 -3.94736841999891                 0  constraints 1 11  vmob  1
+ 24                -25 -3.42105262998325                 0  constraints 1 11  vmob  1
+ 25                -25 -2.89473684002921                 0  constraints 1 11  vmob  1
+ 26                -25 -2.36842104999792                 0  constraints 1 11  vmob  1
+ 27                -25 -1.84210525999488                 0  constraints 1 11  vmob  1
+ 28                -25 -1.31578946996794                 0  constraints 1 11  vmob  1
+ 29                -25 -0.78947368004183                 0  constraints 1 11  vmob  1
+ 30                -25 -0.263157889963992                 0  constraints 1 11  vmob  1
+ 31                -25 0.263157889964587                 0  constraints 1 11  vmob  1
+ 32                -25 0.789473680042537                 0  constraints 1 11  vmob  1
+ 33                -25  1.31578947000135                 0  constraints 1 11  vmob  1
+ 34                -25  1.84210525999075                 0  constraints 1 11  vmob  1
+ 35                -25  2.36842105001093                 0  constraints 1 11  vmob  1
+ 36                -25  2.89473683997563                 0  constraints 1 11  vmob  1
+ 37                -25  3.42105263001715                 0  constraints 1 11  vmob  1
+ 38                -25  3.94736841999983                 0  constraints 1 11  vmob  1
+ 39                -25  4.47368420999807                 0  constraints 1 11  vmob  1
+ 40                -25  4.99999999999951                 0  constraints 1 11  vmob  1
+ 41                -25  6.00000000000007                 0  constraints 1 11  vmob  1
+ 42                -25       10.94736842                 0  constraints 1 11  vmob  1
+ 43                -25       15.89473684                 0  constraints 1 11  vmob  1
+ 44                -25       20.84210526                 0  constraints 1 11  vmob  1
+ 45                -25       25.78947368                 0  constraints 1 11  vmob  1
+ 46                -25       30.73684211                 0  constraints 1 11  vmob  1
+ 47                -25       35.68421053                 0  constraints 1 11  vmob  1
+ 48                -25       40.63157895                 0  constraints 1 11  vmob  1
+ 49                -25       45.57894737                 0  constraints 1 11  vmob  1
+ 50                -25       50.52631579                 0  constraints 1 11  vmob  1
+ 51                -25       55.47368421                 0  constraints 1 11  vmob  1
+ 52                -25       60.42105263                 0  constraints 1 11  vmob  1
+ 53                -25       65.36842105                 0  constraints 1 11  vmob  1
+ 54                -25       70.31578947                 0  constraints 1 11  vmob  1
+ 55                -25       75.26315789                 0  constraints 1 11  vmob  1
+ 56                -25       80.21052632                 0  constraints 1 11  vmob  1
+ 57                -25       85.15789474                 0  constraints 1 11  vmob  1
+ 58                -25       90.10526316                 0  constraints 1 11  vmob  1
+ 59                -25       95.05263158                 0  constraints 1 11  vmob  1
+ 60                -25               100                 0  constraints 1 11 44  vmob  1
+ 61                 25              -100                 0  constraints 1 33 22  vmob  1
+ 62                 25      -95.05263158                 0  constraints 1 33  vmob  1
+ 63                 25      -90.10526316                 0  constraints 1 33  vmob  1
+ 64                 25      -85.15789474                 0  constraints 1 33  vmob  1
+ 65                 25      -80.21052632                 0  constraints 1 33  vmob  1
+ 66                 25      -75.26315789                 0  constraints 1 33  vmob  1
+ 67                 25      -70.31578947                 0  constraints 1 33  vmob  1
+ 68                 25      -65.36842105                 0  constraints 1 33  vmob  1
+ 69                 25      -60.42105263                 0  constraints 1 33  vmob  1
+ 70                 25      -55.47368421                 0  constraints 1 33  vmob  1
+ 71                 25      -50.52631579                 0  constraints 1 33  vmob  1
+ 72                 25      -45.57894737                 0  constraints 1 33  vmob  1
+ 73                 25      -40.63157895                 0  constraints 1 33  vmob  1
+ 74                 25      -35.68421053                 0  constraints 1 33  vmob  1
+ 75                 25      -30.73684211                 0  constraints 1 33  vmob  1
+ 76                 25      -25.78947368                 0  constraints 1 33  vmob  1
+ 77                 25      -20.84210526                 0  constraints 1 33  vmob  1
+ 78                 25      -15.89473684                 0  constraints 1 33  vmob  1
+ 79                 25      -10.94736842                 0  constraints 1 33  vmob  1
+ 80                 25 -5.99999999999994                 0  constraints 1 33  vmob  1
+ 81                 25 -4.99999999999943                 0  constraints 1 33  vmob  1
+ 82                 25 -4.47368421000137                 0  constraints 1 33  vmob  1
+ 83                 25 -3.94736841999891                 0  constraints 1 33  vmob  1
+ 84                 25 -3.42105262998325                 0  constraints 1 33  vmob  1
+ 85                 25 -2.89473684002921                 0  constraints 1 33  vmob  1
+ 86                 25 -2.36842104999793                 0  constraints 1 33  vmob  1
+ 87                 25 -1.84210525999489                 0  constraints 1 33  vmob  1
+ 88                 25 -1.31578946996794                 0  constraints 1 33  vmob  1
+ 89                 25 -0.789473680041846                 0  constraints 1 33  vmob  1
+ 90                 25 -0.263157889963994                 0  constraints 1 33  vmob  1
+ 91                 25 0.263157889964591                 0  constraints 1 33  vmob  1
+ 92                 25 0.789473680042553                 0  constraints 1 33  vmob  1
+ 93                 25  1.31578947000134                 0  constraints 1 33  vmob  1
+ 94                 25  1.84210525999075                 0  constraints 1 33  vmob  1
+ 95                 25  2.36842105001092                 0  constraints 1 33  vmob  1
+ 96                 25  2.89473683997563                 0  constraints 1 33  vmob  1
+ 97                 25  3.42105263001715                 0  constraints 1 33  vmob  1
+ 98                 25  3.94736841999984                 0  constraints 1 33  vmob  1
+ 99                 25  4.47368420999808                 0  constraints 1 33  vmob  1
+100                 25  4.99999999999952                 0  constraints 1 33  vmob  1
+101                 25  6.00000000000007                 0  constraints 1 33  vmob  1
+102                 25       10.94736842                 0  constraints 1 33  vmob  1
+103                 25       15.89473684                 0  constraints 1 33  vmob  1
+104                 25       20.84210526                 0  constraints 1 33  vmob  1
+105                 25       25.78947368                 0  constraints 1 33  vmob  1
+106                 25       30.73684211                 0  constraints 1 33  vmob  1
+107                 25       35.68421053                 0  constraints 1 33  vmob  1
+108                 25       40.63157895                 0  constraints 1 33  vmob  1
+109                 25       45.57894737                 0  constraints 1 33  vmob  1
+110                 25       50.52631579                 0  constraints 1 33  vmob  1
+111                 25       55.47368421                 0  constraints 1 33  vmob  1
+112                 25       60.42105263                 0  constraints 1 33  vmob  1
+113                 25       65.36842105                 0  constraints 1 33  vmob  1
+114                 25       70.31578947                 0  constraints 1 33  vmob  1
+115                 25       75.26315789                 0  constraints 1 33  vmob  1
+116                 25       80.21052632                 0  constraints 1 33  vmob  1
+117                 25       85.15789474                 0  constraints 1 33  vmob  1
+118                 25       90.10526316                 0  constraints 1 33  vmob  1
+119                 25       95.05263158                 0  constraints 1 33  vmob  1
+120                 25               100                 0  constraints 1 33 44  vmob  1
+121                -25              -100  80.2542089124908  constraints 11 22  vmob  1
+122                -25 -95.0559251347424  80.3074359101028  constraints 11  vmob  1
+123                -25 -90.1069445842164  80.3578142848241  constraints 11  vmob  1
+124                -25 -85.1587407552757  80.4004819166582  constraints 11  vmob  1
+125                -25 -80.2109676801008  80.4332723979959  constraints 11  vmob  1
+126                -25 -75.2633890327905  80.4560135732106  constraints 11  vmob  1
+127                -25 -70.3158996260661  80.4695122428367  constraints 11  vmob  1
+128                -25  -65.368452395442  80.4742112774217  constraints 11  vmob  1
+129                -25 -60.4210251653357  80.4685853001557  constraints 11  vmob  1
+130                -25  -55.473647811948  80.4470989603654  constraints 11  vmob  1
+131                -25 -50.5265775355552   80.397474561023  constraints 11  vmob  1
+132                -25 -45.5809172770608  80.2973087814657  constraints 11  vmob  1
+133                -25 -40.6403475153789  80.1109787848696  constraints 11  vmob  1
+134                -25 -35.7149518955116  79.7894403646642  constraints 11  vmob  1
+135                -25 -30.8274385778552  79.2775476316363  constraints 11  vmob  1
+136                -25 -26.0194456848225  78.5337925392162  constraints 11  vmob  1
+137                -25 -21.3546140939794  77.5618205061169  constraints 11  vmob  1
+138                -25 -16.9290388298487  76.4425102540032  constraints 11  vmob  1
+139                -25 -12.9239021238412  75.3476975787345  constraints 11  vmob  1
+140                -25 -10.8602760887299   74.803416356964  constraints 11  vmob  1
+141                -25 -9.83149718479153   74.547261959704  constraints 11  vmob  1
+142                -25 -8.79955415787299  74.3102547491705  constraints 11  vmob  1
+143                -25 -7.76881512253873  74.0958595485291  constraints 11  vmob  1
+144                -25 -6.42967855174199  73.8650113898632  constraints 11  vmob  1
+145                -25 -5.40536770611484  73.7216813420489  constraints 11  vmob  1
+146                -25  -4.4398744240226  73.5724858797178  constraints 11  vmob  1
+147                -25 -3.47780704515675  73.4352273215878  constraints 11  vmob  1
+148                -25 -2.47982709030632  73.3520810439987  constraints 11  vmob  1
+149                -25 -1.53421020914427  73.3603168274459  constraints 11  vmob  1
+150                -25 -0.631769508330195   73.337912982395  constraints 11  vmob  1
+151                -25 0.307987937995501  73.2807295235744  constraints 11  vmob  1
+152                -25  1.30208641680707  73.3080594699316  constraints 11  vmob  1
+153                -25  2.25130726782782  73.4098492951803  constraints 11  vmob  1
+154                -25  3.20329735845909  73.5280853179022  constraints 11  vmob  1
+155                -25  4.18148623763279   73.580663256496  constraints 11  vmob  1
+156                -25  5.15507415941822  73.6736327458623  constraints 11  vmob  1
+157                -25  6.17631047814424  73.8413950846335  constraints 11  vmob  1
+158                -25   7.7386931821323  74.1344745103328  constraints 11  vmob  1
+159                -25  8.76569430101453  74.3473399568288  constraints 11  vmob  1
+160                -25  9.79953294796711  74.5828846942847  constraints 11  vmob  1
+161                -25  10.8299434016122  74.8371037334372  constraints 11  vmob  1
+162                -25  12.9076935631044  75.3798621749576  constraints 11  vmob  1
+163                -25   16.918300561107  76.4654516230684  constraints 11  vmob  1
+164                -25  21.3493241948202  77.5761154496699  constraints 11  vmob  1
+165                -25  26.0173702513462  78.5413763696924  constraints 11  vmob  1
+166                -25  30.8267951462658  79.2808898792374  constraints 11  vmob  1
+167                -25  35.7147984428629  79.7905869322959  constraints 11  vmob  1
+168                -25  40.6403215616882  80.1112058276774  constraints 11  vmob  1
+169                -25   45.580915063944  80.2972478298646  constraints 11  vmob  1
+170                -25   50.526577709696  80.3973731357234  constraints 11  vmob  1
+171                -25  55.4736478012606  80.4470257465956  constraints 11  vmob  1
+172                -25  60.4210250662188  80.4685443383783  constraints 11  vmob  1
+173                -25  65.3684523214496  80.4741914915851  constraints 11  vmob  1
+174                -25   70.315899586344  80.4695036452004  constraints 11  vmob  1
+175                -25  75.2633890135299   80.456010142304  constraints 11  vmob  1
+176                -25  80.2109676710947  80.4332711254964  constraints 11  vmob  1
+177                -25  85.1587407512519  80.4004814747134  constraints 11  vmob  1
+178                -25  90.1069445825612  80.3578141407317  constraints 11  vmob  1
+179                -25  95.0559251341478  80.3074358672818  constraints 11  vmob  1
+180                -25               100  80.2542089059814  constraints 11 44  vmob  1
+181                 25              -100  80.2542089124908  constraints 33 22  vmob  1
+182                 25 -95.0559251347424  80.3074359101028  constraints 33  vmob  1
+183                 25 -90.1069445842164  80.3578142848241  constraints 33  vmob  1
+184                 25 -85.1587407552757  80.4004819166582  constraints 33  vmob  1
+185                 25 -80.2109676801008  80.4332723979959  constraints 33  vmob  1
+186                 25 -75.2633890327905  80.4560135732106  constraints 33  vmob  1
+187                 25 -70.3158996260661  80.4695122428367  constraints 33  vmob  1
+188                 25  -65.368452395442  80.4742112774217  constraints 33  vmob  1
+189                 25 -60.4210251653357  80.4685853001557  constraints 33  vmob  1
+190                 25  -55.473647811948  80.4470989603654  constraints 33  vmob  1
+191                 25 -50.5265775355552   80.397474561023  constraints 33  vmob  1
+192                 25 -45.5809172770608  80.2973087814658  constraints 33  vmob  1
+193                 25 -40.6403475153789  80.1109787848696  constraints 33  vmob  1
+194                 25 -35.7149518955116  79.7894403646643  constraints 33  vmob  1
+195                 25 -30.8274385778551  79.2775476316364  constraints 33  vmob  1
+196                 25 -26.0194456848225  78.5337925392163  constraints 33  vmob  1
+197                 25 -21.3546140939792  77.5618205061173  constraints 33  vmob  1
+198                 25 -16.9290388298484  76.4425102540041  constraints 33  vmob  1
+199                 25 -12.9239021238405   75.347697578736  constraints 33  vmob  1
+200                 25 -10.8602760887288  74.8034163569659  constraints 33  vmob  1
+201                 25 -9.83149718479008  74.5472619597061  constraints 33  vmob  1
+202                 25 -8.79955415787128  74.3102547491729  constraints 33  vmob  1
+203                 25 -7.76881512253689  74.0958595485318  constraints 33  vmob  1
+204                 25 -6.42967855174167  73.8650113898666  constraints 33  vmob  1
+205                 25 -5.40536770611574  73.7216813420527  constraints 33  vmob  1
+206                 25 -4.43987442403966  73.5724858797236  constraints 33  vmob  1
+207                 25 -3.47780704518505   73.435227321595  constraints 33  vmob  1
+208                 25 -2.47982709029803   73.352081044003  constraints 33  vmob  1
+209                 25 -1.53421020914681  73.3603168274509  constraints 33  vmob  1
+210                 25 -0.631769508331348  73.3379129824002  constraints 33  vmob  1
+211                 25 0.307987937992823  73.2807295235799  constraints 33  vmob  1
+212                 25  1.30208641681284  73.3080594699375  constraints 33  vmob  1
+213                 25  2.25130726782841  73.4098492951858  constraints 33  vmob  1
+214                 25  3.20329735845356  73.5280853179071  constraints 33  vmob  1
+215                 25  4.18148623763409  73.5806632565013  constraints 33  vmob  1
+216                 25  5.15507415942197  73.6736327458676  constraints 33  vmob  1
+217                 25   6.1763104781439  73.8413950846379  constraints 33  vmob  1
+218                 25  7.73869318212995  74.1344745103363  constraints 33  vmob  1
+219                 25  8.76569430101263   74.347339956832  constraints 33  vmob  1
+220                 25  9.79953294796544  74.5828846942875  constraints 33  vmob  1
+221                 25  10.8299434016108  74.8371037334397  constraints 33  vmob  1
+222                 25  12.9076935631035  75.3798621749595  constraints 33  vmob  1
+223                 25  16.9183005611067  76.4654516230695  constraints 33  vmob  1
+224                 25    21.34932419482  77.5761154496705  constraints 33  vmob  1
+225                 25  26.0173702513461  78.5413763696927  constraints 33  vmob  1
+226                 25  30.8267951462657  79.2808898792375  constraints 33  vmob  1
+227                 25  35.7147984428629  79.7905869322959  constraints 33  vmob  1
+228                 25  40.6403215616882  80.1112058276774  constraints 33  vmob  1
+229                 25   45.580915063944  80.2972478298646  constraints 33  vmob  1
+230                 25   50.526577709696  80.3973731357234  constraints 33  vmob  1
+231                 25  55.4736478012606  80.4470257465956  constraints 33  vmob  1
+232                 25  60.4210250662188  80.4685443383782  constraints 33  vmob  1
+233                 25  65.3684523214496   80.474191491585  constraints 33  vmob  1
+234                 25   70.315899586344  80.4695036452003  constraints 33  vmob  1
+235                 25  75.2633890135299   80.456010142304  constraints 33  vmob  1
+236                 25  80.2109676710947  80.4332711254964  constraints 33  vmob  1
+237                 25   85.158740751252  80.4004814747134  constraints 33  vmob  1
+238                 25  90.1069445825612  80.3578141407317  constraints 33  vmob  1
+239                 25  95.0559251341478  80.3074358672818  constraints 33  vmob  1
+240                 25               100  80.2542089059814  constraints 33 44  vmob  1
+241                  0      -97.52631579                 0  constraints 1  vmob  1
+242  7.40542379349027e-16      -92.57894737                 0  constraints 1  vmob  1
+243                  0      -87.63157895                 0  constraints 1  vmob  1
+244                  0      -82.68421053                 0  constraints 1  vmob  1
+245                  0     -77.736842105                 0  constraints 1  vmob  1
+246                  0      -72.78947368                 0  constraints 1  vmob  1
+247                  0      -67.84210526                 0  constraints 1  vmob  1
+248                  0      -62.89473684                 0  constraints 1  vmob  1
+249                  0      -57.94736842                 0  constraints 1  vmob  1
+250                  0               -53                 0  constraints 1  vmob  1
+251                  0      -48.05263158                 0  constraints 1  vmob  1
+252                  0      -43.10526316                 0  constraints 1  vmob  1
+253                  0      -38.15789474                 0  constraints 1  vmob  1
+254                  0      -33.21052632                 0  constraints 1  vmob  1
+255                  0     -28.263157895                 0  constraints 1  vmob  1
+256                  0      -23.31578947                 0  constraints 1  vmob  1
+257                  0      -18.36842105                 0  constraints 1  vmob  1
+258                  0      -13.42105263                 0  constraints 1  vmob  1
+259  1.15120678971529e-16       -8.47368421                 0  constraints 1  vmob  1
+260  3.62709862146748e-16  -5.5000000000003                 0  constraints 1  vmob  1
+261  -4.89381034996442e-15  -4.7368421050103                 0  constraints 1  vmob  1
+262  -3.59304210990938e-14 -4.21052631500626                 0  constraints 1  vmob  1
+263  -3.56390042089043e-14 -3.68421052500229                 0  constraints 1  vmob  1
+264  2.02383809511377e-13 -3.15789473499115                 0  constraints 1  vmob  1
+265  -6.57508963267705e-14 -2.63157894501331                 0  constraints 1  vmob  1
+266  -6.75218630277424e-14 -2.10526315501302                 0  constraints 1  vmob  1
+267  -3.39840821769372e-14 -1.57894736499434                 0  constraints 1  vmob  1
+268  3.90546253299494e-13 -1.05263157499745                 0  constraints 1  vmob  1
+269  -3.95149121338218e-13 -0.526315785021321                 0  constraints 1  vmob  1
+270  3.56549837774214e-14 -7.60083115644291e-12                 0  constraints 1  vmob  1
+271  -3.9067914695178e-13 0.526315785013362                 0  constraints 1  vmob  1
+272  3.86594801637556e-13  1.05263157501015                 0  constraints 1  vmob  1
+273  3.90726450828126e-14  1.57894736498175                 0  constraints 1  vmob  1
+274  1.40232987580589e-13  2.10526315498865                 0  constraints 1  vmob  1
+275  3.25039786458378e-14  2.63157894499446                 0  constraints 1  vmob  1
+276  -2.1799494270303e-13  3.15789473499384                 0  constraints 1  vmob  1
+277  3.50581480182262e-14  3.68421052498819                 0  constraints 1  vmob  1
+278  1.06225965420747e-13  4.21052631499273                 0  constraints 1  vmob  1
+279  -5.90689538337546e-14  4.73684210499928                 0  constraints 1  vmob  1
+280  8.45989944762892e-16  5.50000000000086                 0  constraints 1  vmob  1
+281  -1.26902035006629e-15        8.47368421                 0  constraints 1  vmob  1
+282                  0       13.42105263                 0  constraints 1  vmob  1
+283                  0       18.36842105                 0  constraints 1  vmob  1
+284                  0       23.31578947                 0  constraints 1  vmob  1
+285                  0      28.263157895                 0  constraints 1  vmob  1
+286                  0       33.21052632                 0  constraints 1  vmob  1
+287                  0       38.15789474                 0  constraints 1  vmob  1
+288                  0       43.10526316                 0  constraints 1  vmob  1
+289                  0       48.05263158                 0  constraints 1  vmob  1
+290                  0                53                 0  constraints 1  vmob  1
+291                  0       57.94736842                 0  constraints 1  vmob  1
+292                  0       62.89473684                 0  constraints 1  vmob  1
+293                  0       67.84210526                 0  constraints 1  vmob  1
+294                  0       72.78947368                 0  constraints 1  vmob  1
+295                  0      77.736842105                 0  constraints 1  vmob  1
+296                  0       82.68421053                 0  constraints 1  vmob  1
+297                  0       87.63157895                 0  constraints 1  vmob  1
+298  7.40542379349027e-16       92.57894737                 0  constraints 1  vmob  1
+299                  0       97.52631579                 0  constraints 1  vmob  1
+300  3.43534087860582e-18 -97.5302349650197  80.2816265199536 vmob  1
+301  -3.27856390823117e-17 -92.5810685502073  80.3340335527437 vmob  1
+302  -7.91850767627829e-17 -87.6326268453562  80.3808221620859 vmob  1
+303  4.28770791224313e-17 -82.6847517007253  80.4186367709913 vmob  1
+304  -1.90690305887108e-17 -77.7371311602007  80.4463666732847 vmob  1
+305  9.11785211291859e-15 -72.7896222414406  80.4644243033061 vmob  1
+306  -9.13602078624174e-15 -67.8421670637015  80.4735509081465 vmob  1
+307  1.80899609707951e-18 -62.8947377458999  80.4733479891041 vmob  1
+308  9.00306565995957e-15  -57.947332302055  80.4604736405445 vmob  1
+309  9.01186735740747e-15 -53.0000558204446  80.4262684691201 vmob  1
+310  -8.97291220521029e-15  -48.053455078381    80.35366529039 vmob  1
+311  9.3927111836559e-16 -43.1095661287958  80.2138131122582 vmob  1
+312  8.85817016691296e-15 -38.1745403472459   79.964119441233 vmob  1
+313  8.98773483734713e-15 -33.2636981304123  79.5513341265016 vmob  1
+314  -8.83701317307751e-15 -28.4082021411243  78.9247406426532 vmob  1
+315  8.85365548278457e-15 -23.6595825563173  78.0621662952237 vmob  1
+316  9.06601897772303e-15 -19.0923225464539  77.0025742699084 vmob  1
+317  8.89400490832654e-15 -14.8318865741373  75.8710651090386 vmob  1
+318  5.41008117774508e-14 -11.1830670322927  74.8842906186254 vmob  1
+319  4.57629213637174e-14 -10.3527852480561  74.6520425069658 vmob  1
+320  -7.47757945992919e-14 -9.32400171125864  74.3974391823085 vmob  1
+321  -3.09071541471412e-15 -8.28309543196417  74.1684268784434 vmob  1
+322  -2.69117769548311e-14 -6.76423464905835  73.8805622915299 vmob  1
+323  -2.73006448807641e-12 -5.94983048572655  73.6338278502961 vmob  1
+324  -3.00680658109129e-11 -4.90933128967007  73.4390847054641 vmob  1
+325  -2.02653056605015e-11 -3.97316405001917  73.7380359323063 vmob  1
+326  2.66682603379366e-11 -2.96383807674755  73.6589207246442 vmob  1
+327  -1.60866353658208e-12 -1.94414438095218  73.6169277585982 vmob  1
+328  -5.68254661242955e-13 -1.08831603849438  73.0787421399587 vmob  1
+329  -1.7062773067633e-12 -0.211850202308655   73.582212265597 vmob  1
+330  6.96352569074189e-13  0.79706747865689  73.5824012322101 vmob  1
+331  -1.2713732389473e-11  1.80887288741107  73.6246294380711 vmob  1
+332  -1.23136555800711e-11  2.69952305376171  73.2094401969495 vmob  1
+333  9.95681909729386e-13  3.75789072920453  73.3225026741798 vmob  1
+334  -8.97622673022786e-12  4.60246105375808  73.8178079394453 vmob  1
+335  -4.51132643923983e-12  5.65138933742467  73.9147916817151 vmob  1
+336  3.98674474279814e-14  6.43897662660218  73.9222375781199 vmob  1
+337  -2.19053509478121e-14  8.24574101469193  74.2106765322373 vmob  1
+338  9.63481986238815e-14  9.29026011470382  74.4369922742625 vmob  1
+339  -1.17412303635385e-14  10.3214410365278  74.6887431834191 vmob  1
+340  -1.05762988206121e-14  11.1702753800455  74.9220398752511 vmob  1
+341  8.62103055534918e-15   14.817824386846  75.8986661616981 vmob  1
+342  -8.87333578238108e-15  19.0846094393308  77.0211854286825 vmob  1
+343  9.00698368037809e-15  23.6562113269146  78.0729623904692 vmob  1
+344  -9.25780590194432e-15  28.4070297441572   78.930030996121 vmob  1
+345  9.1618340004031e-15  33.2633792286383   79.553448065406 vmob  1
+346  -7.06077786223952e-16  38.1744756436644  79.9647324880352 vmob  1
+347  8.7934373927634e-15  43.1095578008297  80.2138632702564 vmob  1
+348  -8.88358072465826e-15   48.053454939771  80.3535728760003 vmob  1
+349  8.90038630777817e-15  53.0000559553799  80.4261789201943 vmob  1
+350  -8.86174477876319e-15  57.9473322419068  80.4604170845933 vmob  1
+351  -4.70448885835434e-18  62.8947376651826   80.473318518728 vmob  1
+352  3.09282576181556e-17  67.8421670133154   80.473537354699 vmob  1
+353  1.01695459396076e-17  72.7896222153119  80.4644186363652 vmob  1
+354  -1.31559450121075e-17  77.7371311473459  80.4463644842796 vmob  1
+355  8.75165870724772e-15  82.6847516946484   80.418635982191 vmob  1
+356  -8.81460260326666e-15  87.6326268426888  80.3808218954192 vmob  1
+357  8.68232612855058e-15  92.5810685491666  80.3340334685884 vmob  1
+358  -8.8426050079912e-15  97.5302349646934    80.28162649798 vmob  1
+359                  0              -100                40  constraints 22  vmob  1
+360  1.04323638627583e-32               100                40  constraints 44  vmob  1
+361                -25      -97.52631579                40  constraints 11  vmob  1
+362                -25      -92.57894737                40  constraints 11  vmob  1
+363                -25      -87.63157895                40  constraints 11  vmob  1
+364                -25      -82.68421053                40  constraints 11  vmob  1
+365                -25     -77.736842105                40  constraints 11  vmob  1
+366                -25      -72.78947368                40  constraints 11  vmob  1
+367                -25      -67.84210526                40  constraints 11  vmob  1
+368                -25      -62.89473684                40  constraints 11  vmob  1
+369                -25      -57.94736842                40  constraints 11  vmob  1
+370                -25               -53                40  constraints 11  vmob  1
+371                -25      -48.05263158                40  constraints 11  vmob  1
+372                -25      -43.10526316                40  constraints 11  vmob  1
+373                -25      -38.15789474                40  constraints 11  vmob  1
+374                -25      -33.21052632                40  constraints 11  vmob  1
+375                -25     -28.263157895                40  constraints 11  vmob  1
+376                -25      -23.31578947                40  constraints 11  vmob  1
+377                -25      -18.36842105                40  constraints 11  vmob  1
+378                -25      -13.42105263                40  constraints 11  vmob  1
+379                -25       -8.47368421                40  constraints 11  vmob  1
+380                -25              -5.5                40  constraints 11  vmob  1
+381                -25      -4.736842105     39.7290862075  constraints 11  vmob  1
+382                -25      -4.210526315      38.674788755  constraints 11  vmob  1
+383                -25      -3.684210525     36.6804433375  constraints 11  vmob  1
+384                -25      -3.157894735      33.962168225  constraints 11  vmob  1
+385                -25      -2.631578945     30.8145307075  constraints 11  vmob  1
+386                -25      -2.105263155       27.57862615  constraints 11  vmob  1
+387                -25 -1.57894736500001       24.60511502  constraints 11  vmob  1
+388                -25 -1.05263157500003     22.2162233875  constraints 11  vmob  1
+389                -25 -0.52631578500001     20.6708247275  constraints 11  vmob  1
+390                -25 -5.82713919268119e-16      20.136386965  constraints 11  vmob  1
+391                -25 0.526315785000003     20.6708247275  constraints 11  vmob  1
+392                -25  1.05263157500003     22.2162233875  constraints 11  vmob  1
+393                -25  1.57894736500004       24.60511502  constraints 11  vmob  1
+394                -25       2.105263155       27.57862615  constraints 11  vmob  1
+395                -25       2.631578945     30.8145307075  constraints 11  vmob  1
+396                -25       3.157894735      33.962168225  constraints 11  vmob  1
+397                -25       3.684210525     36.6804433375  constraints 11  vmob  1
+398                -25       4.210526315      38.674788755  constraints 11  vmob  1
+399                -25       4.736842105     39.7290862075  constraints 11  vmob  1
+400                -25               5.5                40  constraints 11  vmob  1
+401                -25        8.47368421                40  constraints 11  vmob  1
+402                -25       13.42105263                40  constraints 11  vmob  1
+403                -25       18.36842105                40  constraints 11  vmob  1
+404                -25       23.31578947                40  constraints 11  vmob  1
+405                -25      28.263157895                40  constraints 11  vmob  1
+406                -25       33.21052632                40  constraints 11  vmob  1
+407                -25       38.15789474                40  constraints 11  vmob  1
+408                -25       43.10526316                40  constraints 11  vmob  1
+409                -25       48.05263158                40  constraints 11  vmob  1
+410                -25                53                40  constraints 11  vmob  1
+411                -25       57.94736842                40  constraints 11  vmob  1
+412                -25       62.89473684                40  constraints 11  vmob  1
+413                -25       67.84210526                40  constraints 11  vmob  1
+414                -25       72.78947368                40  constraints 11  vmob  1
+415                -25      77.736842105                40  constraints 11  vmob  1
+416                -25       82.68421053                40  constraints 11  vmob  1
+417                -25       87.63157895                40  constraints 11  vmob  1
+418                -25       92.57894737                40  constraints 11  vmob  1
+419                -25       97.52631579                40  constraints 11  vmob  1
+420                 25      -97.52631579                40  constraints 33  vmob  1
+421                 25      -92.57894737                40  constraints 33  vmob  1
+422                 25      -87.63157895                40  constraints 33  vmob  1
+423                 25      -82.68421053                40  constraints 33  vmob  1
+424                 25     -77.736842105                40  constraints 33  vmob  1
+425                 25      -72.78947368                40  constraints 33  vmob  1
+426                 25      -67.84210526                40  constraints 33  vmob  1
+427                 25      -62.89473684                40  constraints 33  vmob  1
+428                 25      -57.94736842                40  constraints 33  vmob  1
+429                 25               -53                40  constraints 33  vmob  1
+430                 25      -48.05263158                40  constraints 33  vmob  1
+431                 25      -43.10526316                40  constraints 33  vmob  1
+432                 25      -38.15789474                40  constraints 33  vmob  1
+433                 25      -33.21052632                40  constraints 33  vmob  1
+434                 25     -28.263157895                40  constraints 33  vmob  1
+435                 25      -23.31578947                40  constraints 33  vmob  1
+436                 25      -18.36842105                40  constraints 33  vmob  1
+437                 25      -13.42105263                40  constraints 33  vmob  1
+438                 25       -8.47368421                40  constraints 33  vmob  1
+439                 25              -5.5                40  constraints 33  vmob  1
+440                 25      -4.736842105     39.7290862075  constraints 33  vmob  1
+441                 25      -4.210526315      38.674788755  constraints 33  vmob  1
+442                 25      -3.684210525     36.6804433375  constraints 33  vmob  1
+443                 25      -3.157894735      33.962168225  constraints 33  vmob  1
+444                 25      -2.631578945     30.8145307075  constraints 33  vmob  1
+445                 25      -2.105263155       27.57862615  constraints 33  vmob  1
+446                 25 -1.57894736500001       24.60511502  constraints 33  vmob  1
+447                 25 -1.05263157500003     22.2162233875  constraints 33  vmob  1
+448                 25 -0.52631578500001     20.6708247275  constraints 33  vmob  1
+449                 25 -5.82713920906788e-16      20.136386965  constraints 33  vmob  1
+450                 25 0.526315785000003     20.6708247275  constraints 33  vmob  1
+451                 25  1.05263157500003     22.2162233875  constraints 33  vmob  1
+452                 25  1.57894736500004       24.60511502  constraints 33  vmob  1
+453                 25       2.105263155       27.57862615  constraints 33  vmob  1
+454                 25       2.631578945     30.8145307075  constraints 33  vmob  1
+455                 25       3.157894735      33.962168225  constraints 33  vmob  1
+456                 25       3.684210525     36.6804433375  constraints 33  vmob  1
+457                 25       4.210526315      38.674788755  constraints 33  vmob  1
+458                 25       4.736842105     39.7290862075  constraints 33  vmob  1
+459                 25               5.5                40  constraints 33  vmob  1
+460                 25        8.47368421                40  constraints 33  vmob  1
+461                 25       13.42105263                40  constraints 33  vmob  1
+462                 25       18.36842105                40  constraints 33  vmob  1
+463                 25       23.31578947                40  constraints 33  vmob  1
+464                 25      28.263157895                40  constraints 33  vmob  1
+465                 25       33.21052632                40  constraints 33  vmob  1
+466                 25       38.15789474                40  constraints 33  vmob  1
+467                 25       43.10526316                40  constraints 33  vmob  1
+468                 25       48.05263158                40  constraints 33  vmob  1
+469                 25                53                40  constraints 33  vmob  1
+470                 25       57.94736842                40  constraints 33  vmob  1
+471                 25       62.89473684                40  constraints 33  vmob  1
+472                 25       67.84210526                40  constraints 33  vmob  1
+473                 25       72.78947368                40  constraints 33  vmob  1
+474                 25      77.736842105                40  constraints 33  vmob  1
+475                 25       82.68421053                40  constraints 33  vmob  1
+476                 25       87.63157895                40  constraints 33  vmob  1
+477                 25       92.57894737                40  constraints 33  vmob  1
+478                 25       97.52631579                40  constraints 33  vmob  1
+
+edges  
+  1       1   61      constraints 1 22 
+  2       2   62      constraints 1 
+  3       3   63      constraints 1 
+  4       4   64      constraints 1 
+  5       5   65      constraints 1 
+  6       6   66      constraints 1 
+  7       7   67      constraints 1 
+  8       8   68      constraints 1 
+  9       9   69      constraints 1 
+ 10      10   70      constraints 1 
+ 11      11   71      constraints 1 
+ 12      12   72      constraints 1 
+ 13      13   73      constraints 1 
+ 14      14   74      constraints 1 
+ 15      15   75      constraints 1 
+ 16      16   76      constraints 1 
+ 17      17   77      constraints 1 
+ 18      18   78      constraints 1 
+ 19      19   79      constraints 1 
+ 20      20   80      constraints 1 
+ 21      21   81      constraints 1 
+ 22      22   82      constraints 1 
+ 23      23   83      constraints 1 
+ 24      24   84      constraints 1 
+ 25      25   85      constraints 1 
+ 26      26   86      constraints 1 
+ 27      27   87      constraints 1 
+ 28      28   88      constraints 1 
+ 29      29   89      constraints 1 
+ 30      30   90      constraints 1 
+ 31      31   91      constraints 1 
+ 32      32   92      constraints 1 
+ 33      33   93      constraints 1 
+ 34      34   94      constraints 1 
+ 35      35   95      constraints 1 
+ 36      36   96      constraints 1 
+ 37      37   97      constraints 1 
+ 38      38   98      constraints 1 
+ 39      39   99      constraints 1 
+ 40      40  100      constraints 1 
+ 41      41  101      constraints 1 
+ 42      42  102      constraints 1 
+ 43      43  103      constraints 1 
+ 44      44  104      constraints 1 
+ 45      45  105      constraints 1 
+ 46      46  106      constraints 1 
+ 47      47  107      constraints 1 
+ 48      48  108      constraints 1 
+ 49      49  109      constraints 1 
+ 50      50  110      constraints 1 
+ 51      51  111      constraints 1 
+ 52      52  112      constraints 1 
+ 53      53  113      constraints 1 
+ 54      54  114      constraints 1 
+ 55      55  115      constraints 1 
+ 56      56  116      constraints 1 
+ 57      57  117      constraints 1 
+ 58      58  118      constraints 1 
+ 59      59  119      constraints 1 
+ 60      60  120      constraints 1 44 
+ 61       1    2      constraints 1 11  no_refine 
+ 62       2    3      constraints 1 11  no_refine 
+ 63       3    4      constraints 1 11  no_refine 
+ 64       4    5      constraints 1 11  no_refine 
+ 65       5    6      constraints 1 11  no_refine 
+ 66       6    7      constraints 1 11  no_refine 
+ 67       7    8      constraints 1 11  no_refine 
+ 68       8    9      constraints 1 11  no_refine 
+ 69       9   10      constraints 1 11  no_refine 
+ 70      10   11      constraints 1 11  no_refine 
+ 71      11   12      constraints 1 11  no_refine 
+ 72      12   13      constraints 1 11  no_refine 
+ 73      13   14      constraints 1 11  no_refine 
+ 74      14   15      constraints 1 11  no_refine 
+ 75      15   16      constraints 1 11  no_refine 
+ 76      16   17      constraints 1 11  no_refine 
+ 77      17   18      constraints 1 11  no_refine 
+ 78      18   19      constraints 1 11  no_refine 
+ 79      19   20      constraints 1 11  no_refine 
+ 80      20   21      constraints 1 11  no_refine 
+ 81      21   22      constraints 1 11  no_refine 
+ 82      22   23      constraints 1 11  no_refine 
+ 83      23   24      constraints 1 11  no_refine 
+ 84      24   25      constraints 1 11  no_refine 
+ 85      25   26      constraints 1 11  no_refine 
+ 86      26   27      constraints 1 11  no_refine 
+ 87      27   28      constraints 1 11  no_refine 
+ 88      28   29      constraints 1 11  no_refine 
+ 89      29   30      constraints 1 11  no_refine 
+ 90      30   31      constraints 1 11  no_refine 
+ 91      31   32      constraints 1 11  no_refine 
+ 92      32   33      constraints 1 11  no_refine 
+ 93      33   34      constraints 1 11  no_refine 
+ 94      34   35      constraints 1 11  no_refine 
+ 95      35   36      constraints 1 11  no_refine 
+ 96      36   37      constraints 1 11  no_refine 
+ 97      37   38      constraints 1 11  no_refine 
+ 98      38   39      constraints 1 11  no_refine 
+ 99      39   40      constraints 1 11  no_refine 
+100      40   41      constraints 1 11  no_refine 
+101      41   42      constraints 1 11  no_refine 
+102      42   43      constraints 1 11  no_refine 
+103      43   44      constraints 1 11  no_refine 
+104      44   45      constraints 1 11  no_refine 
+105      45   46      constraints 1 11  no_refine 
+106      46   47      constraints 1 11  no_refine 
+107      47   48      constraints 1 11  no_refine 
+108      48   49      constraints 1 11  no_refine 
+109      49   50      constraints 1 11  no_refine 
+110      50   51      constraints 1 11  no_refine 
+111      51   52      constraints 1 11  no_refine 
+112      52   53      constraints 1 11  no_refine 
+113      53   54      constraints 1 11  no_refine 
+114      54   55      constraints 1 11  no_refine 
+115      55   56      constraints 1 11  no_refine 
+116      56   57      constraints 1 11  no_refine 
+117      57   58      constraints 1 11  no_refine 
+118      58   59      constraints 1 11  no_refine 
+119      59   60      constraints 1 11  no_refine 
+120      61   62      constraints 1 33  no_refine 
+121      62   63      constraints 1 33  no_refine 
+122      63   64      constraints 1 33  no_refine 
+123      64   65      constraints 1 33  no_refine 
+124      65   66      constraints 1 33  no_refine 
+125      66   67      constraints 1 33  no_refine 
+126      67   68      constraints 1 33  no_refine 
+127      68   69      constraints 1 33  no_refine 
+128      69   70      constraints 1 33  no_refine 
+129      70   71      constraints 1 33  no_refine 
+130      71   72      constraints 1 33  no_refine 
+131      72   73      constraints 1 33  no_refine 
+132      73   74      constraints 1 33  no_refine 
+133      74   75      constraints 1 33  no_refine 
+134      75   76      constraints 1 33  no_refine 
+135      76   77      constraints 1 33  no_refine 
+136      77   78      constraints 1 33  no_refine 
+137      78   79      constraints 1 33  no_refine 
+138      79   80      constraints 1 33  no_refine 
+139      80   81      constraints 1 33  no_refine 
+140      81   82      constraints 1 33  no_refine 
+141      82   83      constraints 1 33  no_refine 
+142      83   84      constraints 1 33  no_refine 
+143      84   85      constraints 1 33  no_refine 
+144      85   86      constraints 1 33  no_refine 
+145      86   87      constraints 1 33  no_refine 
+146      87   88      constraints 1 33  no_refine 
+147      88   89      constraints 1 33  no_refine 
+148      89   90      constraints 1 33  no_refine 
+149      90   91      constraints 1 33  no_refine 
+150      91   92      constraints 1 33  no_refine 
+151      92   93      constraints 1 33  no_refine 
+152      93   94      constraints 1 33  no_refine 
+153      94   95      constraints 1 33  no_refine 
+154      95   96      constraints 1 33  no_refine 
+155      96   97      constraints 1 33  no_refine 
+156      97   98      constraints 1 33  no_refine 
+157      98   99      constraints 1 33  no_refine 
+158      99  100      constraints 1 33  no_refine 
+159     100  101      constraints 1 33  no_refine 
+160     101  102      constraints 1 33  no_refine 
+161     102  103      constraints 1 33  no_refine 
+162     103  104      constraints 1 33  no_refine 
+163     104  105      constraints 1 33  no_refine 
+164     105  106      constraints 1 33  no_refine 
+165     106  107      constraints 1 33  no_refine 
+166     107  108      constraints 1 33  no_refine 
+167     108  109      constraints 1 33  no_refine 
+168     109  110      constraints 1 33  no_refine 
+169     110  111      constraints 1 33  no_refine 
+170     111  112      constraints 1 33  no_refine 
+171     112  113      constraints 1 33  no_refine 
+172     113  114      constraints 1 33  no_refine 
+173     114  115      constraints 1 33  no_refine 
+174     115  116      constraints 1 33  no_refine 
+175     116  117      constraints 1 33  no_refine 
+176     117  118      constraints 1 33  no_refine 
+177     118  119      constraints 1 33  no_refine 
+178     119  120      constraints 1 33  no_refine 
+179     121  181      constraints 22 
+180     122  182    
+181     123  183    
+182     124  184    
+183     125  185    
+184     126  186    
+185     127  187    
+186     128  188    
+187     129  189    
+188     130  190    
+189     131  191    
+190     132  192    
+191     133  193    
+192     134  194    
+193     135  195    
+194     136  196    
+195     137  197    
+196     138  198    
+197     139  199    
+198     140  200    
+199     141  201    
+200     142  202    
+201     143  203    
+202     144  204    
+203     145  205    
+204     146  206    
+205     147  207    
+206     148  208    
+207     149  209    
+208     150  210    
+209     151  211    
+210     152  212    
+211     153  213    
+212     154  214    
+213     155  215    
+214     156  216    
+215     157  217    
+216     158  218    
+217     159  219    
+218     160  220    
+219     161  221    
+220     162  222    
+221     163  223    
+222     164  224    
+223     165  225    
+224     166  226    
+225     167  227    
+226     168  228    
+227     169  229    
+228     170  230    
+229     171  231    
+230     172  232    
+231     173  233    
+232     174  234    
+233     175  235    
+234     176  236    
+235     177  237    
+236     178  238    
+237     179  239    
+238     180  240      constraints 44 
+239     121  122      constraints 11  no_refine 
+240     122  123      constraints 11  no_refine 
+241     123  124      constraints 11  no_refine 
+242     124  125      constraints 11  no_refine 
+243     125  126      constraints 11  no_refine 
+244     126  127      constraints 11  no_refine 
+245     127  128      constraints 11  no_refine 
+246     128  129      constraints 11  no_refine 
+247     129  130      constraints 11  no_refine 
+248     130  131      constraints 11  no_refine 
+249     131  132      constraints 11  no_refine 
+250     132  133      constraints 11  no_refine 
+251     133  134      constraints 11  no_refine 
+252     134  135      constraints 11  no_refine 
+253     135  136      constraints 11  no_refine 
+254     136  137      constraints 11  no_refine 
+255     137  138      constraints 11  no_refine 
+256     138  139      constraints 11  no_refine 
+257     139  140      constraints 11  no_refine 
+258     140  141      constraints 11  no_refine 
+259     141  142      constraints 11  no_refine 
+260     142  143      constraints 11  no_refine 
+261     143  144      constraints 11  no_refine 
+262     144  145      constraints 11  no_refine 
+263     145  146      constraints 11  no_refine 
+264     146  147      constraints 11  no_refine 
+265     147  148      constraints 11  no_refine 
+266     148  149      constraints 11  no_refine 
+267     149  150      constraints 11  no_refine 
+268     150  151      constraints 11  no_refine 
+269     151  152      constraints 11  no_refine 
+270     152  153      constraints 11  no_refine 
+271     153  154      constraints 11  no_refine 
+272     154  155      constraints 11  no_refine 
+273     155  156      constraints 11  no_refine 
+274     156  157      constraints 11  no_refine 
+275     157  158      constraints 11  no_refine 
+276     158  159      constraints 11  no_refine 
+277     159  160      constraints 11  no_refine 
+278     160  161      constraints 11  no_refine 
+279     161  162      constraints 11  no_refine 
+280     162  163      constraints 11  no_refine 
+281     163  164      constraints 11  no_refine 
+282     164  165      constraints 11  no_refine 
+283     165  166      constraints 11  no_refine 
+284     166  167      constraints 11  no_refine 
+285     167  168      constraints 11  no_refine 
+286     168  169      constraints 11  no_refine 
+287     169  170      constraints 11  no_refine 
+288     170  171      constraints 11  no_refine 
+289     171  172      constraints 11  no_refine 
+290     172  173      constraints 11  no_refine 
+291     173  174      constraints 11  no_refine 
+292     174  175      constraints 11  no_refine 
+293     175  176      constraints 11  no_refine 
+294     176  177      constraints 11  no_refine 
+295     177  178      constraints 11  no_refine 
+296     178  179      constraints 11  no_refine 
+297     179  180      constraints 11  no_refine 
+298     181  182      constraints 33  no_refine 
+299     182  183      constraints 33  no_refine 
+300     183  184      constraints 33  no_refine 
+301     184  185      constraints 33  no_refine 
+302     185  186      constraints 33  no_refine 
+303     186  187      constraints 33  no_refine 
+304     187  188      constraints 33  no_refine 
+305     188  189      constraints 33  no_refine 
+306     189  190      constraints 33  no_refine 
+307     190  191      constraints 33  no_refine 
+308     191  192      constraints 33  no_refine 
+309     192  193      constraints 33  no_refine 
+310     193  194      constraints 33  no_refine 
+311     194  195      constraints 33  no_refine 
+312     195  196      constraints 33  no_refine 
+313     196  197      constraints 33  no_refine 
+314     197  198      constraints 33  no_refine 
+315     198  199      constraints 33  no_refine 
+316     199  200      constraints 33  no_refine 
+317     200  201      constraints 33  no_refine 
+318     201  202      constraints 33  no_refine 
+319     202  203      constraints 33  no_refine 
+320     203  204      constraints 33  no_refine 
+321     204  205      constraints 33  no_refine 
+322     205  206      constraints 33  no_refine 
+323     206  207      constraints 33  no_refine 
+324     207  208      constraints 33  no_refine 
+325     208  209      constraints 33  no_refine 
+326     209  210      constraints 33  no_refine 
+327     210  211      constraints 33  no_refine 
+328     211  212      constraints 33  no_refine 
+329     212  213      constraints 33  no_refine 
+330     213  214      constraints 33  no_refine 
+331     214  215      constraints 33  no_refine 
+332     215  216      constraints 33  no_refine 
+333     216  217      constraints 33  no_refine 
+334     217  218      constraints 33  no_refine 
+335     218  219      constraints 33  no_refine 
+336     219  220      constraints 33  no_refine 
+337     220  221      constraints 33  no_refine 
+338     221  222      constraints 33  no_refine 
+339     222  223      constraints 33  no_refine 
+340     223  224      constraints 33  no_refine 
+341     224  225      constraints 33  no_refine 
+342     225  226      constraints 33  no_refine 
+343     226  227      constraints 33  no_refine 
+344     227  228      constraints 33  no_refine 
+345     228  229      constraints 33  no_refine 
+346     229  230      constraints 33  no_refine 
+347     230  231      constraints 33  no_refine 
+348     231  232      constraints 33  no_refine 
+349     232  233      constraints 33  no_refine 
+350     233  234      constraints 33  no_refine 
+351     234  235      constraints 33  no_refine 
+352     235  236      constraints 33  no_refine 
+353     236  237      constraints 33  no_refine 
+354     237  238      constraints 33  no_refine 
+355     238  239      constraints 33  no_refine 
+356     239  240      constraints 33  no_refine 
+357       1  121      constraints 11 22 
+358       2  122      constraints 11 
+359       3  123      constraints 11 
+360       4  124      constraints 11 
+361       5  125      constraints 11 
+362       6  126      constraints 11 
+363       7  127      constraints 11 
+364       8  128      constraints 11 
+365       9  129      constraints 11 
+366      10  130      constraints 11 
+367      11  131      constraints 11 
+368      12  132      constraints 11 
+369      13  133      constraints 11 
+370      14  134      constraints 11 
+371      15  135      constraints 11 
+372      16  136      constraints 11 
+373      17  137      constraints 11 
+374      18  138      constraints 11 
+375      19  139      constraints 11 
+376      20  140      constraints 11 
+377      21  141      constraints 11 
+378      22  142      constraints 11 
+379      23  143      constraints 11 
+380      24  144      constraints 11 
+381      25  145      constraints 11 
+382      26  146      constraints 11 
+383      27  147      constraints 11 
+384      28  148      constraints 11 
+385      29  149      constraints 11 
+386      30  150      constraints 11 
+387      31  151      constraints 11 
+388      32  152      constraints 11 
+389      33  153      constraints 11 
+390      34  154      constraints 11 
+391      35  155      constraints 11 
+392      36  156      constraints 11 
+393      37  157      constraints 11 
+394      38  158      constraints 11 
+395      39  159      constraints 11 
+396      40  160      constraints 11 
+397      41  161      constraints 11 
+398      42  162      constraints 11 
+399      43  163      constraints 11 
+400      44  164      constraints 11 
+401      45  165      constraints 11 
+402      46  166      constraints 11 
+403      47  167      constraints 11 
+404      48  168      constraints 11 
+405      49  169      constraints 11 
+406      50  170      constraints 11 
+407      51  171      constraints 11 
+408      52  172      constraints 11 
+409      53  173      constraints 11 
+410      54  174      constraints 11 
+411      55  175      constraints 11 
+412      56  176      constraints 11 
+413      57  177      constraints 11 
+414      58  178      constraints 11 
+415      59  179      constraints 11 
+416      60  180      constraints 11 44 
+417      61  181      constraints 33 22 
+418      62  182      constraints 33 
+419      63  183      constraints 33 
+420      64  184      constraints 33 
+421      65  185      constraints 33 
+422      66  186      constraints 33 
+423      67  187      constraints 33 
+424      68  188      constraints 33 
+425      69  189      constraints 33 
+426      70  190      constraints 33 
+427      71  191      constraints 33 
+428      72  192      constraints 33 
+429      73  193      constraints 33 
+430      74  194      constraints 33 
+431      75  195      constraints 33 
+432      76  196      constraints 33 
+433      77  197      constraints 33 
+434      78  198      constraints 33 
+435      79  199      constraints 33 
+436      80  200      constraints 33 
+437      81  201      constraints 33 
+438      82  202      constraints 33 
+439      83  203      constraints 33 
+440      84  204      constraints 33 
+441      85  205      constraints 33 
+442      86  206      constraints 33 
+443      87  207      constraints 33 
+444      88  208      constraints 33 
+445      89  209      constraints 33 
+446      90  210      constraints 33 
+447      91  211      constraints 33 
+448      92  212      constraints 33 
+449      93  213      constraints 33 
+450      94  214      constraints 33 
+451      95  215      constraints 33 
+452      96  216      constraints 33 
+453      97  217      constraints 33 
+454      98  218      constraints 33 
+455      99  219      constraints 33 
+456     100  220      constraints 33 
+457     101  221      constraints 33 
+458     102  222      constraints 33 
+459     103  223      constraints 33 
+460     104  224      constraints 33 
+461     105  225      constraints 33 
+462     106  226      constraints 33 
+463     107  227      constraints 33 
+464     108  228      constraints 33 
+465     109  229      constraints 33 
+466     110  230      constraints 33 
+467     111  231      constraints 33 
+468     112  232      constraints 33 
+469     113  233      constraints 33 
+470     114  234      constraints 33 
+471     115  235      constraints 33 
+472     116  236      constraints 33 
+473     117  237      constraints 33 
+474     118  238      constraints 33 
+475     119  239      constraints 33 
+476     120  240      constraints 33 44 
+477       1  241      constraints 1 
+478       2  241      constraints 1 
+479      62  241      constraints 1 
+480      61  241      constraints 1 
+481       2  242      constraints 1 
+482       3  242      constraints 1 
+483      63  242      constraints 1 
+484      62  242      constraints 1 
+485       3  243      constraints 1 
+486       4  243      constraints 1 
+487      64  243      constraints 1 
+488      63  243      constraints 1 
+489       4  244      constraints 1 
+490       5  244      constraints 1 
+491      65  244      constraints 1 
+492      64  244      constraints 1 
+493       5  245      constraints 1 
+494       6  245      constraints 1 
+495      66  245      constraints 1 
+496      65  245      constraints 1 
+497       6  246      constraints 1 
+498       7  246      constraints 1 
+499      67  246      constraints 1 
+500      66  246      constraints 1 
+501       7  247      constraints 1 
+502       8  247      constraints 1 
+503      68  247      constraints 1 
+504      67  247      constraints 1 
+505       8  248      constraints 1 
+506       9  248      constraints 1 
+507      69  248      constraints 1 
+508      68  248      constraints 1 
+509       9  249      constraints 1 
+510      10  249      constraints 1 
+511      70  249      constraints 1 
+512      69  249      constraints 1 
+513      10  250      constraints 1 
+514      11  250      constraints 1 
+515      71  250      constraints 1 
+516      70  250      constraints 1 
+517      11  251      constraints 1 
+518      12  251      constraints 1 
+519      72  251      constraints 1 
+520      71  251      constraints 1 
+521      12  252      constraints 1 
+522      13  252      constraints 1 
+523      73  252      constraints 1 
+524      72  252      constraints 1 
+525      13  253      constraints 1 
+526      14  253      constraints 1 
+527      74  253      constraints 1 
+528      73  253      constraints 1 
+529      14  254      constraints 1 
+530      15  254      constraints 1 
+531      75  254      constraints 1 
+532      74  254      constraints 1 
+533      15  255      constraints 1 
+534      16  255      constraints 1 
+535      76  255      constraints 1 
+536      75  255      constraints 1 
+537      16  256      constraints 1 
+538      17  256      constraints 1 
+539      77  256      constraints 1 
+540      76  256      constraints 1 
+541      17  257      constraints 1 
+542      18  257      constraints 1 
+543      78  257      constraints 1 
+544      77  257      constraints 1 
+545      18  258      constraints 1 
+546      19  258      constraints 1 
+547      79  258      constraints 1 
+548      78  258      constraints 1 
+549      19  259      constraints 1 
+550      20  259      constraints 1 
+551      80  259      constraints 1 
+552      79  259      constraints 1 
+553      20  260      constraints 1 
+554      21  260      constraints 1 
+555      81  260      constraints 1 
+556      80  260      constraints 1 
+557      21  261      constraints 1 
+558      22  261      constraints 1 
+559      82  261      constraints 1 
+560      81  261      constraints 1 
+561      22  262      constraints 1 
+562      23  262      constraints 1 
+563      83  262      constraints 1 
+564      82  262      constraints 1 
+565      23  263      constraints 1 
+566      24  263      constraints 1 
+567      84  263      constraints 1 
+568      83  263      constraints 1 
+569      24  264      constraints 1 
+570      25  264      constraints 1 
+571      85  264      constraints 1 
+572      84  264      constraints 1 
+573      25  265      constraints 1 
+574      26  265      constraints 1 
+575      86  265      constraints 1 
+576      85  265      constraints 1 
+577      26  266      constraints 1 
+578      27  266      constraints 1 
+579      87  266      constraints 1 
+580      86  266      constraints 1 
+581      27  267      constraints 1 
+582      28  267      constraints 1 
+583      88  267      constraints 1 
+584      87  267      constraints 1 
+585      28  268      constraints 1 
+586      29  268      constraints 1 
+587      89  268      constraints 1 
+588      88  268      constraints 1 
+589      29  269      constraints 1 
+590      30  269      constraints 1 
+591      90  269      constraints 1 
+592      89  269      constraints 1 
+593      30  270      constraints 1 
+594      31  270      constraints 1 
+595      91  270      constraints 1 
+596      90  270      constraints 1 
+597      31  271      constraints 1 
+598      32  271      constraints 1 
+599      92  271      constraints 1 
+600      91  271      constraints 1 
+601      32  272      constraints 1 
+602      33  272      constraints 1 
+603      93  272      constraints 1 
+604      92  272      constraints 1 
+605      33  273      constraints 1 
+606      34  273      constraints 1 
+607      94  273      constraints 1 
+608      93  273      constraints 1 
+609      34  274      constraints 1 
+610      35  274      constraints 1 
+611      95  274      constraints 1 
+612      94  274      constraints 1 
+613      35  275      constraints 1 
+614      36  275      constraints 1 
+615      96  275      constraints 1 
+616      95  275      constraints 1 
+617      36  276      constraints 1 
+618      37  276      constraints 1 
+619      97  276      constraints 1 
+620      96  276      constraints 1 
+621      37  277      constraints 1 
+622      38  277      constraints 1 
+623      98  277      constraints 1 
+624      97  277      constraints 1 
+625      38  278      constraints 1 
+626      39  278      constraints 1 
+627      99  278      constraints 1 
+628      98  278      constraints 1 
+629      39  279      constraints 1 
+630      40  279      constraints 1 
+631     100  279      constraints 1 
+632      99  279      constraints 1 
+633      40  280      constraints 1 
+634      41  280      constraints 1 
+635     101  280      constraints 1 
+636     100  280      constraints 1 
+637      41  281      constraints 1 
+638      42  281      constraints 1 
+639     102  281      constraints 1 
+640     101  281      constraints 1 
+641      42  282      constraints 1 
+642      43  282      constraints 1 
+643     103  282      constraints 1 
+644     102  282      constraints 1 
+645      43  283      constraints 1 
+646      44  283      constraints 1 
+647     104  283      constraints 1 
+648     103  283      constraints 1 
+649      44  284      constraints 1 
+650      45  284      constraints 1 
+651     105  284      constraints 1 
+652     104  284      constraints 1 
+653      45  285      constraints 1 
+654      46  285      constraints 1 
+655     106  285      constraints 1 
+656     105  285      constraints 1 
+657      46  286      constraints 1 
+658      47  286      constraints 1 
+659     107  286      constraints 1 
+660     106  286      constraints 1 
+661      47  287      constraints 1 
+662      48  287      constraints 1 
+663     108  287      constraints 1 
+664     107  287      constraints 1 
+665      48  288      constraints 1 
+666      49  288      constraints 1 
+667     109  288      constraints 1 
+668     108  288      constraints 1 
+669      49  289      constraints 1 
+670      50  289      constraints 1 
+671     110  289      constraints 1 
+672     109  289      constraints 1 
+673      50  290      constraints 1 
+674      51  290      constraints 1 
+675     111  290      constraints 1 
+676     110  290      constraints 1 
+677      51  291      constraints 1 
+678      52  291      constraints 1 
+679     112  291      constraints 1 
+680     111  291      constraints 1 
+681      52  292      constraints 1 
+682      53  292      constraints 1 
+683     113  292      constraints 1 
+684     112  292      constraints 1 
+685      53  293      constraints 1 
+686      54  293      constraints 1 
+687     114  293      constraints 1 
+688     113  293      constraints 1 
+689      54  294      constraints 1 
+690      55  294      constraints 1 
+691     115  294      constraints 1 
+692     114  294      constraints 1 
+693      55  295      constraints 1 
+694      56  295      constraints 1 
+695     116  295      constraints 1 
+696     115  295      constraints 1 
+697      56  296      constraints 1 
+698      57  296      constraints 1 
+699     117  296      constraints 1 
+700     116  296      constraints 1 
+701      57  297      constraints 1 
+702      58  297      constraints 1 
+703     118  297      constraints 1 
+704     117  297      constraints 1 
+705      58  298      constraints 1 
+706      59  298      constraints 1 
+707     119  298      constraints 1 
+708     118  298      constraints 1 
+709      59  299      constraints 1 
+710      60  299      constraints 1 
+711     120  299      constraints 1 
+712     119  299      constraints 1 
+713     121  300    
+714     181  300    
+715     182  300    
+716     122  300    
+717     122  301    
+718     182  301    
+719     183  301    
+720     123  301    
+721     123  302    
+722     183  302    
+723     184  302    
+724     124  302    
+725     124  303    
+726     184  303    
+727     185  303    
+728     125  303    
+729     125  304    
+730     185  304    
+731     186  304    
+732     126  304    
+733     126  305    
+734     186  305    
+735     187  305    
+736     127  305    
+737     127  306    
+738     187  306    
+739     188  306    
+740     128  306    
+741     128  307    
+742     188  307    
+743     189  307    
+744     129  307    
+745     129  308    
+746     189  308    
+747     190  308    
+748     130  308    
+749     130  309    
+750     190  309    
+751     191  309    
+752     131  309    
+753     131  310    
+754     191  310    
+755     192  310    
+756     132  310    
+757     132  311    
+758     192  311    
+759     193  311    
+760     133  311    
+761     133  312    
+762     193  312    
+763     194  312    
+764     134  312    
+765     134  313    
+766     194  313    
+767     195  313    
+768     135  313    
+769     135  314    
+770     195  314    
+771     196  314    
+772     136  314    
+773     136  315    
+774     196  315    
+775     197  315    
+776     137  315    
+777     137  316    
+778     197  316    
+779     198  316    
+780     138  316    
+781     138  317    
+782     198  317    
+783     199  317    
+784     139  317    
+785     139  318    
+786     199  318    
+787     200  318    
+788     140  318    
+789     140  319    
+790     200  319    
+791     201  319    
+792     141  319    
+793     141  320    
+794     201  320    
+795     202  320    
+796     142  320    
+797     142  321    
+798     202  321    
+799     203  321    
+800     143  321    
+801     143  322    
+802     203  322    
+803     204  322    
+804     144  322    
+805     144  323    
+806     204  323    
+807     205  323    
+808     145  323    
+809     145  324    
+810     205  324    
+811     206  324    
+812     146  324    
+813     146  325    
+814     206  325    
+815     207  325    
+816     147  325    
+817     147  326    
+818     207  326    
+819     208  326    
+820     148  326    
+821     148  327    
+822     208  327    
+823     209  327    
+824     149  327    
+825     149  328    
+826     209  328    
+827     210  328    
+828     150  328    
+829     150  329    
+830     210  329    
+831     211  329    
+832     151  329    
+833     151  330    
+834     211  330    
+835     212  330    
+836     152  330    
+837     152  331    
+838     212  331    
+839     213  331    
+840     153  331    
+841     153  332    
+842     213  332    
+843     214  332    
+844     154  332    
+845     154  333    
+846     214  333    
+847     215  333    
+848     155  333    
+849     155  334    
+850     215  334    
+851     216  334    
+852     156  334    
+853     156  335    
+854     216  335    
+855     217  335    
+856     157  335    
+857     157  336    
+858     217  336    
+859     218  336    
+860     158  336    
+861     158  337    
+862     218  337    
+863     219  337    
+864     159  337    
+865     159  338    
+866     219  338    
+867     220  338    
+868     160  338    
+869     160  339    
+870     220  339    
+871     221  339    
+872     161  339    
+873     161  340    
+874     221  340    
+875     222  340    
+876     162  340    
+877     162  341    
+878     222  341    
+879     223  341    
+880     163  341    
+881     163  342    
+882     223  342    
+883     224  342    
+884     164  342    
+885     164  343    
+886     224  343    
+887     225  343    
+888     165  343    
+889     165  344    
+890     225  344    
+891     226  344    
+892     166  344    
+893     166  345    
+894     226  345    
+895     227  345    
+896     167  345    
+897     167  346    
+898     227  346    
+899     228  346    
+900     168  346    
+901     168  347    
+902     228  347    
+903     229  347    
+904     169  347    
+905     169  348    
+906     229  348    
+907     230  348    
+908     170  348    
+909     170  349    
+910     230  349    
+911     231  349    
+912     171  349    
+913     171  350    
+914     231  350    
+915     232  350    
+916     172  350    
+917     172  351    
+918     232  351    
+919     233  351    
+920     173  351    
+921     173  352    
+922     233  352    
+923     234  352    
+924     174  352    
+925     174  353    
+926     234  353    
+927     235  353    
+928     175  353    
+929     175  354    
+930     235  354    
+931     236  354    
+932     176  354    
+933     176  355    
+934     236  355    
+935     237  355    
+936     177  355    
+937     177  356    
+938     237  356    
+939     238  356    
+940     178  356    
+941     178  357    
+942     238  357    
+943     239  357    
+944     179  357    
+945     179  358    
+946     239  358    
+947     240  358    
+948     180  358    
+949       1  359      constraints 22 
+950      61  359      constraints 22 
+951     181  359      constraints 22 
+952     121  359      constraints 22 
+953      60  360      constraints 44 
+954     180  360      constraints 44 
+955     240  360      constraints 44 
+956     120  360      constraints 44 
+957       1  361      constraints 11 
+958     121  361      constraints 11 
+959     122  361      constraints 11 
+960       2  361      constraints 11 
+961       2  362      constraints 11 
+962     122  362      constraints 11 
+963     123  362      constraints 11 
+964       3  362      constraints 11 
+965       3  363      constraints 11 
+966     123  363      constraints 11 
+967     124  363      constraints 11 
+968       4  363      constraints 11 
+969       4  364      constraints 11 
+970     124  364      constraints 11 
+971     125  364      constraints 11 
+972       5  364      constraints 11 
+973       5  365      constraints 11 
+974     125  365      constraints 11 
+975     126  365      constraints 11 
+976       6  365      constraints 11 
+977       6  366      constraints 11 
+978     126  366      constraints 11 
+979     127  366      constraints 11 
+980       7  366      constraints 11 
+981       7  367      constraints 11 
+982     127  367      constraints 11 
+983     128  367      constraints 11 
+984       8  367      constraints 11 
+985       8  368      constraints 11 
+986     128  368      constraints 11 
+987     129  368      constraints 11 
+988       9  368      constraints 11 
+989       9  369      constraints 11 
+990     129  369      constraints 11 
+991     130  369      constraints 11 
+992      10  369      constraints 11 
+993      10  370      constraints 11 
+994     130  370      constraints 11 
+995     131  370      constraints 11 
+996      11  370      constraints 11 
+997      11  371      constraints 11 
+998     131  371      constraints 11 
+999     132  371      constraints 11 
+1000      12  371      constraints 11 
+1001      12  372      constraints 11 
+1002     132  372      constraints 11 
+1003     133  372      constraints 11 
+1004      13  372      constraints 11 
+1005      13  373      constraints 11 
+1006     133  373      constraints 11 
+1007     134  373      constraints 11 
+1008      14  373      constraints 11 
+1009      14  374      constraints 11 
+1010     134  374      constraints 11 
+1011     135  374      constraints 11 
+1012      15  374      constraints 11 
+1013      15  375      constraints 11 
+1014     135  375      constraints 11 
+1015     136  375      constraints 11 
+1016      16  375      constraints 11 
+1017      16  376      constraints 11 
+1018     136  376      constraints 11 
+1019     137  376      constraints 11 
+1020      17  376      constraints 11 
+1021      17  377      constraints 11 
+1022     137  377      constraints 11 
+1023     138  377      constraints 11 
+1024      18  377      constraints 11 
+1025      18  378      constraints 11 
+1026     138  378      constraints 11 
+1027     139  378      constraints 11 
+1028      19  378      constraints 11 
+1029      19  379      constraints 11 
+1030     139  379      constraints 11 
+1031     140  379      constraints 11 
+1032      20  379      constraints 11 
+1033      20  380      constraints 11 
+1034     140  380      constraints 11 
+1035     141  380      constraints 11 
+1036      21  380      constraints 11 
+1037      21  381      constraints 11 
+1038     141  381      constraints 11 
+1039     142  381      constraints 11 
+1040      22  381      constraints 11 
+1041      22  382      constraints 11 
+1042     142  382      constraints 11 
+1043     143  382      constraints 11 
+1044      23  382      constraints 11 
+1045      23  383      constraints 11 
+1046     143  383      constraints 11 
+1047     144  383      constraints 11 
+1048      24  383      constraints 11 
+1049      24  384      constraints 11 
+1050     144  384      constraints 11 
+1051     145  384      constraints 11 
+1052      25  384      constraints 11 
+1053      25  385      constraints 11 
+1054     145  385      constraints 11 
+1055     146  385      constraints 11 
+1056      26  385      constraints 11 
+1057      26  386      constraints 11 
+1058     146  386      constraints 11 
+1059     147  386      constraints 11 
+1060      27  386      constraints 11 
+1061      27  387      constraints 11 
+1062     147  387      constraints 11 
+1063     148  387      constraints 11 
+1064      28  387      constraints 11 
+1065      28  388      constraints 11 
+1066     148  388      constraints 11 
+1067     149  388      constraints 11 
+1068      29  388      constraints 11 
+1069      29  389      constraints 11 
+1070     149  389      constraints 11 
+1071     150  389      constraints 11 
+1072      30  389      constraints 11 
+1073      30  390      constraints 11 
+1074     150  390      constraints 11 
+1075     151  390      constraints 11 
+1076      31  390      constraints 11 
+1077      31  391      constraints 11 
+1078     151  391      constraints 11 
+1079     152  391      constraints 11 
+1080      32  391      constraints 11 
+1081      32  392      constraints 11 
+1082     152  392      constraints 11 
+1083     153  392      constraints 11 
+1084      33  392      constraints 11 
+1085      33  393      constraints 11 
+1086     153  393      constraints 11 
+1087     154  393      constraints 11 
+1088      34  393      constraints 11 
+1089      34  394      constraints 11 
+1090     154  394      constraints 11 
+1091     155  394      constraints 11 
+1092      35  394      constraints 11 
+1093      35  395      constraints 11 
+1094     155  395      constraints 11 
+1095     156  395      constraints 11 
+1096      36  395      constraints 11 
+1097      36  396      constraints 11 
+1098     156  396      constraints 11 
+1099     157  396      constraints 11 
+1100      37  396      constraints 11 
+1101      37  397      constraints 11 
+1102     157  397      constraints 11 
+1103     158  397      constraints 11 
+1104      38  397      constraints 11 
+1105      38  398      constraints 11 
+1106     158  398      constraints 11 
+1107     159  398      constraints 11 
+1108      39  398      constraints 11 
+1109      39  399      constraints 11 
+1110     159  399      constraints 11 
+1111     160  399      constraints 11 
+1112      40  399      constraints 11 
+1113      40  400      constraints 11 
+1114     160  400      constraints 11 
+1115     161  400      constraints 11 
+1116      41  400      constraints 11 
+1117      41  401      constraints 11 
+1118     161  401      constraints 11 
+1119     162  401      constraints 11 
+1120      42  401      constraints 11 
+1121      42  402      constraints 11 
+1122     162  402      constraints 11 
+1123     163  402      constraints 11 
+1124      43  402      constraints 11 
+1125      43  403      constraints 11 
+1126     163  403      constraints 11 
+1127     164  403      constraints 11 
+1128      44  403      constraints 11 
+1129      44  404      constraints 11 
+1130     164  404      constraints 11 
+1131     165  404      constraints 11 
+1132      45  404      constraints 11 
+1133      45  405      constraints 11 
+1134     165  405      constraints 11 
+1135     166  405      constraints 11 
+1136      46  405      constraints 11 
+1137      46  406      constraints 11 
+1138     166  406      constraints 11 
+1139     167  406      constraints 11 
+1140      47  406      constraints 11 
+1141      47  407      constraints 11 
+1142     167  407      constraints 11 
+1143     168  407      constraints 11 
+1144      48  407      constraints 11 
+1145      48  408      constraints 11 
+1146     168  408      constraints 11 
+1147     169  408      constraints 11 
+1148      49  408      constraints 11 
+1149      49  409      constraints 11 
+1150     169  409      constraints 11 
+1151     170  409      constraints 11 
+1152      50  409      constraints 11 
+1153      50  410      constraints 11 
+1154     170  410      constraints 11 
+1155     171  410      constraints 11 
+1156      51  410      constraints 11 
+1157      51  411      constraints 11 
+1158     171  411      constraints 11 
+1159     172  411      constraints 11 
+1160      52  411      constraints 11 
+1161      52  412      constraints 11 
+1162     172  412      constraints 11 
+1163     173  412      constraints 11 
+1164      53  412      constraints 11 
+1165      53  413      constraints 11 
+1166     173  413      constraints 11 
+1167     174  413      constraints 11 
+1168      54  413      constraints 11 
+1169      54  414      constraints 11 
+1170     174  414      constraints 11 
+1171     175  414      constraints 11 
+1172      55  414      constraints 11 
+1173      55  415      constraints 11 
+1174     175  415      constraints 11 
+1175     176  415      constraints 11 
+1176      56  415      constraints 11 
+1177      56  416      constraints 11 
+1178     176  416      constraints 11 
+1179     177  416      constraints 11 
+1180      57  416      constraints 11 
+1181      57  417      constraints 11 
+1182     177  417      constraints 11 
+1183     178  417      constraints 11 
+1184      58  417      constraints 11 
+1185      58  418      constraints 11 
+1186     178  418      constraints 11 
+1187     179  418      constraints 11 
+1188      59  418      constraints 11 
+1189      59  419      constraints 11 
+1190     179  419      constraints 11 
+1191     180  419      constraints 11 
+1192      60  419      constraints 11 
+1193      61  420      constraints 33 
+1194      62  420      constraints 33 
+1195     182  420      constraints 33 
+1196     181  420      constraints 33 
+1197      62  421      constraints 33 
+1198      63  421      constraints 33 
+1199     183  421      constraints 33 
+1200     182  421      constraints 33 
+1201      63  422      constraints 33 
+1202      64  422      constraints 33 
+1203     184  422      constraints 33 
+1204     183  422      constraints 33 
+1205      64  423      constraints 33 
+1206      65  423      constraints 33 
+1207     185  423      constraints 33 
+1208     184  423      constraints 33 
+1209      65  424      constraints 33 
+1210      66  424      constraints 33 
+1211     186  424      constraints 33 
+1212     185  424      constraints 33 
+1213      66  425      constraints 33 
+1214      67  425      constraints 33 
+1215     187  425      constraints 33 
+1216     186  425      constraints 33 
+1217      67  426      constraints 33 
+1218      68  426      constraints 33 
+1219     188  426      constraints 33 
+1220     187  426      constraints 33 
+1221      68  427      constraints 33 
+1222      69  427      constraints 33 
+1223     189  427      constraints 33 
+1224     188  427      constraints 33 
+1225      69  428      constraints 33 
+1226      70  428      constraints 33 
+1227     190  428      constraints 33 
+1228     189  428      constraints 33 
+1229      70  429      constraints 33 
+1230      71  429      constraints 33 
+1231     191  429      constraints 33 
+1232     190  429      constraints 33 
+1233      71  430      constraints 33 
+1234      72  430      constraints 33 
+1235     192  430      constraints 33 
+1236     191  430      constraints 33 
+1237      72  431      constraints 33 
+1238      73  431      constraints 33 
+1239     193  431      constraints 33 
+1240     192  431      constraints 33 
+1241      73  432      constraints 33 
+1242      74  432      constraints 33 
+1243     194  432      constraints 33 
+1244     193  432      constraints 33 
+1245      74  433      constraints 33 
+1246      75  433      constraints 33 
+1247     195  433      constraints 33 
+1248     194  433      constraints 33 
+1249      75  434      constraints 33 
+1250      76  434      constraints 33 
+1251     196  434      constraints 33 
+1252     195  434      constraints 33 
+1253      76  435      constraints 33 
+1254      77  435      constraints 33 
+1255     197  435      constraints 33 
+1256     196  435      constraints 33 
+1257      77  436      constraints 33 
+1258      78  436      constraints 33 
+1259     198  436      constraints 33 
+1260     197  436      constraints 33 
+1261      78  437      constraints 33 
+1262      79  437      constraints 33 
+1263     199  437      constraints 33 
+1264     198  437      constraints 33 
+1265      79  438      constraints 33 
+1266      80  438      constraints 33 
+1267     200  438      constraints 33 
+1268     199  438      constraints 33 
+1269      80  439      constraints 33 
+1270      81  439      constraints 33 
+1271     201  439      constraints 33 
+1272     200  439      constraints 33 
+1273      81  440      constraints 33 
+1274      82  440      constraints 33 
+1275     202  440      constraints 33 
+1276     201  440      constraints 33 
+1277      82  441      constraints 33 
+1278      83  441      constraints 33 
+1279     203  441      constraints 33 
+1280     202  441      constraints 33 
+1281      83  442      constraints 33 
+1282      84  442      constraints 33 
+1283     204  442      constraints 33 
+1284     203  442      constraints 33 
+1285      84  443      constraints 33 
+1286      85  443      constraints 33 
+1287     205  443      constraints 33 
+1288     204  443      constraints 33 
+1289      85  444      constraints 33 
+1290      86  444      constraints 33 
+1291     206  444      constraints 33 
+1292     205  444      constraints 33 
+1293      86  445      constraints 33 
+1294      87  445      constraints 33 
+1295     207  445      constraints 33 
+1296     206  445      constraints 33 
+1297      87  446      constraints 33 
+1298      88  446      constraints 33 
+1299     208  446      constraints 33 
+1300     207  446      constraints 33 
+1301      88  447      constraints 33 
+1302      89  447      constraints 33 
+1303     209  447      constraints 33 
+1304     208  447      constraints 33 
+1305      89  448      constraints 33 
+1306      90  448      constraints 33 
+1307     210  448      constraints 33 
+1308     209  448      constraints 33 
+1309      90  449      constraints 33 
+1310      91  449      constraints 33 
+1311     211  449      constraints 33 
+1312     210  449      constraints 33 
+1313      91  450      constraints 33 
+1314      92  450      constraints 33 
+1315     212  450      constraints 33 
+1316     211  450      constraints 33 
+1317      92  451      constraints 33 
+1318      93  451      constraints 33 
+1319     213  451      constraints 33 
+1320     212  451      constraints 33 
+1321      93  452      constraints 33 
+1322      94  452      constraints 33 
+1323     214  452      constraints 33 
+1324     213  452      constraints 33 
+1325      94  453      constraints 33 
+1326      95  453      constraints 33 
+1327     215  453      constraints 33 
+1328     214  453      constraints 33 
+1329      95  454      constraints 33 
+1330      96  454      constraints 33 
+1331     216  454      constraints 33 
+1332     215  454      constraints 33 
+1333      96  455      constraints 33 
+1334      97  455      constraints 33 
+1335     217  455      constraints 33 
+1336     216  455      constraints 33 
+1337      97  456      constraints 33 
+1338      98  456      constraints 33 
+1339     218  456      constraints 33 
+1340     217  456      constraints 33 
+1341      98  457      constraints 33 
+1342      99  457      constraints 33 
+1343     219  457      constraints 33 
+1344     218  457      constraints 33 
+1345      99  458      constraints 33 
+1346     100  458      constraints 33 
+1347     220  458      constraints 33 
+1348     219  458      constraints 33 
+1349     100  459      constraints 33 
+1350     101  459      constraints 33 
+1351     221  459      constraints 33 
+1352     220  459      constraints 33 
+1353     101  460      constraints 33 
+1354     102  460      constraints 33 
+1355     222  460      constraints 33 
+1356     221  460      constraints 33 
+1357     102  461      constraints 33 
+1358     103  461      constraints 33 
+1359     223  461      constraints 33 
+1360     222  461      constraints 33 
+1361     103  462      constraints 33 
+1362     104  462      constraints 33 
+1363     224  462      constraints 33 
+1364     223  462      constraints 33 
+1365     104  463      constraints 33 
+1366     105  463      constraints 33 
+1367     225  463      constraints 33 
+1368     224  463      constraints 33 
+1369     105  464      constraints 33 
+1370     106  464      constraints 33 
+1371     226  464      constraints 33 
+1372     225  464      constraints 33 
+1373     106  465      constraints 33 
+1374     107  465      constraints 33 
+1375     227  465      constraints 33 
+1376     226  465      constraints 33 
+1377     107  466      constraints 33 
+1378     108  466      constraints 33 
+1379     228  466      constraints 33 
+1380     227  466      constraints 33 
+1381     108  467      constraints 33 
+1382     109  467      constraints 33 
+1383     229  467      constraints 33 
+1384     228  467      constraints 33 
+1385     109  468      constraints 33 
+1386     110  468      constraints 33 
+1387     230  468      constraints 33 
+1388     229  468      constraints 33 
+1389     110  469      constraints 33 
+1390     111  469      constraints 33 
+1391     231  469      constraints 33 
+1392     230  469      constraints 33 
+1393     111  470      constraints 33 
+1394     112  470      constraints 33 
+1395     232  470      constraints 33 
+1396     231  470      constraints 33 
+1397     112  471      constraints 33 
+1398     113  471      constraints 33 
+1399     233  471      constraints 33 
+1400     232  471      constraints 33 
+1401     113  472      constraints 33 
+1402     114  472      constraints 33 
+1403     234  472      constraints 33 
+1404     233  472      constraints 33 
+1405     114  473      constraints 33 
+1406     115  473      constraints 33 
+1407     235  473      constraints 33 
+1408     234  473      constraints 33 
+1409     115  474      constraints 33 
+1410     116  474      constraints 33 
+1411     236  474      constraints 33 
+1412     235  474      constraints 33 
+1413     116  475      constraints 33 
+1414     117  475      constraints 33 
+1415     237  475      constraints 33 
+1416     236  475      constraints 33 
+1417     117  476      constraints 33 
+1418     118  476      constraints 33 
+1419     238  476      constraints 33 
+1420     237  476      constraints 33 
+1421     118  477      constraints 33 
+1422     119  477      constraints 33 
+1423     239  477      constraints 33 
+1424     238  477      constraints 33 
+1425     119  478      constraints 33 
+1426     120  478      constraints 33 
+1427     240  478      constraints 33 
+1428     239  478      constraints 33 
+
+faces    /* edge loop */      
+  1   -480 -1 477  density -0.1921481061776  color cyan  /*area 61.8421*/
+  2   -484 -2 481  density -0.1921481061776  color cyan  /*area 61.8421*/
+  3   -488 -3 485  density -0.1921481061776  color cyan  /*area 61.8421*/
+  4   -492 -4 489  density -0.1921481061776  color cyan  /*area 61.8421*/
+  5   -496 -5 493  density -0.1921481061776  color cyan  /*area 61.8421*/
+  6   -500 -6 497  density -0.1921481061776  color cyan  /*area 61.8421*/
+  7   -504 -7 501  density -0.1921481061776  color cyan  /*area 61.8421*/
+  8   -508 -8 505  density -0.1921481061776  color cyan  /*area 61.8421*/
+  9   -512 -9 509  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 10   -516 -10 513  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 11   -520 -11 517  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 12   -524 -12 521  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 13   -528 -13 525  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 14   -532 -14 529  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 15   -536 -15 533  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 16   -540 -16 537  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 17   -544 -17 541  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 18   -548 -18 545  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 19   -552 -19 549  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 20   -556 -20 553  density -0.1921481061776  color cyan  /*area 12.5*/
+ 21   -560 -21 557  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 22   -564 -22 561  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 23   -568 -23 565  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 24   -572 -24 569  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 25   -576 -25 573  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 26   -580 -26 577  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 27   -584 -27 581  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 28   -588 -28 585  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 29   -592 -29 589  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 30   -596 -30 593  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 31   -600 -31 597  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 32   -604 -32 601  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 33   -608 -33 605  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 34   -612 -34 609  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 35   -616 -35 613  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 36   -620 -36 617  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 37   -624 -37 621  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 38   -628 -38 625  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 39   -632 -39 629  density -0.1921481061776  color cyan  /*area 6.57895*/
+ 40   -636 -40 633  density -0.1921481061776  color cyan  /*area 12.5*/
+ 41   -640 -41 637  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 42   -644 -42 641  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 43   -648 -43 645  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 44   -652 -44 649  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 45   -656 -45 653  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 46   -660 -46 657  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 47   -664 -47 661  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 48   -668 -48 665  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 49   -672 -49 669  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 50   -676 -50 673  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 51   -680 -51 677  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 52   -684 -52 681  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 53   -688 -53 685  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 54   -692 -54 689  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 55   -696 -55 693  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 56   -700 -56 697  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 57   -704 -57 701  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 58   -708 -58 705  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 59   -712 -59 709  density -0.1921481061776  color cyan  /*area 61.8421*/
+ 60   -716 -239 713  density 0.335  color yellow  /*area 61.8045*/
+ 61   -720 -240 717  density 0.335  color yellow  /*area 61.8655*/
+ 62   -724 -241 721  density 0.335  color yellow  /*area 61.8548*/
+ 63   -728 -242 725  density 0.335  color yellow  /*area 61.8485*/
+ 64   -732 -243 729  density 0.335  color yellow  /*area 61.8454*/
+ 65   -736 -244 733  density 0.335  color yellow  /*area 61.8438*/
+ 66   -740 -245 737  density 0.335  color yellow  /*area 61.8431*/
+ 67   -744 -246 741  density 0.335  color yellow  /*area 61.8429*/
+ 68   -748 -247 745  density 0.335  color yellow  /*area 61.8428*/
+ 69   -752 -248 749  density 0.335  color yellow  /*area 61.8415*/
+ 70   -756 -249 753  density 0.335  color yellow  /*area 61.8334*/
+ 71   -760 -250 757  density 0.335  color yellow  /*area 61.801*/
+ 72   -764 -251 761  density 0.335  color yellow  /*area 61.6985*/
+ 73   -768 -252 765  density 0.335  color yellow  /*area 61.4281*/
+ 74   -772 -253 769  density 0.335  color yellow  /*area 60.8148*/
+ 75   -776 -254 773  density 0.335  color yellow  /*area 59.5627*/
+ 76   -780 -255 777  density 0.335  color yellow  /*area 57.0616*/
+ 77   -784 -256 781  density 0.335  color yellow  /*area 51.9009*/
+ 78   -788 -257 785  density 0.335  color yellow  /*area 26.6775*/
+ 79   -792 -258 789  density 0.335  color yellow  /*area 13.2524*/
+ 80   -796 -259 793  density 0.335  color yellow  /*area 13.2351*/
+ 81   -800 -260 797  density 0.335  color yellow  /*area 13.16*/
+ 82   -804 -261 801  density 0.335  color yellow  /*area 16.9861*/
+ 83   -808 -262 805  density 0.335  color yellow  /*area 12.9289*/
+ 84   -812 -263 809  density 0.335  color yellow  /*area 12.2123*/
+ 85   -816 -264 813  density 0.335  color yellow  /*area 12.1481*/
+ 86   -820 -265 817  density 0.335  color yellow  /*area 12.5187*/
+ 87   -824 -266 821  density 0.335  color yellow  /*area 11.8213*/
+ 88   -828 -267 825  density 0.335  color yellow  /*area 11.2846*/
+ 89   -832 -268 829  density 0.335  color yellow  /*area 11.7694*/
+ 90   -836 -269 833  density 0.335  color yellow  /*area 12.4318*/
+ 91   -840 -270 837  density 0.335  color yellow  /*area 11.9339*/
+ 92   -844 -271 841  density 0.335  color yellow  /*area 11.9919*/
+ 93   -848 -272 845  density 0.335  color yellow  /*area 12.2456*/
+ 94   -852 -273 849  density 0.335  color yellow  /*area 12.2256*/
+ 95   -856 -274 853  density 0.335  color yellow  /*area 12.9368*/
+ 96   -860 -275 857  density 0.335  color yellow  /*area 19.8704*/
+ 97   -864 -276 861  density 0.335  color yellow  /*area 13.1104*/
+ 98   -868 -277 865  density 0.335  color yellow  /*area 13.2542*/
+ 99   -872 -278 869  density 0.335  color yellow  /*area 13.2663*/
+100   -876 -279 873  density 0.335  color yellow  /*area 26.8434*/
+101   -880 -280 877  density 0.335  color yellow  /*area 51.9367*/
+102   -884 -281 881  density 0.335  color yellow  /*area 57.1013*/
+103   -888 -282 885  density 0.335  color yellow  /*area 59.585*/
+104   -892 -283 889  density 0.335  color yellow  /*area 60.8244*/
+105   -896 -284 893  density 0.335  color yellow  /*area 61.4313*/
+106   -900 -285 897  density 0.335  color yellow  /*area 61.6993*/
+107   -904 -286 901  density 0.335  color yellow  /*area 61.8012*/
+108   -908 -287 905  density 0.335  color yellow  /*area 61.8335*/
+109   -912 -288 909  density 0.335  color yellow  /*area 61.8415*/
+110   -916 -289 913  density 0.335  color yellow  /*area 61.8428*/
+111   -920 -290 917  density 0.335  color yellow  /*area 61.8429*/
+112   -924 -291 921  density 0.335  color yellow  /*area 61.8431*/
+113   -928 -292 925  density 0.335  color yellow  /*area 61.8438*/
+114   -932 -293 929  density 0.335  color yellow  /*area 61.8454*/
+115   -936 -294 933  density 0.335  color yellow  /*area 61.8485*/
+116   -940 -295 937  density 0.335  color yellow  /*area 61.8548*/
+117   -944 -296 941  density 0.335  color yellow  /*area 61.8655*/
+118   -948 -297 945  density 0.335  color yellow  /*area 61.8045*/
+119   -952 -357 949  density -2.05128338857182e-17  color brown  /*area 1003.18*/
+120   -956 -60 953  density -2.05128338857182e-17  color brown  /*area 1000*/
+121   -960 -61 957  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+122   -964 -62 961  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+123   -968 -63 965  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+124   -972 -64 969  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+125   -976 -65 973  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+126   -980 -66 977  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+127   -984 -67 981  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+128   -988 -68 985  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+129   -992 -69 989  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+130   -996 -70 993  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+131   -1000 -71 997  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+132   -1004 -72 1001  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+133   -1008 -73 1005  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+134   -1012 -74 1009  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+135   -1016 -75 1013  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+136   -1020 -76 1017  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+137   -1024 -77 1021  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+138   -1028 -78 1025  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+139   -1032 -79 1029  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+140   -1036 -80 1033  density -2.05128338857182e-17  color brown  /*area 20*/
+141   -1040 -81 1037  density -2.05128338857182e-17  color brown  /*area 10.455*/
+142   -1044 -82 1041  density -2.05128338857182e-17  color brown  /*area 10.1776*/
+143   -1048 -83 1045  density -2.05128338857182e-17  color brown  /*area 9.65275*/
+144   -1052 -84 1049  density -2.05128338857182e-17  color brown  /*area 8.93741*/
+145   -1056 -85 1053  density -2.05128338857182e-17  color brown  /*area 8.10909*/
+146   -1060 -86 1057  density -2.05128338857182e-17  color brown  /*area 7.25753*/
+147   -1064 -87 1061  density -2.05128338857182e-17  color brown  /*area 6.47503*/
+148   -1068 -88 1065  density -2.05128338857182e-17  color brown  /*area 5.84637*/
+149   -1072 -89 1069  density -2.05128338857182e-17  color brown  /*area 5.43969*/
+150   -1076 -90 1073  density -2.05128338857182e-17  color brown  /*area 5.29905*/
+151   -1080 -91 1077  density -2.05128338857182e-17  color brown  /*area 5.43969*/
+152   -1084 -92 1081  density -2.05128338857182e-17  color brown  /*area 5.84637*/
+153   -1088 -93 1085  density -2.05128338857182e-17  color brown  /*area 6.47503*/
+154   -1092 -94 1089  density -2.05128338857182e-17  color brown  /*area 7.25753*/
+155   -1096 -95 1093  density -2.05128338857182e-17  color brown  /*area 8.10909*/
+156   -1100 -96 1097  density -2.05128338857182e-17  color brown  /*area 8.93741*/
+157   -1104 -97 1101  density -2.05128338857182e-17  color brown  /*area 9.65275*/
+158   -1108 -98 1105  density -2.05128338857182e-17  color brown  /*area 10.1776*/
+159   -1112 -99 1109  density -2.05128338857182e-17  color brown  /*area 10.455*/
+160   -1116 -100 1113  density -2.05128338857182e-17  color brown  /*area 20*/
+161   -1120 -101 1117  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+162   -1124 -102 1121  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+163   -1128 -103 1125  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+164   -1132 -104 1129  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+165   -1136 -105 1133  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+166   -1140 -106 1137  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+167   -1144 -107 1141  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+168   -1148 -108 1145  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+169   -1152 -109 1149  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+170   -1156 -110 1153  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+171   -1160 -111 1157  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+172   -1164 -112 1161  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+173   -1168 -113 1165  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+174   -1172 -114 1169  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+175   -1176 -115 1173  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+176   -1180 -116 1177  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+177   -1184 -117 1181  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+178   -1188 -118 1185  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+179   -1192 -119 1189  density -2.05128338857182e-17  color brown  /*area 98.9474*/
+180   -1196 -417 1193  density -2.05128338857182e-17  color brown  /*area 99.2618*/
+181   -1200 -418 1197  density -2.05128338857182e-17  color brown  /*area 99.3935*/
+182   -1204 -419 1201  density -2.05128338857182e-17  color brown  /*area 99.4236*/
+183   -1208 -420 1205  density -2.05128338857182e-17  color brown  /*area 99.4596*/
+184   -1212 -421 1209  density -2.05128338857182e-17  color brown  /*area 99.4921*/
+185   -1216 -422 1213  density -2.05128338857182e-17  color brown  /*area 99.516*/
+186   -1220 -423 1217  density -2.05128338857182e-17  color brown  /*area 99.5303*/
+187   -1224 -424 1221  density -2.05128338857182e-17  color brown  /*area 99.5345*/
+188   -1228 -425 1225  density -2.05128338857182e-17  color brown  /*area 99.5264*/
+189   -1232 -426 1229  density -2.05128338857182e-17  color brown  /*area 99.4996*/
+190   -1236 -427 1233  density -2.05128338857182e-17  color brown  /*area 99.4442*/
+191   -1240 -428 1237  density -2.05128338857182e-17  color brown  /*area 99.3545*/
+192   -1244 -429 1241  density -2.05128338857182e-17  color brown  /*area 99.26*/
+193   -1248 -430 1245  density -2.05128338857182e-17  color brown  /*area 99.3018*/
+194   -1252 -431 1249  density -2.05128338857182e-17  color brown  /*area 99.8657*/
+195   -1256 -432 1253  density -2.05128338857182e-17  color brown  /*area 101.733*/
+196   -1260 -433 1257  density -2.05128338857182e-17  color brown  /*area 106.182*/
+197   -1264 -434 1261  density -2.05128338857182e-17  color brown  /*area 115.233*/
+198   -1268 -435 1265  density -2.05128338857182e-17  color brown  /*area 132.724*/
+199   -1272 -436 1269  density -2.05128338857182e-17  color brown  /*area 115.906*/
+200   -1276 -437 1273  density -2.05128338857182e-17  color brown  /*area 105.784*/
+201   -1280 -438 1277  density -2.05128338857182e-17  color brown  /*area 93.4287*/
+202   -1284 -439 1281  density -2.05128338857182e-17  color brown  /*area 79.8356*/
+203   -1288 -440 1285  density -2.05128338857182e-17  color brown  /*area 60.8088*/
+204   -1292 -441 1289  density -2.05128338857182e-17  color brown  /*area 48.3822*/
+205   -1296 -442 1293  density -2.05128338857182e-17  color brown  /*area 38.2445*/
+206   -1300 -443 1297  density -2.05128338857182e-17  color brown  /*area 29.7858*/
+207   -1304 -444 1301  density -2.05128338857182e-17  color brown  /*area 22.5818*/
+208   -1308 -445 1305  density -2.05128338857182e-17  color brown  /*area 17.3498*/
+209   -1312 -446 1309  density -2.05128338857182e-17  color brown  /*area 13.361*/
+210   -1316 -447 1313  density -2.05128338857182e-17  color brown  /*area 9.17886*/
+211   -1320 -448 1317  density -2.05128338857182e-17  color brown  /*area 3.95164*/
+212   -1324 -449 1321  density -2.05128338857182e-17  color brown  /*area 1.85007*/
+213   -1328 -450 1325  density -2.05128338857182e-17  color brown  /*area 9.09516*/
+214   -1332 -451 1329  density -2.05128338857182e-17  color brown  /*area 18.2527*/
+215   -1336 -452 1333  density -2.05128338857182e-17  color brown  /*area 28.6891*/
+216   -1340 -453 1337  density -2.05128338857182e-17  color brown  /*area 40.8161*/
+217   -1344 -454 1341  density -2.05128338857182e-17  color brown  /*area 63.5598*/
+218   -1348 -455 1345  density -2.05128338857182e-17  color brown  /*area 75.4763*/
+219   -1352 -456 1349  density -2.05128338857182e-17  color brown  /*area 77.3449*/
+220   -1356 -457 1353  density -2.05128338857182e-17  color brown  /*area 4.03719*/
+221   -1360 -458 1357  density -2.05128338857182e-17  color brown  /*area 54.0265*/
+222   -1364 -459 1361  density -2.05128338857182e-17  color brown  /*area 74.1044*/
+223   -1368 -460 1365  density -2.05128338857182e-17  color brown  /*area 85.805*/
+224   -1372 -461 1369  density -2.05128338857182e-17  color brown  /*area 92.5854*/
+225   -1376 -462 1373  density -2.05128338857182e-17  color brown  /*area 96.2589*/
+226   -1380 -463 1377  density -2.05128338857182e-17  color brown  /*area 98.0766*/
+227   -1384 -464 1381  density -2.05128338857182e-17  color brown  /*area 98.9101*/
+228   -1388 -465 1385  density -2.05128338857182e-17  color brown  /*area 99.2757*/
+229   -1392 -466 1389  density -2.05128338857182e-17  color brown  /*area 99.4336*/
+230   -1396 -467 1393  density -2.05128338857182e-17  color brown  /*area 99.501*/
+231   -1400 -468 1397  density -2.05128338857182e-17  color brown  /*area 99.5274*/
+232   -1404 -469 1401  density -2.05128338857182e-17  color brown  /*area 99.5332*/
+233   -1408 -470 1405  density -2.05128338857182e-17  color brown  /*area 99.5259*/
+234   -1412 -471 1409  density -2.05128338857182e-17  color brown  /*area 99.5068*/
+235   -1416 -472 1413  density -2.05128338857182e-17  color brown  /*area 99.4744*/
+236   -1420 -473 1417  density -2.05128338857182e-17  color brown  /*area 99.4258*/
+237   -1424 -474 1421  density -2.05128338857182e-17  color brown  /*area 99.3563*/
+238   -1428 -475 1425  density -2.05128338857182e-17  color brown  /*area 99.2617*/
+239   61 478 -477  density -0.1921481061776  color cyan  /*area 61.8421*/ original 1
+240   2 479 -478  density -0.1921481061776  color cyan  /*area 61.8421*/ original 1
+241   -120 480 -479  density -0.1921481061776  color cyan  /*area 61.8421*/ original 1
+242   62 482 -481  density -0.1921481061776  color cyan  /*area 61.8421*/ original 2
+243   3 483 -482  density -0.1921481061776  color cyan  /*area 61.8421*/ original 2
+244   -121 484 -483  density -0.1921481061776  color cyan  /*area 61.8421*/ original 2
+245   63 486 -485  density -0.1921481061776  color cyan  /*area 61.8421*/ original 3
+246   4 487 -486  density -0.1921481061776  color cyan  /*area 61.8421*/ original 3
+247   -122 488 -487  density -0.1921481061776  color cyan  /*area 61.8421*/ original 3
+248   64 490 -489  density -0.1921481061776  color cyan  /*area 61.8421*/ original 4
+249   5 491 -490  density -0.1921481061776  color cyan  /*area 61.8421*/ original 4
+250   -123 492 -491  density -0.1921481061776  color cyan  /*area 61.8421*/ original 4
+251   65 494 -493  density -0.1921481061776  color cyan  /*area 61.8421*/ original 5
+252   6 495 -494  density -0.1921481061776  color cyan  /*area 61.8421*/ original 5
+253   -124 496 -495  density -0.1921481061776  color cyan  /*area 61.8421*/ original 5
+254   66 498 -497  density -0.1921481061776  color cyan  /*area 61.8421*/ original 6
+255   7 499 -498  density -0.1921481061776  color cyan  /*area 61.8421*/ original 6
+256   -125 500 -499  density -0.1921481061776  color cyan  /*area 61.8421*/ original 6
+257   67 502 -501  density -0.1921481061776  color cyan  /*area 61.8421*/ original 7
+258   8 503 -502  density -0.1921481061776  color cyan  /*area 61.8421*/ original 7
+259   -126 504 -503  density -0.1921481061776  color cyan  /*area 61.8421*/ original 7
+260   68 506 -505  density -0.1921481061776  color cyan  /*area 61.8421*/ original 8
+261   9 507 -506  density -0.1921481061776  color cyan  /*area 61.8421*/ original 8
+262   -127 508 -507  density -0.1921481061776  color cyan  /*area 61.8421*/ original 8
+263   69 510 -509  density -0.1921481061776  color cyan  /*area 61.8421*/ original 9
+264   10 511 -510  density -0.1921481061776  color cyan  /*area 61.8421*/ original 9
+265   -128 512 -511  density -0.1921481061776  color cyan  /*area 61.8421*/ original 9
+266   70 514 -513  density -0.1921481061776  color cyan  /*area 61.8421*/ original 10
+267   11 515 -514  density -0.1921481061776  color cyan  /*area 61.8421*/ original 10
+268   -129 516 -515  density -0.1921481061776  color cyan  /*area 61.8421*/ original 10
+269   71 518 -517  density -0.1921481061776  color cyan  /*area 61.8421*/ original 11
+270   12 519 -518  density -0.1921481061776  color cyan  /*area 61.8421*/ original 11
+271   -130 520 -519  density -0.1921481061776  color cyan  /*area 61.8421*/ original 11
+272   72 522 -521  density -0.1921481061776  color cyan  /*area 61.8421*/ original 12
+273   13 523 -522  density -0.1921481061776  color cyan  /*area 61.8421*/ original 12
+274   -131 524 -523  density -0.1921481061776  color cyan  /*area 61.8421*/ original 12
+275   73 526 -525  density -0.1921481061776  color cyan  /*area 61.8421*/ original 13
+276   14 527 -526  density -0.1921481061776  color cyan  /*area 61.8421*/ original 13
+277   -132 528 -527  density -0.1921481061776  color cyan  /*area 61.8421*/ original 13
+278   74 530 -529  density -0.1921481061776  color cyan  /*area 61.8421*/ original 14
+279   15 531 -530  density -0.1921481061776  color cyan  /*area 61.8421*/ original 14
+280   -133 532 -531  density -0.1921481061776  color cyan  /*area 61.8421*/ original 14
+281   75 534 -533  density -0.1921481061776  color cyan  /*area 61.8421*/ original 15
+282   16 535 -534  density -0.1921481061776  color cyan  /*area 61.8421*/ original 15
+283   -134 536 -535  density -0.1921481061776  color cyan  /*area 61.8421*/ original 15
+284   76 538 -537  density -0.1921481061776  color cyan  /*area 61.8421*/ original 16
+285   17 539 -538  density -0.1921481061776  color cyan  /*area 61.8421*/ original 16
+286   -135 540 -539  density -0.1921481061776  color cyan  /*area 61.8421*/ original 16
+287   77 542 -541  density -0.1921481061776  color cyan  /*area 61.8421*/ original 17
+288   18 543 -542  density -0.1921481061776  color cyan  /*area 61.8421*/ original 17
+289   -136 544 -543  density -0.1921481061776  color cyan  /*area 61.8421*/ original 17
+290   78 546 -545  density -0.1921481061776  color cyan  /*area 61.8421*/ original 18
+291   19 547 -546  density -0.1921481061776  color cyan  /*area 61.8421*/ original 18
+292   -137 548 -547  density -0.1921481061776  color cyan  /*area 61.8421*/ original 18
+293   79 550 -549  density -0.1921481061776  color cyan  /*area 61.8421*/ original 19
+294   20 551 -550  density -0.1921481061776  color cyan  /*area 61.8421*/ original 19
+295   -138 552 -551  density -0.1921481061776  color cyan  /*area 61.8421*/ original 19
+296   80 554 -553  density -0.1921481061776  color cyan  /*area 12.5*/ original 20
+297   21 555 -554  density -0.1921481061776  color cyan  /*area 12.5*/ original 20
+298   -139 556 -555  density -0.1921481061776  color cyan  /*area 12.5*/ original 20
+299   81 558 -557  density -0.1921481061776  color cyan  /*area 6.57895*/ original 21
+300   22 559 -558  density -0.1921481061776  color cyan  /*area 6.57895*/ original 21
+301   -140 560 -559  density -0.1921481061776  color cyan  /*area 6.57895*/ original 21
+302   82 562 -561  density -0.1921481061776  color cyan  /*area 6.57895*/ original 22
+303   23 563 -562  density -0.1921481061776  color cyan  /*area 6.57895*/ original 22
+304   -141 564 -563  density -0.1921481061776  color cyan  /*area 6.57895*/ original 22
+305   83 566 -565  density -0.1921481061776  color cyan  /*area 6.57895*/ original 23
+306   24 567 -566  density -0.1921481061776  color cyan  /*area 6.57895*/ original 23
+307   -142 568 -567  density -0.1921481061776  color cyan  /*area 6.57895*/ original 23
+308   84 570 -569  density -0.1921481061776  color cyan  /*area 6.57895*/ original 24
+309   25 571 -570  density -0.1921481061776  color cyan  /*area 6.57895*/ original 24
+310   -143 572 -571  density -0.1921481061776  color cyan  /*area 6.57895*/ original 24
+311   85 574 -573  density -0.1921481061776  color cyan  /*area 6.57895*/ original 25
+312   26 575 -574  density -0.1921481061776  color cyan  /*area 6.57895*/ original 25
+313   -144 576 -575  density -0.1921481061776  color cyan  /*area 6.57895*/ original 25
+314   86 578 -577  density -0.1921481061776  color cyan  /*area 6.57895*/ original 26
+315   27 579 -578  density -0.1921481061776  color cyan  /*area 6.57895*/ original 26
+316   -145 580 -579  density -0.1921481061776  color cyan  /*area 6.57895*/ original 26
+317   87 582 -581  density -0.1921481061776  color cyan  /*area 6.57895*/ original 27
+318   28 583 -582  density -0.1921481061776  color cyan  /*area 6.57895*/ original 27
+319   -146 584 -583  density -0.1921481061776  color cyan  /*area 6.57895*/ original 27
+320   88 586 -585  density -0.1921481061776  color cyan  /*area 6.57895*/ original 28
+321   29 587 -586  density -0.1921481061776  color cyan  /*area 6.57895*/ original 28
+322   -147 588 -587  density -0.1921481061776  color cyan  /*area 6.57895*/ original 28
+323   89 590 -589  density -0.1921481061776  color cyan  /*area 6.57895*/ original 29
+324   30 591 -590  density -0.1921481061776  color cyan  /*area 6.57895*/ original 29
+325   -148 592 -591  density -0.1921481061776  color cyan  /*area 6.57895*/ original 29
+326   90 594 -593  density -0.1921481061776  color cyan  /*area 6.57895*/ original 30
+327   31 595 -594  density -0.1921481061776  color cyan  /*area 6.57895*/ original 30
+328   -149 596 -595  density -0.1921481061776  color cyan  /*area 6.57895*/ original 30
+329   91 598 -597  density -0.1921481061776  color cyan  /*area 6.57895*/ original 31
+330   32 599 -598  density -0.1921481061776  color cyan  /*area 6.57895*/ original 31
+331   -150 600 -599  density -0.1921481061776  color cyan  /*area 6.57895*/ original 31
+332   92 602 -601  density -0.1921481061776  color cyan  /*area 6.57895*/ original 32
+333   33 603 -602  density -0.1921481061776  color cyan  /*area 6.57895*/ original 32
+334   -151 604 -603  density -0.1921481061776  color cyan  /*area 6.57895*/ original 32
+335   93 606 -605  density -0.1921481061776  color cyan  /*area 6.57895*/ original 33
+336   34 607 -606  density -0.1921481061776  color cyan  /*area 6.57895*/ original 33
+337   -152 608 -607  density -0.1921481061776  color cyan  /*area 6.57895*/ original 33
+338   94 610 -609  density -0.1921481061776  color cyan  /*area 6.57895*/ original 34
+339   35 611 -610  density -0.1921481061776  color cyan  /*area 6.57895*/ original 34
+340   -153 612 -611  density -0.1921481061776  color cyan  /*area 6.57895*/ original 34
+341   95 614 -613  density -0.1921481061776  color cyan  /*area 6.57895*/ original 35
+342   36 615 -614  density -0.1921481061776  color cyan  /*area 6.57895*/ original 35
+343   -154 616 -615  density -0.1921481061776  color cyan  /*area 6.57895*/ original 35
+344   96 618 -617  density -0.1921481061776  color cyan  /*area 6.57895*/ original 36
+345   37 619 -618  density -0.1921481061776  color cyan  /*area 6.57895*/ original 36
+346   -155 620 -619  density -0.1921481061776  color cyan  /*area 6.57895*/ original 36
+347   97 622 -621  density -0.1921481061776  color cyan  /*area 6.57895*/ original 37
+348   38 623 -622  density -0.1921481061776  color cyan  /*area 6.57895*/ original 37
+349   -156 624 -623  density -0.1921481061776  color cyan  /*area 6.57895*/ original 37
+350   98 626 -625  density -0.1921481061776  color cyan  /*area 6.57895*/ original 38
+351   39 627 -626  density -0.1921481061776  color cyan  /*area 6.57895*/ original 38
+352   -157 628 -627  density -0.1921481061776  color cyan  /*area 6.57895*/ original 38
+353   99 630 -629  density -0.1921481061776  color cyan  /*area 6.57895*/ original 39
+354   40 631 -630  density -0.1921481061776  color cyan  /*area 6.57895*/ original 39
+355   -158 632 -631  density -0.1921481061776  color cyan  /*area 6.57895*/ original 39
+356   100 634 -633  density -0.1921481061776  color cyan  /*area 12.5*/ original 40
+357   41 635 -634  density -0.1921481061776  color cyan  /*area 12.5*/ original 40
+358   -159 636 -635  density -0.1921481061776  color cyan  /*area 12.5*/ original 40
+359   101 638 -637  density -0.1921481061776  color cyan  /*area 61.8421*/ original 41
+360   42 639 -638  density -0.1921481061776  color cyan  /*area 61.8421*/ original 41
+361   -160 640 -639  density -0.1921481061776  color cyan  /*area 61.8421*/ original 41
+362   102 642 -641  density -0.1921481061776  color cyan  /*area 61.8421*/ original 42
+363   43 643 -642  density -0.1921481061776  color cyan  /*area 61.8421*/ original 42
+364   -161 644 -643  density -0.1921481061776  color cyan  /*area 61.8421*/ original 42
+365   103 646 -645  density -0.1921481061776  color cyan  /*area 61.8421*/ original 43
+366   44 647 -646  density -0.1921481061776  color cyan  /*area 61.8421*/ original 43
+367   -162 648 -647  density -0.1921481061776  color cyan  /*area 61.8421*/ original 43
+368   104 650 -649  density -0.1921481061776  color cyan  /*area 61.8421*/ original 44
+369   45 651 -650  density -0.1921481061776  color cyan  /*area 61.8421*/ original 44
+370   -163 652 -651  density -0.1921481061776  color cyan  /*area 61.8421*/ original 44
+371   105 654 -653  density -0.1921481061776  color cyan  /*area 61.8421*/ original 45
+372   46 655 -654  density -0.1921481061776  color cyan  /*area 61.8421*/ original 45
+373   -164 656 -655  density -0.1921481061776  color cyan  /*area 61.8421*/ original 45
+374   106 658 -657  density -0.1921481061776  color cyan  /*area 61.8421*/ original 46
+375   47 659 -658  density -0.1921481061776  color cyan  /*area 61.8421*/ original 46
+376   -165 660 -659  density -0.1921481061776  color cyan  /*area 61.8421*/ original 46
+377   107 662 -661  density -0.1921481061776  color cyan  /*area 61.8421*/ original 47
+378   48 663 -662  density -0.1921481061776  color cyan  /*area 61.8421*/ original 47
+379   -166 664 -663  density -0.1921481061776  color cyan  /*area 61.8421*/ original 47
+380   108 666 -665  density -0.1921481061776  color cyan  /*area 61.8421*/ original 48
+381   49 667 -666  density -0.1921481061776  color cyan  /*area 61.8421*/ original 48
+382   -167 668 -667  density -0.1921481061776  color cyan  /*area 61.8421*/ original 48
+383   109 670 -669  density -0.1921481061776  color cyan  /*area 61.8421*/ original 49
+384   50 671 -670  density -0.1921481061776  color cyan  /*area 61.8421*/ original 49
+385   -168 672 -671  density -0.1921481061776  color cyan  /*area 61.8421*/ original 49
+386   110 674 -673  density -0.1921481061776  color cyan  /*area 61.8421*/ original 50
+387   51 675 -674  density -0.1921481061776  color cyan  /*area 61.8421*/ original 50
+388   -169 676 -675  density -0.1921481061776  color cyan  /*area 61.8421*/ original 50
+389   111 678 -677  density -0.1921481061776  color cyan  /*area 61.8421*/ original 51
+390   52 679 -678  density -0.1921481061776  color cyan  /*area 61.8421*/ original 51
+391   -170 680 -679  density -0.1921481061776  color cyan  /*area 61.8421*/ original 51
+392   112 682 -681  density -0.1921481061776  color cyan  /*area 61.8421*/ original 52
+393   53 683 -682  density -0.1921481061776  color cyan  /*area 61.8421*/ original 52
+394   -171 684 -683  density -0.1921481061776  color cyan  /*area 61.8421*/ original 52
+395   113 686 -685  density -0.1921481061776  color cyan  /*area 61.8421*/ original 53
+396   54 687 -686  density -0.1921481061776  color cyan  /*area 61.8421*/ original 53
+397   -172 688 -687  density -0.1921481061776  color cyan  /*area 61.8421*/ original 53
+398   114 690 -689  density -0.1921481061776  color cyan  /*area 61.8421*/ original 54
+399   55 691 -690  density -0.1921481061776  color cyan  /*area 61.8421*/ original 54
+400   -173 692 -691  density -0.1921481061776  color cyan  /*area 61.8421*/ original 54
+401   115 694 -693  density -0.1921481061776  color cyan  /*area 61.8421*/ original 55
+402   56 695 -694  density -0.1921481061776  color cyan  /*area 61.8421*/ original 55
+403   -174 696 -695  density -0.1921481061776  color cyan  /*area 61.8421*/ original 55
+404   116 698 -697  density -0.1921481061776  color cyan  /*area 61.8421*/ original 56
+405   57 699 -698  density -0.1921481061776  color cyan  /*area 61.8421*/ original 56
+406   -175 700 -699  density -0.1921481061776  color cyan  /*area 61.8421*/ original 56
+407   117 702 -701  density -0.1921481061776  color cyan  /*area 61.8421*/ original 57
+408   58 703 -702  density -0.1921481061776  color cyan  /*area 61.8421*/ original 57
+409   -176 704 -703  density -0.1921481061776  color cyan  /*area 61.8421*/ original 57
+410   118 706 -705  density -0.1921481061776  color cyan  /*area 61.8421*/ original 58
+411   59 707 -706  density -0.1921481061776  color cyan  /*area 61.8421*/ original 58
+412   -177 708 -707  density -0.1921481061776  color cyan  /*area 61.8421*/ original 58
+413   119 710 -709  density -0.1921481061776  color cyan  /*area 61.8421*/ original 59
+414   60 711 -710  density -0.1921481061776  color cyan  /*area 61.8421*/ original 59
+415   -178 712 -711  density -0.1921481061776  color cyan  /*area 61.8421*/ original 59
+416   179 714 -713  density 0.335  color yellow  /*area 61.7479*/ original 60
+417   298 715 -714  density 0.335  color yellow  /*area 61.8045*/ original 60
+418   -180 716 -715  density 0.335  color yellow  /*area 61.8611*/ original 60
+419   180 718 -717  density 0.335  color yellow  /*area 61.875*/ original 61
+420   299 719 -718  density 0.335  color yellow  /*area 61.8655*/ original 61
+421   -181 720 -719  density 0.335  color yellow  /*area 61.856*/ original 61
+422   181 722 -721  density 0.335  color yellow  /*area 61.8606*/ original 62
+423   300 723 -722  density 0.335  color yellow  /*area 61.8548*/ original 62
+424   -182 724 -723  density 0.335  color yellow  /*area 61.8491*/ original 62
+425   182 726 -725  density 0.335  color yellow  /*area 61.8514*/ original 63
+426   301 727 -726  density 0.335  color yellow  /*area 61.8485*/ original 63
+427   -183 728 -727  density 0.335  color yellow  /*area 61.8457*/ original 63
+428   183 730 -729  density 0.335  color yellow  /*area 61.8468*/ original 64
+429   302 731 -730  density 0.335  color yellow  /*area 61.8454*/ original 64
+430   -184 732 -731  density 0.335  color yellow  /*area 61.844*/ original 64
+431   184 734 -733  density 0.335  color yellow  /*area 61.8445*/ original 65
+432   303 735 -734  density 0.335  color yellow  /*area 61.8438*/ original 65
+433   -185 736 -735  density 0.335  color yellow  /*area 61.8432*/ original 65
+434   185 738 -737  density 0.335  color yellow  /*area 61.8434*/ original 66
+435   304 739 -738  density 0.335  color yellow  /*area 61.8431*/ original 66
+436   -186 740 -739  density 0.335  color yellow  /*area 61.8429*/ original 66
+437   186 742 -741  density 0.335  color yellow  /*area 61.8429*/ original 67
+438   305 743 -742  density 0.335  color yellow  /*area 61.8429*/ original 67
+439   -187 744 -743  density 0.335  color yellow  /*area 61.8429*/ original 67
+440   187 746 -745  density 0.335  color yellow  /*area 61.8427*/ original 68
+441   306 747 -746  density 0.335  color yellow  /*area 61.8428*/ original 68
+442   -188 748 -747  density 0.335  color yellow  /*area 61.843*/ original 68
+443   188 750 -749  density 0.335  color yellow  /*area 61.842*/ original 69
+444   307 751 -750  density 0.335  color yellow  /*area 61.8415*/ original 69
+445   -189 752 -751  density 0.335  color yellow  /*area 61.8411*/ original 69
+446   189 754 -753  density 0.335  color yellow  /*area 61.8378*/ original 70
+447   308 755 -754  density 0.335  color yellow  /*area 61.8334*/ original 70
+448   -190 756 -755  density 0.335  color yellow  /*area 61.8295*/ original 70
+449   190 758 -757  density 0.335  color yellow  /*area 61.819*/ original 71
+450   309 759 -758  density 0.335  color yellow  /*area 61.801*/ original 71
+451   -191 760 -759  density 0.335  color yellow  /*area 61.784*/ original 71
+452   191 762 -761  density 0.335  color yellow  /*area 61.7544*/ original 72
+453   310 763 -762  density 0.335  color yellow  /*area 61.6985*/ original 72
+454   -192 764 -763  density 0.335  color yellow  /*area 61.6446*/ original 72
+455   192 766 -765  density 0.335  color yellow  /*area 61.5698*/ original 73
+456   311 767 -766  density 0.335  color yellow  /*area 61.4281*/ original 73
+457   -193 768 -767  density 0.335  color yellow  /*area 61.2899*/ original 73
+458   193 770 -769  density 0.335  color yellow  /*area 61.1207*/ original 74
+459   312 771 -770  density 0.335  color yellow  /*area 60.8148*/ original 74
+460   -194 772 -771  density 0.335  color yellow  /*area 60.5134*/ original 74
+461   194 774 -773  density 0.335  color yellow  /*area 60.1632*/ original 75
+462   313 775 -774  density 0.335  color yellow  /*area 59.5627*/ original 75
+463   -195 776 -775  density 0.335  color yellow  /*area 58.9662*/ original 75
+464   195 778 -777  density 0.335  color yellow  /*area 58.2598*/ original 76
+465   314 779 -778  density 0.335  color yellow  /*area 57.0616*/ original 76
+466   -196 780 -779  density 0.335  color yellow  /*area 55.8652*/ original 76
+467   196 782 -781  density 0.335  color yellow  /*area 54.3403*/ original 77
+468   315 783 -782  density 0.335  color yellow  /*area 51.9009*/ original 77
+469   -197 784 -783  density 0.335  color yellow  /*area 49.4616*/ original 77
+470   197 786 -785  density 0.335  color yellow  /*area 45.0365*/ original 78
+471   316 787 -786  density 0.335  color yellow  /*area 26.6775*/ original 78
+472   -198 788 -787  density 0.335  color yellow  /*area 8.3192*/ original 78
+473   198 790 -789  density 0.335  color yellow  /*area 13.2396*/ original 79
+474   317 791 -790  density 0.335  color yellow  /*area 13.2524*/ original 79
+475   -199 792 -791  density 0.335  color yellow  /*area 13.2929*/ original 79
+476   199 794 -793  density 0.335  color yellow  /*area 13.2287*/ original 80
+477   318 795 -794  density 0.335  color yellow  /*area 13.2351*/ original 80
+478   -200 796 -795  density 0.335  color yellow  /*area 13.2911*/ original 80
+479   200 798 -797  density 0.335  color yellow  /*area 13.3895*/ original 81
+480   319 799 -798  density 0.335  color yellow  /*area 13.16*/ original 81
+481   -201 800 -799  density 0.335  color yellow  /*area 12.9844*/ original 81
+482   201 802 -801  density 0.335  color yellow  /*area 25.6848*/ original 82
+483   320 803 -802  density 0.335  color yellow  /*area 16.9861*/ original 82
+484   -202 804 -803  density 0.335  color yellow  /*area 8.37293*/ original 82
+485   202 806 -805  density 0.335  color yellow  /*area 13.3159*/ original 83
+486   321 807 -806  density 0.335  color yellow  /*area 12.9289*/ original 83
+487   -203 808 -807  density 0.335  color yellow  /*area 13.7876*/ original 83
+488   203 810 -809  density 0.335  color yellow  /*area 14.2722*/ original 84
+489   322 811 -810  density 0.335  color yellow  /*area 12.2123*/ original 84
+490   -204 812 -811  density 0.335  color yellow  /*area 12.2011*/ original 84
+491   204 814 -813  density 0.335  color yellow  /*area 12.3801*/ original 85
+492   323 815 -814  density 0.335  color yellow  /*area 12.1481*/ original 85
+493   -205 816 -815  density 0.335  color yellow  /*area 14.5145*/ original 85
+494   205 818 -817  density 0.335  color yellow  /*area 14.0134*/ original 86
+495   324 819 -818  density 0.335  color yellow  /*area 12.5187*/ original 86
+496   -206 820 -819  density 0.335  color yellow  /*area 14.3269*/ original 86
+497   206 822 -821  density 0.335  color yellow  /*area 14.9395*/ original 87
+498   325 823 -822  density 0.335  color yellow  /*area 11.8213*/ original 87
+499   -207 824 -823  density 0.335  color yellow  /*area 12.0907*/ original 87
+500   207 826 -825  density 0.335  color yellow  /*area 13.1839*/ original 88
+501   326 827 -826  density 0.335  color yellow  /*area 11.2846*/ original 88
+502   -208 828 -827  density 0.335  color yellow  /*area 13.1245*/ original 88
+503   208 830 -829  density 0.335  color yellow  /*area 12.1453*/ original 89
+504   327 831 -830  density 0.335  color yellow  /*area 11.7694*/ original 89
+505   -209 832 -831  density 0.335  color yellow  /*area 15.0234*/ original 89
+506   209 834 -833  density 0.335  color yellow  /*area 14.3659*/ original 90
+507   328 835 -834  density 0.335  color yellow  /*area 12.4318*/ original 90
+508   -210 836 -835  density 0.335  color yellow  /*area 14.3681*/ original 90
+509   210 838 -837  density 0.335  color yellow  /*area 14.9384*/ original 91
+510   329 839 -838  density 0.335  color yellow  /*area 11.9339*/ original 91
+511   -211 840 -839  density 0.335  color yellow  /*area 12.2953*/ original 91
+512   211 842 -841  density 0.335  color yellow  /*area 12.2745*/ original 92
+513   330 843 -842  density 0.335  color yellow  /*area 11.9919*/ original 92
+514   -212 844 -843  density 0.335  color yellow  /*area 14.9022*/ original 92
+515   212 846 -845  density 0.335  color yellow  /*area 14.7868*/ original 93
+516   331 847 -846  density 0.335  color yellow  /*area 12.2456*/ original 93
+517   -213 848 -847  density 0.335  color yellow  /*area 12.4016*/ original 93
+518   213 850 -849  density 0.335  color yellow  /*area 12.0794*/ original 94
+519   332 851 -850  density 0.335  color yellow  /*area 12.2256*/ original 94
+520   -214 852 -851  density 0.335  color yellow  /*area 14.2778*/ original 94
+521   214 854 -853  density 0.335  color yellow  /*area 13.7951*/ original 95
+522   333 855 -854  density 0.335  color yellow  /*area 12.9368*/ original 95
+523   -215 856 -855  density 0.335  color yellow  /*area 13.2507*/ original 95
+524   215 858 -857  density 0.335  color yellow  /*area 6.87064*/ original 96
+525   334 859 -858  density 0.335  color yellow  /*area 19.8704*/ original 96
+526   -216 860 -859  density 0.335  color yellow  /*area 32.9233*/ original 96
+527   216 862 -861  density 0.335  color yellow  /*area 12.8185*/ original 97
+528   335 863 -862  density 0.335  color yellow  /*area 13.1104*/ original 97
+529   -217 864 -863  density 0.335  color yellow  /*area 13.4403*/ original 97
+530   217 866 -865  density 0.335  color yellow  /*area 13.3043*/ original 98
+531   336 867 -866  density 0.335  color yellow  /*area 13.2542*/ original 98
+532   -218 868 -867  density 0.335  color yellow  /*area 13.2439*/ original 98
+533   218 870 -869  density 0.335  color yellow  /*area 13.3134*/ original 99
+534   337 871 -870  density 0.335  color yellow  /*area 13.2663*/ original 99
+535   -219 872 -871  density 0.335  color yellow  /*area 13.2426*/ original 99
+536   219 874 -873  density 0.335  color yellow  /*area 8.76926*/ original 100
+537   338 875 -874  density 0.335  color yellow  /*area 26.8434*/ original 100
+538   -220 876 -875  density 0.335  color yellow  /*area 44.9181*/ original 100
+539   220 878 -877  density 0.335  color yellow  /*area 49.4833*/ original 101
+540   339 879 -878  density 0.335  color yellow  /*area 51.9367*/ original 101
+541   -221 880 -879  density 0.335  color yellow  /*area 54.3901*/ original 101
+542   221 882 -881  density 0.335  color yellow  /*area 55.9114*/ original 102
+543   340 883 -882  density 0.335  color yellow  /*area 57.1013*/ original 102
+544   -222 884 -883  density 0.335  color yellow  /*area 58.2928*/ original 102
+545   222 886 -885  density 0.335  color yellow  /*area 58.9946*/ original 103
+546   341 887 -886  density 0.335  color yellow  /*area 59.585*/ original 103
+547   -223 888 -887  density 0.335  color yellow  /*area 60.1793*/ original 103
+548   223 890 -889  density 0.335  color yellow  /*area 60.5265*/ original 104
+549   342 891 -890  density 0.335  color yellow  /*area 60.8244*/ original 104
+550   -224 892 -891  density 0.335  color yellow  /*area 61.1267*/ original 104
+551   224 894 -893  density 0.335  color yellow  /*area 61.2945*/ original 105
+552   343 895 -894  density 0.335  color yellow  /*area 61.4313*/ original 105
+553   -225 896 -895  density 0.335  color yellow  /*area 61.5716*/ original 105
+554   225 898 -897  density 0.335  color yellow  /*area 61.6459*/ original 106
+555   344 899 -898  density 0.335  color yellow  /*area 61.6993*/ original 106
+556   -226 900 -899  density 0.335  color yellow  /*area 61.7548*/ original 106
+557   226 902 -901  density 0.335  color yellow  /*area 61.7842*/ original 107
+558   345 903 -902  density 0.335  color yellow  /*area 61.8012*/ original 107
+559   -227 904 -903  density 0.335  color yellow  /*area 61.8191*/ original 107
+560   227 906 -905  density 0.335  color yellow  /*area 61.8295*/ original 108
+561   346 907 -906  density 0.335  color yellow  /*area 61.8335*/ original 108
+562   -228 908 -907  density 0.335  color yellow  /*area 61.8378*/ original 108
+563   228 910 -909  density 0.335  color yellow  /*area 61.8411*/ original 109
+564   347 911 -910  density 0.335  color yellow  /*area 61.8415*/ original 109
+565   -229 912 -911  density 0.335  color yellow  /*area 61.842*/ original 109
+566   229 914 -913  density 0.335  color yellow  /*area 61.843*/ original 110
+567   348 915 -914  density 0.335  color yellow  /*area 61.8428*/ original 110
+568   -230 916 -915  density 0.335  color yellow  /*area 61.8427*/ original 110
+569   230 918 -917  density 0.335  color yellow  /*area 61.8429*/ original 111
+570   349 919 -918  density 0.335  color yellow  /*area 61.8429*/ original 111
+571   -231 920 -919  density 0.335  color yellow  /*area 61.8429*/ original 111
+572   231 922 -921  density 0.335  color yellow  /*area 61.8429*/ original 112
+573   350 923 -922  density 0.335  color yellow  /*area 61.8431*/ original 112
+574   -232 924 -923  density 0.335  color yellow  /*area 61.8434*/ original 112
+575   232 926 -925  density 0.335  color yellow  /*area 61.8432*/ original 113
+576   351 927 -926  density 0.335  color yellow  /*area 61.8438*/ original 113
+577   -233 928 -927  density 0.335  color yellow  /*area 61.8445*/ original 113
+578   233 930 -929  density 0.335  color yellow  /*area 61.844*/ original 114
+579   352 931 -930  density 0.335  color yellow  /*area 61.8454*/ original 114
+580   -234 932 -931  density 0.335  color yellow  /*area 61.8468*/ original 114
+581   234 934 -933  density 0.335  color yellow  /*area 61.8457*/ original 115
+582   353 935 -934  density 0.335  color yellow  /*area 61.8485*/ original 115
+583   -235 936 -935  density 0.335  color yellow  /*area 61.8514*/ original 115
+584   235 938 -937  density 0.335  color yellow  /*area 61.8491*/ original 116
+585   354 939 -938  density 0.335  color yellow  /*area 61.8548*/ original 116
+586   -236 940 -939  density 0.335  color yellow  /*area 61.8606*/ original 116
+587   236 942 -941  density 0.335  color yellow  /*area 61.856*/ original 117
+588   355 943 -942  density 0.335  color yellow  /*area 61.8655*/ original 117
+589   -237 944 -943  density 0.335  color yellow  /*area 61.875*/ original 117
+590   237 946 -945  density 0.335  color yellow  /*area 61.8611*/ original 118
+591   356 947 -946  density 0.335  color yellow  /*area 61.8045*/ original 118
+592   -238 948 -947  density 0.335  color yellow  /*area 61.7479*/ original 118
+593   1 950 -949  density -2.05128338857182e-17  color brown  /*area 1000*/ original 119
+594   417 951 -950  density -2.05128338857182e-17  color brown  /*area 1003.18*/ original 119
+595   -179 952 -951  density -2.05128338857182e-17  color brown  /*area 1006.36*/ original 119
+596   416 954 -953  density -2.05128338857182e-17  color brown  /*area 1003.18*/ original 120
+597   238 955 -954  density -2.05128338857182e-17  color brown  /*area 1006.36*/ original 120
+598   -476 956 -955  density -2.05128338857182e-17  color brown  /*area 1003.18*/ original 120
+599   357 958 -957  density -2.05128338857182e-17  color brown  /*area 99.2618*/ original 121
+600   239 959 -958  density -2.05128338857182e-17  color brown  /*area 99.5757*/ original 121
+601   -358 960 -959  density -2.05128338857182e-17  color brown  /*area 99.2617*/ original 121
+602   358 962 -961  density -2.05128338857182e-17  color brown  /*area 99.3935*/ original 122
+603   240 963 -962  density -2.05128338857182e-17  color brown  /*area 99.8028*/ original 122
+604   -359 964 -963  density -2.05128338857182e-17  color brown  /*area 99.3563*/ original 122
+605   359 966 -965  density -2.05128338857182e-17  color brown  /*area 99.4236*/ original 123
+606   241 967 -966  density -2.05128338857182e-17  color brown  /*area 99.9022*/ original 123
+607   -360 968 -967  density -2.05128338857182e-17  color brown  /*area 99.4258*/ original 123
+608   360 970 -969  density -2.05128338857182e-17  color brown  /*area 99.4596*/ original 124
+609   242 971 -970  density -2.05128338857182e-17  color brown  /*area 99.9868*/ original 124
+610   -361 972 -971  density -2.05128338857182e-17  color brown  /*area 99.4744*/ original 124
+611   361 974 -973  density -2.05128338857182e-17  color brown  /*area 99.4921*/ original 125
+612   243 975 -974  density -2.05128338857182e-17  color brown  /*area 100.052*/ original 125
+613   -362 976 -975  density -2.05128338857182e-17  color brown  /*area 99.5068*/ original 125
+614   362 978 -977  density -2.05128338857182e-17  color brown  /*area 99.516*/ original 126
+615   244 979 -978  density -2.05128338857182e-17  color brown  /*area 100.095*/ original 126
+616   -363 980 -979  density -2.05128338857182e-17  color brown  /*area 99.5259*/ original 126
+617   363 982 -981  density -2.05128338857182e-17  color brown  /*area 99.5303*/ original 127
+618   245 983 -982  density -2.05128338857182e-17  color brown  /*area 100.116*/ original 127
+619   -364 984 -983  density -2.05128338857182e-17  color brown  /*area 99.5333*/ original 127
+620   364 986 -985  density -2.05128338857182e-17  color brown  /*area 99.5345*/ original 128
+621   246 987 -986  density -2.05128338857182e-17  color brown  /*area 100.115*/ original 128
+622   -365 988 -987  density -2.05128338857182e-17  color brown  /*area 99.5275*/ original 128
+623   365 990 -989  density -2.05128338857182e-17  color brown  /*area 99.5264*/ original 129
+624   247 991 -990  density -2.05128338857182e-17  color brown  /*area 100.08*/ original 129
+625   -366 992 -991  density -2.05128338857182e-17  color brown  /*area 99.5011*/ original 129
+626   366 994 -993  density -2.05128338857182e-17  color brown  /*area 99.4996*/ original 130
+627   248 995 -994  density -2.05128338857182e-17  color brown  /*area 99.9859*/ original 130
+628   -367 996 -995  density -2.05128338857182e-17  color brown  /*area 99.4337*/ original 130
+629   367 998 -997  density -2.05128338857182e-17  color brown  /*area 99.4442*/ original 131
+630   249 999 -998  density -2.05128338857182e-17  color brown  /*area 99.7722*/ original 131
+631   -368 1000 -999  density -2.05128338857182e-17  color brown  /*area 99.2757*/ original 131
+632   368 1002 -1001  density -2.05128338857182e-17  color brown  /*area 99.3545*/ original 132
+633   250 1003 -1002  density -2.05128338857182e-17  color brown  /*area 99.3152*/ original 132
+634   -369 1004 -1003  density -2.05128338857182e-17  color brown  /*area 98.9093*/ original 132
+635   369 1006 -1005  density -2.05128338857182e-17  color brown  /*area 99.26*/ original 133
+636   251 1007 -1006  density -2.05128338857182e-17  color brown  /*area 98.3821*/ original 133
+637   -370 1008 -1007  density -2.05128338857182e-17  color brown  /*area 98.0721*/ original 133
+638   370 1010 -1009  density -2.05128338857182e-17  color brown  /*area 99.3018*/ original 134
+639   252 1011 -1010  density -2.05128338857182e-17  color brown  /*area 96.5947*/ original 134
+640   -371 1012 -1011  density -2.05128338857182e-17  color brown  /*area 96.2419*/ original 134
+641   371 1014 -1013  density -2.05128338857182e-17  color brown  /*area 99.8657*/ original 135
+642   253 1015 -1014  density -2.05128338857182e-17  color brown  /*area 93.4695*/ original 135
+643   -372 1016 -1015  density -2.05128338857182e-17  color brown  /*area 92.5345*/ original 135
+644   372 1018 -1017  density -2.05128338857182e-17  color brown  /*area 101.733*/ original 136
+645   254 1019 -1018  density -2.05128338857182e-17  color brown  /*area 88.5629*/ original 136
+646   -373 1020 -1019  density -2.05128338857182e-17  color brown  /*area 85.6815*/ original 136
+647   373 1022 -1021  density -2.05128338857182e-17  color brown  /*area 106.182*/ original 137
+648   255 1023 -1022  density -2.05128338857182e-17  color brown  /*area 81.4451*/ original 137
+649   -374 1024 -1023  density -2.05128338857182e-17  color brown  /*area 73.8613*/ original 137
+650   374 1026 -1025  density -2.05128338857182e-17  color brown  /*area 115.233*/ original 138
+651   256 1027 -1026  density -2.05128338857182e-17  color brown  /*area 71.0583*/ original 138
+652   -375 1028 -1027  density -2.05128338857182e-17  color brown  /*area 53.6625*/ original 138
+653   375 1030 -1029  density -2.05128338857182e-17  color brown  /*area 132.724*/ original 139
+654   257 1031 -1030  density -2.05128338857182e-17  color brown  /*area 35.2611*/ original 139
+655   -376 1032 -1031  density -2.05128338857182e-17  color brown  /*area 4.68551*/ original 139
+656   376 1034 -1033  density -2.05128338857182e-17  color brown  /*area 115.906*/ original 140
+657   258 1035 -1034  density -2.05128338857182e-17  color brown  /*area 17.216*/ original 140
+658   -377 1036 -1035  density -2.05128338857182e-17  color brown  /*area 77.9931*/ original 140
+659   377 1038 -1037  density -2.05128338857182e-17  color brown  /*area 105.784*/ original 141
+660   259 1039 -1038  density -2.05128338857182e-17  color brown  /*area 17.3615*/ original 141
+661   -378 1040 -1039  density -2.05128338857182e-17  color brown  /*area 76.1538*/ original 141
+662   378 1042 -1041  density -2.05128338857182e-17  color brown  /*area 93.4287*/ original 142
+663   260 1043 -1042  density -2.05128338857182e-17  color brown  /*area 17.8735*/ original 142
+664   -379 1044 -1043  density -2.05128338857182e-17  color brown  /*area 64.1474*/ original 142
+665   379 1046 -1045  density -2.05128338857182e-17  color brown  /*area 79.8356*/ original 143
+666   261 1047 -1046  density -2.05128338857182e-17  color brown  /*area 24.5807*/ original 143
+667   -380 1048 -1047  density -2.05128338857182e-17  color brown  /*area 45.4598*/ original 143
+668   380 1050 -1049  density -2.05128338857182e-17  color brown  /*area 60.8088*/ original 144
+669   262 1051 -1050  density -2.05128338857182e-17  color brown  /*area 20.202*/ original 144
+670   -381 1052 -1051  density -2.05128338857182e-17  color brown  /*area 32.933*/ original 144
+671   381 1054 -1053  density -2.05128338857182e-17  color brown  /*area 48.3822*/ original 145
+672   263 1055 -1054  density -2.05128338857182e-17  color brown  /*area 20.5064*/ original 145
+673   -382 1056 -1055  density -2.05128338857182e-17  color brown  /*area 22.2348*/ original 145
+674   382 1058 -1057  density -2.05128338857182e-17  color brown  /*area 38.2445*/ original 146
+675   264 1059 -1058  density -2.05128338857182e-17  color brown  /*area 21.9644*/ original 146
+676   -383 1060 -1059  density -2.05128338857182e-17  color brown  /*area 12.8927*/ original 146
+677   383 1062 -1061  density -2.05128338857182e-17  color brown  /*area 29.7858*/ original 147
+678   265 1063 -1062  density -2.05128338857182e-17  color brown  /*area 24.2868*/ original 147
+679   -384 1064 -1063  density -2.05128338857182e-17  color brown  /*area 4.66905*/ original 147
+680   384 1066 -1065  density -2.05128338857182e-17  color brown  /*area 22.5818*/ original 148
+681   266 1067 -1066  density -2.05128338857182e-17  color brown  /*area 24.1833*/ original 148
+682   -385 1068 -1067  density -2.05128338857182e-17  color brown  /*area 1.38006*/ original 148
+683   385 1070 -1069  density -2.05128338857182e-17  color brown  /*area 17.3498*/ original 149
+684   267 1071 -1070  density -2.05128338857182e-17  color brown  /*area 23.7633*/ original 149
+685   -386 1072 -1071  density -2.05128338857182e-17  color brown  /*area 5.83997*/ original 149
+686   386 1074 -1073  density -2.05128338857182e-17  color brown  /*area 13.361*/ original 150
+687   268 1075 -1074  density -2.05128338857182e-17  color brown  /*area 24.9802*/ original 150
+688   -387 1076 -1075  density -2.05128338857182e-17  color brown  /*area 10.0936*/ original 150
+689   387 1078 -1077  density -2.05128338857182e-17  color brown  /*area 9.17886*/ original 151
+690   269 1079 -1078  density -2.05128338857182e-17  color brown  /*area 26.1527*/ original 151
+691   -388 1080 -1079  density -2.05128338857182e-17  color brown  /*area 14.9439*/ original 151
+692   388 1082 -1081  density -2.05128338857182e-17  color brown  /*area 3.95164*/ original 152
+693   270 1083 -1082  density -2.05128338857182e-17  color brown  /*area 24.236*/ original 152
+694   -389 1084 -1083  density -2.05128338857182e-17  color brown  /*area 20.051*/ original 152
+695   389 1086 -1085  density -2.05128338857182e-17  color brown  /*area 1.85007*/ original 153
+696   271 1087 -1086  density -2.05128338857182e-17  color brown  /*area 23.1911*/ original 153
+697   -390 1088 -1087  density -2.05128338857182e-17  color brown  /*area 26.4209*/ original 153
+698   390 1090 -1089  density -2.05128338857182e-17  color brown  /*area 9.09516*/ original 154
+699   272 1091 -1090  density -2.05128338857182e-17  color brown  /*area 22.4448*/ original 154
+700   -391 1092 -1091  density -2.05128338857182e-17  color brown  /*area 34.6826*/ original 154
+701   391 1094 -1093  density -2.05128338857182e-17  color brown  /*area 18.2527*/ original 155
+702   273 1095 -1094  density -2.05128338857182e-17  color brown  /*area 20.7462*/ original 155
+703   -392 1096 -1095  density -2.05128338857182e-17  color brown  /*area 44.5195*/ original 155
+704   392 1098 -1097  density -2.05128338857182e-17  color brown  /*area 28.6891*/ original 156
+705   274 1099 -1098  density -2.05128338857182e-17  color brown  /*area 20.1099*/ original 156
+706   -393 1100 -1099  density -2.05128338857182e-17  color brown  /*area 56.5032*/ original 156
+707   393 1102 -1101  density -2.05128338857182e-17  color brown  /*area 40.8161*/ original 157
+708   275 1103 -1102  density -2.05128338857182e-17  color brown  /*area 28.6646*/ original 157
+709   -394 1104 -1103  density -2.05128338857182e-17  color brown  /*area 79.2883*/ original 157
+710   394 1106 -1105  density -2.05128338857182e-17  color brown  /*area 63.5598*/ original 158
+711   276 1107 -1106  density -2.05128338857182e-17  color brown  /*area 17.8331*/ original 158
+712   -395 1108 -1107  density -2.05128338857182e-17  color brown  /*area 92.7788*/ original 158
+713   395 1110 -1109  density -2.05128338857182e-17  color brown  /*area 75.4763*/ original 159
+714   277 1111 -1110  density -2.05128338857182e-17  color brown  /*area 17.4204*/ original 159
+715   -396 1112 -1111  density -2.05128338857182e-17  color brown  /*area 105.154*/ original 159
+716   396 1114 -1113  density -2.05128338857182e-17  color brown  /*area 77.3449*/ original 160
+717   278 1115 -1114  density -2.05128338857182e-17  color brown  /*area 17.2708*/ original 160
+718   -397 1116 -1115  density -2.05128338857182e-17  color brown  /*area 115.308*/ original 160
+719   397 1118 -1117  density -2.05128338857182e-17  color brown  /*area 4.03719*/ original 161
+720   279 1119 -1118  density -2.05128338857182e-17  color brown  /*area 35.552*/ original 161
+721   -398 1120 -1119  density -2.05128338857182e-17  color brown  /*area 132.439*/ original 161
+722   398 1122 -1121  density -2.05128338857182e-17  color brown  /*area 54.0265*/ original 162
+723   280 1123 -1122  density -2.05128338857182e-17  color brown  /*area 71.226*/ original 162
+724   -399 1124 -1123  density -2.05128338857182e-17  color brown  /*area 115.047*/ original 162
+725   399 1126 -1125  density -2.05128338857182e-17  color brown  /*area 74.1044*/ original 163
+726   281 1127 -1126  density -2.05128338857182e-17  color brown  /*area 81.5949*/ original 163
+727   -400 1128 -1127  density -2.05128338857182e-17  color brown  /*area 106.094*/ original 163
+728   400 1130 -1129  density -2.05128338857182e-17  color brown  /*area 85.805*/ original 164
+729   282 1131 -1130  density -2.05128338857182e-17  color brown  /*area 88.6526*/ original 164
+730   -401 1132 -1131  density -2.05128338857182e-17  color brown  /*area 101.701*/ original 164
+731   401 1134 -1133  density -2.05128338857182e-17  color brown  /*area 92.5854*/ original 165
+732   283 1135 -1134  density -2.05128338857182e-17  color brown  /*area 93.5113*/ original 165
+733   -402 1136 -1135  density -2.05128338857182e-17  color brown  /*area 99.857*/ original 165
+734   402 1138 -1137  density -2.05128338857182e-17  color brown  /*area 96.2589*/ original 166
+735   284 1139 -1138  density -2.05128338857182e-17  color brown  /*area 96.61*/ original 166
+736   -403 1140 -1139  density -2.05128338857182e-17  color brown  /*area 99.3001*/ original 166
+737   403 1142 -1141  density -2.05128338857182e-17  color brown  /*area 98.0766*/ original 167
+738   285 1143 -1142  density -2.05128338857182e-17  color brown  /*area 98.3864*/ original 167
+739   -404 1144 -1143  density -2.05128338857182e-17  color brown  /*area 99.2598*/ original 167
+740   404 1146 -1145  density -2.05128338857182e-17  color brown  /*area 98.9101*/ original 168
+741   286 1147 -1146  density -2.05128338857182e-17  color brown  /*area 99.3159*/ original 168
+742   -405 1148 -1147  density -2.05128338857182e-17  color brown  /*area 99.3544*/ original 168
+743   405 1150 -1149  density -2.05128338857182e-17  color brown  /*area 99.2757*/ original 169
+744   287 1151 -1150  density -2.05128338857182e-17  color brown  /*area 99.772*/ original 169
+745   -406 1152 -1151  density -2.05128338857182e-17  color brown  /*area 99.4441*/ original 169
+746   406 1154 -1153  density -2.05128338857182e-17  color brown  /*area 99.4336*/ original 170
+747   288 1155 -1154  density -2.05128338857182e-17  color brown  /*area 99.9857*/ original 170
+748   -407 1156 -1155  density -2.05128338857182e-17  color brown  /*area 99.4995*/ original 170
+749   407 1158 -1157  density -2.05128338857182e-17  color brown  /*area 99.501*/ original 171
+750   289 1159 -1158  density -2.05128338857182e-17  color brown  /*area 100.08*/ original 171
+751   -408 1160 -1159  density -2.05128338857182e-17  color brown  /*area 99.5263*/ original 171
+752   408 1162 -1161  density -2.05128338857182e-17  color brown  /*area 99.5274*/ original 172
+753   290 1163 -1162  density -2.05128338857182e-17  color brown  /*area 100.115*/ original 172
+754   -409 1164 -1163  density -2.05128338857182e-17  color brown  /*area 99.5345*/ original 172
+755   409 1166 -1165  density -2.05128338857182e-17  color brown  /*area 99.5332*/ original 173
+756   291 1167 -1166  density -2.05128338857182e-17  color brown  /*area 100.116*/ original 173
+757   -410 1168 -1167  density -2.05128338857182e-17  color brown  /*area 99.5303*/ original 173
+758   410 1170 -1169  density -2.05128338857182e-17  color brown  /*area 99.5259*/ original 174
+759   292 1171 -1170  density -2.05128338857182e-17  color brown  /*area 100.095*/ original 174
+760   -411 1172 -1171  density -2.05128338857182e-17  color brown  /*area 99.516*/ original 174
+761   411 1174 -1173  density -2.05128338857182e-17  color brown  /*area 99.5068*/ original 175
+762   293 1175 -1174  density -2.05128338857182e-17  color brown  /*area 100.052*/ original 175
+763   -412 1176 -1175  density -2.05128338857182e-17  color brown  /*area 99.4921*/ original 175
+764   412 1178 -1177  density -2.05128338857182e-17  color brown  /*area 99.4744*/ original 176
+765   294 1179 -1178  density -2.05128338857182e-17  color brown  /*area 99.9868*/ original 176
+766   -413 1180 -1179  density -2.05128338857182e-17  color brown  /*area 99.4596*/ original 176
+767   413 1182 -1181  density -2.05128338857182e-17  color brown  /*area 99.4258*/ original 177
+768   295 1183 -1182  density -2.05128338857182e-17  color brown  /*area 99.9022*/ original 177
+769   -414 1184 -1183  density -2.05128338857182e-17  color brown  /*area 99.4236*/ original 177
+770   414 1186 -1185  density -2.05128338857182e-17  color brown  /*area 99.3563*/ original 178
+771   296 1187 -1186  density -2.05128338857182e-17  color brown  /*area 99.8028*/ original 178
+772   -415 1188 -1187  density -2.05128338857182e-17  color brown  /*area 99.3935*/ original 178
+773   415 1190 -1189  density -2.05128338857182e-17  color brown  /*area 99.2617*/ original 179
+774   297 1191 -1190  density -2.05128338857182e-17  color brown  /*area 99.5757*/ original 179
+775   -416 1192 -1191  density -2.05128338857182e-17  color brown  /*area 99.2618*/ original 179
+776   120 1194 -1193  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 180
+777   418 1195 -1194  density -2.05128338857182e-17  color brown  /*area 99.2617*/ original 180
+778   -298 1196 -1195  density -2.05128338857182e-17  color brown  /*area 99.5757*/ original 180
+779   121 1198 -1197  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 181
+780   419 1199 -1198  density -2.05128338857182e-17  color brown  /*area 99.3563*/ original 181
+781   -299 1200 -1199  density -2.05128338857182e-17  color brown  /*area 99.8028*/ original 181
+782   122 1202 -1201  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 182
+783   420 1203 -1202  density -2.05128338857182e-17  color brown  /*area 99.4258*/ original 182
+784   -300 1204 -1203  density -2.05128338857182e-17  color brown  /*area 99.9022*/ original 182
+785   123 1206 -1205  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 183
+786   421 1207 -1206  density -2.05128338857182e-17  color brown  /*area 99.4744*/ original 183
+787   -301 1208 -1207  density -2.05128338857182e-17  color brown  /*area 99.9868*/ original 183
+788   124 1210 -1209  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 184
+789   422 1211 -1210  density -2.05128338857182e-17  color brown  /*area 99.5068*/ original 184
+790   -302 1212 -1211  density -2.05128338857182e-17  color brown  /*area 100.052*/ original 184
+791   125 1214 -1213  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 185
+792   423 1215 -1214  density -2.05128338857182e-17  color brown  /*area 99.5259*/ original 185
+793   -303 1216 -1215  density -2.05128338857182e-17  color brown  /*area 100.095*/ original 185
+794   126 1218 -1217  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 186
+795   424 1219 -1218  density -2.05128338857182e-17  color brown  /*area 99.5333*/ original 186
+796   -304 1220 -1219  density -2.05128338857182e-17  color brown  /*area 100.116*/ original 186
+797   127 1222 -1221  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 187
+798   425 1223 -1222  density -2.05128338857182e-17  color brown  /*area 99.5275*/ original 187
+799   -305 1224 -1223  density -2.05128338857182e-17  color brown  /*area 100.115*/ original 187
+800   128 1226 -1225  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 188
+801   426 1227 -1226  density -2.05128338857182e-17  color brown  /*area 99.5011*/ original 188
+802   -306 1228 -1227  density -2.05128338857182e-17  color brown  /*area 100.08*/ original 188
+803   129 1230 -1229  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 189
+804   427 1231 -1230  density -2.05128338857182e-17  color brown  /*area 99.4337*/ original 189
+805   -307 1232 -1231  density -2.05128338857182e-17  color brown  /*area 99.9859*/ original 189
+806   130 1234 -1233  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 190
+807   428 1235 -1234  density -2.05128338857182e-17  color brown  /*area 99.2757*/ original 190
+808   -308 1236 -1235  density -2.05128338857182e-17  color brown  /*area 99.7722*/ original 190
+809   131 1238 -1237  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 191
+810   429 1239 -1238  density -2.05128338857182e-17  color brown  /*area 98.9093*/ original 191
+811   -309 1240 -1239  density -2.05128338857182e-17  color brown  /*area 99.3152*/ original 191
+812   132 1242 -1241  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 192
+813   430 1243 -1242  density -2.05128338857182e-17  color brown  /*area 98.0721*/ original 192
+814   -310 1244 -1243  density -2.05128338857182e-17  color brown  /*area 98.3821*/ original 192
+815   133 1246 -1245  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 193
+816   431 1247 -1246  density -2.05128338857182e-17  color brown  /*area 96.2419*/ original 193
+817   -311 1248 -1247  density -2.05128338857182e-17  color brown  /*area 96.5947*/ original 193
+818   134 1250 -1249  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 194
+819   432 1251 -1250  density -2.05128338857182e-17  color brown  /*area 92.5345*/ original 194
+820   -312 1252 -1251  density -2.05128338857182e-17  color brown  /*area 93.4695*/ original 194
+821   135 1254 -1253  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 195
+822   433 1255 -1254  density -2.05128338857182e-17  color brown  /*area 85.6815*/ original 195
+823   -313 1256 -1255  density -2.05128338857182e-17  color brown  /*area 88.5629*/ original 195
+824   136 1258 -1257  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 196
+825   434 1259 -1258  density -2.05128338857182e-17  color brown  /*area 73.8613*/ original 196
+826   -314 1260 -1259  density -2.05128338857182e-17  color brown  /*area 81.4451*/ original 196
+827   137 1262 -1261  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 197
+828   435 1263 -1262  density -2.05128338857182e-17  color brown  /*area 53.6625*/ original 197
+829   -315 1264 -1263  density -2.05128338857182e-17  color brown  /*area 71.0583*/ original 197
+830   138 1266 -1265  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 198
+831   436 1267 -1266  density -2.05128338857182e-17  color brown  /*area 4.68551*/ original 198
+832   -316 1268 -1267  density -2.05128338857182e-17  color brown  /*area 35.2611*/ original 198
+833   139 1270 -1269  density -2.05128338857182e-17  color brown  /*area 20*/ original 199
+834   437 1271 -1270  density -2.05128338857182e-17  color brown  /*area 77.9931*/ original 199
+835   -317 1272 -1271  density -2.05128338857182e-17  color brown  /*area 17.216*/ original 199
+836   140 1274 -1273  density -2.05128338857182e-17  color brown  /*area 10.455*/ original 200
+837   438 1275 -1274  density -2.05128338857182e-17  color brown  /*area 76.1538*/ original 200
+838   -318 1276 -1275  density -2.05128338857182e-17  color brown  /*area 17.3615*/ original 200
+839   141 1278 -1277  density -2.05128338857182e-17  color brown  /*area 10.1776*/ original 201
+840   439 1279 -1278  density -2.05128338857182e-17  color brown  /*area 64.1474*/ original 201
+841   -319 1280 -1279  density -2.05128338857182e-17  color brown  /*area 17.8735*/ original 201
+842   142 1282 -1281  density -2.05128338857182e-17  color brown  /*area 9.65275*/ original 202
+843   440 1283 -1282  density -2.05128338857182e-17  color brown  /*area 45.4598*/ original 202
+844   -320 1284 -1283  density -2.05128338857182e-17  color brown  /*area 24.5807*/ original 202
+845   143 1286 -1285  density -2.05128338857182e-17  color brown  /*area 8.93741*/ original 203
+846   441 1287 -1286  density -2.05128338857182e-17  color brown  /*area 32.933*/ original 203
+847   -321 1288 -1287  density -2.05128338857182e-17  color brown  /*area 20.202*/ original 203
+848   144 1290 -1289  density -2.05128338857182e-17  color brown  /*area 8.10909*/ original 204
+849   442 1291 -1290  density -2.05128338857182e-17  color brown  /*area 22.2348*/ original 204
+850   -322 1292 -1291  density -2.05128338857182e-17  color brown  /*area 20.5064*/ original 204
+851   145 1294 -1293  density -2.05128338857182e-17  color brown  /*area 7.25753*/ original 205
+852   443 1295 -1294  density -2.05128338857182e-17  color brown  /*area 12.8927*/ original 205
+853   -323 1296 -1295  density -2.05128338857182e-17  color brown  /*area 21.9644*/ original 205
+854   146 1298 -1297  density -2.05128338857182e-17  color brown  /*area 6.47503*/ original 206
+855   444 1299 -1298  density -2.05128338857182e-17  color brown  /*area 4.66905*/ original 206
+856   -324 1300 -1299  density -2.05128338857182e-17  color brown  /*area 24.2868*/ original 206
+857   147 1302 -1301  density -2.05128338857182e-17  color brown  /*area 5.84637*/ original 207
+858   445 1303 -1302  density -2.05128338857182e-17  color brown  /*area 1.38006*/ original 207
+859   -325 1304 -1303  density -2.05128338857182e-17  color brown  /*area 24.1833*/ original 207
+860   148 1306 -1305  density -2.05128338857182e-17  color brown  /*area 5.43969*/ original 208
+861   446 1307 -1306  density -2.05128338857182e-17  color brown  /*area 5.83997*/ original 208
+862   -326 1308 -1307  density -2.05128338857182e-17  color brown  /*area 23.7633*/ original 208
+863   149 1310 -1309  density -2.05128338857182e-17  color brown  /*area 5.29905*/ original 209
+864   447 1311 -1310  density -2.05128338857182e-17  color brown  /*area 10.0936*/ original 209
+865   -327 1312 -1311  density -2.05128338857182e-17  color brown  /*area 24.9802*/ original 209
+866   150 1314 -1313  density -2.05128338857182e-17  color brown  /*area 5.43969*/ original 210
+867   448 1315 -1314  density -2.05128338857182e-17  color brown  /*area 14.9439*/ original 210
+868   -328 1316 -1315  density -2.05128338857182e-17  color brown  /*area 26.1527*/ original 210
+869   151 1318 -1317  density -2.05128338857182e-17  color brown  /*area 5.84637*/ original 211
+870   449 1319 -1318  density -2.05128338857182e-17  color brown  /*area 20.051*/ original 211
+871   -329 1320 -1319  density -2.05128338857182e-17  color brown  /*area 24.236*/ original 211
+872   152 1322 -1321  density -2.05128338857182e-17  color brown  /*area 6.47503*/ original 212
+873   450 1323 -1322  density -2.05128338857182e-17  color brown  /*area 26.4209*/ original 212
+874   -330 1324 -1323  density -2.05128338857182e-17  color brown  /*area 23.1911*/ original 212
+875   153 1326 -1325  density -2.05128338857182e-17  color brown  /*area 7.25753*/ original 213
+876   451 1327 -1326  density -2.05128338857182e-17  color brown  /*area 34.6826*/ original 213
+877   -331 1328 -1327  density -2.05128338857182e-17  color brown  /*area 22.4448*/ original 213
+878   154 1330 -1329  density -2.05128338857182e-17  color brown  /*area 8.10909*/ original 214
+879   452 1331 -1330  density -2.05128338857182e-17  color brown  /*area 44.5195*/ original 214
+880   -332 1332 -1331  density -2.05128338857182e-17  color brown  /*area 20.7462*/ original 214
+881   155 1334 -1333  density -2.05128338857182e-17  color brown  /*area 8.93741*/ original 215
+882   453 1335 -1334  density -2.05128338857182e-17  color brown  /*area 56.5032*/ original 215
+883   -333 1336 -1335  density -2.05128338857182e-17  color brown  /*area 20.1099*/ original 215
+884   156 1338 -1337  density -2.05128338857182e-17  color brown  /*area 9.65275*/ original 216
+885   454 1339 -1338  density -2.05128338857182e-17  color brown  /*area 79.2883*/ original 216
+886   -334 1340 -1339  density -2.05128338857182e-17  color brown  /*area 28.6646*/ original 216
+887   157 1342 -1341  density -2.05128338857182e-17  color brown  /*area 10.1776*/ original 217
+888   455 1343 -1342  density -2.05128338857182e-17  color brown  /*area 92.7788*/ original 217
+889   -335 1344 -1343  density -2.05128338857182e-17  color brown  /*area 17.8331*/ original 217
+890   158 1346 -1345  density -2.05128338857182e-17  color brown  /*area 10.455*/ original 218
+891   456 1347 -1346  density -2.05128338857182e-17  color brown  /*area 105.154*/ original 218
+892   -336 1348 -1347  density -2.05128338857182e-17  color brown  /*area 17.4204*/ original 218
+893   159 1350 -1349  density -2.05128338857182e-17  color brown  /*area 20*/ original 219
+894   457 1351 -1350  density -2.05128338857182e-17  color brown  /*area 115.308*/ original 219
+895   -337 1352 -1351  density -2.05128338857182e-17  color brown  /*area 17.2708*/ original 219
+896   160 1354 -1353  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 220
+897   458 1355 -1354  density -2.05128338857182e-17  color brown  /*area 132.439*/ original 220
+898   -338 1356 -1355  density -2.05128338857182e-17  color brown  /*area 35.552*/ original 220
+899   161 1358 -1357  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 221
+900   459 1359 -1358  density -2.05128338857182e-17  color brown  /*area 115.047*/ original 221
+901   -339 1360 -1359  density -2.05128338857182e-17  color brown  /*area 71.226*/ original 221
+902   162 1362 -1361  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 222
+903   460 1363 -1362  density -2.05128338857182e-17  color brown  /*area 106.094*/ original 222
+904   -340 1364 -1363  density -2.05128338857182e-17  color brown  /*area 81.5949*/ original 222
+905   163 1366 -1365  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 223
+906   461 1367 -1366  density -2.05128338857182e-17  color brown  /*area 101.701*/ original 223
+907   -341 1368 -1367  density -2.05128338857182e-17  color brown  /*area 88.6526*/ original 223
+908   164 1370 -1369  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 224
+909   462 1371 -1370  density -2.05128338857182e-17  color brown  /*area 99.857*/ original 224
+910   -342 1372 -1371  density -2.05128338857182e-17  color brown  /*area 93.5113*/ original 224
+911   165 1374 -1373  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 225
+912   463 1375 -1374  density -2.05128338857182e-17  color brown  /*area 99.3001*/ original 225
+913   -343 1376 -1375  density -2.05128338857182e-17  color brown  /*area 96.61*/ original 225
+914   166 1378 -1377  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 226
+915   464 1379 -1378  density -2.05128338857182e-17  color brown  /*area 99.2598*/ original 226
+916   -344 1380 -1379  density -2.05128338857182e-17  color brown  /*area 98.3864*/ original 226
+917   167 1382 -1381  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 227
+918   465 1383 -1382  density -2.05128338857182e-17  color brown  /*area 99.3544*/ original 227
+919   -345 1384 -1383  density -2.05128338857182e-17  color brown  /*area 99.3159*/ original 227
+920   168 1386 -1385  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 228
+921   466 1387 -1386  density -2.05128338857182e-17  color brown  /*area 99.4441*/ original 228
+922   -346 1388 -1387  density -2.05128338857182e-17  color brown  /*area 99.772*/ original 228
+923   169 1390 -1389  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 229
+924   467 1391 -1390  density -2.05128338857182e-17  color brown  /*area 99.4995*/ original 229
+925   -347 1392 -1391  density -2.05128338857182e-17  color brown  /*area 99.9857*/ original 229
+926   170 1394 -1393  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 230
+927   468 1395 -1394  density -2.05128338857182e-17  color brown  /*area 99.5263*/ original 230
+928   -348 1396 -1395  density -2.05128338857182e-17  color brown  /*area 100.08*/ original 230
+929   171 1398 -1397  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 231
+930   469 1399 -1398  density -2.05128338857182e-17  color brown  /*area 99.5345*/ original 231
+931   -349 1400 -1399  density -2.05128338857182e-17  color brown  /*area 100.115*/ original 231
+932   172 1402 -1401  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 232
+933   470 1403 -1402  density -2.05128338857182e-17  color brown  /*area 99.5303*/ original 232
+934   -350 1404 -1403  density -2.05128338857182e-17  color brown  /*area 100.116*/ original 232
+935   173 1406 -1405  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 233
+936   471 1407 -1406  density -2.05128338857182e-17  color brown  /*area 99.516*/ original 233
+937   -351 1408 -1407  density -2.05128338857182e-17  color brown  /*area 100.095*/ original 233
+938   174 1410 -1409  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 234
+939   472 1411 -1410  density -2.05128338857182e-17  color brown  /*area 99.4921*/ original 234
+940   -352 1412 -1411  density -2.05128338857182e-17  color brown  /*area 100.052*/ original 234
+941   175 1414 -1413  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 235
+942   473 1415 -1414  density -2.05128338857182e-17  color brown  /*area 99.4596*/ original 235
+943   -353 1416 -1415  density -2.05128338857182e-17  color brown  /*area 99.9868*/ original 235
+944   176 1418 -1417  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 236
+945   474 1419 -1418  density -2.05128338857182e-17  color brown  /*area 99.4236*/ original 236
+946   -354 1420 -1419  density -2.05128338857182e-17  color brown  /*area 99.9022*/ original 236
+947   177 1422 -1421  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 237
+948   475 1423 -1422  density -2.05128338857182e-17  color brown  /*area 99.3935*/ original 237
+949   -355 1424 -1423  density -2.05128338857182e-17  color brown  /*area 99.8028*/ original 237
+950   178 1426 -1425  density -2.05128338857182e-17  color brown  /*area 98.9474*/ original 238
+951   476 1427 -1426  density -2.05128338857182e-17  color brown  /*area 99.2618*/ original 238
+952   -356 1428 -1427  density -2.05128338857182e-17  color brown  /*area 99.5757*/ original 238
+
+bodies  /* facets */
+  1       1 2 3 4 5 6 7 8 9 10 \
+           11 12 13 14 15 16 17 18 19 20 \
+           21 22 23 24 25 26 27 28 29 30 \
+           31 32 33 34 35 36 37 38 39 40 \
+           41 42 43 44 45 46 47 48 49 50 \
+           51 52 53 54 55 56 57 58 59 60 \
+           61 62 63 64 65 66 67 68 69 70 \
+           71 72 73 74 75 76 77 78 79 80 \
+           81 82 83 84 85 86 87 88 89 90 \
+           91 92 93 94 95 96 97 98 99 100 \
+           101 102 103 104 105 106 107 108 109 110 \
+           111 112 113 114 115 116 117 118 119 120 \
+           121 122 123 124 125 126 127 128 129 130 \
+           131 132 133 134 135 136 137 138 139 140 \
+           141 142 143 144 145 146 147 148 149 150 \
+           151 152 153 154 155 156 157 158 159 160 \
+           161 162 163 164 165 166 167 168 169 170 \
+           171 172 173 174 175 176 177 178 179 180 \
+           181 182 183 184 185 186 187 188 189 190 \
+           191 192 193 194 195 196 197 198 199 200 \
+           201 202 203 204 205 206 207 208 209 210 \
+           211 212 213 214 215 216 217 218 219 220 \
+           221 222 223 224 225 226 227 228 229 230 \
+           231 232 233 234 235 236 237 238 239 240 \
+           241 242 243 244 245 246 247 248 249 250 \
+           251 252 253 254 255 256 257 258 259 260 \
+           261 262 263 264 265 266 267 268 269 270 \
+           271 272 273 274 275 276 277 278 279 280 \
+           281 282 283 284 285 286 287 288 289 290 \
+           291 292 293 294 295 296 297 298 299 300 \
+           301 302 303 304 305 306 307 308 309 310 \
+           311 312 313 314 315 316 317 318 319 320 \
+           321 322 323 324 325 326 327 328 329 330 \
+           331 332 333 334 335 336 337 338 339 340 \
+           341 342 343 344 345 346 347 348 349 350 \
+           351 352 353 354 355 356 357 358 359 360 \
+           361 362 363 364 365 366 367 368 369 370 \
+           371 372 373 374 375 376 377 378 379 380 \
+           381 382 383 384 385 386 387 388 389 390 \
+           391 392 393 394 395 396 397 398 399 400 \
+           401 402 403 404 405 406 407 408 409 410 \
+           411 412 413 414 415 416 417 418 419 420 \
+           421 422 423 424 425 426 427 428 429 430 \
+           431 432 433 434 435 436 437 438 439 440 \
+           441 442 443 444 445 446 447 448 449 450 \
+           451 452 453 454 455 456 457 458 459 460 \
+           461 462 463 464 465 466 467 468 469 470 \
+           471 472 473 474 475 476 477 478 479 480 \
+           481 482 483 484 485 486 487 488 489 490 \
+           491 492 493 494 495 496 497 498 499 500 \
+           501 502 503 504 505 506 507 508 509 510 \
+           511 512 513 514 515 516 517 518 519 520 \
+           521 522 523 524 525 526 527 528 529 530 \
+           531 532 533 534 535 536 537 538 539 540 \
+           541 542 543 544 545 546 547 548 549 550 \
+           551 552 553 554 555 556 557 558 559 560 \
+           561 562 563 564 565 566 567 568 569 570 \
+           571 572 573 574 575 576 577 578 579 580 \
+           581 582 583 584 585 586 587 588 589 590 \
+           591 592 593 594 595 596 597 598 599 600 \
+           601 602 603 604 605 606 607 608 609 610 \
+           611 612 613 614 615 616 617 618 619 620 \
+           621 622 623 624 625 626 627 628 629 630 \
+           631 632 633 634 635 636 637 638 639 640 \
+           641 642 643 644 645 646 647 648 649 650 \
+           651 652 653 654 655 656 657 658 659 660 \
+           661 662 663 664 665 666 667 668 669 670 \
+           671 672 673 674 675 676 677 678 679 680 \
+           681 682 683 684 685 686 687 688 689 690 \
+           691 692 693 694 695 696 697 698 699 700 \
+           701 702 703 704 705 706 707 708 709 710 \
+           711 712 713 714 715 716 717 718 719 720 \
+           721 722 723 724 725 726 727 728 729 730 \
+           731 732 733 734 735 736 737 738 739 740 \
+           741 742 743 744 745 746 747 748 749 750 \
+           751 752 753 754 755 756 757 758 759 760 \
+           761 762 763 764 765 766 767 768 769 770 \
+           771 772 773 774 775 776 777 778 779 780 \
+           781 782 783 784 785 786 787 788 789 790 \
+           791 792 793 794 795 796 797 798 799 800 \
+           801 802 803 804 805 806 807 808 809 810 \
+           811 812 813 814 815 816 817 818 819 820 \
+           821 822 823 824 825 826 827 828 829 830 \
+           831 832 833 834 835 836 837 838 839 840 \
+           841 842 843 844 845 846 847 848 849 850 \
+           851 852 853 854 855 856 857 858 859 860 \
+           861 862 863 864 865 866 867 868 869 870 \
+           871 872 873 874 875 876 877 878 879 880 \
+           881 882 883 884 885 886 887 888 889 890 \
+           891 892 893 894 895 896 897 898 899 900 \
+           901 902 903 904 905 906 907 908 909 910 \
+           911 912 913 914 915 916 917 918 919 920 \
+           921 922 923 924 925 926 927 928 929 930 \
+           931 932 933 934 935 936 937 938 939 940 \
+           941 942 943 944 945 946 947 948 949 950 \
+           951 952  volume 790000  /*actual: 790000.000085962*/ lagrange_multiplier -0.00129475840597498  centerofmass 
+
+read
+
+area_normalization on
+metric_conversion off
+autorecalc on
+gv_binary off
+gravity off
+
+
+//Procedures and functions forward declarations:
+defmob_1 := {}
+defmob_y := {}
+set_no_refine := {}
+set_v_constraint_1 := {}
+set_v_constraint_5 := {}
+set_v_constraints_11_33 := {}
+set_v_constraints_22_44 := {}
+set_e_constraint_1 := {}
+set_e_constraint_11_33 := {}
+set_e_constraint_22_44 := {}
+set_f_tension_resist := {}
+set_f_tension_surface := {}
+set_f_tension_mirror := {}
+color_TENS_m_faces := {}
+color_TENS_s_faces := {}
+color_TENS_r_faces := {}
+prepare_save := {}
+prepare_surface := {}
+loopit := {}
+save := {}
+ebash := {}
+// Procedures without arguments:
+defmob_1 := { foreach vertices vv do 
+    set vv vmob (1)
+}
+defmob_y := { foreach vertices vv do 
+    set vv vmob (1 + exp(5*exp( -(vv.y)^2/30)))
+}
+set_no_refine := { foreach edges ee do 
+    { cnt := 0; 
+      foreach ee.vertices vv do 
+        { if ( vv.x == -lx/2 ) then 
+            cnt := cnt - 1; 
+          if ( vv.x == lx/2 ) then 
+            cnt := cnt + 1
+        }; 
+      if ( abs(cnt) == 2 && ee.color == 4 && ee.y != 0 ) then 
+        set ee no_refine 
+    }; 
+  foreach edges ee do 
+    { set ee color (0)
+    }
+}
+set_v_constraint_1 := { foreach vertices vv do 
+    { if ( vv.z == 0 ) then 
+        set vv constraint (1)
+    }
+}
+set_v_constraint_5 := { foreach vertices vv do 
+    { if ( vv.z == z_max ) then 
+        set vv constraint (5)
+    }
+}
+set_v_constraints_11_33 := { foreach vertices vv do 
+    { if ( vv.x == -lx/2 ) then 
+        set vv constraint (11); 
+      if ( vv.x == lx/2 ) then 
+        set vv constraint (33)
+    }
+}
+set_v_constraints_22_44 := { foreach vertices vv do 
+    { if ( vv.y == -ly/2 ) then 
+        set vv constraint (22); 
+      if ( vv.y == ly/2 ) then 
+        set vv constraint (44)
+    }
+}
+set_e_constraint_1 := { foreach edges ee do 
+    { cnt := 0; 
+      foreach ee.vertices vv do 
+        { if ( vv.z == 0 ) then 
+            cnt := cnt + 1
+        }; 
+      if ( cnt == 2 ) then 
+        set ee constraint (1)
+    }
+}
+set_e_constraint_11_33 := { foreach edges ee do 
+    { cnt := 0; 
+      foreach ee.vertices vv do 
+        { if ( vv.x == -lx/2 ) then 
+            cnt := cnt - 1; 
+          if ( vv.x == lx/2 ) then 
+            cnt := cnt + 1
+        }; 
+      if ( cnt == -2 ) then 
+        set ee constraint (11); 
+      if ( cnt == 2 ) then 
+        set ee constraint (33)
+    }
+}
+set_e_constraint_22_44 := { foreach edges ee do 
+    { cnt := 0; 
+      foreach ee.vertices vv do 
+        { if ( vv.y == -ly/2 ) then 
+            cnt := cnt - 1; 
+          if ( vv.y == ly/2 ) then 
+            cnt := cnt + 1
+        }; 
+      if ( cnt == -2 ) then 
+        set ee constraint (22); 
+      if ( cnt == 2 ) then 
+        set ee constraint (44)
+    }
+}
+set_f_tension_resist := { foreach facets ff do 
+    { set ff density (TENS_r)
+    }
+}
+set_f_tension_surface := { foreach facets ff do 
+    { cnt := 0; 
+      foreach ff.vertices vv do 
+        { if ( vv.z == 0 ) then 
+            cnt := cnt + 1
+        }; 
+      if ( cnt == 3 ) then 
+        set ff density (TENS_s)
+    }
+}
+set_f_tension_mirror := { foreach facets ff do 
+    { cnt := 0; 
+      foreach ff.vertices vv do 
+        { if ( vv.x == -lx/2 ) then 
+            cnt := cnt - 1; 
+          if ( vv.x == lx/2 ) then 
+            cnt := cnt + 1
+        }; 
+      if ( abs(cnt) == 3 ) then 
+        set ff density (TENS_m)
+    }; 
+  foreach facets ff do 
+    { cnt := 0; 
+      foreach ff.vertices vv do 
+        { if ( vv.y == -ly/2 ) then 
+            cnt := cnt - 1; 
+          if ( vv.y == ly/2 ) then 
+            cnt := cnt + 1
+        }; 
+      if ( abs(cnt) == 3 ) then 
+        set ff density (TENS_m)
+    }
+}
+color_TENS_m_faces := { set facets color (6) where density == TENS_m
+}
+color_TENS_s_faces := { set facets color (3) where density == TENS_s
+}
+color_TENS_r_faces := { set facets color (14) where density == TENS_r
+}
+prepare_save := { printf "" >>> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist.txt"
+}
+prepare_surface := { set_no_refine; 
+  set_v_constraint_1; 
+  set_v_constraints_11_33; 
+  set_v_constraints_22_44; 
+  set_e_constraint_1; 
+  set_e_constraint_11_33; 
+  set_e_constraint_22_44; 
+  set_f_tension_resist; 
+  set_f_tension_surface; 
+  set_f_tension_mirror; 
+  color_TENS_m_faces; 
+  color_TENS_s_faces; 
+  color_TENS_r_faces; 
+  area_normalization ON; 
+  defmob_1; 
+  prepare_save 
+}
+loopit := { g 10; 
+  areaweed 0.01; 
+  areaweed 0.01; 
+  V 
+}
+save := { foreach vertices do 
+    { if ( x < lx/2 ) then 
+        if ( x > -lx/2 ) then 
+          printf "%f %f %f\n",x, y, z >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist.txt"
+    }
+}
+ebash := { prepare_surface; 
+  m 0.0001; 
+  cnt := 0; 
+  save; 
+  printf "%f %f %f\n",total_time, -100, -100 >> "vlist.txt"; 
+  while (cnt < 1000) do 
+    { loopit 5; 
+      save; 
+      printf "%f %f %f\n",total_time, -100, -100 >> "vlist.txt"; 
+      cnt := cnt + 1; 
+      print cnt
+    }
+}
