@@ -224,3 +224,41 @@ ef.create_datafile_latest(
     mobs=np.ones(len(xx_evolver_final)) * 1e-2,
     path=file_full_path
 )
+
+# %%
+zz_vac = np.load('zz_vac.npy')
+Mn_array = np.load('Mn_array.npy')
+total_tau_array = np.load('total_tau_array.npy')
+
+eta_array = np.zeros(len(Mn_array))
+mobs_array = np.zeros(len(Mn_array))
+
+viscosity_power = 10
+
+for i in range(len(eta_array)):
+    eta_array[i] = rf.get_viscosity_experiment_Mn(T_C, Mn_array[i], power=viscosity_power)
+    mobs_array[i] = rf.get_SE_mobility(eta_array[i])
+
+plt.figure(dpi=300)
+plt.semilogy(xx_vac, mobs_array)
+plt.show()
+
+# %%
+zz_evolver = mm.d_PMMA - zz_vac
+
+# go to um!!!
+xx_evolver_final = np.concatenate([[mm.x_bins_20nm[0]], mm.x_centers_20nm, [mm.x_bins_20nm[-1]]]) * 1e-3
+zz_evolver_final = np.concatenate([[zz_evolver[0]], zz_evolver, [zz_evolver[-1]]]) * 1e-3
+mobs_evolver_final = np.concatenate([[mobs_array[0]], mobs_array, [mobs_array[-1]]])
+
+file_full_path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/datafile_DEBER_2021.fe'
+commands_full_path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/commands.txt'
+
+ef.create_datafile_latest(
+    yy=xx_evolver_final,
+    zz=zz_evolver_final,
+    width=mm.ly * 1e-3,
+    mobs=np.ones(len(xx_evolver_final)) * 1e-2,
+    # mobs=mobs_evolver_final,
+    path=file_full_path
+)

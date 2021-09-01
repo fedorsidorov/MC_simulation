@@ -233,25 +233,23 @@ def create_datafile_latest(yy, zz, width, mobs, path):  # xx and zz in um !!!
     with open(path, 'w') as myfile:
         myfile.write(file)
 
-    return VV, file
-
 
 # %%
-x_min, x_max = -1650, 1650
-x_bins_20nm = np.arange(x_min, x_max + 1, 20)
-x_centers_20nm = (x_bins_20nm[:-1] + x_bins_20nm[1:]) / 2
-xx_evolver_final = np.concatenate([[x_bins_20nm[0]], x_centers_20nm, [x_bins_20nm[-1]]]) / 1000
-
-zz_evolver = 80 - np.load('zz_vac.npy')
-zz_evolver_final = np.concatenate([[zz_evolver[0]], zz_evolver, [zz_evolver[-1]]]) / 1000
-
-VV, file = create_datafile_latest(
-    yy=xx_evolver_final,
-    zz=zz_evolver_final,
-    width=mm.ly * 1e-3,
-    mobs=np.ones(len(xx_evolver_final)) * 1e-4,
-    path='notebooks/SE/datafile_DEBER_2021.fe'
-)
+# x_min, x_max = -1650, 1650
+# x_bins_20nm = np.arange(x_min, x_max + 1, 20)
+# x_centers_20nm = (x_bins_20nm[:-1] + x_bins_20nm[1:]) / 2
+# xx_evolver_final = np.concatenate([[x_bins_20nm[0]], x_centers_20nm, [x_bins_20nm[-1]]]) / 1000
+#
+# zz_evolver = 80 - np.load('zz_vac.npy')
+# zz_evolver_final = np.concatenate([[zz_evolver[0]], zz_evolver, [zz_evolver[-1]]]) / 1000
+#
+# create_datafile_latest(
+#     yy=xx_evolver_final,
+#     zz=zz_evolver_final,
+#     width=mm.ly * 1e-3,
+#     mobs=np.ones(len(xx_evolver_final)) * 1e-4,
+#     path='notebooks/SE/datafile_DEBER_2021.fe'
+# )
 
 # xx_nm = np.load('notebooks/DEBER_simulation/xx_evolver_nm.npy')
 # zz_nm = np.load('notebooks/DEBER_simulation/zz_evolver_nm.npy')
