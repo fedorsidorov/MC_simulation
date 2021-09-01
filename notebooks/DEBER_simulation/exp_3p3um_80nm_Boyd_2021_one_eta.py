@@ -129,11 +129,6 @@ for n_step in range(32):
     delta_z_vac_array = monomers_array * const.V_mon_nm3 / mm.step_20nm / mm.ly
     zz_vac_after_diffusion = zz_vac + delta_z_vac_array
 
-    plt.figure(dpi=300)
-    plt.plot(mm.x_centers_20nm, mm.d_PMMA - zz_vac_after_diffusion)
-    plt.title('step ' + str(n_step))
-    plt.show()
-
     zz_vac = zz_vac_after_diffusion
     zz_vac_list.append(zz_vac)
 
@@ -188,6 +183,16 @@ for n_step in range(32):
     plt.xlabel('z, nm')
     plt.legend()
     plt.show()
+
+    plt.figure(dpi=300)
+    plt.plot(mm.x_centers_20nm, zz_evolver, label='after monomer diffusion')
+    plt.plot(xx_vac, zz_vac_final, label='after Surface Evolver')
+    plt.title('step ' + str(n_step))
+    plt.grid()
+    plt.xlabel('x, nm')
+    plt.xlabel('z, nm')
+    plt.legend()
+    plt.savefig('notebooks/Boyd_kinetic_curves/1e-2/' + str(n_step) + '.jpg', dpi=300)
 
     zz_vac = mm.d_PMMA - zz_vac_final
     zz_vac_list.append(zz_vac)

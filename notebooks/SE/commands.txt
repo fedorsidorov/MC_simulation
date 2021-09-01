@@ -1,6 +1,4 @@
 prepare_surface
-s
-q
 step_10s
 save_single
 q
