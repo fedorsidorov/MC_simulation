@@ -120,26 +120,6 @@ structure_electron_u_diff_cumulated = [PMMA_electron_u_diff_cumulated, Si_electr
 
 structure_process_indexes = [PMMA_process_indexes, Si_process_indexes]
 
-# %% zz_vac
-# xx_vac = np.linspace(-1000, 1000, 1000)
-# zz_vac = (np.cos(xx_vac * 2 * np.pi / 2000) + 1) * 40 * 0
-#
-# xx_vac_final = np.concatenate(([-1e+6], xx_vac, [1e+6]))
-# zz_vac_final = np.concatenate(([zz_vac[0]], zz_vac, [zz_vac[-1]]))
-
-
-# fig, ax = plt.subplots(dpi=300)
-# ax.plot(xx_vac_final, zz_vac_final)
-# ax.plot(xx_vac_final, np.ones(len(xx_vac_final)) * d_PMMA)
-# plt.xlim(-1000, 1000)
-# plt.ylim(-50, 150)
-# plt.gca().set_aspect('equal', adjustable='box')
-# plt.gca().invert_yaxis()
-# plt.xlabel('x, nm')
-# plt.ylabel('z, nm')
-# plt.grid()
-# plt.show()
-
 
 # %% functions
 def get_scattered_flight_ort(flight_ort, phi, theta):
@@ -233,8 +213,8 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
         layer_ind = 0
     else:
         layer_ind = 2
-        print(E_0, coords_0, get_now_z_vac(coords[0], 0, xx_vac, zz_vac))
-        print('WTF ???')
+        # print(E, get_now_z_vac(coords[0], 0, xx_vac, zz_vac) - coords[-1])
+        # print('WTF ???')
 
     # e_DATA_line: [e_id, par_id, layer_ind, proc_id, x_new, y_new, z_new, E_loss, E_2nd, E_new]
     e_DATA_deque = deque()
@@ -246,6 +226,9 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
     next_e_2nd_id = 0
 
     while True:
+
+        if get_now_z_vac(coords[0], 0, xx_vac, zz_vac) >= coords[-1]:
+            print('Vacuum at the beginning of the track')
 
         if coords[-1] >= d_PMMA:  # get layer_ind
             layer_ind = 1
@@ -272,6 +255,10 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
                 d_PMMA <= coords[-1] and d_PMMA <= coords[-1] + delta_r[-1]:
 
             coords = coords + delta_r
+            if coords[-1] <= get_now_z_vac(coords[0], 0, xx_vac, zz_vac):
+                # print('KAKOGO HERA ???')
+                layer_ind = 2
+                break
 
         # electron changes layer
         elif 0 <= coords[-1] <= d_PMMA <= coords[-1] + delta_r[-1] or \
@@ -288,6 +275,12 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
 
             delta_r_corr = flight_ort * free_path_corr
             coords = coords + delta_r_corr
+
+            if coords[-1] <= get_now_z_vac(coords[0], 0, xx_vac, zz_vac):
+                # print('HERE')
+                coords += delta_r * 2
+                layer_ind = 2
+                break
 
         # electron is going to emerge from the structure
         elif coords[-1] + delta_r[-1] <= get_now_z_vac(coords[0] + delta_r[0], layer_ind, xx_vac, zz_vac):
@@ -319,6 +312,10 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
 
                 delta_r[-1] *= -1
                 coords += delta_r * (1 - factor)
+
+                if coords[-1] <= get_now_z_vac(coords[0], 0, xx_vac, zz_vac):
+                    print('Vacuum after surface scattering')
+
                 flight_ort[-1] *= -1
 
         else:
@@ -373,7 +370,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
 
             E -= hw
 
-            if not (Pn and layer_ind == 1):
+            if layer_ind == 0 or not Pn:
                 e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, Eb, E_2nd, E]
                 e_DATA_deque.append(e_DATA_line)
 
@@ -471,37 +468,47 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut, Pn, xx_vac, zz_vac, r_be
 
 
 # %%
-# xx_vac = np.linspace(-1000, 1000, 1000)
-# zz_vac = (np.cos(xx_vac * 2 * np.pi / 2000) + 1) * 40 * 0
-#
-# xx_vac_final = np.concatenate(([-1e+6], xx_vac, [1e+6]))
-# zz_vac_final = np.concatenate(([zz_vac[0]], zz_vac, [zz_vac[-1]]))
-#
-# e_DATA = track_all_electrons(
-#     n_electrons=30,
-#     E0=10000,
-#     d_PMMA=80,
-#     z_cut=np.inf,
-#     Pn=False,
-#     xx_vac=xx_vac,
-#     zz_vac=zz_vac,
-#     r_beam_x=100,
-#     r_beam_y=100
-# )
+xx_vac = np.linspace(-1000, 1000, 1000)
+zz_vac = (np.cos(xx_vac * 2 * np.pi / 2000) + 1) * 40
+
+xx_vac_final = np.concatenate(([-1e+6], xx_vac, [1e+6]))
+zz_vac_final = np.concatenate(([zz_vac[0]], zz_vac, [zz_vac[-1]]))
+
+e_DATA = track_all_electrons(
+    n_electrons=100,
+    E0=10000,
+    d_PMMA=80,
+    z_cut=np.inf,
+    Pn=False,
+    xx_vac=xx_vac_final,
+    zz_vac=zz_vac_final,
+    r_beam_x=100,
+    r_beam_y=100
+)
+
 # %%
-# fig, ax = plt.subplots(dpi=300)
-#
-# for e_id in range(int(np.max(e_DATA[:, 0]) + 1)):
-#     inds = np.where(e_DATA[:, 0] == e_id)[0]
-#
-#     if len(inds) == 0:
-#         continue
-#
-#     ax.plot(e_DATA[inds, 4], e_DATA[inds, 6], '-', linewidth='1')
-#
-# plt.gca().set_aspect('equal', adjustable='box')
-# plt.gca().invert_yaxis()
-# plt.xlabel('x, nm')
-# plt.ylabel('z, nm')
-# plt.grid()
-# plt.show()
+fig, ax = plt.subplots(dpi=300)
+
+for e_id in range(int(np.max(e_DATA[:, 0]) + 1)):
+    inds = np.where(e_DATA[:, 0] == e_id)[0]
+
+    if len(inds) == 0:
+        continue
+
+    ax.plot(e_DATA[inds, 4], e_DATA[inds, 6], '-', linewidth='1')
+
+ax.plot(xx_vac_final, zz_vac_final)
+ax.plot(xx_vac_final, np.ones(len(xx_vac_final)) * 80)
+
+plt.xlim(-1000, 1000)
+plt.ylim(0, 200)
+
+# ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
+# ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
+
+plt.gca().set_aspect('equal', adjustable='box')
+plt.gca().invert_yaxis()
+plt.xlabel('x, nm')
+plt.ylabel('z, nm')
+plt.grid()
+plt.show()

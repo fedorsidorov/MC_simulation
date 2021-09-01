@@ -217,7 +217,7 @@ mobs_evolver_final = np.concatenate([[mobs_array[0]], mobs_array, [mobs_array[-1
 file_full_path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/datafile_DEBER_2021.fe'
 commands_full_path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/commands.txt'
 
-ef.create_datafile_no_mob_fit(
+ef.create_datafile_latest(
     yy=xx_evolver_final,
     zz=zz_evolver_final,
     width=mm.ly * 1e-3,

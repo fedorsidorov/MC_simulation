@@ -185,7 +185,12 @@ save := {
 		}
 	}
 
-iteration := {
-	g 10;
-	save;
+step_10s := {
+	now_time := total_time;
+	while total_time < now_time + 10 do {g1; printf "Total time = %f\n",total_time};
+	}
+
+step_1s := {
+	now_time := total_time;
+	while total_time < now_time + 1 do {g1; printf "Total time = %f\n",total_time};
 	}

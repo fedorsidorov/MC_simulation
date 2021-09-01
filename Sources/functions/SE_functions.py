@@ -11,17 +11,13 @@ mcf = importlib.reload(mcf)
 
 
 # %%
-def create_datafile_no_mob_fit(yy, zz, width, mobs, path):  # xx and zz in um !!!
+def create_datafile_latest(yy, zz, width, mobs, path):  # xx and zz in um !!!
 
-    print(yy)
     yy[0] = yy[0].astype(np.float16)
     yy[-1] = yy[-1].astype(np.float16)
 
     lx = width
     ly = yy.max() - yy.min()
-
-    print(lx)
-    print(yy.max(), yy.min(), ly)
 
     zz_1d = zz
     z_max = np.max(zz_1d)
@@ -47,7 +43,6 @@ def create_datafile_no_mob_fit(yy, zz, width, mobs, path):  # xx and zz in um !!
 
     for i, x in enumerate(xx):
         for j, y in enumerate(yy):
-            print(y)
             VV[cnt - 1, :] = cnt, x, y, 0, 0
             VV[nx * ny + cnt - 1, :] = nx * ny + cnt, x, y, zz[i, j], mobs[j]
             VV_inv[0, i, j] = cnt
@@ -146,6 +141,8 @@ def create_datafile_no_mob_fit(yy, zz, width, mobs, path):  # xx and zz in um !!
             'vmob  0     0\n' + \
             '0     vmob  0\n' + \
             '0     0  vmob\n\n'
+
+    file += 'PARAMETER now_time = 0\n'
 
     file += 'PARAMETER lx = ' + str(lx) + '\n'
     file += 'PARAMETER ly = ' + str(ly) + '\n'
@@ -248,11 +245,11 @@ xx_evolver_final = np.concatenate([[x_bins_20nm[0]], x_centers_20nm, [x_bins_20n
 zz_evolver = 80 - np.load('zz_vac.npy')
 zz_evolver_final = np.concatenate([[zz_evolver[0]], zz_evolver, [zz_evolver[-1]]]) / 1000
 
-VV, file = create_datafile_no_mob_fit(
+VV, file = create_datafile_latest(
     yy=xx_evolver_final,
     zz=zz_evolver_final,
     width=mm.ly * 1e-3,
-    mobs=np.ones(len(xx_evolver_final)),
+    mobs=np.ones(len(xx_evolver_final)) * 1e-4,
     path='notebooks/SE/datafile_DEBER_2021.fe'
 )
 
