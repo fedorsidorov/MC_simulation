@@ -227,12 +227,14 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
     coords = coords_0
     flight_ort = flight_ort_0
 
-    if coords[-1] > d_PMMA:  # get layer_ind
+    if coords[-1] >= d_PMMA:  # get layer_ind
         layer_ind = 1
-    elif 0 < coords[-1] < d_PMMA:
+    elif get_now_z_vac(coords[0], 0, xx_vac, zz_vac) <= coords[-1]:
         layer_ind = 0
     else:
         layer_ind = 2
+        print(E_0, coords_0, get_now_z_vac(coords[0], 0, xx_vac, zz_vac))
+        print('WTF ???')
 
     # e_DATA_line: [e_id, par_id, layer_ind, proc_id, x_new, y_new, z_new, E_loss, E_2nd, E_new]
     e_DATA_deque = deque()
@@ -245,12 +247,13 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
 
     while True:
 
-        if coords[-1] > d_PMMA:  # get layer_ind
+        if coords[-1] >= d_PMMA:  # get layer_ind
             layer_ind = 1
-        elif 0 < coords[-1] < d_PMMA:
+        elif get_now_z_vac(coords[0], 0, xx_vac, zz_vac) <= coords[-1]:
             layer_ind = 0
         else:
             layer_ind = 2
+            break
 
         if E <= structure_E_cut[layer_ind]:  # check energy
             break
@@ -265,14 +268,14 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
         delta_r = flight_ort * free_path
 
         # electron remains in the same layer
-        if 0 < coords[-1] < d_PMMA and 0 < coords[-1] + delta_r[-1] < d_PMMA or \
-                d_PMMA < coords[-1] and d_PMMA < coords[-1] + delta_r[-1]:
+        if 0 <= coords[-1] <= d_PMMA and 0 <= coords[-1] + delta_r[-1] <= d_PMMA or \
+                d_PMMA <= coords[-1] and d_PMMA <= coords[-1] + delta_r[-1]:
 
             coords = coords + delta_r
 
         # electron changes layer
-        elif 0 < coords[-1] < d_PMMA < coords[-1] + delta_r[-1] or \
-                coords[-1] > d_PMMA > coords[-1] + delta_r[-1] > 0:
+        elif 0 <= coords[-1] <= d_PMMA <= coords[-1] + delta_r[-1] or \
+                coords[-1] >= d_PMMA >= coords[-1] + delta_r[-1] >= 0:
 
             d = np.linalg.norm(delta_r) * np.abs(coords[-1] - d_PMMA) / np.abs(delta_r[-1])
             W1 = structure_u_total[layer_ind][E_ind]
@@ -298,6 +301,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
                     print('Wf problems')
 
                 coords += delta_r * 3
+                layer_ind = 2
 
                 break
 
@@ -395,7 +399,8 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
 
         flight_ort = new_flight_ort
 
-    if coords[-1] < 0 and not Pn:  # electron emerges from specimen
+    # if coords[-1] < 0 and not Pn:  # electron emerges from specimen
+    if layer_ind == 2:  # electron emerges from specimen
         e_DATA_final_line = [e_id, par_id, -1, -10, *coords, 0, 0, E]
         e_DATA_deque.append(e_DATA_final_line)
 

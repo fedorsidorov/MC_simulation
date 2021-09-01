@@ -19,6 +19,13 @@ set_v_constraints_22_44 := {
 		}
 	}
 
+set_v_constraints_222_444 := {
+	foreach vertex vv do {
+		if abs(vv.y - y_min) < 0.00001 then set vv constraint 222;
+		if abs(vv.y - y_max) < 0.00001 then set vv constraint 444;
+		}
+	}
+
 set_e_constraint_1 := {
 	foreach edge ee do {
 		cnt := 0;
@@ -53,6 +60,18 @@ set_e_constraint_22_44 := {
 		};
 	}
 
+set_e_constraint_222_444 := {
+	foreach edge ee do {
+		cnt := 0;
+		foreach ee.vertices vv do {
+			if abs(vv.y - y_min) < 0.00001 then cnt := cnt - 1;
+			if abs(vv.y - y_max) < 0.00001 then cnt := cnt + 1
+			};
+		if cnt == -2 then set ee constraint 222;
+		if cnt == 2 then set ee constraint 444
+		};
+	}
+
 set_f_tension_resist := {foreach facet ff do {set ff tension TENS_r}}
 
 set_f_tension_surface := {
@@ -79,6 +98,25 @@ set_f_tension_mirror := {
 		foreach ff.vertices vv do {
 			if vv.y == -ly/2 then cnt := cnt - 1;
 			if vv.y == ly/2 then cnt := cnt + 1
+			};
+		if abs(cnt) == 3 then set ff tension TENS_m;
+		}
+	}
+
+set_f_tension_mirror_xxx := {
+	foreach facet ff do {
+		cnt := 0;
+		foreach ff.vertices vv do {
+			if vv.x == -lx/2 then cnt := cnt - 1;
+			if vv.x == lx/2 then cnt := cnt + 1
+			};
+		if abs(cnt) == 3 then set ff tension TENS_m;
+		};
+	foreach facet ff do {
+		cnt := 0;
+		foreach ff.vertices vv do {
+			if abs(vv.y - y_min) < 0.00001 then cnt := cnt - 1;
+			if abs(vv.y - y_max) < 0.00001 then cnt := cnt + 1
 			};
 		if abs(cnt) == 3 then set ff tension TENS_m;
 		}
@@ -114,13 +152,16 @@ def_vmob := {
 prepare_surface := {
 	set_v_constraint_1;
 	set_v_constraints_11_33;
-	set_v_constraints_22_44;
+	//set_v_constraints_22_44;
+	set_v_constraints_222_444;
 	set_e_constraint_1;
 	set_e_constraint_11_33;
-	set_e_constraint_22_44;
+	//set_e_constraint_22_44;
+	set_v_constraints_222_444;
 	set_f_tension_resist;
 	set_f_tension_surface;
-	set_f_tension_mirror;
+	//set_f_tension_mirror;
+	set_f_tension_mirror_xxx;
 	color_TENS_m_faces;
 	color_TENS_s_faces;
 	color_TENS_r_faces;
@@ -129,6 +170,13 @@ prepare_surface := {
 	}
 
 loopit := {g10; w 0.001; w 0.001; V}
+
+save_single := {
+	printf "%f %f %f\n", total_time, -100., -100. >>> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_single.txt";
+	foreach vertex do {
+		printf "%f %f %f\n", x, y, z >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_single.txt";
+		}
+	}
 
 save := {
 	printf "%f %f %f\n", total_time, -100., -100. >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist.txt";

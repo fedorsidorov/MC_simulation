@@ -67,7 +67,7 @@ zz_vac_list = [zz_vac]
 
 total_tau_array = np.zeros(len(mm.x_centers_20nm))
 
-for n_step in range(1):
+for n_step in range(32):
 
     xx_vac_for_sim = np.concatenate(([-1e+6], xx_vac, [1e+6]))
     zz_vac_for_sim = np.concatenate(([zz_vac[0]], zz_vac, [zz_vac[-1]]))
@@ -131,10 +131,10 @@ for n_step in range(1):
 
     total_tau_array += now_delta_tau_array
 
-    plt.figure(dpi=300)
-    plt.plot(mm.x_centers_20nm, total_tau_array)
-    plt.title('step ' + str(n_step) + ', total tau')
-    plt.show()
+    # plt.figure(dpi=300)
+    # plt.plot(mm.x_centers_20nm, total_tau_array)
+    # plt.title('step ' + str(n_step) + ', total tau')
+    # plt.show()
 
     tau_inds = np.zeros(len(total_tau_array))
     Mn_array = np.zeros(len(total_tau_array))
@@ -145,10 +145,10 @@ for n_step in range(1):
         else:
             Mn_array[i] = mcf.lin_lin_interp(tau_125, Mn_125)(total_tau_array[i])
 
-    plt.figure(dpi=300)
-    plt.plot(mm.x_centers_20nm, Mn_array)
-    plt.title('step ' + str(n_step) + ', local Mn')
-    plt.show()
+    # plt.figure(dpi=300)
+    # plt.plot(mm.x_centers_20nm, Mn_array)
+    # plt.title('step ' + str(n_step) + ', local Mn')
+    # plt.show()
 
     eta_array = np.zeros(len(Mn_array))
     mobs_array = np.zeros(len(Mn_array))
@@ -157,10 +157,10 @@ for n_step in range(1):
         eta_array[i] = rf.get_viscosity_experiment_Mn(T_C, Mn_array[i], power=viscosity_power)
         mobs_array[i] = rf.get_SE_mobility(eta_array[i])
 
-    plt.figure(dpi=300)
-    plt.plot(mm.x_centers_20nm, mobs_array)
-    plt.title('step ' + str(n_step) + ', SE mobilities')
-    plt.show()
+    # plt.figure(dpi=300)
+    # plt.plot(mm.x_centers_20nm, mobs_array)
+    # plt.title('step ' + str(n_step) + ', SE mobilities')
+    # plt.show()
 
     monomer_matrix = scission_matrix * zip_length
     monomers_array = np.zeros(len(mm.x_centers_20nm))
@@ -178,67 +178,49 @@ for n_step in range(1):
 
     delta_z_vac_array = monomers_array * const.V_mon_nm3 / mm.step_20nm / mm.ly
     zz_vac_after_diffusion = zz_vac + delta_z_vac_array
-    zz_evolver = mm.d_PMMA - zz_vac_after_diffusion
 
-    # go to um!!!
-    xx_evolver_final = np.concatenate([[mm.x_bins_20nm[0]], mm.x_centers_20nm, [mm.x_bins_20nm[-1]]]) * 1e-3
-    zz_evolver_final = np.concatenate([[zz_evolver[0]], zz_evolver, [zz_evolver[-1]]]) * 1e-3
-    mobs_evolver_final = np.concatenate([[mobs_array[0]], mobs_array, [mobs_array[-1]]])
+    plt.figure(dpi=300)
+    plt.plot(mm.x_centers_20nm, mm.d_PMMA - zz_vac_after_diffusion)
+    plt.title('step ' + str(n_step))
+    plt.show()
 
-    file_full_path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/datafile_DEBER_2021.fe'
-    commands_full_path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/commands.txt'
-
-    ef.create_datafile_no_mob_fit(
-        yy=xx_evolver_final.astype(np.float16),
-        zz=zz_evolver_final.astype(np.float16),
-        width=mm.ly.astype(np.float16) * 1e-3,
-        mobs=mobs_evolver_final,
-        path=file_full_path
-    )
+    zz_vac = zz_vac_after_diffusion
+    zz_vac_list.append(zz_vac)
 
 # %%
-ef.run_evolver(file_full_path, commands_full_path)
-
-SE = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_single.txt')
-SE = SE[np.where(
-        np.logical_and(
-            np.abs(SE[:, 0]) < 0.1,
-            SE[:, 2] > 1e-3
-        ))]
-
-xx_SE = SE[1:, 1]
-zz_SE = SE[1:, 2]
-
-sort_inds = np.argsort(xx_SE)
-xx_SE_sorted = xx_SE[sort_inds]
-zz_SE_sorted = zz_SE[sort_inds]
-
-xx_SE_sorted[0] = -mm.lx * 1e-3 / 2
-xx_SE_sorted[-1] = mm.lx * 1e-3 / 2
-
-zz_SE_sorted[0] = zz_SE_sorted[1]
-zz_SE_sorted[-1] = zz_SE_sorted[-2]
-
-zz_vac_final = mcf.lin_lin_interp(xx_SE_sorted * 1e+3, zz_SE_sorted * 1e+3)(xx_vac)
-
 plt.figure(dpi=300)
-plt.plot(mm.x_centers_20nm, zz_evolver)
-plt.plot(xx_vac, zz_vac_final)
-plt.title('step ' + str(n_step))
+# plt.plot(mm.x_centers_20nm, total_tau_array)
+plt.plot(mm.x_centers_20nm, Mn_array)
 plt.show()
 
-zz_vac = mm.d_PMMA - zz_vac_final
-zz_vac_list.append(zz_vac)
+# %%
+eta_array = np.zeros(len(Mn_array))
+mobs_array = np.zeros(len(Mn_array))
+
+for i in range(len(eta_array)):
+    eta_array[i] = rf.get_viscosity_experiment_Mn(T_C, Mn_array[i], power=20)
+    mobs_array[i] = rf.get_SE_mobility(eta_array[i])
+
+plt.figure(dpi=300)
+# plt.semilogy(mm.x_centers_20nm, eta_array)
+plt.semilogy(mm.x_centers_20nm, mobs_array)
+plt.show()
 
 # %%
+zz_evolver = mm.d_PMMA - zz_vac_after_diffusion
+
+# go to um!!!
+xx_evolver_final = np.concatenate([[mm.x_bins_20nm[0]], mm.x_centers_20nm, [mm.x_bins_20nm[-1]]]) * 1e-3
+zz_evolver_final = np.concatenate([[zz_evolver[0]], zz_evolver, [zz_evolver[-1]]]) * 1e-3
+mobs_evolver_final = np.concatenate([[mobs_array[0]], mobs_array, [mobs_array[-1]]])
+
+file_full_path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/datafile_DEBER_2021.fe'
+commands_full_path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/commands.txt'
+
 ef.create_datafile_no_mob_fit(
     yy=xx_evolver_final,
     zz=zz_evolver_final,
     width=mm.ly * 1e-3,
-    mobs=np.ones(len(xx_evolver_final)) * np.max(mobs_evolver_final) * 1e+4,
+    mobs=np.ones(len(xx_evolver_final)) * 1e-2,
     path=file_full_path
 )
-
-
-
-

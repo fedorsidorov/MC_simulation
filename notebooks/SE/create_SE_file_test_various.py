@@ -15,19 +15,23 @@ ly = 50
 z_min = h0 - dh / 2
 z_max = h0 + dh / 2
 
-yy_pre = np.array((-l0/2, 0, l0/2))
-zz_pre = [z_max, z_max/2, z_max]
+# yy_pre = np.array((-l0/2, 0, l0/2))
+# zz_pre = [z_max, z_max/2, z_max]
 # zz_pre = [h0, h0/2, h0]
 
 # yy_pre = np.array((0, l0/8, l0/4, l0/4, l0/4+l0/8, l0/2, l0/2+l0/8, l0*3/4, l0*3/4, l0*3/4+l0/8, l0))-l0/2
-# zz_pre = [z_min, z_min, z_min, z_max, z_max, z_max, z_max, z_max, z_min, z_min, z_min]
+# zz_pre = np.array([z_min, z_min, z_min, z_max, z_max, z_max, z_max, z_max, z_min, z_min, z_min])
+
+# yy_pre = np.array((0, l0/8, l0/4, l0/4, l0/4+l0/8, l0/2, l0/2+l0/8, l0*3/4, l0*3/4, l0*3/4+l0/8, l0))-l0/2
+# zz_pre = np.array([z_min, z_min, z_min, z_max, z_max, z_max, z_max, z_max, z_min, z_min, z_min])
+# zz_pre = 20 - zz_pre
 
 # yy_pre = np.array([0, l0/8, 2*l0/8, 3*l0/8, 4*l0/8, 5*l0/8, 6*l0/8, 7*l0/8, 8*l0/8]) - l0/2
 # zz_pre = [z_max/4, z_max/4, z_max/3, z_max/2, z_max, z_max/2, z_max/3, z_max/4, z_max/4]
 
-# yy_pre = np.linspace(-l0/10, l0/10, 50)
-# zz_pre = h0 * (1 - np.cos(yy_pre / l0 * 5 * 2 * np.pi)/2)
-# zz_pre = (h0 * (1 - 0.4*np.exp(-(np.abs(yy_pre))))) * 0.5
+yy_pre = np.linspace(-l0/2, l0/2, 100)
+zz_pre = h0 * (1 - np.cos(yy_pre / l0 * 5 * 2 * np.pi)/2)
+zz_pre = (h0 * (1 - 0.4*np.exp(-(np.abs(yy_pre))))) * 0.5
 
 # yy_pre = np.linspace(-l0/2, l0/2, 100)
 # zz_pre = h0 * (1 - np.cos(yy_pre / l0 * 5 * 2 * np.pi)/2)
@@ -61,10 +65,9 @@ volume = 0
 for i in range(len(xx) - 1):
     volume += np.trapz(zz[i, :], x=yy) * (xx[1] - xx[0])
 
-# %%
-plt.figure(dpi=300)
-plt.plot(yy, zz[0, :], '.-')
-plt.show()
+# plt.figure(dpi=300)
+# plt.plot(yy, zz[0, :], '.-')
+# plt.show()
 
 # %%
 # % vertices
@@ -249,5 +252,5 @@ with open('notebooks/SE/set_SE_constraints.txt', 'r') as myfile:
     file += myfile.read()
 
 # % write to file
-with open('notebooks/SE/SE_input_3D_test_sin.fe', 'w') as myfile:
+with open('notebooks/SE/SE_input_3D_test_various.fe', 'w') as myfile:
     myfile.write(file)

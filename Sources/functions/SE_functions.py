@@ -13,8 +13,15 @@ mcf = importlib.reload(mcf)
 # %%
 def create_datafile_no_mob_fit(yy, zz, width, mobs, path):  # xx and zz in um !!!
 
+    print(yy)
+    yy[0] = yy[0].astype(np.float16)
+    yy[-1] = yy[-1].astype(np.float16)
+
     lx = width
     ly = yy.max() - yy.min()
+
+    print(lx)
+    print(yy.max(), yy.min(), ly)
 
     zz_1d = zz
     z_max = np.max(zz_1d)
@@ -40,6 +47,7 @@ def create_datafile_no_mob_fit(yy, zz, width, mobs, path):  # xx and zz in um !!
 
     for i, x in enumerate(xx):
         for j, y in enumerate(yy):
+            print(y)
             VV[cnt - 1, :] = cnt, x, y, 0, 0
             VV[nx * ny + cnt - 1, :] = nx * ny + cnt, x, y, zz[i, j], mobs[j]
             VV_inv[0, i, j] = cnt
@@ -142,13 +150,17 @@ def create_datafile_no_mob_fit(yy, zz, width, mobs, path):  # xx and zz in um !!
     file += 'PARAMETER lx = ' + str(lx) + '\n'
     file += 'PARAMETER ly = ' + str(ly) + '\n'
 
+    file += 'PARAMETER y_min = ' + str(yy.min()) + '\n'
+    file += 'PARAMETER y_max = ' + str(yy.max()) + '\n'
+
     file += 'PARAMETER z_max = ' + str(z_max) + '\n'
     file += 'PARAMETER angle_surface = 55\n'
     file += 'PARAMETER angle_mirror = 90\n'
 
     file += 'PARAMETER TENS_r = 33.5e-2\n'
     file += 'PARAMETER TENS_s = -TENS_r*cos((angle_surface)*pi/180)\n'
-    file += 'PARAMETER TENS_m = -TENS_r*cos((angle_mirror)*pi/180)\n\n'
+    # file += 'PARAMETER TENS_m = -TENS_r*cos((angle_mirror)*pi/180)\n\n'
+    file += 'PARAMETER TENS_m = 0\n\n'
 
     file += '/*--------------------CONSTRAINTS START--------------------*/\n'
 
@@ -161,11 +173,17 @@ def create_datafile_no_mob_fit(yy, zz, width, mobs, path):  # xx and zz in um !!
     file += 'constraint 22\n'
     file += 'formula: y = -ly/2\n\n'
 
+    file += 'constraint 222\n'
+    file += 'formula: y = y_min\n\n'
+
     file += 'constraint 33\n'
     file += 'formula: x = lx/2\n\n'
 
     file += 'constraint 44\n'
     file += 'formula: y = ly/2\n\n'
+
+    file += 'constraint 444\n'
+    file += 'formula: y = y_max\n\n'
 
     file += 'constraint 5 nonpositive\n'
     file += 'formula: z = z_max\n\n'
@@ -218,10 +236,28 @@ def create_datafile_no_mob_fit(yy, zz, width, mobs, path):  # xx and zz in um !!
     with open(path, 'w') as myfile:
         myfile.write(file)
 
+    return VV, file
+
 
 # %%
-xx_nm = np.load('notebooks/DEBER_simulation/xx_evolver_nm.npy')
-zz_nm = np.load('notebooks/DEBER_simulation/zz_evolver_nm.npy')
+x_min, x_max = -1650, 1650
+x_bins_20nm = np.arange(x_min, x_max + 1, 20)
+x_centers_20nm = (x_bins_20nm[:-1] + x_bins_20nm[1:]) / 2
+xx_evolver_final = np.concatenate([[x_bins_20nm[0]], x_centers_20nm, [x_bins_20nm[-1]]]) / 1000
+
+zz_evolver = 80 - np.load('zz_vac.npy')
+zz_evolver_final = np.concatenate([[zz_evolver[0]], zz_evolver, [zz_evolver[-1]]]) / 1000
+
+VV, file = create_datafile_no_mob_fit(
+    yy=xx_evolver_final,
+    zz=zz_evolver_final,
+    width=mm.ly * 1e-3,
+    mobs=np.ones(len(xx_evolver_final)),
+    path='notebooks/SE/datafile_DEBER_2021.fe'
+)
+
+# xx_nm = np.load('notebooks/DEBER_simulation/xx_evolver_nm.npy')
+# zz_nm = np.load('notebooks/DEBER_simulation/zz_evolver_nm.npy')
 # mobs = np.load('notebooks/DEBER_simulation/mobs_evolver.npy')
 
 # create_datafile_no_mob_fit(xx_nm, zz_nm, mobs)
