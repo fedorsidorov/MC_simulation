@@ -6,15 +6,16 @@ from mapping import mapping_3p3um_80nm as mm
 from functions import MC_functions as mcf
 import constants as const
 import copy
+from scipy import special
 
 const = importlib.reload(const)
 mcf = importlib.reload(mcf)
 mm = importlib.reload(mm)
 
 # %%
-# D = 3.16e-7 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
+D = 3.16e-7 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
 D = 3.16e-6 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
-# D = 3.16e-5 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
+D = 3.16e-5 * 1e+7 ** 2  # cm^2 / s -> nm^2 / s
 
 delta_t = 1e-7  # s
 sigma = np.sqrt(2 * D * delta_t)  # nm
@@ -27,6 +28,35 @@ probs_norm = probs / np.sum(probs)
 # %%
 def get_delta_coord_fast():
     return np.random.choice(xx_sample, p=probs_norm)
+
+
+def get_final_x_arr(x0_arr, D, delta_t):
+    N_arr = np.random.normal(size=len(x0_arr))
+    x_arr = x0_arr + np.sqrt(D * delta_t) * N_arr
+    return x_arr
+
+
+def get_final_z_arr(z0_arr_raw, d_PMMA, D, delta_t):
+    z0_arr = d_PMMA - z0_arr_raw
+    # z0_arr = z0_arr_raw
+
+    sqrt = np.sqrt(4 * D * delta_t)
+    N0_arr = 1/2 * special.erfc(-z0_arr / sqrt)
+    U_arr = np.random.random(len(z0_arr))
+    V_arr = np.random.random(len(z0_arr))
+
+    arg_if_arr = V_arr * special.erfc(-z0_arr / sqrt)
+    arg_else_arr = V_arr * special.erfc(z0_arr / sqrt)
+
+    z_arr = -z0_arr + sqrt * special.erfcinv(arg_else_arr)
+
+    inds_if = np.where(U_arr < N0_arr)[0]
+    z_arr[inds_if] = z0_arr[inds_if] + sqrt * special.erfcinv(arg_if_arr[inds_if])
+
+    z_arr_final = d_PMMA - z_arr
+    # z_arr_final = z_arr
+
+    return z_arr_final
 
 
 def get_D(dT, wp=1):  # in cm^2 / s
@@ -139,18 +169,18 @@ def track_all_monomers(monomer_matrix_2d, xx, zz_vac, d_PMMA, dT, wp, t_step, dt
 #     return zz_vac_new_50nm, mon_matrix_2d_final
 
 
-def get_zz_vac_50nm_monomer_matrix(zz_vac_old_50nm, mon_matrix_2d):
-
-    n_monomers_out = move_10nm_to_50nm(mon_matrix_2d[:, 0])
-    V_monomer_out_nm3 = n_monomers_out * const.V_mon_nm3
-
-    dh_monomer_out_nm = V_monomer_out_nm3 / (mm.ly * mm.step_50nm)
-
-    zz_vac_new_50nm = zz_vac_old_50nm + dh_monomer_out_nm
-    mon_matrix_2d_final = copy.deepcopy(mon_matrix_2d)
-    mon_matrix_2d_final[:, 0] = 0
-
-    return zz_vac_new_50nm, mon_matrix_2d_final
+# def get_zz_vac_50nm_monomer_matrix(zz_vac_old_50nm, mon_matrix_2d):
+#
+#     n_monomers_out = move_10nm_to_50nm(mon_matrix_2d[:, 0])
+#     V_monomer_out_nm3 = n_monomers_out * const.V_mon_nm3
+#
+#     dh_monomer_out_nm = V_monomer_out_nm3 / (mm.ly * mm.step_50nm)
+#
+#     zz_vac_new_50nm = zz_vac_old_50nm + dh_monomer_out_nm
+#     mon_matrix_2d_final = copy.deepcopy(mon_matrix_2d)
+#     mon_matrix_2d_final[:, 0] = 0
+#
+#     return zz_vac_new_50nm, mon_matrix_2d_final
 
 
 def track_monomer_easy(xz_0, xx, zz_vac, d_PMMA):

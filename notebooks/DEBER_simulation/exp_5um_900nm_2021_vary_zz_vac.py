@@ -1,5 +1,4 @@
 import importlib
-import constants
 import matplotlib.pyplot as plt
 import numpy as np
 import constants as const
@@ -27,16 +26,19 @@ rf = importlib.reload(rf)
 
 # %%
 j_exp_s = 0.85e-9  # A / cm^2 --- exposure current
-j_exp_l = j_exp_s * mm.lx_cm  # A / cm --- current per Y unit lungth
+j_exp_l = j_exp_s * mm.lx_cm  # A / cm --- current per Y unit length
+
+# dose_s = 0.05e-6  # C / cm^2 --- dose per area
 dose_s = 0.2e-6  # C / cm^2 --- dose per area
 # dose_s = 0.87e-6  # C / cm^2
+
 dose_l = dose_s * mm.lx_cm  # C / cm --- dose per Y unit length
 total_time = dose_l / j_exp_l  # 235 s
 Q = dose_s * mm.area_cm2
 n_electrons = Q / constants.e_SI  # 12 483
 n_electrons_s = int(np.around(n_electrons / total_time))
 
-step_time = 5
+step_time = 1
 primary_electrons_in_file = n_electrons_s * step_time
 
 n_steps = int(total_time / step_time)
@@ -55,24 +57,22 @@ profile_0p2 = np.loadtxt('notebooks/DEBER_simulation/exp_curves/exp_900nm_5um_0.
 profile_0p2[0, 1] = profile_0p2[:, 1].max()
 profile_0p2[-1, 1] = profile_0p2[:, 1].max()
 
-xx_vac_0p2 = profile_0p2[:, 0] * 1000 - 6935.08
-zz_vac_0p2 = (profile_0p2[:, 1].max() - profile_0p2[:, 1]) * 1000
+xx_vac = profile_0p2[:, 0] * 1000 - 6935.08
+zz_vac = (profile_0p2[:, 1].max() - profile_0p2[:, 1]) * 1000
 
 plt.figure(dpi=300)
 
-plt.plot(xx_vac_0p2, zz_vac_0p2)
-plt.plot(xx_vac_0p2, zz_vac_0p2 * 0.7)
-plt.plot(xx_vac_0p2, zz_vac_0p2 * 0.5)
-plt.plot(xx_vac_0p2, zz_vac_0p2 * 0.3)
+plt.plot(xx_vac, zz_vac)
+plt.plot(xx_vac, zz_vac * 0.7)
+plt.plot(xx_vac, zz_vac * 0.5)
+plt.plot(xx_vac, zz_vac * 0.3)
 plt.grid()
 plt.show()
 
 # %% Area
-area = np.trapz(zz_vac_0p2, x=xx_vac_0p2)
+area = np.trapz(zz_vac, x=xx_vac)
 
 # %%
-xx_vac = xx_vac_0p2  # nm
-
 zz_vac_list = []
 total_tau_array = np.zeros(len(mm.x_centers_20nm))
 
@@ -80,14 +80,15 @@ plt.figure(dpi=300)
 
 for n_step in range(n_steps):
 
-    zz_vac = zz_vac_0p2 * n_step / n_steps
+    zz_vac = zz_vac * n_step / n_steps
     print(n_step, 'zz_vac_max =', np.max(zz_vac))
 
     xx_vac_for_sim = np.concatenate(([-1e+6], xx_vac, [1e+6]))
     zz_vac_for_sim = np.concatenate(([zz_vac[0]], zz_vac, [zz_vac[-1]]))
 
     now_e_DATA = eb_MC.track_all_electrons(
-        n_electrons=int(primary_electrons_in_file / 2),
+        # n_electrons=int(primary_electrons_in_file / 2),
+        n_electrons=primary_electrons_in_file,
         E0=E0,
         d_PMMA=mm.d_PMMA,
         z_cut=np.inf,
@@ -120,7 +121,7 @@ for n_step in range(n_steps):
         bins=[mm.x_bins_5nm, mm.z_bins_5nm]
     )[0]
 
-    val_matrix += val_matrix[::-1, :]
+    # val_matrix += val_matrix[::-1, :]
 
     scission_matrix = np.zeros(np.shape(val_matrix), dtype=int)
 
@@ -131,5 +132,5 @@ for n_step in range(n_steps):
             scissions = np.where(np.random.random(n_val) < scission_weight)[0]
             scission_matrix[x_ind, z_ind] = len(scissions)
 
-    np.save('notebooks/DEBER_simulation/vary_zz_vac/zz_vac_' + str(n_step) + '_check.npy', zz_vac)
-    np.save('notebooks/DEBER_simulation/vary_zz_vac/scission_matrix_' + str(n_step) + '_check.npy', scission_matrix)
+    np.save('notebooks/DEBER_simulation/vary_zz_vac_0p2_1s/zz_vac_' + str(n_step) + '_check.npy', zz_vac)
+    np.save('notebooks/DEBER_simulation/vary_zz_vac_0p2_1s/scission_matrix_' + str(n_step) + '_check.npy', scission_matrix)

@@ -26,11 +26,11 @@ sf = importlib.reload(sf)
 rf = importlib.reload(rf)
 
 # %%
-sci_mat = np.load('notebooks/DEBER_simulation/vary_zz_vac/scission_matrix_46.npy')
+sci_mat = np.load('notebooks/DEBER_simulation/vary_zz_vac_0p2_5s/scission_matrix_46.npy')
 scission_matrix = np.zeros(np.shape(sci_mat))
 
 for i in range(47):
-    now_sci_mat = np.load('notebooks/DEBER_simulation/vary_zz_vac/scission_matrix_' + str(i) + '.npy')
+    now_sci_mat = np.load('notebooks/DEBER_simulation/vary_zz_vac_0p2_5s/scission_matrix_' + str(i) + '.npy')
     scission_matrix += now_sci_mat
 
 plt.figure(dpi=300)
