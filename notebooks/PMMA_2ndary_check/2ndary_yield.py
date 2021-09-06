@@ -105,11 +105,11 @@ energies_delta_nf_0p075 = get_2ndary_yield(folder_nf_0p075)
 
 # %%
 plt.figure(dpi=300)
-plt.plot(D_sim[:, 0], D_sim[:, 1], 'o-', label='Dapor')
-plt.plot(D_exp[:, 0], D_exp[:, 1], 'o-', label='experiment')
+plt.plot(D_sim[:, 0], D_sim[:, 1], 'o--', label='Dapor')
+plt.plot(D_exp[:, 0], D_exp[:, 1], 'go--', label='experiment')
 
 # plt.plot(energies_delta_nf_0p01[0], energies_delta_nf_0p01[1], '*-', label='my simulation NF 0.01')
-plt.plot(energies_delta_nf_0p02[0], energies_delta_nf_0p02[1], '*-', label='my simulation NF 0.02')
+plt.plot(energies_delta_nf_0p02[0], energies_delta_nf_0p02[1], 'r*-', label='my simulation NF 0.02')
 # plt.plot(energies_delta_nf_0p025[0], energies_delta_nf_0p025[1], '*-', label='my simulation NF 0.025')
 # plt.plot(energies_delta_nf_0p03[0], energies_delta_nf_0p03[1], '*-', label='my simulation NF 0.03')
 # plt.plot(energies_delta_nf_0p04[0], energies_delta_nf_0p04[1], '*-', label='my simulation NF 0.04')

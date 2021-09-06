@@ -178,6 +178,13 @@ save_single := {
 		}
 	}
 
+save_single_5 := {
+	printf "%f %f %f\n", total_time, -100., -100. >>> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_single_5.txt";
+	foreach vertex do {
+		printf "%f %f %f\n", x, y, z >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_single_5.txt";
+		}
+	}
+
 save := {
 	printf "%f %f %f\n", total_time, -100., -100. >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist.txt";
 	foreach vertex do {

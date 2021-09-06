@@ -133,7 +133,7 @@ plt.savefig('stairway.tiff', bbox_inches='tight', dpi=600)
 # plt.ylabel('bond weight', fontsize=font_size)
 #
 # plt.xlim(1e+0, 1e+4)
-# plt.ylim(1e-2, 1)
+# plt.ylim(1000_1e-2, 1)
 #
 # plt.legend(loc='upper right', fontsize=font_size)
 # plt.grid()
