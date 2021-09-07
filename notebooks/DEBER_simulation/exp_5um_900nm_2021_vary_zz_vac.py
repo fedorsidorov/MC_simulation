@@ -35,7 +35,7 @@ dose_s = 0.2e-6  # C / cm^2 --- dose per area
 dose_l = dose_s * mm.lx_cm  # C / cm --- dose per Y unit length
 total_time = dose_l / j_exp_l  # 235 s
 Q = dose_s * mm.area_cm2
-n_electrons = Q / constants.e_SI  # 12 483
+n_electrons = Q / const.e_SI  # 12 483
 n_electrons_s = int(np.around(n_electrons / total_time))
 
 step_time = 1
@@ -57,20 +57,20 @@ profile_0p2 = np.loadtxt('notebooks/DEBER_simulation/exp_curves/exp_900nm_5um_0.
 profile_0p2[0, 1] = profile_0p2[:, 1].max()
 profile_0p2[-1, 1] = profile_0p2[:, 1].max()
 
-xx_vac = profile_0p2[:, 0] * 1000 - 6935.08
-zz_vac = (profile_0p2[:, 1].max() - profile_0p2[:, 1]) * 1000
+xx_vac_0p2 = profile_0p2[:, 0] * 1000 - 6935.08
+zz_vac_0p2 = (profile_0p2[:, 1].max() - profile_0p2[:, 1]) * 1000
 
 plt.figure(dpi=300)
 
-plt.plot(xx_vac, zz_vac)
-plt.plot(xx_vac, zz_vac * 0.7)
-plt.plot(xx_vac, zz_vac * 0.5)
-plt.plot(xx_vac, zz_vac * 0.3)
+plt.plot(xx_vac_0p2, zz_vac_0p2)
+plt.plot(xx_vac_0p2, zz_vac_0p2 * 0.7)
+plt.plot(xx_vac_0p2, zz_vac_0p2 * 0.5)
+plt.plot(xx_vac_0p2, zz_vac_0p2 * 0.3)
 plt.grid()
 plt.show()
 
-# %% Area
-area = np.trapz(zz_vac, x=xx_vac)
+# %% area
+area = np.trapz(zz_vac_0p2, x=xx_vac_0p2)
 
 # %%
 zz_vac_list = []
@@ -80,10 +80,10 @@ plt.figure(dpi=300)
 
 for n_step in range(n_steps):
 
-    zz_vac = zz_vac * n_step / n_steps
+    zz_vac = zz_vac_0p2 * n_step / n_steps
     print(n_step, 'zz_vac_max =', np.max(zz_vac))
 
-    xx_vac_for_sim = np.concatenate(([-1e+6], xx_vac, [1e+6]))
+    xx_vac_for_sim = np.concatenate(([-1e+6], xx_vac_0p2, [1e+6]))
     zz_vac_for_sim = np.concatenate(([zz_vac[0]], zz_vac, [zz_vac[-1]]))
 
     now_e_DATA = eb_MC.track_all_electrons(
@@ -132,5 +132,5 @@ for n_step in range(n_steps):
             scissions = np.where(np.random.random(n_val) < scission_weight)[0]
             scission_matrix[x_ind, z_ind] = len(scissions)
 
-    np.save('notebooks/DEBER_simulation/vary_zz_vac_0p2_1s/zz_vac_' + str(n_step) + '_check.npy', zz_vac)
-    np.save('notebooks/DEBER_simulation/vary_zz_vac_0p2_1s/scission_matrix_' + str(n_step) + '_check.npy', scission_matrix)
+    np.save('notebooks/DEBER_simulation/NO_vary_zz_vac_0p2_1s/zz_vac_' + str(n_step) + '.npy', zz_vac)
+    np.save('notebooks/DEBER_simulation/NO_vary_zz_vac_0p2_1s/scission_matrix_' + str(n_step) + '.npy', scission_matrix)

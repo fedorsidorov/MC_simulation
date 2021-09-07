@@ -3,6 +3,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+def snake_coord_1d(array, coord_min, coord_max):
+
+    lower_el_inds = np.where(array < coord_min)[0]
+
+    while len(lower_el_inds) > 0:
+        array[lower_el_inds] += coord_max - coord_min
+        lower_el_inds = np.where(array < coord_min)[0]
+
+    upper_el_inds = np.where(array > coord_max)[0]
+
+    while len(upper_el_inds):
+        array[upper_el_inds] -= coord_max - coord_min
+        upper_el_inds = np.where(array >= coord_max)[0]
+
+
 def snake_coord(array, coord_ind, coord_min, coord_max):
 
     while True:
