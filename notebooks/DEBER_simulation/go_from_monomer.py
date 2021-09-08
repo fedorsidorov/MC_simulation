@@ -41,28 +41,153 @@ tau_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kin
 Mn_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/Mn_125.npy')*100
 Mw_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/Mw_125.npy')*100
 
-tau_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
-free_monomer_matrix_in_resist = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
+global_tau_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
+global_free_monomer_in_resist_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)), dtype=int)
 
 
-# %%
 def get_resist_fraction_matrix(zz_vac):
     resist_fraction_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
 
-    for i in range(len(mm.x_centers_5nm)):
-        beg_ind = np.where(mm.z_bins_5nm > now_zz_vac[i])[0][0]
-
-        now_resist_fraction_matrix[i, beg_ind:] = 1
+    for ii in range(len(mm.x_centers_5nm)):
+        beg_ind = np.where(mm.z_bins_5nm > zz_vac[ii])[0][0]
+        resist_fraction_matrix[ii, beg_ind:] = 1
 
         if beg_ind > 0:
-            now_resist_fraction_matrix[i, :beg_ind - 1] = 0
-            trans_resist_fraction = 1 - (now_zz_vac[i] - mm.z_bins_5nm[beg_ind - 1]) / mm.step_5nm
-            now_resist_fraction_matrix[i, beg_ind - 1] = trans_resist_fraction
+            resist_fraction_matrix[ii, :beg_ind - 1] = 0
+            trans_resist_fraction = 1 - (zz_vac[ii] - mm.z_bins_5nm[beg_ind - 1]) / mm.step_5nm
+            resist_fraction_matrix[ii, beg_ind - 1] = trans_resist_fraction
 
     return resist_fraction_matrix
 
 
-for n_step in range(34, 35):
+def get_Mn_true_Mn_matrix(resist_fraction_matrix, free_monomer_in_resist_matrix, tau_matrix):
+    Mn_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
+    true_Mn_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
+
+    print('Get Mn and true_Mn matrices')
+    progress_bar = tqdm(total=len(mm.x_centers_5nm), position=0)
+
+    for ii in range(len(mm.x_centers_5nm)):
+        for kk in range(len(mm.z_centers_5nm)):
+
+            if resist_fraction_matrix[ii, kk] == 0:
+                continue
+
+            if tau_matrix[ii, kk] > tau_125[-1]:
+                Mn = Mn_125[-1]
+            else:
+                tau_ind = np.argmin(np.abs(tau_matrix[ii, kk] - tau_125))
+                Mn = Mn_125[tau_ind]
+
+            Mn_matrix[ii, kk] = Mn
+
+            n_chains = y_slice_V / const.V_mon_nm3 / (Mn / MMA_weight)
+            true_Mn = (n_chains * Mn + free_monomer_in_resist_matrix[ii, kk] * MMA_weight) / \
+                      (n_chains + free_monomer_in_resist_matrix[ii, kk])
+
+            true_Mn_matrix[ii, kk] = true_Mn
+
+        progress_bar.update()
+
+    return Mn_matrix, true_Mn_matrix
+
+
+def get_eta_SE_mob_arrays(true_Mn_matrix, temp_C, viscosity_power):
+    eta_array = np.zeros(len(mm.x_centers_5nm))
+    SE_mob_array = np.zeros(len(mm.x_centers_5nm))
+
+    for ii in range(len(mm.x_centers_5nm)):
+        inds = np.where(true_Mn_matrix[ii, :] > 0)[0]
+        Mn_avg = np.average(true_Mn_matrix[ii, inds])
+        eta = rf.get_viscosity_experiment_Mn(temp_C, Mn_avg, viscosity_power)
+
+        eta_array[ii] = eta
+        SE_mob_array[ii] = rf.get_SE_mobility(eta)
+
+    return eta_array, SE_mob_array
+
+
+def get_delta_tau_matix(resist_monomer_matrix, scission_matrix):
+    ks_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
+    inds_mon = np.where(resist_monomer_matrix > 0)
+    ks_matrix[inds_mon] = scission_matrix[inds_mon] / resist_monomer_matrix[inds_mon] / step_time
+    delta_tau_matrix = y_0 * ks_matrix * step_time
+    return delta_tau_matrix
+
+
+def get_wp_D_matrix(global_free_monomer_in_resist_matrix, resist_monomer_matrix, temp_C, D_factor):
+    wp_matrix = np.zeros(np.shape(now_free_monomer_matrix_0))
+    D_matrix = np.zeros(np.shape(now_free_monomer_matrix_0))
+
+    for ii in range(len(mm.x_centers_5nm)):
+        for kk in range(len(mm.z_centers_5nm)):
+
+            if resist_monomer_matrix[ii, kk] == 0:
+                continue
+
+            n_free_monomers = global_free_monomer_in_resist_matrix[ii, kk]
+            wp = 1 - n_free_monomers / resist_monomer_matrix[ii, kk]
+
+            if wp <= 0:
+                # print('now_wp <= 0')
+                wp = 0
+
+            D = df.get_D(temp_C, wp)
+
+            wp_matrix[ii, kk] = wp
+            D_matrix[ii, kk] = D * D_factor
+
+    return wp_matrix, D_matrix
+
+
+def get_free_mon_matrix_mon_out_array_after_diffusion(global_free_monomer_in_resist_matrix, D_matrix, xx_vac, zz_vac):
+    free_monomer_in_resist_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
+    out_monomer_array = np.zeros(len(mm.x_centers_5nm))
+
+    print('Simulate diffusion')
+    progress_bar = tqdm(total=len(mm.x_centers_5nm), position=0)
+
+    for ii in range(len(mm.x_centers_5nm)):
+        for kk in range(len(mm.z_centers_5nm)):
+
+            n_free_monomers = int(global_free_monomer_in_resist_matrix[ii, kk])
+
+            if n_free_monomers == 0:
+                continue
+
+            xx0_mon_arr = np.ones(n_free_monomers) * mm.x_centers_5nm[ii]
+            zz0_mon_arr = np.ones(n_free_monomers) * mm.z_centers_5nm[kk]
+
+            xx_mon = df.get_final_x_arr(x0_arr=xx0_mon_arr, D=D_matrix[ii, kk], delta_t=step_time)
+            zz_mon = df.get_final_z_arr(z0_arr_raw=zz0_mon_arr, d_PMMA=900, D=D_matrix[ii, kk], delta_t=step_time)
+
+            af.snake_coord_1d(array=xx_mon, coord_min=mm.x_bins_5nm[0], coord_max=mm.x_bins_5nm[-1])
+
+            zz_mon_vac = mcf.lin_lin_interp(xx_vac, zz_vac)(xx_mon)
+            weights = zz_mon > zz_mon_vac
+            xx_zz_mon = np.vstack([xx_mon, zz_mon]).transpose()
+
+            if len(np.where(zz_mon > 900)[0]) > 0:
+                print('here')
+
+            free_monomer_in_resist_matrix += np.histogramdd(
+                sample=xx_zz_mon,
+                bins=[mm.x_bins_5nm, mm.z_bins_5nm],
+                weights=weights.astype(int)
+            )[0]
+
+            out_monomer_array += np.histogram(
+                a=xx_mon,
+                bins=mm.x_bins_5nm,
+                weights=np.logical_not(weights).astype(int)
+            )[0]
+
+        progress_bar.update()
+
+    return free_monomer_in_resist_matrix, out_monomer_array
+
+
+for n_step in range(0, 1):
 
     # get new scission matrix
     xx_vac_raw = np.load('notebooks/DEBER_simulation/vary_zz_vac_0p2_5s/xx_vac.npy')
@@ -73,167 +198,72 @@ for n_step in range(34, 35):
     now_xx_vac = mm.x_centers_5nm
     now_zz_vac = mcf.lin_lin_interp(xx_vac_raw, now_zz_vac_raw)(now_xx_vac)
 
+    now_xx_vac_for_sim = np.concatenate(([mm.x_bins_5nm[0]], now_xx_vac, [mm.x_bins_5nm[-1]]))
+    now_zz_vac_for_sim = np.concatenate(([now_zz_vac[0]], now_zz_vac, [now_zz_vac[-1]]))
+
     # plt.figure(dpi=300)
     # plt.plot(now_xx_vac, now_zz_vac)
     # plt.show()
 
     # get resist fraction matrix
-    now_resist_fraction_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
-
-    for i in range(len(mm.x_centers_5nm)):
-        beg_ind = np.where(mm.z_bins_5nm > now_zz_vac[i])[0][0]
-
-        now_resist_fraction_matrix[i, beg_ind:] = 1
-
-        if beg_ind > 0:
-            now_resist_fraction_matrix[i, :beg_ind - 1] = 0
-            trans_resist_fraction = 1 - (now_zz_vac[i] - mm.z_bins_5nm[beg_ind - 1]) / mm.step_5nm
-            now_resist_fraction_matrix[i, beg_ind - 1] = trans_resist_fraction
-    # now_resist_fraction_matrix = get_resist_fraction_matrix(now_zz_vac)
-
-    plt.figure(dpi=300)
-    plt.imshow(now_resist_fraction_matrix.transpose())
-    plt.show()
-
-    break
-
+    now_resist_fraction_matrix = get_resist_fraction_matrix(now_zz_vac)
     now_resist_monomer_matrix = now_resist_fraction_matrix * y_slice_V / const.V_mon_nm3
 
-    free_monomer_matrix_in_resist = free_monomer_matrix_in_resist * now_resist_fraction_matrix
+    # plt.figure(dpi=300)
+    # plt.imshow(now_resist_fraction_matrix.transpose())
+    # plt.show()
 
-    # deal with Mn
-    now_ks_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
-    now_Mn_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
-    now_true_Mn_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
-    now_eta_array = np.zeros(len(mm.x_centers_5nm))
-    now_SE_mob = np.zeros(len(mm.x_centers_5nm))
+    # simulate depolymerization
+    now_free_monomer_matrix_0 = (now_scission_matrix * zip_length * now_resist_fraction_matrix).astype(int)
 
-    inds_mon = np.where(now_resist_monomer_matrix > 0)
-    now_ks_matrix[inds_mon] = now_scission_matrix[inds_mon] / now_resist_monomer_matrix[inds_mon] / step_time
+    # correct global_free_monomers_in_resist matrix
+    global_free_monomer_in_resist_matrix = \
+        (global_free_monomer_in_resist_matrix * now_resist_fraction_matrix).astype(int)
+    global_free_monomer_in_resist_matrix += now_free_monomer_matrix_0
 
-    now_tau_matrix = y_0 * now_ks_matrix * step_time
+    # update tau_matrix
+    now_delta_tau_matrix = get_delta_tau_matix(now_resist_monomer_matrix, now_scission_matrix)
+    global_tau_matrix += now_delta_tau_matrix
 
-    tau_matrix += now_tau_matrix
+    # get Mn and true_Mn matrices
+    # now_Mn_matrix, now_true_Mn_matrix = \
+    #     get_Mn_true_Mn_matrix(now_resist_fraction_matrix, global_free_monomer_in_resist_matrix, global_tau_matrix)
 
-    progress_bar = tqdm(total=len(mm.x_centers_5nm), position=0)
+    # get eta and SE_mob arrays
+    # now_eta_array, now_SE_mob_array = get_eta_SE_mob_arrays(now_true_Mn_matrix, temp_C=T_C, viscosity_power=3.4)
 
-    for i in range(len(mm.x_centers_5nm)):
-        for k in range(len(mm.z_centers_5nm)):
+    # plt.figure(dpi=300)
+    # plt.semilogy(mm.x_centers_5nm, now_eta_array)
+    # plt.semilogy(mm.x_centers_5nm, now_SE_mob_array)
+    # plt.show()
 
-            if now_resist_fraction_matrix[i, k] == 0:
-                continue
+    # get wp, D matrices
+    now_outer_monomer_array = np.zeros(len(mm.x_centers_5nm))
 
-            if tau_matrix[i, k] > tau_125[-1]:
-                now_Mn = Mn_125[-1]
-            else:
-                # now_Mn = mcf.lin_lin_interp(tau_125, Mn_125)(tau_matrix[i, k])
-                tau_ind = np.argmin(np.abs(tau_matrix[i, k] - tau_125))
-                now_Mn = Mn_125[tau_ind]
+    now_wp_matrix, now_D_matrix =\
+        get_wp_D_matrix(global_free_monomer_in_resist_matrix, now_resist_monomer_matrix, temp_C=T_C, D_factor=1e-3)
 
-            now_Mn_matrix[i, k] = now_Mn
+    # simulate diffusion
+    now_free_monomer_in_resist_matrix, now_out_monomer_array = get_free_mon_matrix_mon_out_array_after_diffusion(
+        global_free_monomer_in_resist_matrix,
+        now_D_matrix,
+        xx_vac=now_xx_vac_for_sim,
+        zz_vac=now_zz_vac_for_sim)
 
-            now_n_chains = y_slice_V / const.V_mon_nm3 / (now_Mn / MMA_weight)
+    global_free_monomer_in_resist_matrix -= now_free_monomer_matrix_0
+    global_free_monomer_in_resist_matrix += now_free_monomer_in_resist_matrix.astype(int)
 
-            now_true_Mn = (now_n_chains * now_Mn + free_monomer_matrix_in_resist[i, k] * MMA_weight) /\
-                          (now_n_chains + free_monomer_matrix_in_resist[i, k])
-
-            now_true_Mn_matrix[i, k] = now_true_Mn
-
-        progress_bar.update()
-
-    now_eta_array = np.zeros(len(mm.x_centers_5nm))
-    now_SE_mob_array = np.zeros(len(mm.x_centers_5nm))
-
-    for i in range(len(mm.x_centers_5nm)):
-
-        inds = np.where(now_true_Mn_matrix[i, :] > 0)[0]
-        now_Mn_avg = np.average(now_true_Mn_matrix[i, inds])
-        now_eta = rf.get_viscosity_experiment_Mn(T_C, now_Mn_avg, 3.4)
-
-        now_eta_array[i] = now_eta
-        now_SE_mob_array[i] = rf.get_SE_mobility(now_eta)
-
-
-
-    # now_n_free_monomers = free_monomer_matrix[i, k]
-    #
-    # if now_n_free_monomers == 0:
-    #     continue
-    #
-    # now_n_chains = now_resist_monomer_matrix[i, k] / (Mn_0 / 1e+2)
-    # now_true_Mn = now_resist_monomer_matrix[i, k] * 100 / (now_n_chains + now_n_free_monomers)
-    # Mn_true_matrix[i, k] = now_true_Mn
-    # eta_matrix[i, k] = rf.get_viscosity_experiment_Mn(T_C, now_true_Mn, 3.4)
-    # SE_mob_matrix[i, k] = rf.get_SE_mobility(eta_matrix[i, k])
-
-# %% simulate depolymerization
-now_free_monomer_matrix_0 = now_scission_matrix * zip_length
-
-# %% simulate diffusion
-now_outer_monomer_array = np.zeros(len(mm.x_centers_5nm))
-
-now_wp_matrix = np.zeros(np.shape(now_free_monomer_matrix_0))
-now_D_matrix = np.zeros(np.shape(now_free_monomer_matrix_0))
-
-progress_bar = tqdm(total=len(mm.x_centers_5nm), position=0)
-
-now_out_monomer_array = np.zeros(len(mm.x_centers_5nm))
-
-for i in range(len(mm.x_centers_5nm)):
-    for k in range(len(mm.z_centers_5nm)):
-
-        now_n_free_monomers = int(now_free_monomer_matrix_0[i, k] + free_monomer_matrix_in_resist[i, k])
-
-        now_wp = 1 - now_n_free_monomers / now_resist_monomer_matrix[i, k]
-        if now_wp <= 0:
-            print('now_wp <= 0')
-            now_wp = 0
-
-        now_D = df.get_D(T_C, now_wp)
-
-        now_wp_matrix[i, k] = now_wp
-        now_D_matrix[i, k] = now_D * 1e-5
-
-
-for i in range(len(mm.x_centers_5nm)):
-    for k in range(len(mm.z_centers_5nm)):
-
-        now_n_free_monomers = int(now_free_monomer_matrix_0[i, k] + free_monomer_matrix_in_resist[i, k])
-
-        if now_n_free_monomers == 0:
-            continue
-
-        now_xx0_mon_arr = np.ones(now_n_free_monomers) * mm.x_centers_5nm[i]
-        now_zz0_mon_arr = np.ones(now_n_free_monomers) * mm.z_centers_5nm[k]
-
-        if now_resist_monomer_matrix[i, k] == 0:  # events doubling problems
-            continue
-
-        now_xx_mon = df.get_final_x_arr(x0_arr=now_xx0_mon_arr, D=now_D_matrix[i, k], delta_t=step_time)
-        now_zz_mon = df.get_final_z_arr(z0_arr_raw=now_zz0_mon_arr, d_PMMA=900, D=now_D_matrix[i, k], delta_t=step_time)
-
-        af.snake_coord_1d(array=now_xx_mon, coord_min=mm.x_bins_5nm[0], coord_max=mm.x_bins_5nm[-1])
-
-        now_zz_mon_vac = mcf.lin_lin_interp(now_xx_vac_prec, now_zz_vac_prec)(now_xx_mon)
-        now_weights = now_zz_mon > now_zz_mon_vac
-
-        now_xx_zz_mon = np.vstack([now_xx_mon, now_zz_mon]).transpose()
-
-        free_monomer_matrix_in_resist += np.histogramdd(
-            sample=now_xx_zz_mon,
-            bins=[mm.x_bins_5nm, mm.z_bins_5nm],
-            weights=now_weights.astype(int)
-        )[0]
-
-        now_out_monomer_array += np.histogram(
-            a=now_xx_mon,
-            bins=mm.x_bins_5nm,
-            weights=np.logical_not(now_weights).astype(int)
-        )[0]
-
-    progress_bar.update()
-
+# %%
 plt.figure(dpi=300)
-plt.imshow(free_monomer_matrix_in_resist.transpose())
+plt.imshow(global_free_monomer_in_resist_matrix.transpose())
 # plt.imshow(np.log(now_D_matrix.transpose()))
 plt.show()
+
+# %%
+plt.figure(dpi=300)
+plt.plot(mm.x_centers_5nm, now_out_monomer_array)
+plt.show()
+
+# %%
+(np.sum(now_free_monomer_in_resist_matrix) + np.sum(now_out_monomer_array)) / np.sum(now_free_monomer_matrix_0)
+
