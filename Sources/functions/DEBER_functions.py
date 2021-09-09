@@ -108,7 +108,7 @@ def get_delta_tau_matix(resist_monomer_matrix, scission_matrix, step_time):
     return delta_tau_matrix
 
 
-def get_wp_D_matrix(global_free_monomer_in_resist_matrix, resist_monomer_matrix, temp_C, D_factor):
+def get_wp_D_matrix(global_free_monomer_in_resist_matrix, resist_monomer_matrix, temp_C):
     wp_matrix = np.zeros(np.shape(resist_monomer_matrix))
     D_matrix = np.zeros(np.shape(resist_monomer_matrix))
 
@@ -127,9 +127,23 @@ def get_wp_D_matrix(global_free_monomer_in_resist_matrix, resist_monomer_matrix,
             D = df.get_D(temp_C, wp)
 
             wp_matrix[ii, kk] = wp
-            D_matrix[ii, kk] = D * D_factor
+            D_matrix[ii, kk] = D
 
     return wp_matrix, D_matrix
+
+
+def get_true_D_matrix(D_matrix, Mn_matrix, k_diff, Mn_diff):
+    true_D_matrix = np.zeros(np.shape(D_matrix))
+
+    for i in range(len(mm.x_centers_5nm)):
+        for k in range(len(mm.z_centers_5nm)):
+
+            if Mn_matrix[i, k] == 0:
+                continue
+
+            true_D_matrix[i, k] = D_matrix * np.power(10, k_diff * (1/Mn_matrix[i, k] - 1/Mn_diff))
+
+    return true_D_matrix
 
 
 def get_free_mon_matrix_mon_out_array_after_diffusion(global_free_monomer_in_resist_matrix,
@@ -258,6 +272,11 @@ def get_zz_after_evolver(vlist_path):
     zz_after_evolver = mcf.lin_lin_interp(xx_SE_sorted * 1e+3, zz_SE_sorted * 1e+3)(mm.x_centers_5nm)
 
     return zz_after_evolver
+
+
+def get_true_D_matrix(D_matrix, Mn_matrix, k_diff, Mn_diff):
+    true_D_matrix = D_matrix * np.power(10, k_diff * (1/Mn_matrix - 1/Mn_diff))
+    return true_D_matrix
 
 
 
