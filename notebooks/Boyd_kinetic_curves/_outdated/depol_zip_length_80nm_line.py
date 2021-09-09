@@ -9,7 +9,7 @@ from functions import scission_functions as sf
 from functions import plot_functions as pf
 from functions import G_functions as Gf
 import constants as const
-from mapping import mapping_viscosity_80nm as mm
+from mapping._outdated import mapping_viscosity_80nm as mm
 
 const = importlib.reload(const)
 mm = importlib.reload(mm)

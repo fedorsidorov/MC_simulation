@@ -42,6 +42,7 @@ Z_C, u_C = 6, 12.0096
 Z_O, u_O = 8, 15.999
 N_H_MMA, N_C_MMA, N_O_MMA = 8, 5, 2
 u_MMA = N_H_MMA * u_H + N_C_MMA * u_C + N_O_MMA * u_O
+MMA_weight = 100
 n_MMA = rho_PMMA * Na / u_MMA  # 1 / cc
 # m_MMA = u_MMA / Na
 M_mon = u_MMA / Na  # g

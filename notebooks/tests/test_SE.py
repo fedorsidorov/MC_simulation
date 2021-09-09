@@ -1,7 +1,7 @@
 import numpy as np
 import importlib
 from functions._outdated import SE_functions as sef
-from mapping import mapping_viscosity_80nm as mm
+from mapping._outdated import mapping_viscosity_80nm as mm
 import matplotlib.pyplot as plt
 
 sef = importlib.reload(sef)

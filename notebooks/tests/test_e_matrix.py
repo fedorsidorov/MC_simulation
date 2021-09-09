@@ -11,7 +11,7 @@ from functions import plot_functions as pf
 from functions import G_functions as Gf
 
 # from mapping import mapping_viscosity_80nm as mm
-from mapping import mapping_viscosity_900nm as mm
+from mapping._outdated import mapping_viscosity_900nm as mm
 
 mm = importlib.reload(mm)
 emf = importlib.reload(emf)

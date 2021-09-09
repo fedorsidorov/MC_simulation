@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import importlib
 from _outdated import MC_classes_nm as mcc
 # from mapping import mapping_viscosity_80nm as mm
-from mapping import mapping_viscosity_900nm as mm
+from mapping._outdated import mapping_viscosity_900nm as mm
 from functions import plot_functions as pf
 from functions import e_matrix_functions as emf
 import indexes as ind

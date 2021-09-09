@@ -179,7 +179,10 @@ def get_now_z_vac(now_x, layer_ind, xx_vac, zz_vac):
     if layer_ind == 1:
         return 0
 
-    return mcf.lin_lin_interp(xx_vac, zz_vac)(now_x)
+    # return mcf.lin_lin_interp(xx_vac, zz_vac)(now_x)
+
+    now_vac_x_ind = np.argmin(np.abs(xx_vac - now_x))
+    return zz_vac[now_vac_x_ind]
 
 
 def get_ee_phi_theta_phi2nd_theta2nd(delta_E, E):
@@ -477,7 +480,7 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut, Pn, xx_vac, zz_vac, r_be
 # e_DATA = track_all_electrons(
 #     n_electrons=100,
 #     E0=10000,
-#     d_PMMA=80,
+#     d_PMMA=900,
 #     z_cut=np.inf,
 #     Pn=False,
 #     xx_vac=xx_vac_final,
@@ -495,6 +498,7 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut, Pn, xx_vac, zz_vac, r_be
 #     if len(inds) == 0:
 #         continue
 #
+#     ax.plot(e_DATA[inds, 4], e_DATA[inds, 6], '-', linewidth='1')
 #     ax.plot(e_DATA[inds, 4], e_DATA[inds, 6], '-', linewidth='1')
 #
 # ax.plot(xx_vac_final, zz_vac_final)

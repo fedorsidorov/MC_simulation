@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from functions import chain_functions as cf
 from functions import array_functions as af
 from tqdm import tqdm
-from mapping import mapping_viscosity_900nm as mapping
+from mapping._outdated import mapping_viscosity_900nm as mapping
 import constants as const
 
 cf = importlib.reload(cf)

@@ -1,12 +1,11 @@
 import importlib
 import os
 
-import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
 
 import constants as cp
-from mapping import mapping_viscosity_900nm as mapping
+from mapping._outdated import mapping_viscosity_900nm as mapping
 from functions import array_functions as af
 from functions import chain_functions as cf
 

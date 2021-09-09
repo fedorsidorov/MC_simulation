@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import importlib
 from _outdated import MC_classes_nm as mcc
-from mapping import mapping_viscosity_1000nm as mm
+from mapping._outdated import mapping_viscosity_1000nm as mm
 from functions import plot_functions as pf
 import indexes as ind
 

@@ -1,10 +1,8 @@
 import numpy as np
 import importlib
-import matplotlib.pyplot as plt
 from tqdm import tqdm
-from mapping import mapping_viscosity_80nm as mapping
+from mapping._outdated import mapping_viscosity_80nm as mapping
 from functions import mapping_functions as mf
-import constants
 
 mapping = importlib.reload(mapping)
 mf = importlib.reload(mf)

@@ -26,6 +26,14 @@ d_PMMA_cm = d_PMMA * 1e-7
 area_cm2 = (x_max - x_min) * (y_max - y_min) * 1e-7 ** 2
 volume_cm3 = area_cm2 * d_PMMA_cm
 
+y_slice_V_nm3 = step_5nm * ly * step_5nm
+
+j_exp_s = 0.85e-9  # A / cm^2
+j_exp_l = j_exp_s * lx_cm  # A / cm
+
+r_beam_x = 100
+r_beam_y = ly / 2
+
 # %% histograms parameters
 x_bins_2nm = np.arange(x_min, x_max + 1, step_2nm)
 y_bins_2nm = np.arange(y_min, y_max + 1, step_2nm)

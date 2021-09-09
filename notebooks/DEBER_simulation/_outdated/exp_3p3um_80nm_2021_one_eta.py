@@ -31,7 +31,7 @@ dose_s = 0.6e-6  # C / cm^2
 dose_l = dose_s * mm.lx_cm  # C / cm
 total_time = dose_l / j_exp_l  # 316 s
 Q = dose_s * mm.area_cm2
-n_electrons = Q / constants.e_SI  # 24 716
+n_electrons = Q / const.e_SI  # 24 716
 n_electrons_s = int(np.around(n_electrons / total_time))
 
 step_time = 10
