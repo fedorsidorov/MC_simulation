@@ -472,14 +472,15 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut, Pn):
 
 
 # %%
-# d_PMMA = 100
+d_PMMA = [10]
 # d_PMMA = 1e+10
-d_PMMA = 500
+# d_PMMA = [10, 20, 30, 40, 50, 60, 70, 80]
 
-n_files = 1000
+n_files = 100
 n_primaries_in_file = 100
 
-E_beam_arr = [10000]
+# E_beam_arr = [20000]
+E_beam = 20000
 
 # E_beam_arr = [700, 1000, 1400]
 # E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 800, 1000, 1400]
@@ -488,16 +489,16 @@ E_beam_arr = [10000]
 # z_max_arr = 1718.42
 
 
-for n in range(525, n_files):
+for n in range(n_files):
 
     print('File #' + str(n))
 
-    for i, E_beam in enumerate(E_beam_arr):
-        print(E_beam, 'eV,', 'elastic factor =', PMMA_elastic_factor)
+    for _, now_d in enumerate(d_PMMA):
+        # print(E_beam, 'eV,', 'elastic factor =', PMMA_elastic_factor)
         e_DATA = track_all_electrons(
             n_electrons=n_primaries_in_file,
             E0=E_beam,
-            d_PMMA=d_PMMA,
+            d_PMMA=now_d,
             z_cut=np.inf,
             Pn=True
         )
@@ -513,7 +514,7 @@ for n in range(525, n_files):
         # np.save('data/2ndaries/no_factor/' + str(PMMA_elastic_factor) + '/' + str(E_beam) +
         #         '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
-        np.save('data/4Harris/e_DATA_Pn_' + str(n) + '.npy', e_DATA_Pn)
+        np.save('data/4_kin_curves/' + str(now_d) + '/e_DATA_Pn_' + str(n) + '.npy', e_DATA_Pn)
 
         # np.save('data/4Akkerman/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA)
         # np.save('data/4Akkerman/1keV/e_DATA_' + str(n) + '.npy', e_DATA)

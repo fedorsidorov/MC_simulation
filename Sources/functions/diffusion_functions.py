@@ -77,3 +77,22 @@ def get_D(T_C, wp):  # in cm^2 / s
 # plt.figure(dpi=300)
 # plt.plot(centers, z_hist)
 # plt.show()
+
+# %%
+# T_C = 160
+#
+# wpwp = np.linspace(0, 1, 100)
+# DD = np.zeros(len(wpwp))
+#
+# for i in range(len(wpwp)):
+#     DD[i] = get_D(T_C, wpwp[i])
+#
+# plt.figure(dpi=300)
+# plt.semilogy(wpwp, DD)
+#
+# plt.xlabel('polymer mass fraction')
+# plt.ylabel('D')
+#
+# plt.grid()
+# plt.show()
+

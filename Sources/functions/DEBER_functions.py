@@ -112,22 +112,22 @@ def get_wp_D_matrix(global_free_monomer_in_resist_matrix, resist_monomer_matrix,
     wp_matrix = np.zeros(np.shape(resist_monomer_matrix))
     D_matrix = np.zeros(np.shape(resist_monomer_matrix))
 
-    for ii in range(len(mm.x_centers_5nm)):
-        for kk in range(len(mm.z_centers_5nm)):
+    for i in range(len(mm.x_centers_5nm)):
+        for k in range(len(mm.z_centers_5nm)):
 
-            if resist_monomer_matrix[ii, kk] == 0:
+            if resist_monomer_matrix[i, k] == 0:
                 wp = 0
             else:
-                n_free_monomers = global_free_monomer_in_resist_matrix[ii, kk]
-                wp = 1 - n_free_monomers / resist_monomer_matrix[ii, kk]
+                n_free_monomers = global_free_monomer_in_resist_matrix[i, k]
+                wp = 1 - n_free_monomers / resist_monomer_matrix[i, k]
 
             if wp <= 0:
                 wp = 0
 
             D = df.get_D(temp_C, wp)
 
-            wp_matrix[ii, kk] = wp
-            D_matrix[ii, kk] = D
+            wp_matrix[i, k] = wp
+            D_matrix[i, k] = D
 
     return wp_matrix, D_matrix
 
@@ -141,7 +141,7 @@ def get_true_D_matrix(D_matrix, Mn_matrix, k_diff, Mn_diff):
             if Mn_matrix[i, k] == 0:
                 continue
 
-            true_D_matrix[i, k] = D_matrix * np.power(10, k_diff * (1/Mn_matrix[i, k] - 1/Mn_diff))
+            true_D_matrix[i, k] = D_matrix[i, k] * np.power(10, k_diff * (1/Mn_matrix[i, k] - 1/Mn_diff))
 
     return true_D_matrix
 
@@ -157,19 +157,24 @@ def get_free_mon_matrix_mon_out_array_after_diffusion(global_free_monomer_in_res
     print('Simulate diffusion')
     progress_bar = tqdm(total=len(mm.x_centers_5nm), position=0)
 
-    for ii in range(len(mm.x_centers_5nm)):
-        for kk in range(len(mm.z_centers_5nm)):
+    for i in range(len(mm.x_centers_5nm)):
+        for k in range(len(mm.z_centers_5nm)):
 
-            n_free_monomers = int(global_free_monomer_in_resist_matrix[ii, kk])
+            n_free_monomers = int(global_free_monomer_in_resist_matrix[i, k])
 
             if n_free_monomers == 0:
                 continue
 
-            xx0_mon_arr = np.ones(n_free_monomers) * mm.x_centers_5nm[ii]
-            zz0_mon_arr = np.ones(n_free_monomers) * mm.z_centers_5nm[kk]
+            xx0_mon_arr = np.ones(n_free_monomers) * mm.x_centers_5nm[i]
+            zz0_mon_arr = np.ones(n_free_monomers) * mm.z_centers_5nm[k]
 
-            xx_mon = df.get_final_x_arr(x0_arr=xx0_mon_arr, D=D_matrix[ii, kk], delta_t=step_time)
-            zz_mon = df.get_final_z_arr(z0_arr_raw=zz0_mon_arr, d_PMMA=d_PMMA, D=D_matrix[ii, kk], delta_t=step_time)
+            if D_matrix[i, k] == 0:
+                xx_mon = xx0_mon_arr
+                zz_mon = zz0_mon_arr
+
+            else:
+                xx_mon = df.get_final_x_arr(x0_arr=xx0_mon_arr, D=D_matrix[i, k], delta_t=step_time)
+                zz_mon = df.get_final_z_arr(z0_arr_raw=zz0_mon_arr, d_PMMA=d_PMMA, D=D_matrix[i, k], delta_t=step_time)
 
             af.snake_coord_1d(array=xx_mon, coord_min=mm.x_bins_5nm[0], coord_max=mm.x_bins_5nm[-1])
 
@@ -274,10 +279,55 @@ def get_zz_after_evolver(vlist_path):
     return zz_after_evolver
 
 
-def get_true_D_matrix(D_matrix, Mn_matrix, k_diff, Mn_diff):
-    true_D_matrix = D_matrix * np.power(10, k_diff * (1/Mn_matrix - 1/Mn_diff))
-    return true_D_matrix
+def get_zz_after_evolver_20(vlist_path):
+    SE = np.loadtxt(vlist_path)
+    SE = SE[np.where(
+        np.logical_and(
+            np.abs(SE[:, 0]) < 0.1,
+            SE[:, 2] > 1e-3
+        ))]
+
+    xx_SE = SE[1:, 1]
+    zz_SE = SE[1:, 2]
+
+    sort_inds = np.argsort(xx_SE)
+    xx_SE_sorted = xx_SE[sort_inds]
+    zz_SE_sorted = zz_SE[sort_inds]
+
+    xx_SE_sorted[0] = -mm.lx * 1e-3 / 2
+    xx_SE_sorted[-1] = mm.lx * 1e-3 / 2
+
+    zz_SE_sorted[0] = zz_SE_sorted[1]
+    zz_SE_sorted[-1] = zz_SE_sorted[-2]
+
+    zz_after_evolver = mcf.lin_lin_interp(xx_SE_sorted * 1e+3, zz_SE_sorted * 1e+3)(mm.x_centers_20nm)
+
+    return zz_after_evolver
 
 
+def get_zz_after_evolver_50(vlist_path):
+    SE = np.loadtxt(vlist_path)
+    SE = SE[np.where(
+        np.logical_and(
+            np.abs(SE[:, 0]) < 0.1,
+            SE[:, 2] > 1e-3
+        ))]
+
+    xx_SE = SE[1:, 1]
+    zz_SE = SE[1:, 2]
+
+    sort_inds = np.argsort(xx_SE)
+    xx_SE_sorted = xx_SE[sort_inds]
+    zz_SE_sorted = zz_SE[sort_inds]
+
+    xx_SE_sorted[0] = -mm.lx * 1e-3 / 2
+    xx_SE_sorted[-1] = mm.lx * 1e-3 / 2
+
+    zz_SE_sorted[0] = zz_SE_sorted[1]
+    zz_SE_sorted[-1] = zz_SE_sorted[-2]
+
+    zz_after_evolver = mcf.lin_lin_interp(xx_SE_sorted * 1e+3, zz_SE_sorted * 1e+3)(mm.x_centers_50nm)
+
+    return zz_after_evolver
 
 

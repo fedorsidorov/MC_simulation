@@ -45,7 +45,13 @@ GG_theor = np.zeros(len(weights))
 
 # sample = '3'
 
-plt.figure(dpi=300)
+# plt.figure(dpi=300)
+
+fontsize = 10
+
+_, ax = plt.subplots(dpi=300)
+fig = plt.gcf()
+fig.set_size_inches(4, 3)
 
 markers = 'v-', '^-', '*-'
 
@@ -70,15 +76,26 @@ for n, sample in enumerate(['3']):
     TT_sim = Gf.get_T(GG_sim)
     TT_theor = Gf.get_T(GG_theor)
 
-    plt.plot(TT_sim, weights, markers[n], markersize=10, label='simulation ' + str(n))
-    plt.plot(TT_theor, weights, markers[n], markersize=10, label='theory ' + str(n))
-    plt.grid()
+    # plt.plot(TT_sim, weights, markers[n], markersize=10, label='simulation ' + str(n))
+    # plt.plot(TT_theor, weights, markers[n], markersize=10, label='theory ' + str(n))
+
+    # plt.plot(TT_sim, weights, markers[n], markersize=10, label='simulation')
+    # plt.plot(TT_theor, weights, markers[n], markersize=10, label='theory')
+
+    plt.plot(TT_sim, weights, '--o', label='simulation')
+    plt.plot(TT_theor, weights, '--o', label='theory')
+
+for tick in ax.xaxis.get_major_ticks():
+    tick.label.set_fontsize(fontsize)
+for tick in ax.yaxis.get_major_ticks():
+    tick.label.set_fontsize(fontsize)
 
 plt.xlim(0, 200)
 plt.ylim(0.02, 0.12)
-plt.xlabel('T, °C')
-plt.ylabel('w (remote scission probability)')
-plt.legend()
+plt.xlabel('T, °C', fontsize=fontsize)
+plt.ylabel('scission probability', fontsize=fontsize)
+plt.legend(fontsize=fontsize)
 
+plt.grid()
 plt.show()
-# plt.savefig('G.png', dpi=300)
+# plt.savefig('G.jpg', bbox_inches='tight')

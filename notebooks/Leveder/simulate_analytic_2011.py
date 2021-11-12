@@ -54,7 +54,7 @@ plt.show()
 # plt.savefig('SE_fourier_beg.png', dpi=300)
 
 # %%
-SE = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/REF/vlist_REF_scale_1.txt')
+SE = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/REF/vlist_REF_scale_1e-3.txt')
 SE = SE[np.where(np.logical_or(np.logical_and(SE[:, 0] == 0, SE[:, 2] > 0.02), SE[:, 1] == -100))]
 
 inds = np.where(SE[:, 1] == -100)[0]

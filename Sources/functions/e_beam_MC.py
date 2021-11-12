@@ -6,6 +6,8 @@ from tqdm import tqdm
 from functions import MC_functions as mcf
 import grid
 
+plt.style.use(['science', 'grid'])
+
 grid = importlib.reload(grid)
 mcf = importlib.reload(mcf)
 
@@ -259,7 +261,6 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
 
             coords = coords + delta_r
             if coords[-1] <= get_now_z_vac(coords[0], 0, xx_vac, zz_vac):
-                # print('KAKOGO HERA ???')
                 layer_ind = 2
                 break
 
@@ -280,7 +281,6 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
             coords = coords + delta_r_corr
 
             if coords[-1] <= get_now_z_vac(coords[0], 0, xx_vac, zz_vac):
-                # print('HERE')
                 coords += delta_r * 2
                 layer_ind = 2
                 break
@@ -324,7 +324,10 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn,
         else:
             print('WTF else ???')
 
-        proc_ind = np.random.choice(structure_process_indexes[layer_ind], p=structure_u_norm[layer_ind][E_ind, :])
+        proc_ind = np.random.choice(
+            structure_process_indexes[layer_ind],
+            p=structure_u_norm[layer_ind][E_ind, :]
+        )
 
         # handle scattering
 
@@ -471,23 +474,59 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut, Pn, xx_vac, zz_vac, r_be
 
 
 # %%
-# xx_vac = np.linspace(-1000, 1000, 1000)
-# zz_vac = (np.cos(xx_vac * 2 * np.pi / 2000) + 1) * 40
-#
-# xx_vac_final = np.concatenate(([-1e+6], xx_vac, [1e+6]))
-# zz_vac_final = np.concatenate(([zz_vac[0]], zz_vac, [zz_vac[-1]]))
-#
+xx_vac = np.linspace(-1000, 1000, 1000)
+zz_vac = (np.cos(xx_vac * 2 * np.pi / 2000) + 1) * 0
+
+xx_vac_final = np.concatenate(([-1e+6], xx_vac, [1e+6]))
+zz_vac_final = np.concatenate(([zz_vac[0]], zz_vac, [zz_vac[-1]]))
+
 # e_DATA = track_all_electrons(
 #     n_electrons=100,
-#     E0=10000,
-#     d_PMMA=900,
+#     E0=20000,
+#     d_PMMA=10,
 #     z_cut=np.inf,
-#     Pn=False,
+#     Pn=True,
 #     xx_vac=xx_vac_final,
 #     zz_vac=zz_vac_final,
 #     r_beam_x=100,
 #     r_beam_y=100
 # )
+
+d_PMMA = [10]
+# d_PMMA = 1e+10
+# d_PMMA = [10, 20, 30, 40, 50, 60, 70, 80]
+
+# n_files = 100
+n_files = 1
+n_primaries_in_file = 100
+
+E_beam = 20000
+
+for n in range(n_files):
+
+    print('File #' + str(n))
+
+    for _, now_d in enumerate(d_PMMA):
+        # print(E_beam, 'eV,', 'elastic factor =', PMMA_elastic_factor)
+        e_DATA = track_all_electrons(
+            n_electrons=100,
+            E0=20000,
+            d_PMMA=now_d,
+            z_cut=np.inf,
+            Pn=True,
+            xx_vac=xx_vac_final,
+            zz_vac=zz_vac_final,
+            r_beam_x=100,
+            r_beam_y=100
+        )
+
+        e_DATA_Pn = e_DATA[
+            np.where(
+                np.logical_and(e_DATA[:, 2] == 0, e_DATA[:, 3] >= 1)
+            )
+        ]
+
+        # np.save('data/4_kin_curves/' + str(now_d) + '/e_DATA_Pn_' + str(n) + '.npy', e_DATA_Pn)
 
 # %%
 # fig, ax = plt.subplots(dpi=300)
@@ -513,3 +552,27 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut, Pn, xx_vac, zz_vac, r_be
 # plt.ylabel('z, nm')
 # plt.grid()
 # plt.show()
+
+# %%
+ans = np.load('data/4_kin_curves/30/e_DATA_Pn_0.npy')
+
+# %%
+d_PMMA = [10, 20, 30, 40, 50, 60, 70, 80]
+
+amounts = np.zeros(8)
+
+for i in range(100):
+
+    for j, d in enumerate(d_PMMA):
+        now_e_DATA_Pn = np.load('data/4_kin_curves/' + str(d) + '/e_DATA_Pn_' + str(i) + '.npy')
+
+        now_e_DATA_Pn = now_e_DATA_Pn[np.where(now_e_DATA_Pn[:, 3] == 1)]
+
+        amounts[j] += len(now_e_DATA_Pn)
+
+plt.figure(dpi=300, figsize=[4, 3])
+plt.plot(amounts / d_PMMA)
+plt.show()
+
+# plt.savefig('result.pdf', bbox_inches='tight')
+

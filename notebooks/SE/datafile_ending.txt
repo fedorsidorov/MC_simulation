@@ -212,3 +212,7 @@ step_10s := {
 	while total_time < now_time + 10 do {g1; printf "Total time = %f\n",total_time};
 	}
 
+step_100s := {
+	now_time := total_time;
+	while total_time < now_time + 100 do {g1; printf "Total time = %f\n",total_time};
+	}

@@ -2,9 +2,8 @@ import importlib
 import numpy as np
 import matplotlib.pyplot as plt
 from mapping import mapping_harris as mm
-
 mm = importlib.reload(mm)
-
+plt.style.use('science')
 
 # %%
 grun = np.loadtxt('notebooks/G_value/curves/Grun_10keV.txt')

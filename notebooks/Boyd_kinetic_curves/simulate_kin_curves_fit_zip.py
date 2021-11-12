@@ -32,11 +32,15 @@ Pn /= np.sum(nn**z_0 * np.exp(-nn / y_0))
 M1_0 = np.sum(Pn * nn)
 
 # %% get zip lens
-zip_len_term_98, zip_len_trans_98 = bf.get_zip_len_term_trans(98)
-zip_len_term_118, zip_len_trans_118 = bf.get_zip_len_term_trans(118)
-zip_len_term_125, zip_len_trans_125 = bf.get_zip_len_term_trans(125)
-zip_len_term_150, zip_len_trans_150 = bf.get_zip_len_term_trans(150)
-zip_len_term_170, zip_len_trans_170 = bf.get_zip_len_term_trans(170)
+# zip_len_term_98, zip_len_trans_98 = bf.get_zip_len_term_trans(98)
+# zip_len_term_118, zip_len_trans_118 = bf.get_zip_len_term_trans(118)
+# zip_len_term_125, zip_len_trans_125 = bf.get_zip_len_term_trans(125)
+# zip_len_term_150, zip_len_trans_150 = bf.get_zip_len_term_trans(150)
+# zip_len_term_170, zip_len_trans_170 = bf.get_zip_len_term_trans(170)
+
+zip_len_125 = 1000
+zip_len_150 = 1000
+zip_len_170 = 1000
 
 # %% 2-point curves
 L_norm = np.array([1, 0.5, 0])
@@ -56,78 +60,30 @@ tau_total = 400
 tau_step = 0.01
 tau = np.arange(0, tau_total, tau_step)
 
-solution_98_term = bf.RK4_PCH(zip_len_term_98**-1 * y_0, np.array([1, 1, z_0]), tau)
-solution_118_term = bf.RK4_PCH(zip_len_term_118**-1 * y_0, np.array([1, 1, z_0]), tau)
-solution_125_term = bf.RK4_PCH(zip_len_term_125**-1 * y_0, np.array([1, 1, z_0]), tau)
-solution_150_term = bf.RK4_PCH(zip_len_term_150**-1 * y_0, np.array([1, 1, z_0]), tau)
-solution_170_term = bf.RK4_PCH(zip_len_term_170**-1 * y_0, np.array([1, 1, z_0]), tau)
-
-solution_98_trans = bf.RK4_PCH(zip_len_trans_98**-1 * y_0, np.array([1, 1, z_0]), tau)
-solution_118_trans = bf.RK4_PCH(zip_len_trans_118**-1 * y_0, np.array([1, 1, z_0]), tau)
-solution_125_trans = bf.RK4_PCH(zip_len_trans_125**-1 * y_0, np.array([1, 1, z_0]), tau)
-solution_150_trans = bf.RK4_PCH(zip_len_trans_150**-1 * y_0, np.array([1, 1, z_0]), tau)
-solution_170_trans = bf.RK4_PCH(zip_len_trans_170**-1 * y_0, np.array([1, 1, z_0]), tau)
+solution_125_term = bf.RK4_PCH(zip_len_125**-1 * y_0, np.array([1, 1, z_0]), tau)
+solution_150_term = bf.RK4_PCH(zip_len_150**-1 * y_0, np.array([1, 1, z_0]), tau)
+solution_170_term = bf.RK4_PCH(zip_len_170**-1 * y_0, np.array([1, 1, z_0]), tau)
 
 # %%
-M1w_98_term = solution_98_term[:, 0]
-M1w_118_term = solution_118_term[:, 0]
 M1w_125_term = solution_125_term[:, 0]
 M1w_150_term = solution_150_term[:, 0]
 M1w_170_term = solution_170_term[:, 0]
 
-yw_98_term = solution_98_term[:, 1]
-yw_118_term = solution_118_term[:, 1]
 yw_125_term = solution_125_term[:, 1]
 yw_150_term = solution_150_term[:, 1]
 yw_170_term = solution_170_term[:, 1]
 
-z_98_term = solution_98_term[:, 2]
-z_118_term = solution_118_term[:, 2]
 z_125_term = solution_125_term[:, 2]
 z_150_term = solution_150_term[:, 2]
 z_170_term = solution_170_term[:, 2]
 
-y_98_term = yw_98_term * y_0
-y_118_term = yw_118_term * y_0
 y_125_term = yw_125_term * y_0
 y_150_term = yw_150_term * y_0
 y_170_term = yw_170_term * y_0
 
-x_98_term = y_98_term * (z_125_term + 1)
-x_118_term = y_118_term * (z_125_term + 1)
 x_125_term = y_125_term * (z_125_term + 1)
 x_150_term = y_150_term * (z_150_term + 1)
 x_170_term = y_170_term * (z_170_term + 1)
-
-M1w_98_trans = solution_98_trans[:, 0]
-M1w_118_trans = solution_118_trans[:, 0]
-M1w_125_trans = solution_125_trans[:, 0]
-M1w_150_trans = solution_150_trans[:, 0]
-M1w_170_trans = solution_170_trans[:, 0]
-
-yw_98_trans = solution_98_trans[:, 1]
-yw_118_trans = solution_118_trans[:, 1]
-yw_125_trans = solution_125_trans[:, 1]
-yw_150_trans = solution_150_trans[:, 1]
-yw_170_trans = solution_170_trans[:, 1]
-
-z_98_trans = solution_98_trans[:, 2]
-z_118_trans = solution_118_trans[:, 2]
-z_125_trans = solution_125_trans[:, 2]
-z_150_trans = solution_150_trans[:, 2]
-z_170_trans = solution_170_trans[:, 2]
-
-y_98_trans = yw_98_trans * y_0
-y_118_trans = yw_118_trans * y_0
-y_125_trans = yw_125_trans * y_0
-y_150_trans = yw_150_trans * y_0
-y_170_trans = yw_170_trans * y_0
-
-x_98_trans = y_98_trans * (z_125_trans + 1)
-x_118_trans = y_118_trans * (z_125_trans + 1)
-x_125_trans = y_125_trans * (z_125_trans + 1)
-x_150_trans = y_150_trans * (z_150_trans + 1)
-x_170_trans = y_170_trans * (z_170_trans + 1)
 
 # %% plot curves for termination
 kin_curve_125 = np.loadtxt('notebooks/Boyd_kinetic_curves/kinetic_curves/3.txt')

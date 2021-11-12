@@ -20,6 +20,13 @@ def get_SE_mobility(eta):
     return mobility
 
 
+def get_eta(mobility):
+    C = 0.0381
+    k = 0.9946
+    eta = (1 / mobility / C)**(1/k)
+    return eta
+
+
 def get_viscosity_experiment_Mn(T_C, Mn, power):  # aho2008.pdf, bueche1955.pdf - ???????????
     Mn_0 = 271374
     eta_pre = get_viscosity_experiment_const_M(T_C)

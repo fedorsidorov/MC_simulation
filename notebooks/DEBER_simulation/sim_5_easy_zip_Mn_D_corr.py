@@ -35,7 +35,7 @@ E0 = 20e+3
 T_C = 160
 
 # PARAMETERS !!!
-zip_length = 4000
+zip_length = 3000
 k_diff = int(1e+4)
 Mn_diff = int(3e+3)
 
@@ -67,8 +67,6 @@ for n_step in range(n_steps):
         zz_vac=zz_vac
     )
 
-    # now_scission_matrix = np.load('now_scission_matrix.npy')
-
     # %
     # get resist fraction matrix
     now_resist_fraction_matrix = df.get_resist_fraction_matrix(zz_vac)
@@ -89,6 +87,8 @@ for n_step in range(n_steps):
     # add monomers that are cut by new PMMA surface
     global_outer_monomer_array +=\
         np.sum(global_free_monomer_in_resist_matrix - global_free_monomer_in_resist_matrix_corr, axis=1)
+
+    global_free_monomer_in_resist_matrix = global_free_monomer_in_resist_matrix_corr
 
     # simulate depolymerization
     # constant zip length
@@ -121,7 +121,8 @@ for n_step in range(n_steps):
 
     # get eta and SE_mob arrays
     now_eta_array, now_SE_mob_array = df.get_eta_SE_mob_arrays(
-        true_Mn_matrix=global_true_Mn_matrix,
+        true_Mn_matrix=global_Mn_matrix,
+        # true_Mn_matrix=global_true_Mn_matrix,
         temp_C=T_C,
         viscosity_power=viscosity_power
     )
@@ -129,6 +130,16 @@ for n_step in range(n_steps):
     now_SE_mob_array_corr = np.copy(now_SE_mob_array)
     # now_SE_mob_array_corr[460:540] = (now_SE_mob_array_corr[459] + now_SE_mob_array_corr[540]) / 2
     now_SE_mob_array_corr[np.where(now_SE_mob_array_corr > 1)] = 1
+
+    plt.figure(dpi=300)
+    plt.imshow(np.log10(global_Mn_matrix).transpose())
+    plt.colorbar()
+    plt.title('lg(Mn) ' + str(n_step))
+    plt.legend()
+    plt.grid()
+    # plt.show()
+    plt.savefig('notebooks/DEBER_simulation/Mn_D/' + str(zip_length) + '_' + str(k_diff) + '_' + str(Mn_diff) + '/' +
+                str(n_step) + '_3a_Mn_matrix.jpg')
 
     plt.figure(dpi=300)
     plt.semilogy(mm.x_centers_5nm, now_SE_mob_array, label='original')
@@ -140,7 +151,7 @@ for n_step in range(n_steps):
     plt.grid()
     # plt.show()
     plt.savefig('notebooks/DEBER_simulation/Mn_D/' + str(zip_length) + '_' + str(k_diff) + '_' + str(Mn_diff) + '/' +
-                str(n_step) + '_3_SE_mobility.jpg')
+                str(n_step) + '_3b_SE_mobility.jpg')
 
     # %
     # get wp, D and true_D matrices
