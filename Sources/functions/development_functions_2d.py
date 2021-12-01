@@ -5,10 +5,8 @@ from tqdm import tqdm
 from collections import deque
 import constants as const
 import indexes
-import mapping_aktary as mapping
 from functions import mapping_functions as mf
 
-mapping = importlib.reload(mapping)
 const = importlib.reload(const)
 indexes = importlib.reload(indexes)
 mf = importlib.reload(mf)
@@ -24,12 +22,22 @@ def get_initial_n_surface_facets(local_chain_length_avg):
     return n_surface_facets
 
 
-def get_development_rates(local_chain_length_avg, S0, alpha, beta):
+def get_development_rates(local_chain_length_avg, R0, alpha, beta):
     development_rates = np.zeros(np.shape(local_chain_length_avg))
 
     for i in range(np.shape(local_chain_length_avg)[0]):
         for j in range(np.shape(local_chain_length_avg)[1]):
-            development_rates[i, j] = S0 + beta / ((local_chain_length_avg[i, j] * const.u_MMA) ** alpha)
+            development_rates[i, j] = R0 + beta / ((local_chain_length_avg[i, j] * const.u_MMA) ** alpha)
+
+    return development_rates
+
+
+def get_development_rates_Mf(Mf_matrix, R0, alpha, beta):
+    development_rates = np.zeros(np.shape(Mf_matrix))
+
+    for i in range(np.shape(Mf_matrix)[0]):
+        for j in range(np.shape(Mf_matrix)[1]):
+            development_rates[i, j] = R0 + beta / Mf_matrix[i, j] ** alpha
 
     return development_rates
 

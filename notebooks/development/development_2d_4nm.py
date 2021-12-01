@@ -5,7 +5,7 @@ import numpy as np
 from tqdm import tqdm
 
 import mapping_aktary as mapping
-from functions._outdated import development_functions_2d as df
+from functions import development_functions_2d as df
 
 mapping = importlib.reload(mapping)
 df = importlib.reload(df)
