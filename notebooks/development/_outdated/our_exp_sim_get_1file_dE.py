@@ -12,7 +12,7 @@ df = importlib.reload(df)
 emf = importlib.reload(emf)
 ind = importlib.reload(ind)
 
-# %% 1um x 1um
+# %% 3um x 140nm
 Lx = 3e+3
 Ly = 1e+3
 D0 = 140
@@ -20,7 +20,7 @@ D0 = 140
 x_min, x_max = -Lx / 2, Lx / 2
 z_min, z_max = 0, D0
 
-bin_size = 10
+bin_size = 2
 
 x_bins = np.arange(x_min, x_max + 1, bin_size)
 z_bins = np.arange(z_min, z_max + 1, bin_size)
@@ -28,73 +28,63 @@ z_bins = np.arange(z_min, z_max + 1, bin_size)
 x_centers = (x_bins[:-1] + x_bins[1:]) / 2
 z_centers = (z_bins[:-1] + z_bins[1:]) / 2
 
-# atoda: Q_l = 2e-9  # C / cm
 # Q_l = 6.56e-9  # C / cm
 Q = 4.5e-9 * 223  # A * s = C
 Q_line = Q / 625  # C
-line_len = Lx * 1e-7 * 625 * 1.3
-Q_l = Q_line / line_len
+Q_l = Q_line / (3e-4 * 1.3 * 625)
 
 n_electrons_required = Q_l * Ly * 1e-7 / 1.6e-19
-n_files_required = int(n_electrons_required / 100)
+# n_files_required = int(n_electrons_required / 100)
+n_files_required = 500000
+
+E_dep_matrix = np.zeros((len(x_centers), len(z_centers)))
 
 # %%
-for beam_sigma in [100, 200, 300, 400, 500, 600, 700, 800]:
+beam_sigma = 0
+# beam_sigma = 200
 
-    print(beam_sigma)
+progress_bar = tqdm(total=n_files_required, position=0)
 
-    E_dep_matrix = np.zeros((len(x_centers), len(z_centers)))
+# n_files = 548
+n_files = 360
+file_cnt = 0
 
-    progress_bar = tqdm(total=n_files_required, position=0)
+while file_cnt < n_files_required:
 
-    n_files = 534
-    file_cnt = 0
+    primary_electrons_in_file = 100
 
-    while file_cnt < n_files_required:
+    # now_e_DATA = np.load('data/4_WET/e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
+    now_e_DATA = np.load('data/4_WET_140nm/e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
+    now_e_DATA = now_e_DATA[np.where(now_e_DATA[:, 7] > 0)]
 
-        primary_electrons_in_file = 100
+    if file_cnt > n_files:
+        emf.rotate_DATA(now_e_DATA, x_ind=4, y_ind=5)
 
-        now_e_DATA = np.load('data/4_WET_140nm/e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
-        now_e_DATA = now_e_DATA[np.where(now_e_DATA[:, 7] > 0)]
+    emf.add_gaussian_xy_shift_to_e_DATA(
+        e_DATA=now_e_DATA,
+        x_position=0,
+        x_sigma=beam_sigma,
+        y_range=[0, 0])
 
-        if file_cnt > n_files:
-            emf.rotate_DATA(now_e_DATA, x_ind=4, y_ind=5)
+    af.snake_coord(
+        array=now_e_DATA,
+        coord_ind=4,
+        coord_min=-Lx/2,
+        coord_max=Lx/2
+    )
 
-        # emf.add_gaussian_xy_shift_to_e_DATA(
-        #     e_DATA=now_e_DATA,
-        #     x_position=0,
-        #     x_sigma=beam_sigma,
-        #     y_range=[0, 0])
+    now_e_DATA_xx = now_e_DATA[:, 4]
+    now_e_DATA_zz = now_e_DATA[:, 6]
+    now_e_DATA_dE = now_e_DATA[:, 7]
 
-        emf.add_uniform_xy_shift_to_e_DATA(
-            e_DATA=now_e_DATA,
-            x_range=[-beam_sigma/2, beam_sigma/2],
-            y_range=[0, 0]
-        )
+    E_dep_matrix += np.histogramdd(
+        sample=[now_e_DATA_xx, now_e_DATA_zz],
+        bins=[x_bins, z_bins],
+        weights=now_e_DATA_dE
+    )[0]
 
-        af.snake_coord(
-            array=now_e_DATA,
-            coord_ind=4,
-            coord_min=-Lx,
-            coord_max=Lx
-        )
-
-        now_e_DATA_xx = now_e_DATA[:, 4]
-        now_e_DATA_zz = now_e_DATA[:, 6]
-        now_e_DATA_dE = now_e_DATA[:, 7]
-
-        E_dep_matrix += np.histogramdd(
-            sample=[now_e_DATA_xx, now_e_DATA_zz],
-            bins=[x_bins, z_bins],
-            weights=now_e_DATA_dE
-        )[0]
-
-        file_cnt += 1
-        progress_bar.update()
-
-    np.save('notebooks/development/E_dep_140nm_10nm/E_dep_140nm_uniform_' + str(beam_sigma) + '.npy', E_dep_matrix)
-
-    print(np.sum(E_dep_matrix))
+    file_cnt += 1
+    progress_bar.update()
 
 # %%
 # E_dep_matrix = np.load('notebooks/development/E_dep_atoda.npy') * 4.25
@@ -105,6 +95,19 @@ plt.figure(dpi=300)
 # plt.imshow(E_dep_matrix.transpose())
 plt.imshow(np.log(E_dep_matrix).transpose())
 plt.show()
+
+# %%
+E_dep_matrix_1_file = E_dep_matrix / n_files_required
+
+# %%
+E_dep_array_1_file = np.zeros((len(x_centers) * len(z_centers), 3))
+
+pos = 0
+
+for i in range(len(x_centers)):
+    for j in range(len(z_centers)):
+        E_dep_array_1_file[pos, :] = x_centers[i], z_centers[j], E_dep_matrix_1_file[i, j]
+        pos += 1
 
 # %%
 plt.figure(dpi=300)

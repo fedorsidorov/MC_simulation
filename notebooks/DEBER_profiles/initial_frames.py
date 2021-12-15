@@ -47,7 +47,7 @@ ax.grid(which='both')
 plt.xlabel('x, nm')
 plt.ylabel('z, nm')
 
-# plt.xlim(0, 10000)
+plt.xlim(0, 10000)
 
 plt.show()
 
@@ -182,8 +182,8 @@ ax = fig.add_subplot(1, 1, 1)
 
 plt.plot(pr_1[:, 0], pr_1[:, 1] - np.min(pr_1[:, 1]))
 plt.plot(pr_2[:, 0], pr_2[:, 1] - np.min(pr_2[:, 1]))
-plt.plot(pr_3[:, 0], pr_3[:, 1] - np.min(pr_3[:, 1]))
-plt.plot(pr_4[:, 0], pr_4[:, 1] - np.min(pr_4[:, 1]))
+# plt.plot(pr_3[:, 0], pr_3[:, 1] - np.min(pr_3[:, 1]))
+# plt.plot(pr_4[:, 0], pr_4[:, 1] - np.min(pr_4[:, 1]))
 
 major_ticks = np.arange(0, 301, 100)
 minor_ticks = np.arange(0, 301, 25)

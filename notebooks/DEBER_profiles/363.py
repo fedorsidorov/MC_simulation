@@ -2,14 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # %%
-# D1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/1/lower_1.csv', delimiter=',', skiprows=5)
-# D2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/2/1.csv', delimiter=',', skiprows=5)
-# D3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/3/2.csv', delimiter=',', skiprows=5)
+D1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/1/lower_1.csv', delimiter=',', skiprows=5)
+D2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/2/1.csv', delimiter=',', skiprows=5)
+D3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/3/2.csv', delimiter=',', skiprows=5)
 D4 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/4/1.csv', delimiter=',', skiprows=5)
-# D5 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/5/1.csv', delimiter=',', skiprows=5)
-# D6 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/6/1.csv', delimiter=',', skiprows=5)
-# D7 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/7/1.csv', delimiter=',', skiprows=5)
-# D8 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/8/1.csv', delimiter=',', skiprows=5)
+D5 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/5/1.csv', delimiter=',', skiprows=5)
+D6 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/6/1.csv', delimiter=',', skiprows=5)
+D7 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/7/1.csv', delimiter=',', skiprows=5)
+D8 = np.loadtxt('notebooks/DEBER_profiles/Fedor/363/8/1.csv', delimiter=',', skiprows=5)
 # D8 = np.loadtxt('notebooks/DEBER_profiles/3-5.csv', delimiter=',', skiprows=5)
 
 plt.figure(dpi=300)

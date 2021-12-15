@@ -181,9 +181,9 @@ ax = fig.add_subplot(1, 1, 1)
 
 # plt.plot(pr_1[:, 0], pr_1[:, 1] - np.min(pr_1[:, 1]))
 # plt.plot(pr_2[:, 0], pr_2[:, 1] - np.min(pr_2[:, 1]))
-plt.plot(pr_3[:, 0], pr_3[:, 1] - np.min(pr_3[:, 1]))
-plt.plot(pr_4[:, 0], pr_4[:, 1] - np.min(pr_4[:, 1]))
-plt.plot(pr_5[:, 0], pr_5[:, 1] - np.min(pr_5[:, 1]))
+plt.plot(pr_3[:, 0] / 1000 - 38.7, pr_3[:, 1] - np.min(pr_3[:, 1]) - 9)
+# plt.plot(pr_4[:, 0], pr_4[:, 1] - np.min(pr_4[:, 1]))
+# plt.plot(pr_5[:, 0], pr_5[:, 1] - np.min(pr_5[:, 1]))
 
 major_ticks = np.arange(0, 301, 100)
 minor_ticks = np.arange(0, 301, 25)
@@ -196,8 +196,13 @@ ax.grid(which='both')
 plt.xlabel('x, nm')
 plt.ylabel('z, nm')
 
+plt.xlim(-10, 10)
+# plt.xlim(-4, 4)
+
 plt.show()
 
-
+# %%
+# np.save('notebooks/DEBER_profiles/wet_slice/xx.npy', pr_3[:, 0] / 1000 - 38.7)
+# np.save('notebooks/DEBER_profiles/wet_slice/zz.npy', pr_3[:, 1] - np.min(pr_3[:, 1]) - 9)
 
 

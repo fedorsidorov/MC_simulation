@@ -104,7 +104,7 @@ ax.grid(which='both')
 
 plt.show()
 
-# %% 360
+# %% 360 - 130 С
 pr_1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/360/D_dark_1/D1_1.csv', delimiter=',', skiprows=5)
 pr_2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/360/D_dark_1/D1_2.csv', delimiter=',', skiprows=5)
 pr_3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/360/D_dark_2/D2_1.csv', delimiter=',', skiprows=5)
@@ -123,10 +123,10 @@ pr_4 = np.loadtxt('notebooks/DEBER_profiles/Fedor/360/D_dark_2/D2_2.csv', delimi
 fig = plt.figure(dpi=300)
 ax = fig.add_subplot(1, 1, 1)
 
-plt.plot(pr_1[:, 0], pr_1[:, 1] - np.min(pr_1[:, 1]))
-plt.plot(pr_2[:, 0], pr_2[:, 1] - np.min(pr_2[:, 1]))
-plt.plot(pr_3[:, 0], pr_3[:, 1] - np.min(pr_3[:, 1]))
-plt.plot(pr_4[:, 0], pr_4[:, 1] - np.min(pr_4[:, 1]))
+# plt.plot(pr_1[:, 0] / 1000, pr_1[:, 1] - np.min(pr_1[:, 1]))
+# plt.plot(pr_2[:, 0] / 1000, pr_2[:, 1] - np.min(pr_2[:, 1]))
+# plt.plot(pr_3[:, 0] / 1000, pr_3[:, 1] - np.min(pr_3[:, 1]))
+plt.plot(pr_4[:, 0] / 1000, pr_4[:, 1] - np.min(pr_4[:, 1]))
 
 major_ticks = np.arange(0, 301, 100)
 minor_ticks = np.arange(0, 301, 25)
@@ -136,6 +136,10 @@ ax.set_yticks(minor_ticks, minor=True)
 
 ax.grid(which='both')
 
+plt.xlabel('x, um')
+plt.ylabel('z, nm')
+
+plt.xlim(33, 38)
 plt.show()
 
 # %% 361 

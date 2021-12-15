@@ -66,7 +66,7 @@ zz = points_array[:, 2]
 
 # %%
 np.save('data/chains/combine_chains/development/xx.npy', xx)
-np.save('data/chains/combine_chains/development/yy.npy', yy)
+np.save('data/chains/combine_chains/development/zz.npy', yy)
 np.save('data/chains/combine_chains/development/zz.npy', zz)
 
 # %%

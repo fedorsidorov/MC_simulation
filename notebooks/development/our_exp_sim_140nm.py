@@ -13,7 +13,7 @@ emf = importlib.reload(emf)
 ind = importlib.reload(ind)
 
 # %% 1um x 1um
-Lx = 3e+3
+Lx = 6e+3
 Ly = 1e+3
 D0 = 140
 
@@ -39,6 +39,7 @@ n_electrons_required = Q_l * Ly * 1e-7 / 1.6e-19
 n_files_required = int(n_electrons_required / 100)
 
 # %%
+# for beam_sigma in [500]:
 for beam_sigma in [100, 200, 300, 400, 500, 600, 700, 800]:
 
     print(beam_sigma)
@@ -47,7 +48,7 @@ for beam_sigma in [100, 200, 300, 400, 500, 600, 700, 800]:
 
     progress_bar = tqdm(total=n_files_required, position=0)
 
-    n_files = 534
+    n_files = 547
     file_cnt = 0
 
     while file_cnt < n_files_required:
@@ -60,17 +61,11 @@ for beam_sigma in [100, 200, 300, 400, 500, 600, 700, 800]:
         if file_cnt > n_files:
             emf.rotate_DATA(now_e_DATA, x_ind=4, y_ind=5)
 
-        # emf.add_gaussian_xy_shift_to_e_DATA(
-        #     e_DATA=now_e_DATA,
-        #     x_position=0,
-        #     x_sigma=beam_sigma,
-        #     y_range=[0, 0])
-
-        emf.add_uniform_xy_shift_to_e_DATA(
+        emf.add_gaussian_xy_shift_to_e_DATA(
             e_DATA=now_e_DATA,
-            x_range=[-beam_sigma/2, beam_sigma/2],
-            y_range=[0, 0]
-        )
+            x_position=0,
+            x_sigma=beam_sigma,
+            y_range=[0, 0])
 
         af.snake_coord(
             array=now_e_DATA,
@@ -92,7 +87,7 @@ for beam_sigma in [100, 200, 300, 400, 500, 600, 700, 800]:
         file_cnt += 1
         progress_bar.update()
 
-    np.save('notebooks/development/E_dep_140nm_10nm/E_dep_140nm_uniform_' + str(beam_sigma) + '.npy', E_dep_matrix)
+    np.save('notebooks/development/E_dep_140nm_10nm/E_dep_140nm_normal_' + str(beam_sigma) + '.npy', E_dep_matrix)
 
     print(np.sum(E_dep_matrix))
 

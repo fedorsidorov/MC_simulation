@@ -13,9 +13,9 @@ emf = importlib.reload(emf)
 ind = importlib.reload(ind)
 
 # %% 1um x 1um
-Lx = 3e+3
+Lx = 6e+3
 Ly = 1e+3
-D0 = 140
+D0 = 280
 
 x_min, x_max = -Lx / 2, Lx / 2
 z_min, z_max = 0, D0
@@ -30,7 +30,8 @@ z_centers = (z_bins[:-1] + z_bins[1:]) / 2
 
 # atoda: Q_l = 2e-9  # C / cm
 # Q_l = 6.56e-9  # C / cm
-Q = 4.5e-9 * 223  # A * s = C
+# Q = 4.5e-9 * 223  # A * s = C
+Q = 2000e-9  # A * s = C
 Q_line = Q / 625  # C
 line_len = Lx * 1e-7 * 625 * 1.3
 Q_l = Q_line / line_len
@@ -39,7 +40,8 @@ n_electrons_required = Q_l * Ly * 1e-7 / 1.6e-19
 n_files_required = int(n_electrons_required / 100)
 
 # %%
-for beam_sigma in [100, 200, 300, 400, 500, 600, 700, 800]:
+# for beam_sigma in [500]:
+for beam_sigma in [600, 700, 800]:
 
     print(beam_sigma)
 
@@ -47,30 +49,24 @@ for beam_sigma in [100, 200, 300, 400, 500, 600, 700, 800]:
 
     progress_bar = tqdm(total=n_files_required, position=0)
 
-    n_files = 534
+    n_files = 547
     file_cnt = 0
 
     while file_cnt < n_files_required:
 
         primary_electrons_in_file = 100
 
-        now_e_DATA = np.load('data/4_WET_140nm/e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
+        now_e_DATA = np.load('data/4_WET_280nm/e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
         now_e_DATA = now_e_DATA[np.where(now_e_DATA[:, 7] > 0)]
 
         if file_cnt > n_files:
             emf.rotate_DATA(now_e_DATA, x_ind=4, y_ind=5)
 
-        # emf.add_gaussian_xy_shift_to_e_DATA(
-        #     e_DATA=now_e_DATA,
-        #     x_position=0,
-        #     x_sigma=beam_sigma,
-        #     y_range=[0, 0])
-
-        emf.add_uniform_xy_shift_to_e_DATA(
+        emf.add_gaussian_xy_shift_to_e_DATA(
             e_DATA=now_e_DATA,
-            x_range=[-beam_sigma/2, beam_sigma/2],
-            y_range=[0, 0]
-        )
+            x_position=0,
+            x_sigma=beam_sigma,
+            y_range=[0, 0])
 
         af.snake_coord(
             array=now_e_DATA,
@@ -92,7 +88,7 @@ for beam_sigma in [100, 200, 300, 400, 500, 600, 700, 800]:
         file_cnt += 1
         progress_bar.update()
 
-    np.save('notebooks/development/E_dep_140nm_10nm/E_dep_140nm_uniform_' + str(beam_sigma) + '.npy', E_dep_matrix)
+    np.save('notebooks/development/E_dep_280nm_10nm/E_dep_280nm_normal_' + str(beam_sigma) + '.npy', E_dep_matrix)
 
     print(np.sum(E_dep_matrix))
 

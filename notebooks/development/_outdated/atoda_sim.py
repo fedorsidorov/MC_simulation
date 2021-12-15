@@ -134,7 +134,7 @@ n_seconds = 30
 factor = 5
 
 delta_t = 1 / factor
-n_steps = n_seconds * factor
+n_steps = int(n_seconds * factor)
 
 progress_bar = tqdm(total=n_steps, position=0)
 

@@ -83,7 +83,7 @@ plt.legend()
 plt.show()
 
 # %%
-np.save('notebooks/Leveder/2010_sim/yy.npy', xx * 1e+6)
+np.save('notebooks/Leveder/2010_sim/zz.npy', xx * 1e+6)
 np.save('notebooks/Leveder/2010_sim/0.npy', zz_0 * 1e+9)
 np.save('notebooks/Leveder/2010_sim/100.npy', zz_100 * 1e+9)
 np.save('notebooks/Leveder/2010_sim/200.npy', zz_200 * 1e+9)

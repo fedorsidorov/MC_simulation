@@ -43,7 +43,7 @@ plt.plot(profiles_w[ind][:, 0], profiles_w[ind][:, 1], '.')
 plt.show()
 
 # %%
-yy = np.load('notebooks/Leveder/2010_sim/yy.npy')
+yy = np.load('notebooks/Leveder/2010_sim/zz.npy')
 zz_0 = np.load('notebooks/Leveder/2010_sim/0.npy')
 zz_100 = np.load('notebooks/Leveder/2010_sim/100.npy')
 zz_200 = np.load('notebooks/Leveder/2010_sim/200.npy')
