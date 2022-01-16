@@ -22,7 +22,7 @@ P16 = np.loadtxt('notebooks/DEBER_profiles/Fedor/7_many/16_1.csv', delimiter=','
 P17 = np.loadtxt('notebooks/DEBER_profiles/Fedor/7_many/17_1.csv', delimiter=',', skiprows=5)
 P18 = np.loadtxt('notebooks/DEBER_profiles/Fedor/7_many/18_1.csv', delimiter=',', skiprows=5)
 
-P0 = np.loadtxt('notebooks/DEBER_profiles/Fedor/365/3_2a.csv', delimiter=',', skiprows=5)
+# P0 = np.loadtxt('notebooks/DEBER_profiles/Fedor/365/3_2a.csv', delimiter=',', skiprows=5)
 
 plt.figure(dpi=300)
 
@@ -45,12 +45,12 @@ plt.plot(P10[:, 0] / 1000 - 15.1, P10[:, 1] - np.min(P10[:, 1]) + 40, label='P10
 # plt.plot(P17[:, 0], P17[:, 1] - np.min(P17[:, 1]), label='P17')
 # plt.plot(P18[:, 0], P18[:, 1] - np.min(P18[:, 1]), label='P18')
 
-plt.plot(P0[:, 0] / 1000 - 20.02, P0[:, 1] - np.min(P0[:, 1]) + 15, label='P0')
+# plt.plot(P0[:, 0] / 1000 - 20.02, P0[:, 1] - np.min(P0[:, 1]) + 15, label='P0')
 
 plt.legend()
 
-plt.xlim(-2, 2)
-plt.ylim(0, 160)
+# plt.xlim(-2, 2)
+# plt.ylim(0, 160)
 
 plt.xlabel('x, um')
 plt.ylabel('z, nm')

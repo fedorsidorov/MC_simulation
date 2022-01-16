@@ -30,7 +30,8 @@ x_centers = (x_bins[:-1] + x_bins[1:]) / 2
 z_centers = (z_bins[:-1] + z_bins[1:]) / 2
 
 # atoda: Q_l = 2e-9  # C / cm
-Q = 4.5e-9 * 223  # A * s = C
+# Q = 4.5e-9 * 223  # A * s = C
+Q = 1.24e-9 * 100  # A * s = C
 Q_line = Q / 625  # C
 line_len = Lx * 1e-7 * 625 * 1.3
 Q_l = Q_line / line_len

@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # %% A1
-A1_c = np.loadtxt('notebooks/DEBER_profiles/359/A/A1_c.csv', delimiter=',', skiprows=5)
-B1_a = np.loadtxt('notebooks/DEBER_profiles/359/B/B1_a.csv', delimiter=',', skiprows=5)
-C1_a = np.loadtxt('notebooks/DEBER_profiles/359/C/C1_a.csv', delimiter=',', skiprows=5)
-D1_a = np.loadtxt('notebooks/DEBER_profiles/359/D/D1_a.csv', delimiter=',', skiprows=5)
+A1_c = np.loadtxt('notebooks/DEBER_profiles/Fedor/359/A/A1_c.csv', delimiter=',', skiprows=5)
+B1_a = np.loadtxt('notebooks/DEBER_profiles/Fedor/359/B/B1_a.csv', delimiter=',', skiprows=5)
+C1_a = np.loadtxt('notebooks/DEBER_profiles/Fedor/359/C/C1_a.csv', delimiter=',', skiprows=5)
+D1_a = np.loadtxt('notebooks/DEBER_profiles/Fedor/359/D/D1_a.csv', delimiter=',', skiprows=5)
 
 # %%
 plt.figure(dpi=300)
