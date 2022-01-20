@@ -227,6 +227,8 @@ def track_electron(xx_vac, zz_vac, e_id, par_id, E_0, coords_0, flight_ort_0, d_
     coords = coords_0
     flight_ort = flight_ort_0
 
+    outer_flag = False
+
     if coords[-1] > d_PMMA:  # get layer_ind
         layer_ind = 1
     elif 0 < coords[-1] < d_PMMA:
@@ -322,6 +324,10 @@ def track_electron(xx_vac, zz_vac, e_id, par_id, E_0, coords_0, flight_ort_0, d_
 
         proc_ind = np.random.choice(structure_process_indexes[layer_ind], p=structure_u_norm[layer_ind][E_ind, :])
 
+        if coords[-1] <= get_now_z_vac(xx_vac, zz_vac, coords[0], layer_ind):
+            outer_flag = True
+            break
+
         # handle scattering
 
         # elastic scattering
@@ -395,7 +401,7 @@ def track_electron(xx_vac, zz_vac, e_id, par_id, E_0, coords_0, flight_ort_0, d_
 
         flight_ort = new_flight_ort
 
-    if coords[-1] < 0 and not Pn:  # electron emerges from specimen
+    if (coords[-1] < 0 or outer_flag) and not Pn:  # electron emerges from specimen
         e_DATA_final_line = [e_id, par_id, -1, -10, *coords, 0, 0, E]
         e_DATA_deque.append(e_DATA_final_line)
 
@@ -412,7 +418,7 @@ def track_electron(xx_vac, zz_vac, e_id, par_id, E_0, coords_0, flight_ort_0, d_
     return e_DATA, e_2nd_deque
 
 
-def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, d_PMMA, z_cut, Pn):
+def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, beam_sigma, d_PMMA, z_cut, Pn):
     e_deque = deque()
     e_DATA_deque = deque()
 
@@ -420,8 +426,7 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, d_PMMA, z_cut, Pn):
 
     for _ in range(n_electrons):
 
-        # x_beg = np.random.normal(loc=0, scale=500)
-        x_beg = np.random.normal(loc=0, scale=0)
+        x_beg = np.random.normal(loc=0, scale=beam_sigma)
         z_beg = get_now_z_vac(xx_vac, zz_vac, x_beg) + 1e-2
 
         e_deque.append([
@@ -474,6 +479,9 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, d_PMMA, z_cut, Pn):
 
 
 # %% experiment constants
+xx_366 = np.load('notebooks/DEBER_simulation/exp_profile_366/xx.npy')
+zz_366 = np.load('notebooks/DEBER_simulation/exp_profile_366/zz.npy')
+
 dose_factor = 3.8
 
 exposure_time = 100
@@ -501,22 +509,26 @@ n_files_required = int(n_electrons_required / n_electrons_in_file)  # 1000 = 2 *
 E0 = 20e+3
 T_C = 150
 scission_weight = 0.09  # 150 C - 0.088568
+
+d_PMMA = 500
+E_beam = 20e+3
+beam_sigma = 500
+
+time_step = 1
+
+# %% SIMULATION
 zip_len = 1000
 
 # vacuum
 xx_vacuum = mm.x_centers_50nm
 zz_vacuum = np.zeros(len(xx_vacuum))
 
-d_PMMA = 500
-E_beam = 20e+3
-
 now_n_files = 0
 now_exposure_time = 0
-time_step = 1
 
 while now_n_files < n_files_required:
 
-    print('File #' + str(now_n_files))
+    print('time step #' + str(now_exposure_time))
 
     print('get e_DATA')
     now_e_DATA = track_all_electrons(
@@ -524,6 +536,7 @@ while now_n_files < n_files_required:
         zz_vac=zz_vacuum,
         n_electrons=n_electrons_in_file,
         E0=E_beam,
+        beam_sigma=beam_sigma,
         d_PMMA=d_PMMA,
         z_cut=np.inf,
         Pn=True
@@ -561,7 +574,11 @@ while now_n_files < n_files_required:
             bins=[mm.x_bins_50nm, mm.z_bins_50nm]
         )[0]
 
-        now_n_files += n_copies
+    for ii, _ in enumerate(mm.x_centers_50nm):
+        for kk, zz in enumerate(mm.z_centers_50nm):
+
+            if zz < zz_vacuum[ii]:
+                now_val_matrix[ii, kk] = 0
 
     # symmetrical hack
     now_val_matrix += now_val_matrix[::-1, :]
@@ -569,22 +586,38 @@ while now_n_files < n_files_required:
     # process scissions
     scission_matrix = np.zeros(np.shape(now_val_matrix), dtype=int)
 
-    for x_ind in range(len(now_val_matrix)):
-        for z_ind in range(len(now_val_matrix[0])):
-            n_val = int(now_val_matrix[x_ind, z_ind])
+    # for x_ind in range(len(now_val_matrix)):
+    #     for z_ind in range(len(now_val_matrix[0])):
+    #
+    #         n_val = int(now_val_matrix[x_ind, z_ind])
+    #
+    #         scissions = np.where(np.random.random(n_val) < scission_weight)[0]
+    #         scission_matrix[x_ind, z_ind] = len(scissions)
 
+    # fix extra vacuum events
+    for ii, _ in enumerate(mm.x_centers_50nm):
+        for kk, zz in enumerate(mm.z_centers_50nm):
+
+            n_val = int(now_val_matrix[ii, kk])
             scissions = np.where(np.random.random(n_val) < scission_weight)[0]
-            scission_matrix[x_ind, z_ind] = len(scissions)
+            scission_matrix[ii, kk] = len(scissions)
 
     scission_array = np.sum(scission_matrix, axis=1)
 
     monomer_array = scission_array * zip_len
-
     delta_zz_vacuum = monomer_array * const.V_mon_nm3 / mm.step_50nm / mm.ly
-    zz_vacuum += delta_zz_vacuum
+    new_zz_vacuum = zz_vacuum + delta_zz_vacuum
 
+    # plot it all
     plt.figure(dpi=300)
-    plt.plot(mm.x_centers_50nm, mm.d_PMMA - zz_vacuum, label='DEBER simulation')
+    plt.plot(mm.x_centers_50nm, np.ones(len(mm.x_centers_50nm)) * d_PMMA, '--', label='PMMA initial height')
+    plt.plot(mm.x_centers_50nm, mm.d_PMMA - zz_vacuum, label='before relaxation')
+
+    plt.plot(mm.x_centers_50nm, mm.d_PMMA - new_zz_vacuum, label='after relaxation')
+    plt.plot(xx_366, zz_366, '--', label='final exp profile')
+
+    plt.xlim(-1500, 1500)
+    plt.ylim(0, 600)
 
     plt.title('t = ' + str(now_exposure_time) + ' s')
     plt.xlabel('x, nm')
@@ -595,6 +628,101 @@ while now_n_files < n_files_required:
                 dpi=300)
     plt.close('all')
 
+    now_n_files += n_copies
+    now_exposure_time += time_step
+    zz_vacuum = new_zz_vacuum
 
+# %% TESTS
+zz_vacuum[np.where(zz_vacuum >= d_PMMA)] = d_PMMA - 1
+
+now_e_DATA_test = track_all_electrons(
+        xx_vac=xx_vacuum,
+        zz_vac=zz_vacuum,
+        n_electrons=100,
+        E0=E_beam,
+        beam_sigma=beam_sigma,
+        d_PMMA=d_PMMA,
+        z_cut=np.inf,
+        Pn=True
+    )
+
+# %%
+plt.figure(dpi=300)
+plt.plot(now_e_DATA_test[:, 4], now_e_DATA_test[:, 6], '.')
+plt.plot(xx_vacuum, zz_vacuum)
+plt.xlim(-1000, 1000)
+plt.ylim(0, 1000)
+plt.show()
+
+
+# %%
+now_val_matrix = np.zeros((len(mm.x_centers_50nm), len(mm.z_centers_50nm)))
+
+for i in range(n_copies):
+    if i > 0:
+        emf.rotate_DATA(
+            e_DATA=now_e_DATA_test,
+            x_ind=ind.e_DATA_x_ind,
+            y_ind=ind.e_DATA_y_ind,
+            phi=2 * np.pi * np.random.random()
+        )
+
+        now_Pv_e_DATA = now_e_DATA_test[np.where(
+            np.logical_and(
+                now_e_DATA_test[:, ind.e_DATA_layer_id_ind] == ind.PMMA_ind,
+                now_e_DATA_test[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))
+        ]
+
+        af.snake_array(
+            array=now_Pv_e_DATA,
+            x_ind=ind.e_DATA_x_ind,
+            y_ind=ind.e_DATA_y_ind,
+            z_ind=ind.e_DATA_z_ind,
+            xyz_min=[mm.x_min, mm.y_min, -np.inf],
+            xyz_max=[mm.x_max, mm.y_max, np.inf]
+        )
+
+        now_val_matrix += np.histogramdd(
+            sample=now_Pv_e_DATA[:, [ind.e_DATA_x_ind, ind.e_DATA_z_ind]],
+            bins=[mm.x_bins_50nm, mm.z_bins_50nm]
+        )[0]
+
+# symmetrical hack
+now_val_matrix += now_val_matrix[::-1, :]
+
+# process scissions
+scission_matrix = np.zeros(np.shape(now_val_matrix), dtype=int)
+
+# for x_ind in range(len(now_val_matrix)):
+#     for z_ind in range(len(now_val_matrix[0])):
+#         n_val = int(now_val_matrix[x_ind, z_ind])
+#
+#         scissions = np.where(np.random.random(n_val) < scission_weight)[0]
+#         scission_matrix[x_ind, z_ind] = len(scissions)
+
+# fix extra vacuum events
+for ii, _ in enumerate(mm.x_centers_50nm):
+    for kk, zz in enumerate(mm.z_centers_50nm):
+
+        if zz >= zz_vacuum[ii]:
+            n_val = int(now_val_matrix[ii, kk])
+            scissions = np.where(np.random.random(n_val) < scission_weight)[0]
+            scission_matrix[ii, kk] = len(scissions)
+
+
+# %%
+# xx_vac = xx_vacuum
+# zz_vac = zz_vacuum
+#
+# xx_vac_final = np.concatenate(
+#     [np.array([-1e+6]), xx_vac - mm.lx * 2, xx_vac - mm.lx, xx_vac, xx_vac + mm.lx, xx_vac + mm.lx * 2,
+#      np.array([1e+6])])
+# zz_vac_final = np.concatenate(
+#     [np.array([zz_vac[0]]), zz_vac, zz_vac, zz_vac, zz_vac, zz_vac, np.array([zz_vac[-1]])])
+#
+# plt.figure(dpi=300)
+# plt.plot(xx_vac_final, zz_vac_final)
+# plt.xlim(-7475, 7475)
+# plt.show()
 
 

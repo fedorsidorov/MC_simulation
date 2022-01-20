@@ -30,17 +30,20 @@ plt.figure(dpi=300)
 # plt.plot(D10[:, 0], D10[:, 1] - np.min(D10[:, 1]), label='D10')
 # plt.plot(D11[:, 0], D11[:, 1] - np.min(D11[:, 1]), label='D11')
 # plt.plot(D12[:, 0], D12[:, 1] - np.min(D12[:, 1]), label='D12')
-plt.plot(D13[:, 0], D13[:, 1] - np.min(D13[:, 1]), label='D13')
+# plt.plot(D13[:, 0], D13[:, 1] - np.min(D13[:, 1]), label='D13')
 
-# plt.plot(D11[:, 0] / 1000, D11[:, 1] - np.min(D11[:, 1]) + 50, label='366 D11 real')
+xx = (D11[:, 0] / 1000 - 10 - 0.85) * 1000
+zz = D11[:, 1] - np.min(D11[:, 1]) + 50
+
+plt.plot(xx[320:422], zz[320:422], label='366 D11 real')
 
 plt.legend()
 
-plt.xlim(0, 10000)
-# plt.xlim(0, 10)
+plt.xlim(-5000, 5000)
+# plt.xlim(-5, 5)
 plt.ylim(0, 600)
 
-plt.xlabel('x, $\mu$m')
+plt.xlabel(r'x, $\mu$m')
 plt.ylabel('z, nm')
 
 plt.grid()

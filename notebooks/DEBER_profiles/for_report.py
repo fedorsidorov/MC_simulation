@@ -33,6 +33,3 @@ plt.xlim(0, 10)
 
 plt.show()
 # plt.savefig('for_report.jpg', dpi=600)
-
-
-
