@@ -99,3 +99,9 @@ plt.legend(fontsize=fontsize)
 plt.grid()
 plt.show()
 # plt.savefig('G.jpg', bbox_inches='tight')
+
+# %%
+mcf.lin_lin_interp(TT_sim, weights)(150)
+
+
+

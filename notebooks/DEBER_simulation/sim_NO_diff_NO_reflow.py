@@ -2,47 +2,46 @@ import importlib
 import matplotlib.pyplot as plt
 import numpy as np
 import constants as const
-from mapping import mapping_5um_900nm as mm
+from mapping import mapping_3um_500nm as mm
 from functions import SE_functions as ef
+
+from notebooks.simple_structure_MC import sim_profile_exposure_pl_7 as monte_carlo
 
 const = importlib.reload(const)
 mm = importlib.reload(mm)
 ef = importlib.reload(ef)
+monte_carlo = importlib.reload(monte_carlo)
 
 # %%
+dose_factor = 3.8
+
+It = 1.2e-9 * 100  # C
 n_lines = 625
+
 pitch = 3e-4  # cm
 ratio = 1.3 / 1
 L_line = pitch * n_lines * ratio
 
-ly =
-
-factor = 3.8
-It = 1.2e-9 * 100  # C
-
 It_line = It / n_lines  # C
+It_line_l = It_line / L_line
 
+y_depth = mm.ly * 1e-7  # cm
 
+sim_dose = It_line_l * y_depth
+n_electrons_required = sim_dose / 1.6e-19
+n_files_required = n_electrons_required // 100
+n_files_requied_true = int(n_files_required * dose_factor)
 
-
-
-step_time = 2
-n_steps = int(total_time / step_time)
-n_electrons_in_file = n_electrons_s * step_time
-
-zip_length = 3000
-scission_weight = 0.092  # 160 C
-
-diffusion_factor = 5e-3
-viscosity_power = 3.4
+zip_length = 1000
+scission_weight = 0.092  # 160 C - nu pochti
 
 E0 = 20e+3
 T_C = 160
 
 # %%
-global_tau_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
-global_free_monomer_in_resist_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)), dtype=int)
-global_outer_monomer_array = np.zeros(len(mm.x_centers_5nm))
+# global_tau_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)))
+# global_free_monomer_in_resist_matrix = np.zeros((len(mm.x_centers_5nm), len(mm.z_centers_5nm)), dtype=int)
+# global_outer_monomer_array = np.zeros(len(mm.x_centers_5nm))
 
 xx_vac = mm.x_centers_5nm  # nm
 zz_vac = np.ones(len(xx_vac)) * 0  # nm

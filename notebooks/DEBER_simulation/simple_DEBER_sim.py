@@ -5,9 +5,21 @@ from collections import deque
 from tqdm import tqdm
 from functions import MC_functions as mcf
 import grid
+import constants as const
+from mapping import mapping_3um_500nm as mm
+from functions import SE_functions as ef
+from functions import array_functions as af
+from functions import e_matrix_functions as emf
+import indexes as ind
 
+af = importlib.reload(af)
+const = importlib.reload(const)
+ef = importlib.reload(ef)
+emf = importlib.reload(emf)
 grid = importlib.reload(grid)
+ind = importlib.reload(ind)
 mcf = importlib.reload(mcf)
+mm = importlib.reload(mm)
 
 # %% constants
 arr_size = 1000
@@ -122,27 +134,7 @@ structure_electron_u_diff_cumulated = [PMMA_electron_u_diff_cumulated, Si_electr
 structure_process_indexes = [PMMA_process_indexes, Si_process_indexes]
 
 
-# %% zz_vac
-xx_vac = np.linspace(-1000, 1000, 1000)
-zz_vac = (np.cos(xx_vac * 2 * np.pi / 2000) + 1) * 40 * 0
-
-xx_vac_final = np.concatenate(([-1e+6], xx_vac, [1e+6]))
-zz_vac_final = np.concatenate(([zz_vac[0]], zz_vac, [zz_vac[-1]]))
-
-# fig, ax = plt.subplots(dpi=300)
-# ax.plot(xx_vac_final, zz_vac_final)
-# ax.plot(xx_vac_final, np.ones(len(xx_vac_final)) * d_PMMA)
-# plt.xlim(-1000, 1000)
-# plt.ylim(-50, 150)
-# plt.gca().set_aspect('equal', adjustable='box')
-# plt.gca().invert_yaxis()
-# plt.xlabel('x, nm')
-# plt.ylabel('z, nm')
-# plt.grid()
-# plt.show()
-
-
-# %% functions
+# %% MC functions
 def get_scattered_flight_ort(flight_ort, phi, theta):
     u, v, w = flight_ort
 
@@ -196,9 +188,15 @@ def get_phonon_scat_hw_phi_theta(E):
     return hw_phonon, phi, theta
 
 
-def get_now_z_vac(now_x, layer_ind=0):
+def get_now_z_vac(xx_vac, zz_vac, now_x, layer_ind=0):
     if layer_ind == 1:
         return 0
+
+    xx_vac_final = np.concatenate(
+        [np.array([-1e+6]), xx_vac - mm.lx * 2, xx_vac - mm.lx, xx_vac, xx_vac + mm.lx, xx_vac + mm.lx * 2,
+         np.array([1e+6])])
+    zz_vac_final = np.concatenate(
+        [np.array([zz_vac[0]]), zz_vac, zz_vac, zz_vac, zz_vac, zz_vac, np.array([zz_vac[-1]])])
 
     return mcf.lin_lin_interp(xx_vac_final, zz_vac_final)(now_x)
 
@@ -224,7 +222,7 @@ def get_ee_phi_theta_phi2nd_theta2nd(delta_E, E):
     return phi, theta, phi_2nd, theta_2nd
 
 
-def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn):
+def track_electron(xx_vac, zz_vac, e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn):
     E = E_0
     coords = coords_0
     flight_ort = flight_ort_0
@@ -289,7 +287,7 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn)
             coords = coords + delta_r_corr
 
         # electron is going to emerge from the structure
-        elif coords[-1] + delta_r[-1] <= get_now_z_vac(coords[0] + delta_r[0], layer_ind):
+        elif coords[-1] + delta_r[-1] <= get_now_z_vac(xx_vac, zz_vac, coords[0] + delta_r[0], layer_ind):
 
             cos2_theta = (-flight_ort[-1]) ** 2
 
@@ -414,16 +412,18 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn)
     return e_DATA, e_2nd_deque
 
 
-def track_all_electrons(n_electrons, E0, d_PMMA, z_cut, Pn):
+def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, d_PMMA, z_cut, Pn):
     e_deque = deque()
     e_DATA_deque = deque()
 
     next_e_id = 0
 
-    x_beg = 0
-    z_beg = get_now_z_vac(x_beg) + 1e-2
-
     for _ in range(n_electrons):
+
+        # x_beg = np.random.normal(loc=0, scale=500)
+        x_beg = np.random.normal(loc=0, scale=0)
+        z_beg = get_now_z_vac(xx_vac, zz_vac, x_beg) + 1e-2
+
         e_deque.append([
             next_e_id,
             -1,
@@ -443,6 +443,8 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut, Pn):
             progress_bar.update()
 
         now_e_DATA, now_e_2nd_deque = track_electron(
+            xx_vac,
+            zz_vac,
             now_e_id, now_par_id, now_E0,
             np.array([now_x0, now_y0, now_z0]),
             np.array([now_ort_x, now_ort_y, now_ort_z]),
@@ -472,84 +474,113 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut, Pn):
 
 
 # %%
-d_PMMA = [500]
-# d_PMMA = [1000]
-# d_PMMA = 1e+10
-# d_PMMA = [10, 20, 30, 40, 50, 60, 70, 80]
+# %% experiment constants
+dose_factor = 3.8
 
-n_files = 2000
+It = 1.2e-9 * 100  # C
+n_lines = 625
+
+pitch = 3e-4  # cm
+ratio = 1.3 / 1
+L_line = pitch * n_lines * ratio
+
+It_line = It / n_lines  # C
+It_line_l = It_line / L_line
+
+y_depth = mm.ly * 1e-7  # cm
+
+sim_dose = It_line_l * y_depth
+n_electrons_required = sim_dose / 1.6e-19
+n_files_required = n_electrons_required // 100
+n_files_requied_true = int(n_files_required * dose_factor)
+
+scission_weight = 0.09  # 150 C - 0.088568
+
+E0 = 20e+3
+T_C = 150
+
+# vacuum
+xx_vacuum = mm.x_centers_50nm
+zz_vacuum = np.zeros(len(xx_vacuum))
+
+d_PMMA = 500
+n_files = 1000
+# n_files = 1
 n_primaries_in_file = 100
+E_beam = 20e+3
 
-# E_beam_arr = [20000]
-E_beam = 20000
+hack_factor = 10
 
-# E_beam_arr = [700, 1000, 1400]
-# E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 800, 1000, 1400]
-# z_max_arr = [23.58, 25.23, 28.8, 31.09, 37.10, 40, 43, 46.10]
-
-# z_max_arr = 1718.42
-
-
-for n in range(n_files):
+for n in range(int(n_files / hack_factor)):
 
     print('File #' + str(n))
 
-    for _, now_d in enumerate(d_PMMA):
-        # print(E_beam, 'eV,', 'elastic factor =', PMMA_elastic_factor)
-        e_DATA = track_all_electrons(
-            n_electrons=n_primaries_in_file,
-            E0=E_beam,
-            d_PMMA=now_d,
-            z_cut=np.inf,
-            Pn=True
-        )
+    print(E_beam, 'eV,', 'elastic factor =', PMMA_elastic_factor)
+    now_e_DATA = track_all_electrons(
+        xx_vac=xx_vacuum,
+        zz_vac=zz_vacuum,
+        n_electrons=n_primaries_in_file,
+        E0=E_beam,
+        d_PMMA=d_PMMA,
+        z_cut=np.inf,
+        Pn=True
+    )
 
-        e_DATA_Pn = e_DATA[
-            np.where(
-                np.logical_and(e_DATA[:, 2] == 0, e_DATA[:, 3] >= 1)
-            )
-        ]
+    now_Pv_e_DATA = now_e_DATA[np.where(
+        np.logical_and(
+            now_e_DATA[:, ind.e_DATA_layer_id_ind] == ind.PMMA_ind,
+            now_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))
+    ]
 
-        # e_DATA_outer = e_DATA[np.where(e_DATA[:, 6] < 0)]
+    now_val_matrix = np.zeros((len(mm.x_centers_50nm), len(mm.z_centers_50nm)))
 
-        # np.save('data/2ndaries/no_factor/' + str(PMMA_elastic_factor) + '/' + str(E_beam) +
-        #         '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
+    af.snake_array(
+        array=now_Pv_e_DATA,
+        x_ind=ind.e_DATA_x_ind,
+        y_ind=ind.e_DATA_y_ind,
+        z_ind=ind.e_DATA_z_ind,
+        xyz_min=[mm.x_min, mm.y_min, -np.inf],
+        xyz_max=[mm.x_max, mm.y_max, np.inf]
+    )
 
-        # np.save('data/4_kin_curves/' + str(now_d) + '/e_DATA_Pn_' + str(n) + '.npy', e_DATA_Pn)
+    now_val_matrix += np.histogramdd(
+        sample=now_Pv_e_DATA[:, [ind.e_DATA_x_ind, ind.e_DATA_z_ind]],
+        bins=[mm.x_bins_50nm, mm.z_bins_50nm]
+    )[0]
 
-        # np.save('data/4_WET/e_DATA_Pn_' + str(n) + '.npy', e_DATA_Pn)
-        # np.save('data/4_WET_140nm/e_DATA_Pn_' + str(n) + '.npy', e_DATA_Pn)
-        # np.save('data/4_Atoda/e_DATA_Pn_' + str(n) + '.npy', e_DATA_Pn)
+    # hack
+    now_val_matrix += now_val_matrix[::-1, :]
+    now_val_matrix *= 10
 
-        # np.save('data/4Akkerman/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA)
-        # np.save('data/4Akkerman/1keV/e_DATA_' + str(n) + '.npy', e_DATA)
+    scission_matrix = np.zeros(np.shape(now_val_matrix), dtype=int)
 
-# %%
-fig, ax = plt.subplots(dpi=300)
+    for x_ind in range(len(now_val_matrix)):
+        for z_ind in range(len(now_val_matrix[0])):
+            n_val = int(now_val_matrix[x_ind, z_ind])
 
-for e_id in range(int(np.max(e_DATA[:, 0]) + 1)):
-    inds = np.where(e_DATA[:, 0] == e_id)[0]
+            scissions = np.where(np.random.random(n_val) < scission_weight)[0]
+            scission_matrix[x_ind, z_ind] = len(scissions)
 
-    if len(inds) == 0:
-        continue
+    scission_array = np.sum(scission_matrix, axis=1)
 
-    ax.plot(e_DATA[inds, 4], e_DATA[inds, 6], '-', linewidth='1')
+    zip_len = 1000
+    monomer_array = scission_array * zip_len
 
-# ax.plot(xx_vac_final, zz_vac_final)
-# ax.plot(xx_vac_final, np.ones(len(xx_vac_final)) * d_PMMA)
+    delta_zz_vacuum = monomer_array * const.V_mon_nm3 / mm.step_50nm / mm.ly
+    zz_vacuum += delta_zz_vacuum
 
-# plt.xlim(-1000, 1000)
-# plt.ylim(-500, 1500)
+    plt.figure(dpi=300)
+    plt.plot(mm.x_centers_50nm, mm.d_PMMA - zz_vacuum, label='step ' + str(n))
 
-# plt.xlim(-250, -150)
-# plt.ylim(-50, 50)
+    plt.title('profile ' + str(n))
+    plt.xlabel('x, nm')
+    plt.ylabel('z, nm')
+    plt.legend()
+    plt.grid()
+    # plt.show()
+    plt.savefig('notebooks/DEBER_simulation/simple_sim/profile_' + str(n) + '.jpg', dpi=300)
+    plt.close('all')
 
-# ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
-# ax.yaxis.get_major_formatter().set_powerlimits((0, 1))
 
-plt.gca().set_aspect('equal', adjustable='box')
-plt.gca().invert_yaxis()
-plt.xlabel('x, nm')
-plt.ylabel('z, nm')
-plt.grid()
-plt.show()
+
+
