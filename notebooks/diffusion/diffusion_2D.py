@@ -70,7 +70,7 @@ def diffuse(nt):
 
 
 # %%
-diffuse(1000)
+diffuse(int(1e+6))
 
 
 
