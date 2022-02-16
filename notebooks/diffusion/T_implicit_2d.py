@@ -10,7 +10,6 @@ rho = 7800
 T0 = 20
 T_h = 300
 T_c = 100
-delta_t = 60
 
 a = lamda / rho / C
 
@@ -22,7 +21,7 @@ TT = np.zeros((Nx, Ny))
 hx = Lx / (Nx-1)
 hy = Ly / (Ny-1)
 
-t_end = 60
+t_end = 10000
 tau = t_end / 100
 
 for i in range(Nx):
@@ -79,6 +78,7 @@ while t < t_end:
 # %%
 plt.figure(dpi=300)
 plt.imshow(TT.transpose())
+plt.colorbar()
 plt.show()
 
 

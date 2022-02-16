@@ -28,7 +28,15 @@ def get_eta(mobility):
 
 
 def get_viscosity_experiment_Mn(T_C, Mn, power):  # aho2008.pdf, bueche1955.pdf - ???????????
-    Mn_0 = 271374
+    # Mn_0 = 271374
+    Mn_0 = 271400
     eta_pre = get_viscosity_experiment_const_M(T_C)
     eta_final = eta_pre * (Mn / Mn_0)**power
+    return eta_final
+
+
+def get_viscosity_experiment_Mw(T_C, Mw, power):  # aho2008.pdf, bueche1955.pdf - ???????????
+    Mw_0 = 670358
+    eta_pre = get_viscosity_experiment_const_M(T_C)
+    eta_final = eta_pre * (Mw / Mw_0)**power
     return eta_final

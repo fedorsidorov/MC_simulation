@@ -602,6 +602,8 @@ while now_n_files < n_files_required:
             scissions = np.where(np.random.random(n_val) < scission_weight)[0]
             scission_matrix[ii, kk] = len(scissions)
 
+    np.save('notebooks/DEBER_simulation/test_scission_matrix.npy', scission_matrix)
+
     scission_array = np.sum(scission_matrix, axis=1)
 
     monomer_array = scission_array * zip_len
@@ -624,8 +626,8 @@ while now_n_files < n_files_required:
     plt.ylabel('z, nm')
     plt.legend()
     plt.grid()
-    plt.savefig('notebooks/DEBER_simulation/simple_DEBER_sim_NO_diff/profile_' + str(now_exposure_time) + '_s.jpg',
-                dpi=300)
+    # plt.savefig('notebooks/DEBER_simulation/simple_DEBER_sim_NO_diff/profile_' + str(now_exposure_time) + '_s.jpg',
+    #             dpi=300)
     plt.close('all')
 
     now_n_files += n_copies

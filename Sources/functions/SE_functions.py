@@ -1,8 +1,8 @@
 import importlib
 import os
 import numpy as np
-from mapping import mapping_3p3um_80nm as mm
 import matplotlib.pyplot as plt
+from mapping import mapping_3um_500nm as mm
 from functions import MC_functions as mcf
 from scipy.optimize import curve_fit
 
@@ -11,7 +11,7 @@ mcf = importlib.reload(mcf)
 
 
 # %%
-def create_datafile_latest(yy, zz, width, mobs, path):  # xx and zz in um !!!
+def create_datafile_latest_um(yy, zz, width, mobs, path):  # xx and zz in um !!!
 
     yy[0] = yy[0].astype(np.float16)
     yy[-1] = yy[-1].astype(np.float16)
@@ -243,12 +243,12 @@ def create_datafile_latest(yy, zz, width, mobs, path):  # xx and zz in um !!!
 # zz_evolver = 80 - np.load('zz_vac.npy')
 # zz_evolver_final = np.concatenate([[zz_evolver[0]], zz_evolver, [zz_evolver[-1]]]) / 1000
 #
-# create_datafile_latest(
+# create_datafile_latest_um(
 #     yy=xx_evolver_final,
 #     zz=zz_evolver_final,
 #     width=mm.ly * 1e-3,
-#     mobs=np.ones(len(xx_evolver_final)) * 1e-4,
-#     path='notebooks/SE/datafile_DEBER_2021.fe'
+#     mobs=np.ones(len(xx_evolver_final)) * 1e-2,
+#     path='notebooks/SE/datafile_DEBER_2022.fe'
 # )
 
 # xx_nm = np.load('notebooks/DEBER_simulation/xx_evolver_nm.npy')
@@ -298,29 +298,36 @@ def get_evolver_times_profiles():
     return times, profiles
 
 
-def get_evolver_profile():
-    SE = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/vlist_SIM.txt')
+def get_evolver_profile(path):
+    SE = np.loadtxt(path)
 
-    profile = SE
+    raw_profile = SE[1:, :]
 
-    # profile = profile[np.where(np.abs(profile[:, 0]) < mm.x_max * 1e-3)]
-    # profile = profile[np.where(profile[:, 2] > 50)]
-    # profile = profile[np.where(profile[:, 1] > 0.03)]
+    raw_profile = raw_profile[np.where(raw_profile[:, 0] > mm.y_max * 1e-3 / 2)]
+    raw_profile = raw_profile[np.where(raw_profile[:, 2] > 0)]
 
-    # sort_inds = np.argsort(profile[:, 0])
-    # profile[:, 0] = profile[sort_inds, 0]
-    # profile[:, 1] = profile[sort_inds, 1]
+    sort_inds = np.argsort(raw_profile[:, 1])
 
-    return profile
+    final_profile = np.zeros((len(raw_profile), 2))
+
+    final_profile[:, 0] = raw_profile[sort_inds, 1]
+    final_profile[:, 1] = raw_profile[sort_inds, 2]
+
+    return final_profile
 
 
 # %%
-# profile = get_evolver_profile()
-# #
-# # plt.figure(dpi=300)
-# # plt.plot(xx_nm, zz_nm)
-# # plt.plot(profile[:, 1], profile[:, 2], '.', ms=2)
-# # plt.show()
+# path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_short.txt'
+# path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_long.txt'
+
+# profile = get_evolver_profile(path)
+
+# plt.figure(dpi=300)
+# plt.plot(xx_nm, zz_nm)
+# plt.plot(profile[:, 0], profile[:, 1], '.-', ms=2)
+# plt.plot(profile[::4, 0], profile[::4, 1], '.-', ms=2)
+# plt.plot(profile[:, 0], profile[:, 1], '.-', ms=2)
+# plt.show()
 
 
 # %% read datafile

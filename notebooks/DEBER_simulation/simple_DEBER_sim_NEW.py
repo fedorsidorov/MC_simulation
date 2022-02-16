@@ -2,6 +2,8 @@ import importlib
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import deque
+from scipy.signal import medfilt
+from copy import deepcopy
 from tqdm import tqdm
 from functions import MC_functions as mcf
 import grid
@@ -10,18 +12,19 @@ from mapping import mapping_3um_500nm as mm
 from functions import SE_functions as ef
 from functions import array_functions as af
 from functions import e_matrix_functions as emf
-from functions import diffusion_functions as df
+from functions import reflow_functions as rf
 import indexes as ind
 
 af = importlib.reload(af)
 const = importlib.reload(const)
 ef = importlib.reload(ef)
-df = importlib.reload(df)
 emf = importlib.reload(emf)
 grid = importlib.reload(grid)
 ind = importlib.reload(ind)
 mcf = importlib.reload(mcf)
 mm = importlib.reload(mm)
+rf = importlib.reload(rf)
+
 
 # %% constants
 arr_size = 1000
@@ -503,10 +506,7 @@ sim_dose = It_line_l * y_depth * dose_factor
 n_electrons_required = sim_dose / 1.6e-19
 n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870.77
 
-n_electrons_in_file = 187
-n_copies = 5
-
-n_files_required = int(n_electrons_required / n_electrons_in_file)  # 1000 = 2 * 5 * 100
+n_electrons_in_file = 94
 
 E0 = 20e+3
 T_C = 150
@@ -519,152 +519,317 @@ beam_sigma = 500
 time_step = 1
 
 # %% SIMULATION
-zip_len_0 = 1000
-D = df.get_D(150, 1)
-
 # vacuum
-xx_vacuum = mm.x_centers_50nm
-zz_vacuum = np.zeros(len(xx_vacuum))
+tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
+Mn_150 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mn_150.npy') * 100
+Mw_150 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mw_150.npy') * 100
 
-xx_arr = mm.x_centers_50nm * 1e-7
-zz_arr = mm.z_centers_50nm * 1e-7
+# plt.figure(dpi=300)
+# plt.semilogy(tau, Mn_150, label='Mn')
+# plt.semilogy(tau, Mw_150, label='Mw')
+# plt.legend()
+# plt.grid()
+# plt.show()
 
-conc_matrix = np.zeros((len(xx_arr), len(zz_arr)))
 
-now_n_files = 0
-now_exposure_time = 0
+# %%
+# PMMA 950K
+PD = 2.47
+x_0 = 2714
+z_0 = (2 - PD)/(PD - 1)
+y_0 = x_0 / (z_0 + 1)
 
-while now_n_files < n_files_required:
+# bin size !!!
+# x_step, z_step = 5, 5
+# x_bins, z_bins = mm.x_bins_5nm, mm.z_bins_5nm
+# x_centers, z_centers = mm.x_centers_5nm, mm.z_centers_5nm
 
-    print('time step #' + str(now_exposure_time))
+# x_step, z_step = 10, 10
+# x_bins, z_bins = mm.x_bins_10nm, mm.z_bins_10nm
+# x_centers, z_centers = mm.x_centers_10nm, mm.z_centers_10nm
 
-    print('get e_DATA')
-    now_e_DATA = track_all_electrons(
-        xx_vac=xx_vacuum,
-        zz_vac=zz_vacuum,
-        n_electrons=n_electrons_in_file,
-        E0=E_beam,
-        beam_sigma=beam_sigma,
-        d_PMMA=d_PMMA,
-        z_cut=np.inf,
-        Pn=True
-    )
+# x_step, z_step = 25, 25
+# x_bins, z_bins = mm.x_bins_25nm, mm.z_bins_25nm
+# x_centers, z_centers = mm.x_centers_25nm, mm.z_centers_25nm
 
-    print('make copies, get histogram')
-    now_val_matrix = np.zeros((len(mm.x_centers_50nm), len(mm.z_centers_50nm)))
+x_step, z_step = 50, 50
+x_bins, z_bins = mm.x_bins_50nm, mm.z_bins_50nm
+x_centers, z_centers = mm.x_centers_50nm, mm.z_centers_50nm
 
-    for i in range(n_copies):
-        if i > 0:
-            emf.rotate_DATA(
-                e_DATA=now_e_DATA,
-                x_ind=ind.e_DATA_x_ind,
-                y_ind=ind.e_DATA_y_ind,
-                phi=2 * np.pi * np.random.random()
-            )
+# x_step, z_step = 100, 100
+# x_bins, z_bins = mm.x_bins_100nm, mm.z_bins_100nm
+# x_centers, z_centers = mm.x_centers_100nm, mm.z_centers_100nm
 
-        now_Pv_e_DATA = now_e_DATA[np.where(
-            np.logical_and(
-                now_e_DATA[:, ind.e_DATA_layer_id_ind] == ind.PMMA_ind,
-                now_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))
-        ]
+bin_volume = x_step * mm.ly * z_step
+bin_n_monomers = bin_volume / const.V_mon_nm3
 
-        af.snake_array(
-            array=now_Pv_e_DATA,
-            x_ind=ind.e_DATA_x_ind,
-            y_ind=ind.e_DATA_y_ind,
-            z_ind=ind.e_DATA_z_ind,
-            xyz_min=[mm.x_min, mm.y_min, -np.inf],
-            xyz_max=[mm.x_max, mm.y_max, np.inf]
+xx = x_bins
+zz_vac = np.zeros(len(xx))
+
+xx_inner = x_centers
+zz_vac_inner = np.zeros(len(xx_inner))
+
+total_scission_matrix = np.zeros((len(x_centers), len(z_centers)))
+
+tau_matrix = np.zeros(np.shape(total_scission_matrix))
+Mn_matrix = np.ones(np.shape(total_scission_matrix)) * Mn_150[0]
+Mw_matrix = np.ones(np.shape(total_scission_matrix)) * Mw_150[0]
+eta_Mn_matrix = np.zeros(np.shape(total_scission_matrix))
+eta_Mw_matrix = np.zeros(np.shape(total_scission_matrix))
+mob_Mn_matrix = np.zeros(np.shape(total_scission_matrix))
+mob_Mw_matrix = np.zeros(np.shape(total_scission_matrix))
+
+now_time = 0
+
+# while now_time < exposure_time:
+while now_time < 1:
+
+    print('Now time =', now_time)
+
+    now_val_matrix = np.zeros((len(x_centers), len(z_centers)))
+
+    print('get val_matrix')
+
+    for n in range(10):
+
+        print(n)
+        # now_e_DATA = track_all_electrons(
+        #     xx_vac=xx_vacuum,
+        #     zz_vac=zz_vacuum,
+        #     n_electrons=n_electrons_in_file,
+        #     E0=E_beam,
+        #     beam_sigma=beam_sigma,
+        #     d_PMMA=d_PMMA,
+        #     z_cut=np.inf,
+        #     Pn=True
+        # )
+
+        now_e_DATA_Pv = np.load(
+            'notebooks/DEBER_simulation/e_DATA_Pv_snaked/e_DATA_Pv_' + str((now_time * 10 * n) % 628) + '.npy'
         )
 
+        inds_PMMA = []
+
+        for i, line in enumerate(now_e_DATA_Pv):
+            if line[ind.e_DATA_z_ind] > mcf.lin_lin_interp(xx, zz_vac)(line[ind.e_DATA_x_ind]):
+                inds_PMMA.append(i)
+
+        now_e_DATA_Pv_PMMA = now_e_DATA_Pv[inds_PMMA, :]
+
         now_val_matrix += np.histogramdd(
-            sample=now_Pv_e_DATA[:, [ind.e_DATA_x_ind, ind.e_DATA_z_ind]],
-            bins=[mm.x_bins_50nm, mm.z_bins_50nm]
+            sample=now_e_DATA_Pv_PMMA[:, [ind.e_DATA_x_ind, ind.e_DATA_z_ind]],
+            bins=[x_bins, z_bins]
         )[0]
 
-    for ii, _ in enumerate(mm.x_centers_50nm):
-        for kk, zz in enumerate(mm.z_centers_50nm):
-
-            if zz < zz_vacuum[ii]:
-                now_val_matrix[ii, kk] = 0
-
-    # symmetrical hack
     now_val_matrix += now_val_matrix[::-1, :]
 
-    # process scissions
-    scission_matrix = np.zeros(np.shape(now_val_matrix), dtype=int)
+    zz_vac_centers = mcf.lin_lin_interp(xx, zz_vac)(xx_inner)
+    ratio_arr = ((d_PMMA - zz_vac_centers + d_PMMA - zz_vac_inner) / 2) / (d_PMMA - zz_vac_centers)
 
-    # fix extra vacuum events
-    for ii, _ in enumerate(mm.x_centers_50nm):
-        for kk, zz in enumerate(mm.z_centers_50nm):
+    for i in range(len(xx_inner)):
+        now_val_matrix[i, :] = (now_val_matrix[i, :] * ratio_arr[i]).astype(int)
 
-            n_val = int(now_val_matrix[ii, kk])
+    now_scission_matrix = np.zeros(np.shape(now_val_matrix), dtype=int)
+
+    for i, _ in enumerate(x_centers):
+        for k, _ in enumerate(z_centers):
+            n_val = int(now_val_matrix[i, k])
             scissions = np.where(np.random.random(n_val) < scission_weight)[0]
-            scission_matrix[ii, kk] = len(scissions)
+            now_scission_matrix[i, k] = len(scissions)
 
-    zip_len_matrix = zip_len_0 * np.exp(-conc_matrix / 1e+21)
+    # total_scission_matrix += now_scission_matrix
 
-    now_monomer_matrix = scission_matrix * zip_len_matrix
-    now_monomer_array = np.sum(now_monomer_matrix, axis=1)
+    # zip_length_matrix = np.ones(np.shape(now_scission_matrix)) * 100
+    zip_length_matrix = (Mn_matrix / 100 / 3).astype(int)
+    # zip_length_matrix = (Mn_matrix / 100).astype(int)
 
-    conc_matrix += now_monomer_matrix / (mm.step_50nm * mm.ly * mm.step_50nm * 1e-21)
+    plt.figure(dpi=300)
+    plt.imshow(now_scission_matrix.transpose())
+    plt.colorbar()
+    plt.title('scission matrix, time = ' + str(now_time))
+    plt.show()
 
-    for ii, _ in enumerate(mm.x_centers_50nm):
-        for kk, zz in enumerate(mm.z_centers_50nm):
+    plt.figure(dpi=300)
+    plt.imshow(zip_length_matrix.transpose())
+    plt.colorbar()
+    plt.title('zip_len matrix, time = ' + str(now_time))
+    plt.show()
+    # plt.savefig(
+    #     'notebooks/DEBER_simulation/NEW_zip_len_Mn_' + str(x_step) + 'nm/zip_len_matrix_' +
+    #     str(now_time) + '_s.jpg',
+    #     dpi=300
+    # )
+    # plt.close('all')
 
-            if zz < zz_vacuum[ii]:
-                conc_matrix[ii, kk] = 0
+    for i in range(len(x_centers)):
+        for j in range(len(z_centers)):
+            # now_k_s = total_scission_matrix[i, j] / now_time / bin_n_monomers
+            now_k_s = now_scission_matrix[i, j] / time_step / bin_n_monomers
+            tau_matrix[i, j] += y_0 * now_k_s * time_step
+            Mn_matrix[i, j] = mcf.lin_log_interp(tau, Mn_150)(tau_matrix[i, j])
+            Mw_matrix[i, j] = mcf.lin_log_interp(tau, Mw_150)(tau_matrix[i, j])
+            eta_Mn_matrix[i, j] = rf.get_viscosity_experiment_Mn(150, Mn_matrix[i, j], 3.4)
+            eta_Mw_matrix[i, j] = rf.get_viscosity_experiment_Mw(150, Mw_matrix[i, j], 3.4)
+            mob_Mn_matrix[i, j] = rf.get_SE_mobility(eta_Mn_matrix[i, j])
+            mob_Mw_matrix[i, j] = rf.get_SE_mobility(eta_Mw_matrix[i, j])
 
-    conc_matrix = df.make_simple_diffusion_sim(
-        conc_matrix=conc_matrix,
-        D=D/100,
-        x_len=len(xx_arr),
-        z_len=len(zz_arr),
-        time_step=time_step/10,
-        h_nm=mm.step_50nm,
-        total_time=time_step
+    monomer_matrix = now_scission_matrix * zip_length_matrix
+
+    monomer_array = np.sum(monomer_matrix, axis=1)
+    delta_h_array = monomer_array * const.V_mon_nm3 / x_step / mm.ly * 2  # triangle!
+
+    new_zz_vac_inner = zz_vac_inner + delta_h_array
+
+    mob_Mn_array = np.average(mob_Mn_matrix, axis=1)
+    mob_Mw_array = np.average(mob_Mw_matrix, axis=1)
+
+    kernel_size = 7
+
+    mob_Mn_array_filt = medfilt(mob_Mn_array, kernel_size=kernel_size)
+    mob_Mw_array_filt = medfilt(mob_Mw_array, kernel_size=kernel_size)
+
+    plt.figure(dpi=300)
+    plt.plot(xx_inner, mob_Mn_array, label='Mn mobility')
+    plt.plot(xx_inner, mob_Mn_array_filt, label='Mn mobility filt')
+    plt.plot(xx_inner, mob_Mw_array_filt, label='Mw mobility filt')
+    plt.xlim(-1500, 1500)
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+    # xx_vac_evolver = np.zeros(len(x_bins) + len(x_centers) + 1)
+    # zz_vac_evolver = np.zeros(len(x_bins) + len(x_centers) + 1)
+    # mobs_evolver = np.zeros(len(x_bins) + len(x_centers) + 1)
+
+    xx_evolver = np.zeros(len(x_bins) + len(x_centers) + 2)
+    zz_vac_evolver = np.zeros(len(x_bins) + len(x_centers) + 2)
+    mobs_Mn_evolver = np.zeros(len(x_bins) + len(x_centers) + 2)
+    mobs_Mw_evolver = np.zeros(len(x_bins) + len(x_centers) + 2)
+
+    # zz_vac_center_array = mcf.lin_lin_interp(x_bins, zz_vac)(x_centers)
+    # zz_vac_center_inds = np.zeros(len(x_centers))
+
+    # for i in range(len(x_centers)):
+    #     zz_vac_center_inds[i] = int(np.argmin(np.abs(z_centers - zz_vac_center_array[i])))
+
+    # xx_vac_evolver[0] = x_bins[0]
+    # zz_vac_evolver[0] = zz_vac[0]
+    # mobs_evolver[0] = mob_matrix[0, int(zz_vac_center_inds[0])]  # constant mobility - inner
+
+    xx_evolver[0] = x_centers[0] - x_step
+    zz_vac_evolver[0] = new_zz_vac_inner[0]
+
+    xx_evolver[1] = x_bins[0]
+    zz_vac_evolver[1] = zz_vac[0]
+
+    xx_evolver[-1] = x_centers[-1] + x_step
+    zz_vac_evolver[-1] = new_zz_vac_inner[-1]
+
+    mobs_Mn_evolver[0] = mob_Mn_array_filt[0]
+    mobs_Mw_evolver[0] = mob_Mw_array_filt[0]
+
+    mobs_Mn_evolver[1] = mob_Mn_array_filt[0]
+    mobs_Mw_evolver[1] = mob_Mw_array_filt[0]
+
+    mobs_Mn_evolver[-2] = mob_Mn_array_filt[-1]
+    mobs_Mw_evolver[-2] = mob_Mw_array_filt[-1]
+
+    mobs_Mn_evolver[-1] = mob_Mn_array_filt[-1]
+    mobs_Mw_evolver[-1] = mob_Mw_array_filt[-1]
+
+    for i in range(len(x_centers)):
+        xx_evolver[2 + 2 * i] = x_centers[i]
+        xx_evolver[2 + 2 * i + 1] = x_bins[i + 1]
+
+        zz_vac_evolver[2 + 2 * i] = new_zz_vac_inner[i]
+        zz_vac_evolver[2 + 2 * i + 1] = zz_vac[i + 1]
+
+    mobs_Mn_evolver[2:-2] = mcf.lin_lin_interp(xx_inner, mob_Mn_array_filt)(xx_evolver[2:-2])
+    mobs_Mw_evolver[2:-2] = mcf.lin_lin_interp(xx_inner, mob_Mw_array_filt)(xx_evolver[2:-2])
+
+    zz_PMMA_evolver = d_PMMA - zz_vac_evolver
+
+
+# %%
+plt.figure(dpi=300)
+# plt.plot(xx_evolver, zz_PMMA_evolver)
+plt.plot(xx_evolver, mobs_Mn_evolver)
+plt.plot(xx_evolver, mobs_Mw_evolver)
+plt.show()
+
+
+# %%
+while True:
+
+    ef.create_datafile_latest_um(
+        yy=xx_evolver * 1e-3,
+        zz=zz_PMMA_evolver * 1e-3,
+        width=mm.ly * 1e-3,
+        mobs=mobs_Mn_evolver,
+        # mobs=mobs_Mw_evolver,
+        path='notebooks/SE/datafile_DEBER_2022.fe'
     )
 
-    delta_zz_vacuum = now_monomer_array * const.V_mon_nm3 / mm.step_50nm / mm.ly
-    new_zz_vacuum = zz_vacuum + delta_zz_vacuum
+    ef.run_evolver(
+        file_full_path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/datafile_DEBER_2022.fe',
+        commands_full_path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/commands.txt'
+    )
 
-    # plot it all
-    plt.figure(dpi=300)
-    plt.imshow(conc_matrix.transpose())
-    plt.colorbar()
-    plt.title('monomer concentration, t = ' + str(now_exposure_time) + ' s')
-    plt.savefig('notebooks/DEBER_simulation/simple_DEBER_sim_diff/mon_conc_' + str(now_exposure_time) + '_s.jpg',
-                dpi=300)
-    plt.close('all')
+    profile = ef.get_evolver_profile(
+        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_single.txt'
+    )
 
     plt.figure(dpi=300)
-    plt.imshow(zip_len_matrix.transpose())
-    plt.colorbar()
-    plt.title('monomer concentration, t = ' + str(now_exposure_time) + ' s')
-    plt.savefig('notebooks/DEBER_simulation/simple_DEBER_sim_diff/zip_len_' + str(now_exposure_time) + '_s.jpg',
-                dpi=300)
-    plt.close('all')
+    plt.plot(profile[:, 0], profile[:, 1])
+    plt.show()
+
+    new_xx_PMMA = profile[::4, 0] * 1e+3
+    new_zz_PMMA = profile[::4, 1] * 1e+3
+
+    new_xx_PMMA[0] = x_bins[0]
+    new_xx_PMMA[-1] = x_bins[-1]
+    new_zz_PMMA = mcf.lin_lin_interp(new_xx_PMMA, new_zz_PMMA)(x_bins)
+
+    new_xx_PMMA_inner = profile[2::4, 0] * 1e+3
+    new_zz_PMMA_inner = profile[2::4, 1] * 1e+3
+
+    new_xx_PMMA_inner[0] = x_centers[0]
+    new_xx_PMMA_inner[-1] = x_centers[-1]
+    new_zz_PMMA_inner = mcf.lin_lin_interp(new_xx_PMMA_inner, new_zz_PMMA_inner)(x_centers)
 
     plt.figure(dpi=300)
-    plt.plot(mm.x_centers_50nm, np.ones(len(mm.x_centers_50nm)) * d_PMMA, '--', label='PMMA initial height')
-    plt.plot(mm.x_centers_50nm, mm.d_PMMA - zz_vacuum, label='before relaxation')
+    plt.plot(profile[::2, 0] * 1e+3, profile[::2, 1] * 1e+3, '.-', ms=2)
+    plt.plot(xx, new_zz_PMMA, '.-', ms=2)
+    plt.plot(xx_inner, new_zz_PMMA_inner, '.-', ms=2)
+    plt.title('time = ' + str(now_time) + str(', max mobility = ') + str(np.max(mobs_evolver)))
 
-    plt.plot(mm.x_centers_50nm, mm.d_PMMA - new_zz_vacuum, label='after relaxation')
-    plt.plot(xx_366, zz_366, '--', label='final exp profile')
-
+    plt.grid()
     plt.xlim(-1500, 1500)
     plt.ylim(0, 600)
 
-    plt.title('t = ' + str(now_exposure_time) + ' s')
-    plt.xlabel('x, nm')
-    plt.ylabel('z, nm')
-    plt.legend()
-    plt.grid()
-    plt.savefig('notebooks/DEBER_simulation/simple_DEBER_sim_diff/profile_' + str(now_exposure_time) + '_s.jpg',
-                dpi=300)
+    # plt.show()
+    plt.savefig(
+        'notebooks/DEBER_simulation/NEW_zip_len_Mn_' + str(x_step) + 'nm/profile_' +
+        str(now_time) + '_s.jpg',
+        dpi=300
+    )
     plt.close('all')
 
-    now_n_files += n_copies
-    now_exposure_time += time_step
-    zz_vacuum = new_zz_vacuum
+    zz_vac = d_PMMA - new_zz_PMMA
+    zz_vac_inner = d_PMMA - new_zz_PMMA_inner
+
+    now_time += time_step
+
+# %%
+# mob_avg_arr = np.average(mob_matrix, axis=1)
+# mob_avg_arr_filt = medfilt(mob_avg_arr, kernel_size=7)
+#
+# plt.figure(dpi=300)
+# plt.plot(xx_inner, mob_avg_arr)
+# plt.plot(xx_inner, mob_avg_arr_filt)
+# plt.show()
+
+
+
+
 

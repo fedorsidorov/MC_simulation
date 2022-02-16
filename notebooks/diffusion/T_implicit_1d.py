@@ -51,6 +51,8 @@ while t < t_end:
 # %%
 plt.figure(dpi=300)
 plt.plot(TT)
+plt.xlim(0, 100)
+plt.ylim(0, 300)
 plt.show()
 
 

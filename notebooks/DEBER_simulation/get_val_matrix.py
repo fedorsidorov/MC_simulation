@@ -2,6 +2,7 @@ import importlib
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import deque
+from copy import deepcopy
 from tqdm import tqdm
 from functions import MC_functions as mcf
 import grid
@@ -10,13 +11,11 @@ from mapping import mapping_3um_500nm as mm
 from functions import SE_functions as ef
 from functions import array_functions as af
 from functions import e_matrix_functions as emf
-from functions import diffusion_functions as df
 import indexes as ind
 
 af = importlib.reload(af)
 const = importlib.reload(const)
 ef = importlib.reload(ef)
-df = importlib.reload(df)
 emf = importlib.reload(emf)
 grid = importlib.reload(grid)
 ind = importlib.reload(ind)
@@ -503,10 +502,7 @@ sim_dose = It_line_l * y_depth * dose_factor
 n_electrons_required = sim_dose / 1.6e-19
 n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870.77
 
-n_electrons_in_file = 187
-n_copies = 5
-
-n_files_required = int(n_electrons_required / n_electrons_in_file)  # 1000 = 2 * 5 * 100
+n_electrons_in_file = 94
 
 E0 = 20e+3
 T_C = 150
@@ -519,26 +515,23 @@ beam_sigma = 500
 time_step = 1
 
 # %% SIMULATION
-zip_len_0 = 1000
-D = df.get_D(150, 1)
-
 # vacuum
 xx_vacuum = mm.x_centers_50nm
 zz_vacuum = np.zeros(len(xx_vacuum))
 
-xx_arr = mm.x_centers_50nm * 1e-7
-zz_arr = mm.z_centers_50nm * 1e-7
+i = 0
 
-conc_matrix = np.zeros((len(xx_arr), len(zz_arr)))
+while True:
 
-now_n_files = 0
-now_exposure_time = 0
+    # print('Now time =', now_time)
 
-while now_n_files < n_files_required:
+    # now_val_matrix = np.zeros((len(mm.x_centers_50nm), len(mm.z_centers_50nm)))
+    # print('get e_DATA')
 
-    print('time step #' + str(now_exposure_time))
+    # for n in range(10):
 
-    print('get e_DATA')
+    # print(n)
+
     now_e_DATA = track_all_electrons(
         xx_vac=xx_vacuum,
         zz_vac=zz_vacuum,
@@ -550,121 +543,33 @@ while now_n_files < n_files_required:
         Pn=True
     )
 
-    print('make copies, get histogram')
-    now_val_matrix = np.zeros((len(mm.x_centers_50nm), len(mm.z_centers_50nm)))
+    now_e_DATA_Pv = now_e_DATA[np.where(
+        np.logical_and(
+            now_e_DATA[:, ind.e_DATA_layer_id_ind] == ind.PMMA_ind,
+            now_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))
+    ]
 
-    for i in range(n_copies):
-        if i > 0:
-            emf.rotate_DATA(
-                e_DATA=now_e_DATA,
-                x_ind=ind.e_DATA_x_ind,
-                y_ind=ind.e_DATA_y_ind,
-                phi=2 * np.pi * np.random.random()
-            )
-
-        now_Pv_e_DATA = now_e_DATA[np.where(
-            np.logical_and(
-                now_e_DATA[:, ind.e_DATA_layer_id_ind] == ind.PMMA_ind,
-                now_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))
-        ]
-
-        af.snake_array(
-            array=now_Pv_e_DATA,
-            x_ind=ind.e_DATA_x_ind,
-            y_ind=ind.e_DATA_y_ind,
-            z_ind=ind.e_DATA_z_ind,
-            xyz_min=[mm.x_min, mm.y_min, -np.inf],
-            xyz_max=[mm.x_max, mm.y_max, np.inf]
-        )
-
-        now_val_matrix += np.histogramdd(
-            sample=now_Pv_e_DATA[:, [ind.e_DATA_x_ind, ind.e_DATA_z_ind]],
-            bins=[mm.x_bins_50nm, mm.z_bins_50nm]
-        )[0]
-
-    for ii, _ in enumerate(mm.x_centers_50nm):
-        for kk, zz in enumerate(mm.z_centers_50nm):
-
-            if zz < zz_vacuum[ii]:
-                now_val_matrix[ii, kk] = 0
-
-    # symmetrical hack
-    now_val_matrix += now_val_matrix[::-1, :]
-
-    # process scissions
-    scission_matrix = np.zeros(np.shape(now_val_matrix), dtype=int)
-
-    # fix extra vacuum events
-    for ii, _ in enumerate(mm.x_centers_50nm):
-        for kk, zz in enumerate(mm.z_centers_50nm):
-
-            n_val = int(now_val_matrix[ii, kk])
-            scissions = np.where(np.random.random(n_val) < scission_weight)[0]
-            scission_matrix[ii, kk] = len(scissions)
-
-    zip_len_matrix = zip_len_0 * np.exp(-conc_matrix / 1e+21)
-
-    now_monomer_matrix = scission_matrix * zip_len_matrix
-    now_monomer_array = np.sum(now_monomer_matrix, axis=1)
-
-    conc_matrix += now_monomer_matrix / (mm.step_50nm * mm.ly * mm.step_50nm * 1e-21)
-
-    for ii, _ in enumerate(mm.x_centers_50nm):
-        for kk, zz in enumerate(mm.z_centers_50nm):
-
-            if zz < zz_vacuum[ii]:
-                conc_matrix[ii, kk] = 0
-
-    conc_matrix = df.make_simple_diffusion_sim(
-        conc_matrix=conc_matrix,
-        D=D/100,
-        x_len=len(xx_arr),
-        z_len=len(zz_arr),
-        time_step=time_step/10,
-        h_nm=mm.step_50nm,
-        total_time=time_step
+    af.snake_array(
+        array=now_e_DATA_Pv,
+        x_ind=ind.e_DATA_x_ind,
+        y_ind=ind.e_DATA_y_ind,
+        z_ind=ind.e_DATA_z_ind,
+        xyz_min=[mm.x_min, mm.y_min, -np.inf],
+        xyz_max=[mm.x_max, mm.y_max, np.inf]
     )
 
-    delta_zz_vacuum = now_monomer_array * const.V_mon_nm3 / mm.step_50nm / mm.ly
-    new_zz_vacuum = zz_vacuum + delta_zz_vacuum
+    np.save('notebooks/DEBER_simulation/e_DATA_Pv_snaked/e_DATA_Pv_' + str(i) + '.npy', now_e_DATA_Pv)
 
-    # plot it all
-    plt.figure(dpi=300)
-    plt.imshow(conc_matrix.transpose())
-    plt.colorbar()
-    plt.title('monomer concentration, t = ' + str(now_exposure_time) + ' s')
-    plt.savefig('notebooks/DEBER_simulation/simple_DEBER_sim_diff/mon_conc_' + str(now_exposure_time) + '_s.jpg',
-                dpi=300)
-    plt.close('all')
+    i += 1
 
-    plt.figure(dpi=300)
-    plt.imshow(zip_len_matrix.transpose())
-    plt.colorbar()
-    plt.title('monomer concentration, t = ' + str(now_exposure_time) + ' s')
-    plt.savefig('notebooks/DEBER_simulation/simple_DEBER_sim_diff/zip_len_' + str(now_exposure_time) + '_s.jpg',
-                dpi=300)
-    plt.close('all')
-
-    plt.figure(dpi=300)
-    plt.plot(mm.x_centers_50nm, np.ones(len(mm.x_centers_50nm)) * d_PMMA, '--', label='PMMA initial height')
-    plt.plot(mm.x_centers_50nm, mm.d_PMMA - zz_vacuum, label='before relaxation')
-
-    plt.plot(mm.x_centers_50nm, mm.d_PMMA - new_zz_vacuum, label='after relaxation')
-    plt.plot(xx_366, zz_366, '--', label='final exp profile')
-
-    plt.xlim(-1500, 1500)
-    plt.ylim(0, 600)
-
-    plt.title('t = ' + str(now_exposure_time) + ' s')
-    plt.xlabel('x, nm')
-    plt.ylabel('z, nm')
-    plt.legend()
-    plt.grid()
-    plt.savefig('notebooks/DEBER_simulation/simple_DEBER_sim_diff/profile_' + str(now_exposure_time) + '_s.jpg',
-                dpi=300)
-    plt.close('all')
-
-    now_n_files += n_copies
-    now_exposure_time += time_step
-    zz_vacuum = new_zz_vacuum
+    # now_val_matrix += np.histogramdd(
+    #     sample=now_Pv_e_DATA[:, [ind.e_DATA_x_ind, ind.e_DATA_z_ind]],
+    #     bins=[mm.x_bins_50nm, mm.z_bins_50nm]
+    # )[0]
+#
+# now_val_matrix += now_val_matrix[::-1, :]
+#
+# np.save('notebooks/DEBER_simulation/val_matrix/val_matrix_' + str(now_time) + '.npy', now_val_matrix)
+#
+# now_time += time_step
 

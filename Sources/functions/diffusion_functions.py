@@ -67,32 +67,167 @@ def get_D(T_C, wp):  # in cm^2 / s
 
 
 # %%
-# zz_0 = np.ones(1000000) * 2
-#
-# zz_f = get_final_z_arr(zz_0, 5, D=1e-11, delta_t=0.001)
-#
-# z_hist, bins = np.histogram(zz_f, bins=np.linspace(-10, 10, 201))
-# centers = (bins[:-1] + bins[1:]) / 2
-#
-# plt.figure(dpi=300)
-# plt.plot(centers, z_hist)
-# plt.show()
+def get_concentration_1d_arr_bnd1(n0_arr, n_beg, n_end, D, tau, h, total_time):
+    N = len(n0_arr)
+
+    n_arr = n0_arr
+
+    alphas = np.zeros(N)
+    betas = np.zeros(N)
+
+    now_time = 0
+
+    while now_time < total_time:
+
+        now_time += tau
+
+        alphas[0] = 0
+        betas[0] = n_beg
+
+        for i in range(1, N-1):
+            Ai = Ci = D / h**2
+            Bi = 2 * D / h**2 + 1 / tau
+            Fi = -n_arr[i] / tau
+
+            alphas[i] = Ai / (Bi - Ci * alphas[i - 1])
+            betas[i] = (Ci * betas[i - 1] - Fi) / (Bi - Ci * alphas[i - 1])
+
+        n_arr[N - 1] = n_end
+
+        for i in range(N-2, -1, -1):
+            n_arr[i] = alphas[i] * n_arr[i + 1] + betas[i]
+
+    return n_arr
+
+
+def get_concentration_1d_arr_bnd2_0(n0_arr, D, tau, h, total_time):
+    N = len(n0_arr)
+
+    n_arr = n0_arr
+
+    alphas = np.zeros(N)
+    betas = np.zeros(N)
+
+    now_time = 0
+
+    while now_time < total_time:
+
+        now_time += tau
+
+        alphas[0] = 2 * D * tau / (h**2 + 2 * D * tau)
+        betas[0] = h**2 * n_arr[0] / (h**2 + 2 * D * tau)
+
+        for i in range(1, N-1):
+            Ai = Ci = D / h**2
+            Bi = 2 * D / h**2 + 1 / tau
+            Fi = -n_arr[i] / tau
+
+            alphas[i] = Ai / (Bi - Ci * alphas[i - 1])
+            betas[i] = (Ci * betas[i - 1] - Fi) / (Bi - Ci * alphas[i - 1])
+
+        n_arr[N - 1] = (2 * D * tau * betas[N - 2] + h ** 2 * n_arr[N - 1]) /\
+                       (2 * D * tau * (1 - alphas[N - 2]) + h ** 2)
+
+        for i in range(N-2, -1, -1):
+            n_arr[i] = alphas[i] * n_arr[i + 1] + betas[i]
+
+    return n_arr
+
+
+def get_concentration_1d_arr_bnd_12_0(n0_arr, n_end, D, tau, h, total_time):
+    N = len(n0_arr)
+
+    n_arr = n0_arr
+
+    alphas = np.zeros(N)
+    betas = np.zeros(N)
+
+    now_time = 0
+
+    while now_time < total_time:
+
+        now_time += tau
+
+        alphas[0] = 2 * D * tau / (h**2 + 2 * D * tau)
+        betas[0] = h**2 * n_arr[0] / (h**2 + 2 * D * tau)
+
+        for i in range(1, N-1):
+            Ai = Ci = D / h**2
+            Bi = 2 * D / h**2 + 1 / tau
+            Fi = -n_arr[i] / tau
+
+            alphas[i] = Ai / (Bi - Ci * alphas[i - 1])
+            betas[i] = (Ci * betas[i - 1] - Fi) / (Bi - Ci * alphas[i - 1])
+
+        # n_arr[N - 1] = (2 * D * tau * betas[N - 2] + h ** 2 * n_arr[N - 1]) /\
+        #                (2 * D * tau * (1 - alphas[N - 2]) + h ** 2)
+
+        n_arr[N - 1] = n_end
+
+        for i in range(N-2, -1, -1):
+            n_arr[i] = alphas[i] * n_arr[i + 1] + betas[i]
+
+    return n_arr
+
+
+def make_simple_diffusion_sim(conc_matrix, D, x_len, z_len, time_step, h_nm, total_time):
+
+    now_time = 0
+
+    while now_time < total_time:
+
+        now_time += time_step
+
+        for k in range(z_len):
+
+            conc_matrix[:, k] = get_concentration_1d_arr_bnd2_0(
+                n0_arr=conc_matrix[:, k],
+                D=D,
+                tau=time_step,
+                h=h_nm * 1e-7,
+                total_time=total_time
+            )
+
+            for i in range(x_len):
+                conc_matrix[i, :] = get_concentration_1d_arr_bnd1(
+                    n0_arr=conc_matrix[i, :],
+                    n_beg=0,
+                    n_end=conc_matrix[i, -1],
+                    D=D,
+                    tau=time_step,
+                    h=h_nm * 1e-7,
+                    total_time=total_time
+                )
+
+    return conc_matrix
+
 
 # %%
-# T_C = 160
+# L = 0.1
+# lamda = 46
+# C = 460
+# rho = 7800
+# T0 = 20
+# T_l = 300
+# T_r = 100
+# delta_t = 60
 #
-# wpwp = np.linspace(0, 1, 100)
-# DD = np.zeros(len(wpwp))
+# D = lamda / rho / C
 #
-# for i in range(len(wpwp)):
-#     DD[i] = get_D(T_C, wpwp[i])
+# t_end = total_time = 10
+# # t_end = total_time = 60000
+# tau = t_end / 100
+#
+# N = 100
+# h = L / (N-1)
+# n0_arr = np.ones(100) * 20
+#
+# n_final_arr = get_concentration_1d_arr_bnd1(n0_arr, T_l, T_r, D, tau, h, total_time)
+# # n_final_arr = get_concentration_1d_arr_bnd2_0(n0_arr, D, tau, h, total_time)
+# # n_final_arr = get_concentration_1d_arr_bnd_12_0(n0_arr, T_r, D, tau, h, total_time)
 #
 # plt.figure(dpi=300)
-# plt.semilogy(wpwp, DD)
-#
-# plt.xlabel('polymer mass fraction')
-# plt.ylabel('D')
-#
-# plt.grid()
+# plt.plot(n_final_arr)
+# plt.xlim(0, 100)
+# plt.ylim(0, 300)
 # plt.show()
-

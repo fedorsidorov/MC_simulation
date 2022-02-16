@@ -129,6 +129,16 @@ x_125_trans = y_125_trans * (z_125_trans + 1)
 x_150_trans = y_150_trans * (z_150_trans + 1)
 x_170_trans = y_170_trans * (z_170_trans + 1)
 
+# %%
+Mn_98_term = y_98_term * (z_98_term + 1)
+Mw_98_term = (z_98_term + 2) / (z_98_term + 1) * Mn_98_term
+
+Mn_150_term = y_150_term * (z_150_term + 1)
+Mw_150_term = (z_150_term + 2) / (z_150_term + 1) * Mn_150_term
+
+Mn_170_term = y_170_term * (z_170_term + 1)
+Mw_170_term = (z_170_term + 2) / (z_170_term + 1) * Mn_170_term
+
 # %% plot curves for termination
 kin_curve_125 = np.loadtxt('notebooks/Boyd_kinetic_curves/kinetic_curves/3.txt')
 tt_125 = dose2time(kin_curve_125[:, 0] * 1e-6, 1e-9)
@@ -225,8 +235,10 @@ plt.figure(dpi=300)
 # plt.figure(dpi=300, figsize=[4, 3])
 # plt.figure(dpi=300, figsize=[6, 4])
 # plt.figure(dpi=300, figsize=[8, 6])
-plt.semilogy(tau, Mw_125)
+plt.semilogy(tau, Mw_98_term)
+# plt.semilogy(tau, Mw_125)
+plt.semilogy(tau, Mw_170_term, '--')
 # plt.grid()
 plt.show()
 
-size = fig.get_size_inches()
+# size = fig.get_size_inches()
