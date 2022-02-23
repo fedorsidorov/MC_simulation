@@ -299,6 +299,7 @@ def get_evolver_times_profiles():
 
 
 def get_evolver_profile(path):
+
     SE = np.loadtxt(path)
 
     raw_profile = SE[1:, :]
@@ -318,12 +319,11 @@ def get_evolver_profile(path):
 
 # %%
 # path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_short.txt'
-# path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_long.txt'
+# path = '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_single.txt'
 
 # profile = get_evolver_profile(path)
 
 # plt.figure(dpi=300)
-# plt.plot(xx_nm, zz_nm)
 # plt.plot(profile[:, 0], profile[:, 1], '.-', ms=2)
 # plt.plot(profile[::4, 0], profile[::4, 1], '.-', ms=2)
 # plt.plot(profile[:, 0], profile[:, 1], '.-', ms=2)
