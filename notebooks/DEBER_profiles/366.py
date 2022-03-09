@@ -49,7 +49,7 @@ plt.ylabel('z, nm')
 plt.grid()
 plt.show()
 
-# %% slice frame
+# %% slice_1 frame
 D1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/366/slice_frame/1.csv', delimiter=',', skiprows=5)
 D2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/366/slice_frame/2.csv', delimiter=',', skiprows=5)
 D3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/366/slice_frame/3.csv', delimiter=',', skiprows=5)
@@ -87,9 +87,9 @@ plt.legend()
 plt.grid()
 plt.show()
 
-# %% slice
-D1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/366/slice/1.csv', delimiter=',', skiprows=5)
-D2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/366/slice/2.csv', delimiter=',', skiprows=5)
+# %% slice_1
+D1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/366/slice_1/1.csv', delimiter=',', skiprows=5)
+D2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/366/slice_1/2.csv', delimiter=',', skiprows=5)
 
 plt.figure(dpi=300)
 

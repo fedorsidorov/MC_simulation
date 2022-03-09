@@ -129,7 +129,7 @@ inds_x, inds_z = np.where(np.logical_and(last_profile < bin_size, last_profile >
 plt.figure(dpi=300)
 plt.plot(x_centers[inds_x] / 1000, 280 - z_centers[inds_z], label='simulation')
 
-plt.plot(xx, zz, label='slice profile')
+plt.plot(xx, zz, label='slice_1 profile')
 
 plt.xlim(-4, 4)
 plt.ylim(0, 300)

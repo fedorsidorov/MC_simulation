@@ -2,11 +2,42 @@ import importlib
 import numpy as np
 import matplotlib.pyplot as plt
 
-from mapping import mapping_3um_500nm as mm
+from mapping import mapping_5um_900nm as mm
 import indexes as ind
+
+import constants
 
 mm = importlib.reload(mm)
 ind = importlib.reload(ind)
+constants = importlib.reload(constants)
+
+
+# %%
+lx = mm.lx * 1e-7
+ly = mm.ly * 1e-7
+# area = lx * ly
+area = 3 * 3.9 * 1e-2
+
+dose_factor = 3.8
+
+exposure_time = 1024
+It = 0.85e-9 * exposure_time * area  # C
+n_lines = 625
+
+pitch = 5e-4  # cm
+ratio = 1.3 / 1
+L_line = pitch * n_lines * ratio
+
+It_line = It / n_lines  # C
+It_line_l = It_line / L_line
+
+y_depth = mm.ly * 1e-7  # cm
+
+sim_dose = It_line_l * y_depth * dose_factor
+n_electrons_required = sim_dose / 1.6e-19
+n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870.77
+
+n_electrons_in_file = 93  # sovpadenie ?
 
 
 # %%
@@ -14,12 +45,9 @@ x_step, z_step = mm.step_1nm, mm.step_1nm
 x_bins, z_bins = mm.x_bins_1nm, mm.z_bins_1nm
 x_centers, z_centers = mm.x_centers_1nm, mm.z_centers_1nm
 
-scission_weight = 0.09  # 150 C - 0.088568
+scission_weight = 0.09  # 150 C - 0.08856, 160 C - 0.09142
 
-exposure_time = 100
-time_step = 1
-
-n_files = 750
+n_files = 470
 
 now_time = 0
 
@@ -29,12 +57,11 @@ while now_time < exposure_time:
 
     now_val_matrix = np.zeros((len(x_centers), len(z_centers)))
 
-    for n in range(10):
+    for n in range(2):
 
         now_e_DATA_Pv = np.load(
-            'notebooks/DEBER_simulation/e_DATA_Pv_snaked_sigma_300nm/e_DATA_Pv_' +
-            # str((now_time * 10 * n) % n_files) + '.npy'
-            str((now_time * 10 + n) % n_files) + '.npy'
+            'notebooks/DEBER_simulation/e_DATA_Pv_900nm_300nm/e_DATA_Pv_' +
+            str((now_time * 2 + n) % n_files) + '.npy'
         )
 
         now_val_matrix += np.histogramdd(
@@ -53,7 +80,7 @@ while now_time < exposure_time:
             now_scission_matrix[i, k] = len(scissions)
 
     np.save(
-        'notebooks/DEBER_simulation/scission_matrixes_sigma_300nm_corr/scission_matrix_1nm_' + str(now_time) + '.npy',
+        'notebooks/DEBER_simulation/scission_matrixes_sigma_300nm_900/scission_matrix_1nm_' + str(now_time) + '.npy',
         now_scission_matrix
     )
 

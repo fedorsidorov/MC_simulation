@@ -1,9 +1,13 @@
 import numpy as np
 
 # %%
-x_min, x_max = -2500, 2500
-y_min, y_max = -100, 100
-z_min, z_max = 0, 900
+lx = 5000
+ly = 100
+lz = 900
+
+x_min, x_max = -lx/2, lx/2
+y_min, y_max = -ly/2, ly/2
+z_min, z_max = 0, lz
 
 l_xyz = np.array((x_max - x_min, y_max - y_min, z_max - z_min))
 l_xyz_cm = l_xyz * 1e-7
@@ -13,6 +17,7 @@ lx_cm, ly_cm, lz_cm = l_xyz_cm
 xyz_min = np.array((x_min, y_min, z_min))
 xyz_max = np.array((x_max, y_max, z_max))
 
+step_1nm = 1
 step_2nm = 2
 step_5nm = 5
 step_10nm = 10
@@ -35,6 +40,10 @@ r_beam_x = 100
 r_beam_y = ly / 2
 
 # %% histograms parameters
+x_bins_1nm = np.arange(x_min, x_max + 1, step_1nm)
+y_bins_1nm = np.arange(y_min, y_max + 1, step_1nm)
+z_bins_1nm = np.arange(z_min, z_max + 1, step_1nm)
+
 x_bins_2nm = np.arange(x_min, x_max + 1, step_2nm)
 y_bins_2nm = np.arange(y_min, y_max + 1, step_2nm)
 z_bins_2nm = np.arange(z_min, z_max + 1, step_2nm)
@@ -62,6 +71,10 @@ z_bins_50nm = np.arange(z_min, z_max + 1, step_50nm)
 x_bins_100nm = np.arange(x_min, x_max + 1, step_100nm)
 y_bins_100nm = np.arange(y_min, y_max + 1, step_100nm)
 z_bins_100nm = np.arange(z_min, z_max + 1, step_100nm)
+
+x_centers_1nm = (x_bins_1nm[:-1] + x_bins_1nm[1:]) / 2
+y_centers_1nm = (y_bins_1nm[:-1] + y_bins_1nm[1:]) / 2
+z_centers_1nm = (z_bins_1nm[:-1] + z_bins_1nm[1:]) / 2
 
 x_centers_2nm = (x_bins_2nm[:-1] + x_bins_2nm[1:]) / 2
 y_centers_2nm = (y_bins_2nm[:-1] + y_bins_2nm[1:]) / 2
@@ -91,6 +104,7 @@ x_centers_100nm = (x_bins_100nm[:-1] + x_bins_100nm[1:]) / 2
 y_centers_100nm = (y_bins_100nm[:-1] + y_bins_100nm[1:]) / 2
 z_centers_100nm = (z_bins_100nm[:-1] + z_bins_100nm[1:]) / 2
 
+bins_1nm = [x_bins_1nm, y_bins_1nm, z_bins_1nm]
 bins_2nm = [x_bins_2nm, y_bins_2nm, z_bins_2nm]
 bins_5nm = [x_bins_5nm, y_bins_5nm, z_bins_5nm]
 bins_10nm = [x_bins_10nm, y_bins_10nm, z_bins_10nm]
@@ -99,6 +113,7 @@ bins_25nm = [x_bins_25nm, y_bins_25nm, z_bins_25nm]
 bins_50nm = [x_bins_50nm, y_bins_50nm, z_bins_50nm]
 bins_100nm = [x_bins_100nm, y_bins_100nm, z_bins_100nm]
 
+hist_1nm_shape = (len(x_bins_1nm) - 1, len(y_bins_1nm) - 1, len(z_bins_1nm) - 1)
 hist_2nm_shape = (len(x_bins_2nm) - 1, len(y_bins_2nm) - 1, len(z_bins_2nm) - 1)
 hist_5nm_shape = (len(x_bins_5nm) - 1, len(y_bins_5nm) - 1, len(z_bins_5nm) - 1)
 hist_10nm_shape = (len(x_bins_10nm) - 1, len(y_bins_10nm) - 1, len(z_bins_10nm) - 1)

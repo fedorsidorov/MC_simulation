@@ -66,11 +66,11 @@ plt.show()
 # pr_6 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/3_corner_90/c_dark_1.csv', delimiter=',', skiprows=5)
 # pr_7 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/3_corner_90/c1_light_1.csv', delimiter=',', skiprows=5)
 
-pr_1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice/3_1_center_slice_1.csv', delimiter=',', skiprows=5)
-pr_2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice/3_1_center_slice_2.csv', delimiter=',', skiprows=5)
-pr_3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice/3_1_center_slice_3.csv', delimiter=',', skiprows=5)
-pr_4 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice/3_1_center_slice_4.csv', delimiter=',', skiprows=5)
-pr_5 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice/3_1_center_slice_5.csv', delimiter=',', skiprows=5)
+pr_1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice_1/3_1_center_slice_1.csv', delimiter=',', skiprows=5)
+pr_2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice_1/3_1_center_slice_2.csv', delimiter=',', skiprows=5)
+pr_3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice_1/3_1_center_slice_3.csv', delimiter=',', skiprows=5)
+pr_4 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice_1/3_1_center_slice_4.csv', delimiter=',', skiprows=5)
+pr_5 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice_1/3_1_center_slice_5.csv', delimiter=',', skiprows=5)
 
 
 fig = plt.figure(dpi=300)
@@ -169,12 +169,12 @@ plt.ylabel('z, nm')
 
 plt.show()
 
-# %% slice
-pr_1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice/3_1_center_slice_1.csv', delimiter=',', skiprows=5)
-pr_2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice/3_1_center_slice_2.csv', delimiter=',', skiprows=5)
-pr_3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice/3_1_center_slice_3.csv', delimiter=',', skiprows=5)
-pr_4 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice/3_1_center_slice_4.csv', delimiter=',', skiprows=5)
-pr_5 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice/3_1_center_slice_5.csv', delimiter=',', skiprows=5)
+# %% slice_1
+pr_1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice_1/3_1_center_slice_1.csv', delimiter=',', skiprows=5)
+pr_2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice_1/3_1_center_slice_2.csv', delimiter=',', skiprows=5)
+pr_3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice_1/3_1_center_slice_3.csv', delimiter=',', skiprows=5)
+pr_4 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice_1/3_1_center_slice_4.csv', delimiter=',', skiprows=5)
+pr_5 = np.loadtxt('notebooks/DEBER_profiles/Fedor/WET/slice_1/3_1_center_slice_5.csv', delimiter=',', skiprows=5)
 
 fig = plt.figure(dpi=300)
 ax = fig.add_subplot(1, 1, 1)

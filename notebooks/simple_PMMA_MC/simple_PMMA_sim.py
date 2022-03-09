@@ -350,6 +350,9 @@ for n in range(n_files):
 # ans = np.load('data/4CASINO/1000/e_DATA_0.npy')
 
 # %%
+e_DATA = now_e_DATA[:, :]
+# e_DATA = now_e_DATA_Pv[:, :]
+
 fig, ax = plt.subplots(dpi=300)
 
 for e_id in range(int(np.max(e_DATA[:, 0]) + 1)):
@@ -358,7 +361,7 @@ for e_id in range(int(np.max(e_DATA[:, 0]) + 1)):
     if len(inds) == 0:
         continue
 
-    ax.plot(e_DATA[inds, 3], e_DATA[inds, 5], '-', linewidth='1')
+    ax.plot(e_DATA[inds, 4], e_DATA[inds, 6], '-', linewidth='1')
 
 ax.xaxis.get_major_formatter().set_powerlimits((0, 1))
 ax.yaxis.get_major_formatter().set_powerlimits((0, 1))

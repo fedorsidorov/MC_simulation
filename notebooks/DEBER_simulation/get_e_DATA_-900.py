@@ -7,7 +7,8 @@ from tqdm import tqdm
 from functions import MC_functions as mcf
 import grid
 import constants as const
-from mapping import mapping_3um_500nm as mm
+# from mapping import mapping_3um_500nm as mm
+from mapping import mapping_5um_900nm as mm
 from functions import SE_functions as ef
 from functions import array_functions as af
 from functions import e_matrix_functions as emf
@@ -232,7 +233,7 @@ def track_electron(xx_vac, zz_vac, e_id, par_id, E_0, coords_0, flight_ort_0, d_
 
     if coords[-1] > d_PMMA:  # get layer_ind
         layer_ind = 1
-    elif 0 < coords[-1] < d_PMMA:
+    elif -900 < coords[-1] < d_PMMA:
         layer_ind = 0
     else:
         layer_ind = 2
@@ -250,7 +251,7 @@ def track_electron(xx_vac, zz_vac, e_id, par_id, E_0, coords_0, flight_ort_0, d_
 
         if coords[-1] > d_PMMA:  # get layer_ind
             layer_ind = 1
-        elif 0 < coords[-1] < d_PMMA:
+        elif -900 < coords[-1] < d_PMMA:
             layer_ind = 0
         else:
             layer_ind = 2
@@ -268,14 +269,14 @@ def track_electron(xx_vac, zz_vac, e_id, par_id, E_0, coords_0, flight_ort_0, d_
         delta_r = flight_ort * free_path
 
         # electron remains in the same layer
-        if 0 < coords[-1] < d_PMMA and 0 < coords[-1] + delta_r[-1] < d_PMMA or \
+        if -900 < coords[-1] < d_PMMA and -900 < coords[-1] + delta_r[-1] < d_PMMA or \
                 d_PMMA < coords[-1] and d_PMMA < coords[-1] + delta_r[-1]:
 
             coords = coords + delta_r
 
         # electron changes layer
-        elif 0 < coords[-1] < d_PMMA < coords[-1] + delta_r[-1] or \
-                coords[-1] > d_PMMA > coords[-1] + delta_r[-1] > 0:
+        elif -900 < coords[-1] < d_PMMA < coords[-1] + delta_r[-1] or \
+                coords[-1] > d_PMMA > coords[-1] + delta_r[-1] > -900:
 
             d = np.linalg.norm(delta_r) * np.abs(coords[-1] - d_PMMA) / np.abs(delta_r[-1])
             W1 = structure_u_total[layer_ind][E_ind]
@@ -428,7 +429,8 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, beam_sigma, d_PMMA, z_c
     for _ in range(n_electrons):
 
         x_beg = np.random.normal(loc=0, scale=beam_sigma)
-        z_beg = get_now_z_vac(xx_vac, zz_vac, x_beg) + 1e-2
+        # z_beg = get_now_z_vac(xx_vac, zz_vac, x_beg) + 1e-2
+        z_beg = 0 + 1e-2
 
         e_deque.append([
             next_e_id,
@@ -502,25 +504,28 @@ sim_dose = It_line_l * y_depth * dose_factor
 n_electrons_required = sim_dose / 1.6e-19
 n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870.77
 
-n_electrons_in_file = 94
+n_electrons_in_file = 10
 
 E0 = 20e+3
-T_C = 150
-scission_weight = 0.09  # 150 C - 0.088568
 
-d_PMMA = 500
+# d_PMMA = 500
+d_PMMA = 900
 E_beam = 20e+3
-beam_sigma = 500
+
+# beam_sigma = 500
+beam_sigma = 0
 
 time_step = 1
 
 # %% SIMULATION
 # vacuum
 xx_vacuum = mm.x_centers_50nm
-zz_vacuum = np.zeros(len(xx_vacuum))
+# zz_vacuum = np.zeros(len(xx_vacuum))
+zz_vacuum = np.ones(len(xx_vacuum)) * -900
 
 i = 0
 
+# while i < 1:
 while True:
 
     # print('Now time =', now_time)
@@ -558,18 +563,9 @@ while True:
         xyz_max=[mm.x_max, mm.y_max, np.inf]
     )
 
-    np.save('notebooks/DEBER_simulation/e_DATA_Pv_snaked/e_DATA_Pv_' + str(i) + '.npy', now_e_DATA_Pv)
+    np.save('notebooks/DEBER_simulation/e_DATA_Pv_900nm_snaked_point_-900/e_DATA_Pv_' + str(i) + '.npy', now_e_DATA_Pv)
 
     i += 1
+# %%
 
-    # now_val_matrix += np.histogramdd(
-    #     sample=now_Pv_e_DATA[:, [ind.e_DATA_x_ind, ind.e_DATA_z_ind]],
-    #     bins=[mm.x_bins_50nm, mm.z_bins_50nm]
-    # )[0]
-#
-# now_val_matrix += now_val_matrix[::-1, :]
-#
-# np.save('notebooks/DEBER_simulation/val_matrix/val_matrix_' + str(now_time) + '.npy', now_val_matrix)
-#
-# now_time += time_step
 

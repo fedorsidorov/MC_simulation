@@ -2,9 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # %% A
-A1y = np.loadtxt('notebooks/DEBER_profiles/356y/A/1b.csv', delimiter=',', skiprows=5)
-B1y = np.loadtxt('notebooks/DEBER_profiles/356y/B/1d.csv', delimiter=',', skiprows=5)
-C1y = np.loadtxt('notebooks/DEBER_profiles/356y/C/1d.csv', delimiter=',', skiprows=5)
+A1y = np.loadtxt('notebooks/DEBER_profiles/Fedor/356y/A/1b.csv', delimiter=',', skiprows=5)
+B1y = np.loadtxt('notebooks/DEBER_profiles/Fedor/356y/B/1d.csv', delimiter=',', skiprows=5)
+C1y = np.loadtxt('notebooks/DEBER_profiles/Fedor/356y/C/1d.csv', delimiter=',', skiprows=5)
 
 plt.figure(dpi=300)
 

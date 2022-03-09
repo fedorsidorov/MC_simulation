@@ -2,16 +2,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # %% A
-A1 = np.loadtxt('notebooks/DEBER_profiles/360y/A1/A1_a.csv', delimiter=',', skiprows=5)
-A2 = np.loadtxt('notebooks/DEBER_profiles/360y/A2/A2_d.csv', delimiter=',', skiprows=5)
-B0 = np.loadtxt('notebooks/DEBER_profiles/360y/B0/B0_e.csv', delimiter=',', skiprows=5)
-B1 = np.loadtxt('notebooks/DEBER_profiles/360y/B1/B1_d.csv', delimiter=',', skiprows=5)
-B2 = np.loadtxt('notebooks/DEBER_profiles/360y/B2/B2_b.csv', delimiter=',', skiprows=5)
+A1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/360y/A1/A1_a.csv', delimiter=',', skiprows=5)
+# A2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/360y/A2/A2_d.csv', delimiter=',', skiprows=5)
+B0 = np.loadtxt('notebooks/DEBER_profiles/Fedor/360y/B0/B1_e.csv', delimiter=',', skiprows=5)
+B1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/360y/B1/B1_d.csv', delimiter=',', skiprows=5)
+B2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/360y/B2/B2_b.csv', delimiter=',', skiprows=5)
 
-C0 = np.loadtxt('notebooks/DEBER_profiles/360y/C0/C0_1.csv', delimiter=',', skiprows=5)
+C0 = np.loadtxt('notebooks/DEBER_profiles/Fedor/360y/C0/C0_1.csv', delimiter=',', skiprows=5)
 # C0 = np.loadtxt('notebooks/DEBER_profiles/360y/C1/C1_4.csv', delimiter=',', skiprows=5)
 
-D0 = np.loadtxt('notebooks/DEBER_profiles/360y/D1/D1_2.csv', delimiter=',', skiprows=5)
+D0 = np.loadtxt('notebooks/DEBER_profiles/Fedor/360y/D1/D1_2.csv', delimiter=',', skiprows=5)
 
 plt.figure(dpi=300)
 

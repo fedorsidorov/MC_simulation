@@ -70,15 +70,15 @@ ax.grid(which='both')
 plt.show()
 
 # %% 357
-# pr_1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/1a.csv', delimiter=',', skiprows=5)
-# pr_2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/1d.csv', delimiter=',', skiprows=5)
-# pr_3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/2a.csv', delimiter=',', skiprows=5)
-# pr_4 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/2d.csv', delimiter=',', skiprows=5)
+pr_1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/1a.csv', delimiter=',', skiprows=5)
+pr_2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/1d.csv', delimiter=',', skiprows=5)
+pr_3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/2a.csv', delimiter=',', skiprows=5)
+pr_4 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/2d.csv', delimiter=',', skiprows=5)
 
-pr_1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/6a.csv', delimiter=',', skiprows=5)
-pr_2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/6d.csv', delimiter=',', skiprows=5)
-pr_3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/8a.csv', delimiter=',', skiprows=5)
-pr_4 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/8d.csv', delimiter=',', skiprows=5)
+# pr_1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/6a.csv', delimiter=',', skiprows=5)
+# pr_2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/6d.csv', delimiter=',', skiprows=5)
+# pr_3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/8a.csv', delimiter=',', skiprows=5)
+# pr_4 = np.loadtxt('notebooks/DEBER_profiles/Fedor/357/height/8d.csv', delimiter=',', skiprows=5)
 
 fig = plt.figure(dpi=300)
 ax = fig.add_subplot(1, 1, 1)

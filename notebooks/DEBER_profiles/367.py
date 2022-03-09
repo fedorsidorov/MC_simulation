@@ -21,11 +21,11 @@ plt.xlim(0, 10000)
 plt.grid()
 plt.show()
 
-# %% slice
-D1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/367/slice/1.csv', delimiter=',', skiprows=5)
-D2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/367/slice/2.csv', delimiter=',', skiprows=5)
-D3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/367/slice/3.csv', delimiter=',', skiprows=5)
-D4 = np.loadtxt('notebooks/DEBER_profiles/Fedor/367/slice/4.csv', delimiter=',', skiprows=5)
+# %% slice_1
+D1 = np.loadtxt('notebooks/DEBER_profiles/Fedor/367/slice_1/1.csv', delimiter=',', skiprows=5)
+D2 = np.loadtxt('notebooks/DEBER_profiles/Fedor/367/slice_1/2.csv', delimiter=',', skiprows=5)
+D3 = np.loadtxt('notebooks/DEBER_profiles/Fedor/367/slice_1/3.csv', delimiter=',', skiprows=5)
+D4 = np.loadtxt('notebooks/DEBER_profiles/Fedor/367/slice_1/4.csv', delimiter=',', skiprows=5)
 
 plt.figure(dpi=300)
 
