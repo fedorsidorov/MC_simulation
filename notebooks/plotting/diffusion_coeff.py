@@ -17,7 +17,7 @@ plt.plot(dT, np.log10(df.get_D(dT, wp=1)), label='w$_p$ = 1')
 
 plt.legend()
 plt.xlabel('T - T$_g$')
-plt.ylabel('log(D), cm$^2$/s')
+plt.ylabel('log(15now21), cm$^2$/s')
 
 plt.grid()
 # plt.show()

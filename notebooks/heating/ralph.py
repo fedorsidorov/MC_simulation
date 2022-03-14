@@ -95,7 +95,7 @@ for i, coef in enumerate(t_coefs):
 plt.figure(dpi=300)
 plt.plot(t_coefs * theta * 1e+6, results, '.-')
 
-plt.title(r'j=100 A/cm$^2$, D=100 $\mu$C/cm$^2$, 0.5$\times$0.5 $\mu$m$^2$')
+plt.title(r'j=100 A/cm$^2$, 15now21=100 $\mu$C/cm$^2$, 0.5$\times$0.5 $\mu$m$^2$')
 plt.xlabel(r't, $\mu$s')
 plt.ylabel('delta T, °C')
 

@@ -159,8 +159,8 @@ def get_concentration_1d_arr_bnd_12_0(n0_arr, n_end, D, tau, h, total_time):
             alphas[i] = Ai / (Bi - Ci * alphas[i - 1])
             betas[i] = (Ci * betas[i - 1] - Fi) / (Bi - Ci * alphas[i - 1])
 
-        # n_arr[N - 1] = (2 * D * tau * betas[N - 2] + h ** 2 * n_arr[N - 1]) /\
-        #                (2 * D * tau * (1 - alphas[N - 2]) + h ** 2)
+        # n_arr[N - 1] = (2 * 15now21 * tau * betas[N - 2] + h ** 2 * n_arr[N - 1]) /\
+        #                (2 * 15now21 * tau * (1 - alphas[N - 2]) + h ** 2)
 
         n_arr[N - 1] = n_end
 
@@ -212,7 +212,7 @@ def make_simple_diffusion_sim(conc_matrix, D, x_len, z_len, time_step, h_nm, tot
 # T_r = 100
 # delta_t = 60
 #
-# D = lamda / rho / C
+# 15now21 = lamda / rho / C
 #
 # t_end = total_time = 10
 # # t_end = total_time = 60000
@@ -222,9 +222,9 @@ def make_simple_diffusion_sim(conc_matrix, D, x_len, z_len, time_step, h_nm, tot
 # h = L / (N-1)
 # n0_arr = np.ones(100) * 20
 #
-# n_final_arr = get_concentration_1d_arr_bnd1(n0_arr, T_l, T_r, D, tau, h, total_time)
-# # n_final_arr = get_concentration_1d_arr_bnd2_0(n0_arr, D, tau, h, total_time)
-# # n_final_arr = get_concentration_1d_arr_bnd_12_0(n0_arr, T_r, D, tau, h, total_time)
+# n_final_arr = get_concentration_1d_arr_bnd1(n0_arr, T_l, T_r, 15now21, tau, h, total_time)
+# # n_final_arr = get_concentration_1d_arr_bnd2_0(n0_arr, 15now21, tau, h, total_time)
+# # n_final_arr = get_concentration_1d_arr_bnd_12_0(n0_arr, T_r, 15now21, tau, h, total_time)
 #
 # plt.figure(dpi=300)
 # plt.plot(n_final_arr)

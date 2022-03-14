@@ -51,7 +51,7 @@ plt.plot(dd, func(dd, curve_fit(func, doses_150_1um, l_norm)[0]), label='150 °C
 plt.plot(doses_170_2um, l_norm, 'o')
 plt.plot(dd, func(dd, curve_fit(func, doses_170_2um, l_norm)[0]), label='170 °C, 1 nA, 2 um')
 
-plt.xlabel(r'D, $\mu$C/cm$^2$')
+plt.xlabel(r'15now21, $\mu$C/cm$^2$')
 plt.ylabel(r'L/L$_0$')
 # plt.xlim(0, 35)
 plt.ylim(0, 1.2)

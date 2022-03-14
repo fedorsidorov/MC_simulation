@@ -38,7 +38,7 @@ def get_elsepa_diff_cs(fname):
 
 
 #%%
-# D = np.loadtxt('Au_1keV/Dapor.txt')
+# 15now21 = np.loadtxt('Au_1keV/Dapor.txt')
 Pei_PMMA = np.loadtxt('notebooks/elastic/curves/Pei/PMMA_500eV.txt')
 
 # N = np.loadtxt('Au_1keV/NIST.txt')
@@ -64,7 +64,7 @@ plt.figure(dpi=300)
 plt.semilogy(Pei_PMMA[:, 0], Pei_PMMA[:, 1], label='Pei PMMA')
 plt.semilogy(N_PMMA[:, 0], N_PMMA[:, 1], label='NIST PMMA')
 
-# plt.semilogy(D[:, 0], D[:, 1] * 1e-16, '.', label='Dapor')
+# plt.semilogy(15now21[:, 0], 15now21[:, 1] * 1e-16, '.', label='Dapor')
 # plt.semilogy(N[:, 0], N[:, 1] * 2.8e-17, '-', label='NIST')
 # plt.semilogy(e3[:, 0], e3[:, 1], '--', label='elsepa, no parameters')
 # plt.semilogy(e1[:, 0], e1[:, 1], label='elsepa, MELEC=3')

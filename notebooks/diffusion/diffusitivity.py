@@ -27,7 +27,7 @@ for i in range(len(temps_C)):
     plt.plot(weights, np.log10(D_matrix[i, :]), label=str(int(temps_C[i])))
 
 plt.xlabel('PMMA weight')
-plt.ylabel('log(D)')
+plt.ylabel('log(15now21)')
 plt.legend()
 plt.grid()
 plt.show()
@@ -39,7 +39,7 @@ for j in range(len(weights)):
     plt.plot(1000 / (temps_C + 273), np.log10(D_matrix[:, j]), label=str(int(weights[j] * 100)) + '%')
 
 plt.xlabel('1000/T, K$^{-1}$')
-plt.ylabel('log(D)')
+plt.ylabel('log(15now21)')
 plt.legend()
 plt.grid()
 plt.show()

@@ -49,7 +49,7 @@ plt.plot(dose_list_depol, L_norm_depol, label='sim depolymerization')
 
 # plt.title('80nm PMMA, 150 °C')
 plt.title('900nm PMMA, 160 °C')
-plt.xlabel('D, $\mu$C/cm$^2$')
+plt.xlabel('15now21, $\mu$C/cm$^2$')
 plt.ylabel('L/L$_0$')
 
 # plt.xlim(0, 20)

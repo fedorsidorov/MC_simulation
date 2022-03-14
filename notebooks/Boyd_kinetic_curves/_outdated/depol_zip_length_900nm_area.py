@@ -25,7 +25,7 @@ zz_vac = np.zeros(len(xx))
 source = 'data/e_DATA_Pv_900nm/'
 n_files_total = 500
 
-# D = 0.9e-6  # C / cm^2
+# 15now21 = 0.9e-6  # C / cm^2
 D = 20e-6  # C / cm^2
 Q = D * mm.area_cm2
 
@@ -140,7 +140,7 @@ plt.title('900 nm PMMA, 160 °C')
 # plt.xlim(0, 20)
 plt.xlim(0, 1)
 plt.ylim(0, 1)
-plt.xlabel('D, $\mu$C/cm$^2$')
+plt.xlabel('15now21, $\mu$C/cm$^2$')
 plt.ylabel('L/L$_0$')
 plt.legend()
 plt.grid()

@@ -99,7 +99,7 @@ plt.figure(dpi=300)
 
 plt.plot(dose_list, L_norm_list, label='sim, zip length = ' + str(zip_length))
 plt.plot(data[:, 0], data[:, 1], 'o-', label='experiment')
-plt.xlabel('D, $\mu$C/cm$^2$')
+plt.xlabel('15now21, $\mu$C/cm$^2$')
 plt.ylabel('L/L$_0$')
 # plt.xlim(0, 20)
 # plt.ylim(0, 1)

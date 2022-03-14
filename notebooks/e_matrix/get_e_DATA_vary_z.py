@@ -7,8 +7,8 @@ from tqdm import tqdm
 from functions import MC_functions as mcf
 import grid
 import constants as const
-# from mapping import mapping_3um_500nm as mm
-from mapping import mapping_5um_900nm as mm
+from mapping import mapping_3um_500nm as mm
+# from mapping import mapping_5um_900nm as mm
 from functions import SE_functions as ef
 from functions import array_functions as af
 from functions import e_matrix_functions as emf
@@ -22,6 +22,7 @@ grid = importlib.reload(grid)
 ind = importlib.reload(ind)
 mcf = importlib.reload(mcf)
 mm = importlib.reload(mm)
+
 
 # %% constants
 arr_size = 1000
@@ -420,7 +421,7 @@ def track_electron(xx_vac, zz_vac, e_id, par_id, E_0, coords_0, flight_ort_0, d_
     return e_DATA, e_2nd_deque
 
 
-def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, beam_sigma, d_PMMA, z_cut, Pn):
+def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, z0, beam_sigma, d_PMMA, z_cut, Pn):
     e_deque = deque()
     e_DATA_deque = deque()
 
@@ -429,7 +430,8 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, beam_sigma, d_PMMA, z_c
     for _ in range(n_electrons):
 
         x_beg = np.random.normal(loc=0, scale=beam_sigma)
-        z_beg = get_now_z_vac(xx_vac, zz_vac, x_beg) + 1e-2
+        # z_beg = get_now_z_vac(xx_vac, zz_vac, x_beg) + 1e-2
+        z_beg = z0 + 1e-2
 
         e_deque.append([
             next_e_id,
@@ -465,14 +467,7 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, beam_sigma, d_PMMA, z_c
 
         next_e_id += len(now_e_2nd_deque)
 
-        # total_e_DATA_deque = total_e_DATA_deque + now_e_DATA_deque
-
-        # for ed in now_e_DATA_deque:
-        #     total_e_DATA_deque.append(ed)
-
         e_DATA_deque.append(now_e_DATA)
-
-        # e_deque = now_e_2nd_deque + e_deque
 
         for e2d in now_e_2nd_deque:
             e_deque.appendleft(e2d)
@@ -503,43 +498,36 @@ sim_dose = It_line_l * y_depth * dose_factor
 n_electrons_required = sim_dose / 1.6e-19
 n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870.77
 
-n_electrons_in_file = 50
+# n_electrons_in_file = 93
+n_electrons_in_file = 31
 
-E0 = 20e+3
-
-# d_PMMA = 500
-d_PMMA = 900
+d_PMMA = 500
 E_beam = 20e+3
-
-# beam_sigma = 500
-beam_sigma = 0
 
 time_step = 1
 
 # %% SIMULATION
 # vacuum
 xx_vacuum = mm.x_centers_50nm
-# zz_vacuum = np.zeros(len(xx_vacuum))
-zz_vacuum = np.ones(len(xx_vacuum)) * -900
+zz_vacuum = np.zeros(len(xx_vacuum))
 
-i = 0
+# z0 = 0
+z0 = 200
+
+beam_sigma = 0
+
+n = 15
 
 while True:
 
-    # print('Now time =', now_time)
-
-    # now_val_matrix = np.zeros((len(mm.x_centers_50nm), len(mm.z_centers_50nm)))
-    # print('get e_DATA')
-
-    # for n in range(10):
-
-    # print(n)
+    print(n)
 
     now_e_DATA = track_all_electrons(
         xx_vac=xx_vacuum,
         zz_vac=zz_vacuum,
         n_electrons=n_electrons_in_file,
         E0=E_beam,
+        z0=z0,
         beam_sigma=beam_sigma,
         d_PMMA=d_PMMA,
         z_cut=np.inf,
@@ -561,10 +549,23 @@ while True:
         xyz_max=[mm.x_max, mm.y_max, np.inf]
     )
 
-    np.save('notebooks/DEBER_simulation/e_DATA_Pv_900nm_snaked_point_-900/e_DATA_Pv_' + str(i) + '.npy', now_e_DATA_Pv)
+    np.save(
+        'notebooks/DEBER_simulation/e_DATA_500nm_point/' + str(z0) + '/e_DATA_Pv_' + str(n) + '.npy',
+        now_e_DATA_Pv
+    )
 
-    i += 1
+    n += 1
+
 
 # %%
+ans = np.load('notebooks/DEBER_simulation/e_DATA_500nm_point/150/e_DATA_Pv_0.npy')
+
+plt.figure(dpi=300)
+plt.plot(ans[:, 4], ans[:, 6], '.')
+
+plt.ylim(0, 300)
+
+plt.grid()
+plt.show()
 
 
