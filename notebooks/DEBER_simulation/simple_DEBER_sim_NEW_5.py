@@ -497,12 +497,99 @@ def save_eta():
     plt.close('all')
 
 
+def save_ratio():
+    plt.figure(dpi=300)
+    plt.plot(xx_centers, ratio_array)
+    plt.title('ratio')
+    plt.xlabel('x, nm')
+    plt.ylabel('ratio')
+    plt.grid()
+    plt.ylim(0, 1.2)
+
+    if not os.path.exists(path + 'ratios/'):
+        os.makedirs(path + 'ratios/')
+
+    plt.savefig(path + 'ratios/' + 'ratio_' + str(now_time) + '_s.jpg', dpi=300)
+    plt.close('all')
+
+
+def save_surface_inds():
+    plt.figure(dpi=300)
+    plt.plot(xx_centers, surface_inds)
+    plt.title('surface inds')
+    plt.xlabel('x, nm')
+    plt.ylabel('surface inds')
+    plt.grid()
+
+    if not os.path.exists(path + 's_inds/'):
+        os.makedirs(path + 's_inds/')
+
+    plt.savefig(path + 's_inds/' + 's_inds_' + str(now_time) + '_s.jpg', dpi=300)
+    plt.close('all')
+
+
+def save_tau_matrix():
+    plt.figure(dpi=300)
+    plt.imshow(tau_matrix.transpose())
+    plt.colorbar()
+
+    if not os.path.exists(path + 'tau/'):
+        os.makedirs(path + 'tau/')
+
+    plt.savefig(path + 'tau/' + 'tau_' + str(now_time) + '_s.jpg', dpi=300)
+    plt.close('all')
+
+
+def save_Mn_matrix():
+    plt.figure(dpi=300)
+    plt.imshow(Mn_matrix.transpose())
+    plt.colorbar()
+
+    if not os.path.exists(path + 'Mn_matrix/'):
+        os.makedirs(path + 'Mn_matrix/')
+
+    plt.savefig(path + 'Mn_matrix/' + 'Mn_matrix_' + str(now_time) + '_s.jpg', dpi=300)
+    plt.close('all')
+
+
+def save_zz_vac_centers():
+    plt.figure(dpi=300)
+    plt.plot(xx_centers, zz_vac_centers, label='zz_vac_centers')
+    plt.title('zz_vac_centers, time = ' + str(now_time))
+    plt.xlabel('x, nm')
+    plt.ylabel('zz_vac_centers')
+    plt.xlim(-1500, 1500)
+    plt.legend()
+    plt.grid()
+
+    if not os.path.exists(path + 'zz_vac_centers/'):
+        os.makedirs(path + 'zz_vac_centers/')
+
+    plt.savefig(path + 'zz_vac_centers/' + 'zz_vac_centers_' + str(now_time) + '_s.jpg', dpi=300)
+    plt.close('all')
+
+
+def save_zz_vac_bins():
+    plt.figure(dpi=300)
+    plt.plot(xx_bins, zz_vac_bins)
+    plt.title('zz_vac_bins, time = ' + str(now_time))
+    plt.xlabel('x, nm')
+    plt.ylabel('zz_vac_bins')
+    plt.xlim(-1500, 1500)
+    plt.grid()
+
+    if not os.path.exists(path + 'zz_vac_bins/'):
+        os.makedirs(path + 'zz_vac_bins/')
+
+    plt.savefig(path + 'zz_vac_bins/' + 'zz_vac_bins_' + str(now_time) + '_s.jpg', dpi=300)
+    plt.close('all')
+
+
 def save_mobilities():
     plt.figure(dpi=300)
-    plt.plot(xx_inner, mobs_array, label='Mn mobility')
-    plt.plot(xx_inner, mobs_array_filt, label='Mn mobility filt')
-    # plt.plot(xx_inner, gauss_mobs, label='Mn gauss')
-    plt.plot(xx_inner, mobs_final, '--', label='FINAL')
+    plt.plot(xx_centers, mobs_array, label='Mn mobility')
+    plt.plot(xx_centers, mobs_array_filt, label='Mn mobility filt')
+    plt.plot(xx_centers, mobs_final, '--', label='FINAL')
     plt.title('mobilities, time = ' + str(now_time))
     plt.xlabel('x, nm')
     plt.ylabel('SE mobility')
@@ -519,12 +606,28 @@ def save_mobilities():
 
 def save_monomers():
     plt.figure(dpi=300)
-    plt.plot(xx_inner, monomer_array)
+    plt.plot(xx_centers, monomer_array)
     plt.title('monomer array, time = ' + str(now_time))
     plt.xlabel('x, nm')
     plt.ylabel('n_monomers')
     plt.grid()
-    plt.savefig(path + 'monomer_array_' + str(now_time) + '_s.jpg', dpi=300)
+
+    if not os.path.exists(path + 'monomers/'):
+        os.makedirs(path + 'monomers/')
+
+    plt.savefig(path + '/monomers/monomer_array_' + str(now_time) + '_s.jpg', dpi=300)
+    plt.close('all')
+
+
+def save_scissions():
+    plt.figure(dpi=300)
+    # plt.imshow((now_scission_matrix - now_scission_matrix[::-1, :]).transpose())
+    plt.plot(xx_centers, np.sum(now_scission_matrix, axis=1))
+
+    if not os.path.exists(path + 'scissions/'):
+        os.makedirs(path + 'scissions/')
+
+    plt.savefig(path + '/scissions/scission_array_' + str(now_time) + '_s.jpg', dpi=300)
     plt.close('all')
 
 
@@ -533,9 +636,12 @@ def save_profiles():
     plt.plot(new_xx_total, new_zz_total, '.-', ms=2, label='SE profile')
     plt.plot(new_xx_surface, new_zz_surface, '.-', ms=2, label='PMMA')
     plt.plot(new_xx_inner, new_zz_inner, '.-', ms=2, label='inner')
-    plt.plot(xx, new_zz_surface_final, '.-', ms=2, label='PMMA interp')
-    plt.plot(xx_inner, new_zz_inner_final, '.-', ms=2, label='inner interp')
+    plt.plot(xx_bins, new_zz_surface_final, '.-', ms=2, label='PMMA interp')
+    plt.plot(xx_centers, new_zz_inner_final, '.-', ms=2, label='inner interp')
     plt.plot(xx_366, zz_366, '--', label='final profile')
+
+    plt.plot(now_x0_array, d_PMMA - now_z0_array, 'ro')
+
     plt.title('profiles, time = ' + str(now_time))
     plt.xlabel('x, nm')
     plt.ylabel('z, nm')
@@ -552,8 +658,8 @@ def save_profiles_final():
     plt.plot(new_xx_total, new_zz_total, '.-', ms=2, label='SE profile')
     plt.plot(new_xx_surface, new_zz_surface, '.-', ms=2, label='PMMA')
     plt.plot(new_xx_inner, new_zz_inner, '.-', ms=2, label='inner')
-    plt.plot(xx, new_zz_surface_final, '.-', ms=2, label='PMMA interp')
-    plt.plot(xx_inner, new_zz_inner_final, '.-', ms=2, label='inner interp')
+    plt.plot(xx_bins, new_zz_surface_final, '.-', ms=2, label='PMMA interp')
+    plt.plot(xx_centers, new_zz_inner_final, '.-', ms=2, label='inner interp')
     plt.plot(xx_366, zz_366, '--', label='final profile')
     plt.title('profiles FINAL')
     plt.xlabel('x, nm')
@@ -567,7 +673,25 @@ def save_profiles_final():
     plt.close('all')
 
 
-# %% experiment constants
+def get_pos_enter(now_x0):
+    now_x0_bin = np.argmin(np.abs(xx_centers - now_x0))
+    now_z0 = zz_vac_centers[now_x0_bin]
+
+    pos_enter = 0
+
+    for ne in [50, 100, 150, 200, 250, 300, 350, 400, 450]:
+        if ne - 50 <= now_z0 < ne:
+            pos_enter = ne - 50
+    
+    if now_z0 >= 450:
+        pos_enter = 400
+
+    # print(now_x0, now_x0_bin, now_z0, pos_enter)
+
+    return int(pos_enter)
+
+
+# %% constants
 xx_366 = np.load('notebooks/DEBER_simulation/exp_profile_366/xx.npy')
 zz_366 = np.load('notebooks/DEBER_simulation/exp_profile_366/zz.npy')
 
@@ -590,9 +714,9 @@ sim_dose = It_line_l * y_depth * dose_factor
 n_electrons_required = sim_dose / 1.6e-19
 n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870.77
 
-n_electrons_in_file = 93
+# n_electrons_in_file = 93
+n_electrons_in_file = 31
 
-E0 = 20e+3
 T_C = 150
 scission_weight = 0.09  # 150 C - 0.088568
 
@@ -600,23 +724,6 @@ d_PMMA = 500
 E_beam = 20e+3
 
 time_step = 1
-
-
-# %% SIMULATION
-def save_ratio():
-    plt.figure(dpi=300)
-    plt.plot(xx_inner, ratio_arr)
-    plt.title('ratio')
-    plt.xlabel('x, nm')
-    plt.ylabel('ratio')
-    plt.grid()
-    # plt.ylim(0, 1)
-
-    if not os.path.exists(path + 'ratios/'):
-        os.makedirs(path + 'ratios/')
-
-    plt.savefig(path + 'ratios/' + 'ratio_' + str(now_time) + '_s.jpg', dpi=300)
-    plt.close('all')
 
 tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
 Mn_150 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mn_150.npy') * 100
@@ -628,58 +735,51 @@ x_0 = 2714
 z_0 = (2 - PD)/(PD - 1)
 y_0 = x_0 / (z_0 + 1)
 
+# %%
 # bin size !!!
-x_step, z_step = 50, 50
-x_bins, z_bins = mm.x_bins_50nm, mm.z_bins_50nm
-x_centers, z_centers = mm.x_centers_50nm, mm.z_centers_50nm
+# x_step, z_step = 50, 5
+# xx_bins, zz_bins = mm.x_bins_50nm, mm.z_bins_5nm
+# xx_centers, zz_centers = mm.x_centers_50nm, mm.z_centers_5nm
 
-# x_step, z_step = 100, 100
-# x_bins, z_bins = mm.x_bins_100nm, mm.z_bins_100nm
-# x_centers, z_centers = mm.x_centers_100nm, mm.z_centers_100nm
+x_step, z_step = 50, 50
+xx_bins, zz_bins = mm.x_bins_50nm, mm.z_bins_50nm
+xx_centers, zz_centers = mm.x_centers_50nm, mm.z_centers_50nm
+
+# x_step, z_step = 100, 5
+# xx_bins, zz_bins = mm.x_bins_100nm, mm.z_bins_5nm
+# xx_centers, zz_centers = mm.x_centers_100nm, mm.z_centers_5nm
 
 bin_volume = x_step * mm.ly * z_step
 bin_n_monomers = bin_volume / const.V_mon_nm3
 
-xx = x_bins
-zz_vac = np.zeros(len(xx))
+zz_vac_bins = np.zeros(len(xx_bins))
+zz_vac_centers = np.zeros(len(xx_centers))
+zz_vac_center_inds = np.zeros(len(xx_centers)).astype(int)
 
-xx_inner = x_centers
-zz_inner = np.zeros(len(xx_inner))
+zz_inner_centers = np.zeros(len(xx_centers))
 
-tau_matrix = np.zeros((len(x_centers), len(z_centers)))
-Mn_matrix = np.ones((len(x_centers), len(z_centers))) * Mn_150[0]
-eta_Mn_matrix = np.zeros((len(x_centers), len(z_centers)))
-mob_Mn_matrix = np.zeros((len(x_centers), len(z_centers)))
+tau_matrix = np.zeros((len(xx_centers), len(zz_centers)))
+Mn_matrix = np.ones((len(xx_centers), len(zz_centers))) * Mn_150[0]
+eta_Mn_matrix = np.zeros((len(xx_centers), len(zz_centers)))
+mob_Mn_matrix = np.zeros((len(xx_centers), len(zz_centers)))
 
-Mn_final_array = np.zeros(len(x_centers))
+Mn_final_array = np.zeros(len(xx_centers))
 
 beam_sigma = 300
+# beam_sigma = 0
 
 kernel_size = 3
-# kernel_size = 5
-
-# Mn_factor = 1/2
-zip_length = 190
-
+zip_length = 140
 power_high = 3.4
-# power_high = 4
-
-# power_low = 1.4
 power_low = 0.7
-
 Mn_edge = 42000
-# Mn_edge = 50000
 
-# path = 'notebooks/DEBER_simulation/sigma_' + str(beam_sigma) + 'nm/bin_' + str(x_step) +\
-#        '_nm/Mn_' + str(Mn_factor) + '_k' + str(kernel_size) + '_ph' + \
-#        str(power_high) + '_pl' + str(power_low) + '_' + str(int(Mn_edge / 1000)) + 'k/'
-
-path = 'notebooks/DEBER_simulation/sigma_' + str(beam_sigma) + 'nm/bin_' + str(x_step) +\
-       '_nm/zip' + str(zip_length) + '_k' + str(kernel_size) + '_ph' + \
+path = 'notebooks/DEBER_simulation/sigma_' + str(beam_sigma) + 'nm/bins_' + str(x_step) + '_' +\
+       str(z_step) + '_nm/zip' + str(zip_length) + '_k' + str(kernel_size) + '_ph' + \
        str(power_high) + '_pl' + str(power_low) + '_' + str(int(Mn_edge / 1000)) + 'k/'
 
-final_fname = 'notebooks/DEBER_simulation/sigma_' + str(beam_sigma) + 'nm/bin_' + str(x_step) +\
-       '_nm/zip' + str(zip_length) + '_k' + str(kernel_size) + '_ph' + \
+final_fname = 'notebooks/DEBER_simulation/sigma_' + str(beam_sigma) + 'nm/bins_' + str(x_step) + '_' +\
+       str(z_step) + '_nm/zip' + str(zip_length) + '_k' + str(kernel_size) + '_ph' + \
        str(power_high) + '_pl' + str(power_low) + '_' + str(int(Mn_edge / 1000)) + 'k.jpg'
 
 if not os.path.exists(path):
@@ -691,10 +791,9 @@ ETA = np.zeros(len(MM))
 for i in range(len(ETA)):
     ETA[i] = rf.get_viscosity_experiment_Mn(T_C, MM[i], power_high, power_low, Mn_edge=Mn_edge)
 
-# figure
 save_eta()
 
-total_scission_matrix = np.zeros((len(x_centers), len(z_centers)))
+pos_enter_dict = {0: 0, 50: 0, 100: 0, 150: 0, 200: 0, 250: 0, 300: 0, 350: 0, 400: 0}
 
 now_time = 0
 
@@ -703,45 +802,71 @@ while now_time < exposure_time:
 
     print('Now time =', now_time)
 
-    now_scission_matrix_1nm = np.load(
-        '/Volumes/Transcend/scission_matrixes_sigma_' + str(beam_sigma) +
-        'nm_corr/scission_matrix_1nm_' + str(now_time) + '.npy'
-    )
-    zz_vac_1nm = mcf.lin_lin_interp(xx, zz_vac)(mm.x_centers_1nm)
+    zz_vac_centers = mcf.lin_lin_interp(xx_bins, zz_vac_bins)(xx_centers)
 
-    for i in range(len(mm.x_centers_1nm)):
-        now_vac_inds = np.where(mm.z_centers_1nm < zz_vac_1nm[i])[0]
+    save_zz_vac_bins()
+    save_zz_vac_centers()
 
-        if len(now_vac_inds) > 0:
-            now_scission_matrix_1nm[i, :now_vac_inds[-1]] = 0
+    # TODO zz_vac_center_inds == surface_inds ?
+    for i in range(len(xx_centers)):
+        zz_vac_center_inds[i] = np.where(zz_centers > zz_vac_centers[i])[0][0]
 
-    now_scission_matrix = np.zeros((len(x_centers), len(z_centers)))
+    now_scission_matrix = np.zeros((len(xx_centers), len(zz_centers)))
 
-    x_new_inds = ((mm.x_centers_1nm - mm.x_min) // x_step).astype(int)
-    z_new_inds = ((mm.z_centers_1nm - mm.z_min) // z_step).astype(int)
+    now_x0_array = np.zeros(30)
+    now_z0_array = np.zeros(30)
 
-    for i in range(len(mm.x_centers_1nm)):
-        for k in range(len(mm.z_centers_1nm)):
-            now_scission_matrix[x_new_inds[i], z_new_inds[k]] += now_scission_matrix_1nm[i, k]
+    # TODO get scission_matrix START
+    for n in range(30):
 
-    total_scission_matrix += now_scission_matrix
+        n_file = np.random.choice(500)
 
-    zz_vac_centers = mcf.lin_lin_interp(xx, zz_vac)(xx_inner)
-    zz_PMMA_centers = d_PMMA - zz_vac_centers
+        now_x0 = np.random.normal(loc=0, scale=beam_sigma)
+        pos_enter = get_pos_enter(now_x0)
 
-    ratio_arr = (d_PMMA - zz_inner) / (((d_PMMA - zz_vac_centers) + (d_PMMA - zz_inner)) / 2)
+        now_x0_array[n] = now_x0
+        now_z0_array[n] = pos_enter
 
-    save_ratio()
+        now_e_DATA_Pv = np.load(
+            '/Volumes/Transcend/e_DATA_500nm_point/' + str(pos_enter) + '/e_DATA_Pv_' +
+            str(n_file) + '.npy'
+        )
 
-    zip_length_matrix = np.ones(np.shape(now_scission_matrix)) * zip_length
-    # zip_length_matrix = Mn_matrix / 100 * Mn_factor
+        pos_enter_dict[pos_enter] += 1
 
-    surface_inds = np.zeros(len(xx_inner))
+        scission_inds = np.where(np.random.random(len(now_e_DATA_Pv)) < scission_weight)[0]
+        now_e_DATA_sci = now_e_DATA_Pv[scission_inds, :]
 
-    for i in range(len(x_centers)):
-        for j in range(len(z_centers)):
+        now_e_DATA_sci[:, ind.e_DATA_x_ind] += now_x0
 
-            if z_centers[j] < zz_vac_centers[i] and j < len(z_centers) - 1:
+        af.snake_array(
+            array=now_e_DATA_sci,
+            x_ind=ind.e_DATA_x_ind,
+            y_ind=ind.e_DATA_y_ind,
+            z_ind=ind.e_DATA_z_ind,
+            xyz_min=[mm.x_min, mm.y_min, -np.inf],
+            xyz_max=[mm.x_max, mm.y_max, np.inf]
+        )
+
+        now_scission_matrix += np.histogramdd(
+            sample=now_e_DATA_sci[:, [ind.e_DATA_x_ind, ind.e_DATA_z_ind]],
+            bins=[xx_bins, zz_bins]
+        )[0]
+
+    for i in range(len(xx_centers)):
+        now_scission_matrix[i, :zz_vac_center_inds[i]] = 0
+
+    now_scission_matrix += now_scission_matrix[::-1, :]
+    # save_scissions()
+    # TODO get scission_matrix END
+
+    # TODO get Mn matrix START
+    surface_inds = np.zeros(len(xx_centers), dtype=int)
+
+    for i in range(len(xx_centers)):
+        for j in range(len(zz_centers)):
+
+            if zz_vac_centers[i] > zz_centers[j] and j < len(zz_centers) - 1:
                 surface_inds[i] = j + 1
 
             now_k_s = now_scission_matrix[i, j] / time_step / bin_n_monomers
@@ -757,49 +882,56 @@ while now_time < exposure_time:
             )
             mob_Mn_matrix[i, j] = rf.get_SE_mobility(eta_Mn_matrix[i, j])
 
+    # save_tau_matrix()
+    save_surface_inds()
+    # save_Mn_matrix()
+    # TODO get Mn matrix END
+
+    # TODO get monomer array START
+    zz_PMMA_centers = d_PMMA - zz_vac_centers
+    zz_PMMA_inner = d_PMMA - zz_inner_centers
+
+    ratio_array = (zz_PMMA_inner + (zz_PMMA_centers - zz_PMMA_inner) / 2) / zz_PMMA_centers
+    save_ratio()
+
+    zip_length_matrix = np.ones(np.shape(now_scission_matrix)) * zip_length
+    # zip_length_matrix = Mn_matrix / 100 * Mn_factor
+
     monomer_matrix = now_scission_matrix * zip_length_matrix
-
     monomer_array = np.sum(monomer_matrix, axis=1)
-    monomer_array *= ratio_arr
-
-    # figure
+    monomer_array *= ratio_array
     # save_monomers()
+    # TODO get monomer array END
 
+    # TODO get raw new profile START
     delta_h_array = monomer_array * const.V_mon_nm3 / x_step / mm.ly * 2  # triangle!
-    new_zz_inner = zz_inner + delta_h_array
+    new_zz_inner_centers = zz_inner_centers + delta_h_array
 
-    mobs_array = np.zeros(len(x_centers))
+    mobs_array = np.zeros(len(xx_centers))
 
     for i in range(len(mobs_array)):
-        mobs_array[i] = mob_Mn_matrix[i, int(surface_inds[i])]
-        Mn_final_array[i] = Mn_matrix[i, int(surface_inds[i])]
+        mobs_array[i] = np.average(mob_Mn_matrix[i, surface_inds[i]:])
+        Mn_final_array[i] = np.average(Mn_matrix[i, surface_inds[i]:])
 
     mobs_array_filt = medfilt(mobs_array, kernel_size=kernel_size)
-
-    # zero_level = (mobs_array_filt[0] + mobs_array_filt[-1]) / 2
-    # var_Mn = np.sum(xx_inner**2 * (mobs_array_filt - zero_level)) / np.sum(mobs_array_filt - zero_level)
-    # A = np.max(mobs_array_filt - zero_level)
-    # gauss_mobs = A * np.exp(-xx_inner**2 / (2 * var_Mn)) + zero_level
-
     mobs_final = mobs_array_filt
-    # mobs_final = gauss_mobs
 
-    # figure
     save_mobilities()
 
-    xx_SE = np.zeros(len(x_bins) + len(x_centers) - 1)
-    zz_vac_SE = np.zeros(len(x_bins) + len(x_centers) - 1)
-    mobs_SE = np.zeros(len(x_bins) + len(x_centers) - 1)
+    # TODO Surface Evolver part START
+    xx_SE = np.zeros(len(xx_bins) + len(xx_centers) - 1)
+    zz_vac_SE = np.zeros(len(xx_bins) + len(xx_centers) - 1)
+    mobs_SE = np.zeros(len(xx_bins) + len(xx_centers) - 1)
 
-    for i in range(len(x_centers)):
-        xx_SE[2 * i] = x_bins[i]
-        xx_SE[2 * i + 1] = x_centers[i]
-        zz_vac_SE[2 * i] = zz_vac[i]
-        zz_vac_SE[2 * i + 1] = new_zz_inner[i]
+    for i in range(len(xx_centers)):
+        xx_SE[2 * i] = xx_bins[i]
+        xx_SE[2 * i + 1] = xx_centers[i]
+        zz_vac_SE[2 * i] = zz_vac_bins[i]
+        zz_vac_SE[2 * i + 1] = new_zz_inner_centers[i]
 
     mobs_SE[0] = mobs_final[0]
     mobs_SE[-1] = mobs_final[-1]
-    mobs_SE[1:-1] = mcf.lin_lin_interp(xx_inner, mobs_final)(xx_SE[1:-1])
+    mobs_SE[1:-1] = mcf.lin_lin_interp(xx_centers, mobs_final)(xx_SE[1:-1])
 
     zz_PMMA_SE = d_PMMA - zz_vac_SE
     zz_PMMA_SE[np.where(zz_PMMA_SE < 0)] = 1
@@ -826,31 +958,31 @@ while now_time < exposure_time:
     ) * 1000
 
     new_xx_surface, new_zz_surface = profile_surface[:, 0], profile_surface[:, 1]
-    new_zz_surface_final = mcf.lin_lin_interp(new_xx_surface, new_zz_surface)(x_bins)
+    new_zz_surface_final = mcf.lin_lin_interp(new_xx_surface, new_zz_surface)(xx_bins)
 
     profile_inner = ef.get_evolver_profile(  # inner
         path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt'
     ) * 1000
 
     new_xx_inner, new_zz_inner = profile_inner[:, 0], profile_inner[:, 1]
-    new_zz_inner_final = mcf.lin_lin_interp(new_xx_inner, new_zz_inner)(x_centers)
+    new_zz_inner_final = mcf.lin_lin_interp(new_xx_inner, new_zz_inner)(xx_centers)
 
-    profile_total = ef.get_evolver_profile(  # total
-        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt'
-    ) * 1000
+    # profile_total = ef.get_evolver_profile(  # total
+    #     path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt'
+    # ) * 1000
+    #
+    # new_xx_total, new_zz_total = profile_total[::2, 0], profile_total[::2, 1]
 
-    new_xx_total, new_zz_total = profile_total[::2, 0], profile_total[::2, 1]
-
-    # figure
     save_profiles()
+    # TODO Surface Evolver part END
 
-    zz_vac = d_PMMA - new_zz_surface_final
-    zz_inner = d_PMMA - new_zz_inner_final
+    zz_vac_bins = d_PMMA - new_zz_surface_final
+    zz_inner_centers = d_PMMA - new_zz_inner_final
 
     now_time += time_step
 
 
-# %%
+# %
 TT = np.array([150,
                149, 148, 147, 146, 145, 144, 143, 142, 141, 140,
                139, 138, 137, 136, 135, 134, 133, 132, 131, 130,
@@ -887,31 +1019,24 @@ for i, mn in enumerate(Mn_final_array):
 
 mobs_1d_array_final_average = np.average(mobs_Mn_final_matrix, axis=1)
 mobs_array_final_filt = medfilt(mobs_1d_array_final_average, kernel_size=kernel_size)
-
-# zero_level = (mobs_array_final_filt[0] + mobs_array_final_filt[-1]) / 2
-# var_Mn = np.sum(xx_inner**2 * (mobs_array_final_filt - zero_level)) / np.sum(mobs_array_final_filt - zero_level)
-# A = np.max(mobs_array_final_filt - zero_level)
-# gauss_mobs = A * np.exp(-xx_inner**2 / (2 * var_Mn)) + zero_level
-
-# mobs_final = gauss_mobs
 mobs_final = mobs_array_final_filt
 
 save_mobilities()
 
-xx_SE = np.zeros(len(x_bins) + len(x_centers) - 1)
-zz_vac_SE = np.zeros(len(x_bins) + len(x_centers) - 1)
-mobs_SE = np.zeros(len(x_bins) + len(x_centers) - 1)
+xx_SE = np.zeros(len(xx_bins) + len(xx_centers) - 1)
+zz_vac_SE = np.zeros(len(xx_bins) + len(xx_centers) - 1)
+mobs_SE = np.zeros(len(xx_bins) + len(xx_centers) - 1)
 
-for i in range(len(x_centers)):
-    xx_SE[2 * i] = x_bins[i]
-    xx_SE[2 * i + 1] = x_centers[i]
+for i in range(len(xx_centers)):
+    xx_SE[2 * i] = xx_bins[i]
+    xx_SE[2 * i + 1] = xx_centers[i]
 
-    zz_vac_SE[2 * i] = zz_vac[i]
-    zz_vac_SE[2 * i + 1] = zz_inner[i]
+    zz_vac_SE[2 * i] = zz_vac_bins[i]
+    zz_vac_SE[2 * i + 1] = zz_inner_centers[i]
 
 mobs_SE[0] = mobs_final[0]
 mobs_SE[-1] = mobs_final[-1]
-mobs_SE[1:-1] = mcf.lin_lin_interp(xx_inner, mobs_final)(xx_SE[1:-1])
+mobs_SE[1:-1] = mcf.lin_lin_interp(xx_centers, mobs_final)(xx_SE[1:-1])
 
 zz_PMMA_SE = d_PMMA - zz_vac_SE
 
@@ -937,14 +1062,14 @@ profile_surface = ef.get_evolver_profile(  # surface
 ) * 1000
 
 new_xx_surface, new_zz_surface = profile_surface[:, 0], profile_surface[:, 1]
-new_zz_surface_final = mcf.lin_lin_interp(new_xx_surface, new_zz_surface)(x_bins)
+new_zz_surface_final = mcf.lin_lin_interp(new_xx_surface, new_zz_surface)(xx_bins)
 
 profile_inner = ef.get_evolver_profile(  # inner
     path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt'
 ) * 1000
 
 new_xx_inner, new_zz_inner = profile_inner[:, 0], profile_inner[:, 1]
-new_zz_inner_final = mcf.lin_lin_interp(new_xx_inner, new_zz_inner)(x_centers)
+new_zz_inner_final = mcf.lin_lin_interp(new_xx_inner, new_zz_inner)(xx_centers)
 
 profile_total = ef.get_evolver_profile(  # total
     path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt'
@@ -954,4 +1079,6 @@ new_xx_total, new_zz_total = profile_total[::2, 0], profile_total[::2, 1]
 
 # figure
 save_profiles_final()
+
+
 

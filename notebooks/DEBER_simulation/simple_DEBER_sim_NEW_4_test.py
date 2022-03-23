@@ -590,7 +590,8 @@ sim_dose = It_line_l * y_depth * dose_factor
 n_electrons_required = sim_dose / 1.6e-19
 n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870.77
 
-n_electrons_in_file = 93
+# n_electrons_in_file = 93
+n_electrons_in_file = 31
 
 E0 = 20e+3
 T_C = 150
@@ -603,21 +604,6 @@ time_step = 1
 
 
 # %% SIMULATION
-def save_ratio():
-    plt.figure(dpi=300)
-    plt.plot(xx_inner, ratio_arr)
-    plt.title('ratio')
-    plt.xlabel('x, nm')
-    plt.ylabel('ratio')
-    plt.grid()
-    # plt.ylim(0, 1)
-
-    if not os.path.exists(path + 'ratios/'):
-        os.makedirs(path + 'ratios/')
-
-    plt.savefig(path + 'ratios/' + 'ratio_' + str(now_time) + '_s.jpg', dpi=300)
-    plt.close('all')
-
 tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
 Mn_150 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mn_150.npy') * 100
 Mw_150 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mw_150.npy') * 100
@@ -694,8 +680,6 @@ for i in range(len(ETA)):
 # figure
 save_eta()
 
-total_scission_matrix = np.zeros((len(x_centers), len(z_centers)))
-
 now_time = 0
 
 # while now_time < 1:
@@ -704,7 +688,7 @@ while now_time < exposure_time:
     print('Now time =', now_time)
 
     now_scission_matrix_1nm = np.load(
-        '/Volumes/Transcend/scission_matrixes_sigma_' + str(beam_sigma) +
+        'notebooks/DEBER_simulation/scission_matrixes_sigma_' + str(beam_sigma) +
         'nm_corr/scission_matrix_1nm_' + str(now_time) + '.npy'
     )
     zz_vac_1nm = mcf.lin_lin_interp(xx, zz_vac)(mm.x_centers_1nm)
@@ -724,14 +708,10 @@ while now_time < exposure_time:
         for k in range(len(mm.z_centers_1nm)):
             now_scission_matrix[x_new_inds[i], z_new_inds[k]] += now_scission_matrix_1nm[i, k]
 
-    total_scission_matrix += now_scission_matrix
-
     zz_vac_centers = mcf.lin_lin_interp(xx, zz_vac)(xx_inner)
     zz_PMMA_centers = d_PMMA - zz_vac_centers
 
     ratio_arr = (d_PMMA - zz_inner) / (((d_PMMA - zz_vac_centers) + (d_PMMA - zz_inner)) / 2)
-
-    save_ratio()
 
     zip_length_matrix = np.ones(np.shape(now_scission_matrix)) * zip_length
     # zip_length_matrix = Mn_matrix / 100 * Mn_factor
@@ -850,7 +830,7 @@ while now_time < exposure_time:
     now_time += time_step
 
 
-# %%
+# %
 TT = np.array([150,
                149, 148, 147, 146, 145, 144, 143, 142, 141, 140,
                139, 138, 137, 136, 135, 134, 133, 132, 131, 130,

@@ -482,7 +482,8 @@ zz_366 = np.load('notebooks/DEBER_simulation/exp_profile_366/zz.npy')
 dose_factor = 3.8
 
 exposure_time = 100
-It = 1.2e-9 * exposure_time  # C
+I = 1.2e-9
+It = I * exposure_time  # C
 n_lines = 625
 
 pitch = 3e-4  # cm
@@ -512,58 +513,63 @@ xx_vacuum = mm.x_centers_50nm
 zz_vacuum = np.zeros(len(xx_vacuum))
 
 # z0 = 0
-z0 = 200
+# z0 = 200
+
+z0_arr = [50, 100, 150, 200, 250, 300, 350, 400]
 
 beam_sigma = 0
 
-n = 15
+# n = 0
+n = 583
 
 while True:
 
     print(n)
 
-    now_e_DATA = track_all_electrons(
-        xx_vac=xx_vacuum,
-        zz_vac=zz_vacuum,
-        n_electrons=n_electrons_in_file,
-        E0=E_beam,
-        z0=z0,
-        beam_sigma=beam_sigma,
-        d_PMMA=d_PMMA,
-        z_cut=np.inf,
-        Pn=True
-    )
+    for z0 in z0_arr:
 
-    now_e_DATA_Pv = now_e_DATA[np.where(
-        np.logical_and(
-            now_e_DATA[:, ind.e_DATA_layer_id_ind] == ind.PMMA_ind,
-            now_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))
-    ]
+        now_e_DATA = track_all_electrons(
+            xx_vac=xx_vacuum,
+            zz_vac=zz_vacuum,
+            n_electrons=n_electrons_in_file,
+            E0=E_beam,
+            z0=z0,
+            beam_sigma=beam_sigma,
+            d_PMMA=d_PMMA,
+            z_cut=np.inf,
+            Pn=True
+        )
 
-    af.snake_array(
-        array=now_e_DATA_Pv,
-        x_ind=ind.e_DATA_x_ind,
-        y_ind=ind.e_DATA_y_ind,
-        z_ind=ind.e_DATA_z_ind,
-        xyz_min=[mm.x_min, mm.y_min, -np.inf],
-        xyz_max=[mm.x_max, mm.y_max, np.inf]
-    )
+        now_e_DATA_Pv = now_e_DATA[np.where(
+            np.logical_and(
+                now_e_DATA[:, ind.e_DATA_layer_id_ind] == ind.PMMA_ind,
+                now_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))
+        ]
 
-    np.save(
-        'notebooks/DEBER_simulation/e_DATA_500nm_point/' + str(z0) + '/e_DATA_Pv_' + str(n) + '.npy',
-        now_e_DATA_Pv
-    )
+        # af.snake_array(
+        #     array=now_e_DATA_Pv,
+        #     x_ind=ind.e_DATA_x_ind,
+        #     y_ind=ind.e_DATA_y_ind,
+        #     z_ind=ind.e_DATA_z_ind,
+        #     xyz_min=[mm.x_min, mm.y_min, -np.inf],
+        #     xyz_max=[mm.x_max, mm.y_max, np.inf]
+        # )
+
+        np.save(
+            'notebooks/DEBER_simulation/e_DATA_500nm_point/' + str(z0) + '/e_DATA_Pv_' + str(n) + '.npy',
+            now_e_DATA_Pv
+        )
 
     n += 1
 
 
 # %%
-ans = np.load('notebooks/DEBER_simulation/e_DATA_500nm_point/150/e_DATA_Pv_0.npy')
+ans = np.load('notebooks/DEBER_simulation/e_DATA_500nm_point/400/e_DATA_Pv_10.npy')
 
 plt.figure(dpi=300)
 plt.plot(ans[:, 4], ans[:, 6], '.')
 
-plt.ylim(0, 300)
+# plt.ylim(0, 300)
 
 plt.grid()
 plt.show()
