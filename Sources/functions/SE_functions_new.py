@@ -286,6 +286,7 @@ def get_evolver_profile(path):
 
     raw_profile = raw_profile[np.where(raw_profile[:, 0] > mm.y_max * 1e-3 / 2)]
     raw_profile = raw_profile[np.where(raw_profile[:, 2] > 0)]
+    # raw_profile = raw_profile[np.where(raw_profile[:, 2] > mm.d_PMMA / 1000)]
 
     sort_inds = np.argsort(raw_profile[:, 1])
 
@@ -298,18 +299,22 @@ def get_evolver_profile(path):
 
 
 # %%
-# profile_s = get_evolver_profile('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_surface.txt')
-# profile_i = get_evolver_profile('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt')
-# profile_t = get_evolver_profile('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt')
+profile_s = get_evolver_profile('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_surface.txt')
+profile_i = get_evolver_profile('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt')
+profile_t = get_evolver_profile('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt')
 
-# plt.figure(dpi=300)
-# plt.plot(profile_s[:, 0], profile_s[:, 1], '.-', ms=2)
-# plt.plot(profile_i[:, 0], profile_i[:, 1], '.-', ms=2)
-# plt.plot(profile_t[::2, 0], profile_t[::2, 1], '.-', ms=2)
-# plt.show()
+plt.figure(dpi=300)
+plt.plot(profile_s[:, 0], profile_s[:, 1], '.-', ms=2)
+plt.plot(profile_i[:, 0], profile_i[:, 1], '.-', ms=2)
+plt.plot(profile_t[::2, 0], profile_t[::2, 1], '.-', ms=2)
+# plt.plot(profile_t[:, 0], profile_t[:, 1], '.-', ms=2)
+
+plt.xlim(-1.5, 1.5)
+
+plt.show()
 
 
-# %% read datafile
+# % read datafile
 # yy_test = mapping.x_centers_5nm * 1e-3
 # zz_test = np.ones(len(yy_test)) * mapping.l_z * 1e-3 *\
 #           (1 - np.cos(2 * np.pi * mapping.x_centers_5nm / 3000) / 5)

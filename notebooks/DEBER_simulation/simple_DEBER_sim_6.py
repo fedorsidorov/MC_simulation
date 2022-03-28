@@ -1,3 +1,4 @@
+# import
 import importlib
 import numpy as np
 import matplotlib.pyplot as plt
@@ -640,7 +641,7 @@ def save_profiles():
     plt.plot(xx_centers, new_zz_inner_final, '.-', ms=2, label='inner interp')
     plt.plot(xx_366, zz_366, '--', label='final profile')
 
-    plt.plot(now_x0_array, d_PMMA - now_z0_array, 'ro')
+    plt.plot(now_x0_array, d_PMMA - now_z0_array, 'm.')
 
     plt.title('profiles, time = ' + str(now_time))
     plt.xlabel('x, nm')
@@ -741,13 +742,13 @@ y_0 = x_0 / (z_0 + 1)
 # xx_bins, zz_bins = mm.x_bins_50nm, mm.z_bins_5nm
 # xx_centers, zz_centers = mm.x_centers_50nm, mm.z_centers_5nm
 
-x_step, z_step = 50, 50
-xx_bins, zz_bins = mm.x_bins_50nm, mm.z_bins_50nm
-xx_centers, zz_centers = mm.x_centers_50nm, mm.z_centers_50nm
+# x_step, z_step = 50, 50
+# xx_bins, zz_bins = mm.x_bins_50nm, mm.z_bins_50nm
+# xx_centers, zz_centers = mm.x_centers_50nm, mm.z_centers_50nm
 
-# x_step, z_step = 100, 5
-# xx_bins, zz_bins = mm.x_bins_100nm, mm.z_bins_5nm
-# xx_centers, zz_centers = mm.x_centers_100nm, mm.z_centers_5nm
+x_step, z_step = 100, 5
+xx_bins, zz_bins = mm.x_bins_100nm, mm.z_bins_5nm
+xx_centers, zz_centers = mm.x_centers_100nm, mm.z_centers_5nm
 
 bin_volume = x_step * mm.ly * z_step
 bin_n_monomers = bin_volume / const.V_mon_nm3
@@ -793,8 +794,6 @@ for i in range(len(ETA)):
 
 save_eta()
 
-pos_enter_dict = {0: 0, 50: 0, 100: 0, 150: 0, 200: 0, 250: 0, 300: 0, 350: 0, 400: 0}
-
 now_time = 0
 
 # while now_time < 1:
@@ -804,8 +803,8 @@ while now_time < exposure_time:
 
     zz_vac_centers = mcf.lin_lin_interp(xx_bins, zz_vac_bins)(xx_centers)
 
-    save_zz_vac_bins()
-    save_zz_vac_centers()
+    # save_zz_vac_bins()
+    # save_zz_vac_centers()
 
     # TODO zz_vac_center_inds == surface_inds ?
     for i in range(len(xx_centers)):
@@ -813,26 +812,19 @@ while now_time < exposure_time:
 
     now_scission_matrix = np.zeros((len(xx_centers), len(zz_centers)))
 
-    now_x0_array = np.zeros(30)
-    now_z0_array = np.zeros(30)
-
     # TODO get scission_matrix START
     for n in range(30):
+    # for n in range(60):
 
         n_file = np.random.choice(500)
 
         now_x0 = np.random.normal(loc=0, scale=beam_sigma)
         pos_enter = get_pos_enter(now_x0)
 
-        now_x0_array[n] = now_x0
-        now_z0_array[n] = pos_enter
-
         now_e_DATA_Pv = np.load(
             '/Volumes/Transcend/e_DATA_500nm_point/' + str(pos_enter) + '/e_DATA_Pv_' +
             str(n_file) + '.npy'
         )
-
-        pos_enter_dict[pos_enter] += 1
 
         scission_inds = np.where(np.random.random(len(now_e_DATA_Pv)) < scission_weight)[0]
         now_e_DATA_sci = now_e_DATA_Pv[scission_inds, :]
@@ -910,8 +902,8 @@ while now_time < exposure_time:
     mobs_array = np.zeros(len(xx_centers))
 
     for i in range(len(mobs_array)):
-        mobs_array[i] = np.average(mob_Mn_matrix[i, surface_inds[i]:])
-        Mn_final_array[i] = np.average(Mn_matrix[i, surface_inds[i]:])
+        mobs_array[i] = np.average(mob_Mn_matrix[i, surface_inds[i]:surface_inds[i] + 10])
+        Mn_final_array[i] = np.average(Mn_matrix[i, surface_inds[i]:surface_inds[i] + 10])
 
     mobs_array_filt = medfilt(mobs_array, kernel_size=kernel_size)
     mobs_final = mobs_array_filt
@@ -967,11 +959,11 @@ while now_time < exposure_time:
     new_xx_inner, new_zz_inner = profile_inner[:, 0], profile_inner[:, 1]
     new_zz_inner_final = mcf.lin_lin_interp(new_xx_inner, new_zz_inner)(xx_centers)
 
-    # profile_total = ef.get_evolver_profile(  # total
-    #     path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt'
-    # ) * 1000
-    #
-    # new_xx_total, new_zz_total = profile_total[::2, 0], profile_total[::2, 1]
+    profile_total = ef.get_evolver_profile(  # total
+        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt'
+    ) * 1000
+
+    new_xx_total, new_zz_total = profile_total[::2, 0], profile_total[::2, 1]
 
     save_profiles()
     # TODO Surface Evolver part END

@@ -476,8 +476,8 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, z0, beam_sigma, d_PMMA,
 
 
 # %% experiment constants
-xx_366 = np.load('notebooks/DEBER_simulation/exp_profile_366/xx.npy')
-zz_366 = np.load('notebooks/DEBER_simulation/exp_profile_366/zz.npy')
+xx_366 = np.load('notebooks/DEBER_simulation/exp_profiles/xx_366.npy')
+zz_366 = np.load('notebooks/DEBER_simulation/exp_profiles/zz_366.npy')
 
 dose_factor = 3.8
 
@@ -515,12 +515,13 @@ zz_vacuum = np.zeros(len(xx_vacuum))
 # z0 = 0
 # z0 = 200
 
-z0_arr = [50, 100, 150, 200, 250, 300, 350, 400]
+# z0_arr = [50, 100, 150, 200, 250, 300, 350, 400]
+z0_arr = [450]
 
 beam_sigma = 0
 
-# n = 0
-n = 583
+n = 0
+# n = 583
 
 while True:
 
