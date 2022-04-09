@@ -299,20 +299,19 @@ def get_evolver_profile(path):
 
 
 # %%
-profile_s = get_evolver_profile('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_surface.txt')
-profile_i = get_evolver_profile('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt')
-profile_t = get_evolver_profile('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt')
-
-plt.figure(dpi=300)
-plt.plot(profile_s[:, 0], profile_s[:, 1], '.-', ms=2)
-plt.plot(profile_i[:, 0], profile_i[:, 1], '.-', ms=2)
-plt.plot(profile_t[::2, 0], profile_t[::2, 1], '.-', ms=2)
-# plt.plot(profile_t[:, 0], profile_t[:, 1], '.-', ms=2)
-
-plt.xlim(-1.5, 1.5)
-
-plt.show()
-
+# profile_s = get_evolver_profile('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_surface.txt')
+# profile_i = get_evolver_profile('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt')
+# profile_t = get_evolver_profile('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt')
+#
+# plt.figure(dpi=300)
+# plt.plot(profile_s[:, 0], profile_s[:, 1], '.-', ms=2)
+# plt.plot(profile_i[:, 0], profile_i[:, 1], '.-', ms=2)
+# plt.plot(profile_t[::2, 0], profile_t[::2, 1], '.-', ms=2)
+# # plt.plot(profile_t[:, 0], profile_t[:, 1], '.-', ms=2)
+#
+# plt.xlim(-1.5, 1.5)
+#
+# plt.show()
 
 # % read datafile
 # yy_test = mapping.x_centers_5nm * 1e-3

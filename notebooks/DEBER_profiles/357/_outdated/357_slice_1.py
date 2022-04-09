@@ -19,7 +19,7 @@ pr_4 = np.loadtxt('notebooks/DEBER_profiles/357/357/slice_1/3d.csv', delimiter='
 
 plt.figure(dpi=300)
 
-plt.plot(pr_1[:, 0], pr_1[:, 1] - np.min(pr_1[:, 1]) - 25)
+plt.plot(pr_1[:, 0], pr_1[:, 1] - np.min(pr_1[:, 1]))
 plt.plot(pr_2[:, 0] - 1000, pr_2[:, 1] - np.min(pr_2[:, 1]))
 plt.plot(pr_3[:, 0] - 1500, pr_3[:, 1] - np.min(pr_3[:, 1]))
 plt.plot(pr_4[:, 0] - 1500, pr_4[:, 1] - np.min(pr_4[:, 1]))

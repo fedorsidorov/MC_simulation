@@ -49,17 +49,17 @@ PMMA_elastic_factor = 0.02
 E_10eV_ind = 228
 
 # simulation constants
-xx_366 = np.load('notebooks/DEBER_simulation/exp_profiles/366/xx_366_zero.npy')
-zz_366 = np.load('notebooks/DEBER_simulation/exp_profiles/366/zz_366_zero.npy')
+xx_366_100 = np.load('notebooks/DEBER_simulation/exp_profiles/xx_366.npy')
+zz_366_100 = np.load('notebooks/DEBER_simulation/exp_profiles/zz_366.npy')
 
-# xx_356_200_A = np.load('notebooks/DEBER_simulation/exp_profiles/xx_356_C_slice_1.npy')
-# zz_356_200_A = np.load('notebooks/DEBER_simulation/exp_profiles/zz_356_C_slice_1.npy')
+xx_356_200_A = np.load('notebooks/DEBER_simulation/exp_profiles/xx_356_C_slice_1.npy')
+zz_356_200_A = np.load('notebooks/DEBER_simulation/exp_profiles/zz_356_C_slice_1.npy')
 
-# xx_356_200_B = np.load('notebooks/DEBER_simulation/exp_profiles/xx_356_C_slice_3.npy')
-# zz_356_200_B = np.load('notebooks/DEBER_simulation/exp_profiles/zz_356_C_slice_3.npy')
+xx_356_200_B = np.load('notebooks/DEBER_simulation/exp_profiles/xx_356_C_slice_3.npy')
+zz_356_200_B = np.load('notebooks/DEBER_simulation/exp_profiles/zz_356_C_slice_3.npy')
 
-# xx_359_100 = np.load('notebooks/DEBER_simulation/exp_profiles/xx_359y_slice_D1.npy')
-# zz_359_100 = np.load('notebooks/DEBER_simulation/exp_profiles/zz_359y_slice_D1.npy')
+xx_359_100 = np.load('notebooks/DEBER_simulation/exp_profiles/xx_359y_slice_D1.npy')
+zz_359_100 = np.load('notebooks/DEBER_simulation/exp_profiles/zz_359y_slice_D1.npy')
 
 dose_factor = 3.8
 
@@ -685,16 +685,17 @@ def save_scissions():
     plt.close('all')
 
 
-def save_profiles(time, is_exposure=True):
+def save_profiles(time, exposure=True):
     plt.figure(dpi=300)
     plt.plot(xx_total, zz_total, '.-', color='C0', ms=2, label='SE profile')
     plt.plot(xx_centers, d_PMMA - zz_inner_centers, '.-', color='C4', ms=2, label='inner interp')
     plt.plot(xx_bins, d_PMMA - zz_vac_bins, 'r.-', color='C3', ms=2, label='PMMA interp')
 
-    plt.plot(xx_366, zz_366 + 75, '--', color='black', label='experiment')
-    plt.plot(xx_366, zz_366 + 100, '--', color='black')
+    plt.plot(xx_366_100, zz_366_100, '--', label='final profile 100s')
+    # plt.plot(xx_356_200_A, zz_356_200_A, '--', label='final profile 200s A')
+    # plt.plot(xx_356_200_B, zz_356_200_B, '--', label='final profile 200s B')
 
-    if is_exposure:
+    if exposure:
         plt.plot(now_x0_array, d_PMMA - now_z0_array, 'm.')
         plt.plot(-now_x0_array, d_PMMA - now_z0_array, 'm.')
 
@@ -706,8 +707,35 @@ def save_profiles(time, is_exposure=True):
     plt.legend()
     plt.grid()
     plt.xlim(-1500, 1500)
-    plt.ylim(-300, 600)
+    plt.ylim(-200, 600)
     plt.savefig(path + 'profiles_' + str(time) + '_s.jpg', dpi=300)
+    plt.close('all')
+
+
+def save_profiles_final(new_xx_total, new_zz_total_final, new_zz_surface_final, new_zz_inner_final, time):
+    final_fname = '/Volumes/Transcend/SIM_DEBER/s' + str(beam_sigma) + '_z' + \
+                  str(zip_length) + '_pl' + str(power_low) + '.jpg'
+
+    plt.figure(dpi=300)
+    plt.plot(new_xx_total, zz_total, '.-', color='C0', ms=2, label='SE profile')
+    plt.plot(xx_centers, zz_inner_centers, '.-', color='C4', ms=2, label='inner interp')
+    plt.plot(xx_bins, zz_vac_bins, 'r.-', color='C3', ms=2, label='PMMA interp')
+
+    plt.plot(xx_366_100, zz_366_100, '--', label='final profile 100s')
+    # plt.plot(xx_356_200_A, zz_356_200_A, '--', label='final profile 200s A')
+    # plt.plot(xx_356_200_B, zz_356_200_B, '--', label='final profile 200s B')
+
+    plt.plot(xx_bins, np.zeros(len(xx_bins)), 'k')
+
+    plt.title('profiles FINAL ' + str(time))
+    plt.xlabel('x, nm')
+    plt.ylabel('z, nm')
+    plt.legend()
+    plt.grid()
+    plt.xlim(-1500, 1500)
+    plt.ylim(-200, 600)
+    plt.savefig(path + 'profiles_FINAL_' + str(time) + '.jpg', dpi=300)
+    # plt.savefig(final_fname, dpi=300)
     plt.close('all')
 
 
@@ -722,6 +750,113 @@ def get_pos_enter(now_x0):
             position_enter = ne - 50
 
     return int(position_enter)
+
+
+def finalize(zz_vac_bins_final, zz_inner_centers_final, time):
+
+    TT = np.array([150,
+                   149, 148, 147, 146, 145, 144, 143, 142, 141, 140,
+                   139, 138, 137, 136, 135, 134, 133, 132, 131, 130,
+                   129, 128, 127, 126, 125, 124, 123, 122, 121, 120,
+                   119, 118, 117, 116, 115, 114, 113, 112, 111, 110,
+                   109, 108, 107, 106, 105, 104, 103, 102, 101, 100,
+                   99, 98, 97, 96, 95, 94, 93, 92, 91, 90,
+                   89, 88, 87, 86, 85, 84, 83, 82, 81, 80
+                   ])
+
+    tt = np.array([8,
+                   4, 4, 3, 2, 5, 2, 4, 3, 3, 3,
+                   4, 2, 4, 3, 3, 3, 4, 3, 3, 4,
+                   3, 3, 4, 4, 3, 3, 4, 4, 4, 4,
+                   3, 4, 4, 5, 4, 4, 4, 5, 4, 4,
+                   5, 5, 4, 6, 4, 5, 5, 5, 5, 5,
+                   6, 6, 5, 6, 6, 5, 6, 6, 6, 7,
+                   7, 6, 7, 6, 8, 7, 7, 6, 9, 9
+                   ])
+
+    mobs_Mn_final_matrix = np.zeros((len(Mn_centers), len(TT)))
+
+    for i, mn in enumerate(Mn_centers):
+        for j in range(len(TT)):
+
+            now_eta_Mn = rf.get_viscosity_experiment_Mn(
+                T_C=TT[j],
+                Mn=Mn_centers[i],
+                power_high=power_high,
+                power_low=power_low
+            )
+
+            mobs_Mn_final_matrix[i, j] = rf.get_SE_mobility(now_eta_Mn)
+
+    tt_weights = tt / np.sum(tt)
+
+    # mobs_1d_array_final_average = np.average(mobs_Mn_final_matrix, axis=1)
+    mobs_1d_array_final_average = np.average(mobs_Mn_final_matrix, axis=1, weights=tt_weights)
+    mobs_array_final_filt = medfilt(mobs_1d_array_final_average, kernel_size=kernel_size)
+    mobs_final = mobs_array_final_filt
+
+    save_mobilities()
+
+    xx_SE = np.zeros(len(xx_bins) + len(xx_centers) - 1)
+    zz_vac_SE = np.zeros(len(xx_bins) + len(xx_centers) - 1)
+    mobs_SE = np.zeros(len(xx_bins) + len(xx_centers) - 1)
+
+    for i in range(len(xx_centers)):
+        xx_SE[2 * i] = xx_bins[i]
+        xx_SE[2 * i + 1] = xx_centers[i]
+
+        zz_vac_SE[2 * i] = zz_vac_bins_final[i]
+        zz_vac_SE[2 * i + 1] = zz_inner_centers_final[i]
+
+    mobs_SE[0] = mobs_final[0]
+    mobs_SE[-1] = mobs_final[-1]
+    mobs_SE[1:-1] = mcf.lin_lin_interp(xx_centers, mobs_final)(xx_SE[1:-1])
+
+    zz_PMMA_SE = d_PMMA - zz_vac_SE
+    zz_PMMA_SE = zz_PMMA_SE + d_PMMA
+    zz_PMMA_SE[np.where(zz_PMMA_SE < 0)] = 1
+
+    xx_SE_final = np.concatenate((xx_SE - mm.lx, xx_SE, xx_SE + mm.lx))
+    zz_PMMA_SE_final = np.concatenate((zz_PMMA_SE, zz_PMMA_SE, zz_PMMA_SE))
+    mobs_SE_final = np.concatenate((mobs_SE, mobs_SE, mobs_SE))
+
+    ef.create_datafile_latest_um(
+        yy=xx_SE_final * 1e-3,
+        zz=zz_PMMA_SE_final * 1e-3,
+        width=mm.ly * 1e-3,
+        mobs=mobs_SE_final * 3,  # x3 time hack !!!
+        path='notebooks/SE/datafile_DEBER_2022_final.fe'
+    )
+
+    ef.run_evolver(
+        file_full_path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/datafile_DEBER_2022_final.fe',
+        commands_full_path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/commands_2022_final.txt'
+    )
+
+    profile_surface = ef.get_evolver_profile(  # surface
+        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_surface.txt'
+    ) * 1000
+
+    new_xx_surface, new_zz_surface = profile_surface[:, 0], profile_surface[:, 1]
+    new_zz_surface -= d_PMMA
+    new_zz_surface_final = mcf.lin_lin_interp(new_xx_surface, new_zz_surface)(xx_bins)
+
+    profile_inner = ef.get_evolver_profile(  # inner
+        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt'
+    ) * 1000
+
+    new_xx_inner, new_zz_inner = profile_inner[:, 0], profile_inner[:, 1]
+    new_zz_inner -= d_PMMA
+    new_zz_inner_final = mcf.lin_lin_interp(new_xx_inner, new_zz_inner)(xx_centers)
+
+    profile_total_final = ef.get_evolver_profile(  # total
+        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt'
+    ) * 1000
+
+    new_xx_total_final, new_zz_total_final = profile_total_final[::2, 0], profile_total_final[::2, 1]
+    new_zz_total_final -= d_PMMA
+
+    save_profiles_final(new_xx_total_final, new_zz_total_final, new_zz_surface_final, new_zz_inner_final, time)
 
 
 def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
@@ -748,24 +883,21 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
     zz_PMMA_SE_final = np.concatenate((zz_PMMA_SE, zz_PMMA_SE, zz_PMMA_SE))
     mobs_SE_final = np.concatenate((mobs_SE, mobs_SE, mobs_SE))
 
-    path_name = 'notebooks/SE/datafiles/datafile_' + str(beam_sigma) + '_' +\
-                str(zip_length) + '_' + str(power_low) + '_' + '.fe'
-
     ef.create_datafile_latest_um(
         yy=xx_SE_final * 1e-3,
         zz=zz_PMMA_SE_final * 1e-3,
         width=mm.ly * 1e-3,
         mobs=mobs_SE_final,
-        path=path_name
+        path='notebooks/SE/datafile_DEBER_2022.fe'
     )
 
     ef.run_evolver(
-        file_full_path='/Users/fedor/PycharmProjects/MC_simulation/' + path_name,
+        file_full_path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/datafile_DEBER_2022.fe',
         commands_full_path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/commands/commands_2022_' +
                            str(time_step) + 's.txt'
     )
 
-    profile_surface = ef.get_evolver_profile(
+    profile_surface = ef.get_evolver_profile(  # surface
         path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_surface.txt'
     ) * 1000
 
@@ -795,16 +927,6 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
 
 
 # %% SIMULATION
-kernel_size = 3
-Mn_edge = 42000
-power_high = 3.4
-
-# PARAMETERS #
-beam_sigma = 300
-zip_length = 150
-power_low = 1.4
-# PARAMETERS #
-
 x_step, z_step = 100, 5
 xx_bins, zz_bins = mm.x_bins_100nm, mm.z_bins_5nm
 xx_centers, zz_centers = mm.x_centers_100nm, mm.z_centers_5nm
@@ -824,7 +946,15 @@ Mn_centers = np.zeros(len(xx_centers))
 mob_matrix = np.zeros((len(xx_centers), len(zz_centers)))
 mobs_array = np.zeros(len(xx_centers))
 
-path = '/Volumes/Transcend/SIM_DEBER/150C_100s/new_s' + str(beam_sigma) + '_z' +\
+beam_sigma = 300
+
+kernel_size = 3
+zip_length = 170
+power_high = 3.4
+power_low = 1.4
+Mn_edge = 42000
+
+path = '/Volumes/Transcend/SIM_DEBER/s' + str(beam_sigma) + '_z' +\
        str(zip_length) + '_pl' + str(power_low) + '/'
 
 if not os.path.exists(path):
@@ -846,20 +976,16 @@ while now_time < exposure_time:
 
     zz_vac_centers = mcf.lin_lin_interp(xx_bins, zz_vac_bins)(xx_centers)
 
+    # TODO zz_vac_center_inds == surface_inds ?
     for i in range(len(xx_centers)):
-
-        where_inds = np.where(zz_centers > zz_vac_centers[i])[0]
-
-        if len(where_inds) > 0:
-            surface_inds[i] = where_inds[0]
-        else:
-            surface_inds[i] = len(zz_centers) - 1
+        surface_inds[i] = np.where(zz_centers > zz_vac_centers[i])[0][0]
 
     now_x0_array = np.zeros(30)
     now_z0_array = np.zeros(30)
     now_scission_matrix = np.zeros((len(xx_centers), len(zz_centers)))
 
     # GET SCISSION MATRIX
+    # for n in range(60):
     for n in range(30):
 
         n_file = np.random.choice(600)
@@ -936,12 +1062,12 @@ while now_time < exposure_time:
     new_zz_inner_centers = zz_inner_centers + delta_h_array
 
     for i in range(len(xx_centers)):
-        # Mn_centers[i] = np.average(Mn_matrix[i, surface_inds[i]:surface_inds[i] + 10])
-        # mobs_array[i] = np.average(mob_matrix[i, surface_inds[i]:surface_inds[i] + 10])
-        Mn_centers[i] = np.average(Mn_matrix[i, surface_inds[i]:])
-        mobs_array[i] = np.average(mob_matrix[i, surface_inds[i]:])
+        Mn_centers[i] = np.average(Mn_matrix[i, surface_inds[i]:surface_inds[i] + 10])
+        mobs_array[i] = np.average(mob_matrix[i, surface_inds[i]:surface_inds[i] + 10])
 
     mobs_centers = medfilt(mobs_array, kernel_size=kernel_size)
+
+    save_mobilities()
 
     xx_total, zz_total, zz_vac_bins, zz_inner_centers = make_SE_iteration(
         zz_vac_bins=zz_vac_bins,
@@ -950,9 +1076,7 @@ while now_time < exposure_time:
         time_step=1
     )
 
-    if now_time % 5 == 0:
-        save_mobilities()
-        save_profiles(now_time, is_exposure=True)
+    save_profiles(now_time)
 
     now_time += time_step
 
@@ -982,7 +1106,8 @@ tt = np.array([8,
 # zz_vac_bins = np.load('notebooks/DEBER_simulation/zz_vac_bins_test.npy')
 # zz_inner_centers = np.load('notebooks/DEBER_simulation/zz_inner_centers_test.npy')
 
-# %
+# now_time = 100
+
 for n_cooling_step, time_cooling_step in enumerate(tt):
 
     print(now_time)
@@ -997,6 +1122,8 @@ for n_cooling_step, time_cooling_step in enumerate(tt):
             power_low=power_low
         )
 
+    save_mobilities()
+
     xx_total, zz_total, zz_vac_bins, zz_inner_centers = make_SE_iteration(
         zz_vac_bins=zz_vac_bins,
         zz_inner_centers=zz_inner_centers,
@@ -1004,10 +1131,35 @@ for n_cooling_step, time_cooling_step in enumerate(tt):
         time_step=time_cooling_step
     )
 
-    save_mobilities()
-    save_profiles(now_time, is_exposure=False)
+    save_profiles(now_time, exposure=False)
 
     now_time += time_cooling_step
 
-    if now_time > 300:
-        break
+# %% OLD
+# for n, t in enumerate(tt):
+#     for _ in range(tt[n]):
+#
+#         print(now_time)
+#
+#         mobs_centers = np.zeros(len(Mn_centers))
+#
+#         for j in range(len(Mn_centers)):
+#             mobs_centers[j] = rf.move_Mn_to_mobs(
+#                 Mn=Mn_centers[j],
+#                 T_C=TT[n],
+#                 power_high=power_high,
+#                 power_low=power_low
+#             )
+#
+#         save_mobilities()
+#
+#         xx_total, zz_total, zz_vac_bins, zz_inner_centers = make_SE_iteration(
+#             zz_vac_bins=zz_vac_bins,
+#             zz_inner_centers=zz_inner_centers,
+#             mobs_centers=mobs_centers,
+#             time_step=1
+#         )
+#
+#         save_profiles(now_time, exposure=False)
+#
+#         now_time += 1

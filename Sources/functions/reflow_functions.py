@@ -44,6 +44,11 @@ def get_viscosity_experiment_Mn(T_C, Mn, power_high, power_low, Mn_edge=42000):
         return eta_final
 
 
+def move_Mn_to_mobs(Mn, T_C, power_high, power_low, Mn_edge=42000):
+    eta = get_viscosity_experiment_Mn(T_C, Mn, power_high, power_low, Mn_edge)
+    return get_SE_mobility(eta)
+
+
 # def get_viscosity_experiment_Mw(T_C, Mw, power):  # aho2008.pdf, bueche1955.pdf - ???????????
 #     Mw_0 = 670358
 #     eta_pre = get_viscosity_experiment_const_M(T_C)
@@ -61,9 +66,4 @@ def get_viscosity_experiment_Mn(T_C, Mn, power_high, power_low, Mn_edge=42000):
 # plt.figure(dpi=300)
 # plt.loglog(MM, ETA)
 # plt.show()
-
-
-
-
-
 
