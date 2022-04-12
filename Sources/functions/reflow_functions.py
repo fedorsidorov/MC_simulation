@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 # %%
@@ -59,11 +60,17 @@ def move_Mn_to_mobs(Mn, T_C, power_high, power_low, Mn_edge=42000):
 # %%
 # MM = np.logspace(4, 5, 10)
 # ETA = np.zeros(len(MM))
-#
-# for i in range(len(ETA)):
-#     ETA[i] = get_viscosity_experiment_Mn(150, MM[i], 3.4, 1.4)
-#
+# TT = np.linspace(80, 150, 100)
+# ETA = np.zeros(len(TT))
+# ETA_new = np.zeros(len(TT))
+
+# for i in range(len(TT)):
+    # ETA[i] = get_viscosity_experiment_const_M(TT[i])
+    # ETA_new[i] = get_viscosity_experiment_const_M(TT[i])
+
 # plt.figure(dpi=300)
-# plt.loglog(MM, ETA)
+# plt.semilogy(TT, ETA)
+# plt.semilogy(TT, ETA_new)
+# plt.grid()
 # plt.show()
 

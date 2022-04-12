@@ -659,8 +659,8 @@ power_high = 3.4
 
 # PARAMETERS #
 beam_sigma = 400
-zip_length = 130
-power_low = 1.4
+zip_length = 120
+power_low = 3.4
 # PARAMETERS #
 
 x_step, z_step = 100, 5
