@@ -27,7 +27,7 @@ def get_2ndary_hist(folder, n_files, n_primaries):
 n_files = 100
 n_primaries = 100
 
-bin_centers, hist_my = get_2ndary_hist('data/4Akkerman/10000/', n_files, n_primaries)
+bin_centers, hist_my = get_2ndary_hist('/Volumes/Transcend/4Akkerman/10000/', n_files, n_primaries)
 
 # %%
 paper_plot = np.loadtxt('notebooks/Si_distr_check/curves/2ndary_spectra.txt')
