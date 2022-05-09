@@ -9,12 +9,11 @@ import grid
 grid = importlib.reload(grid)
 mcf = importlib.reload(mcf)
 
-
 # %% constants
 arr_size = 1000
 
 Wf_PMMA = 4.68
-PMMA_E_cut = 3.3  # Aktary 2006
+PMMA_E_cut = 3.3  # Aktary
 # PMMA_E_cut = Wf_PMMA
 PMMA_electron_E_bind = [0]
 
@@ -39,6 +38,14 @@ PMMA_elastic_u = np.load(
 )
 
 PMMA_elastic_u[:E_10eV_ind] = PMMA_elastic_u[E_10eV_ind] * PMMA_elastic_factor
+
+# u_0 = PMMA_elastic_u[228] * 1e-5
+
+# PMMA_elastic_u[:228] = np.exp(
+#     np.log(u_0) +
+#     (np.log(grid.EE[:228]) - np.log(grid.EE[0])) *
+#     (np.log(PMMA_elastic_u[228]) - np.log(u_0)) / (np.log(grid.EE[228]) - np.log(grid.EE[0]))
+# )
 
 PMMA_elastic_u_diff_cumulated = np.load(
     '/Users/fedor/PycharmProjects/MC_simulation/notebooks/elastic/final_arrays/PMMA/PMMA_diff_cs_cumulated_'
@@ -121,6 +128,22 @@ structure_elastic_u_diff_cumulated = [PMMA_elastic_u_diff_cumulated, Si_elastic_
 structure_electron_u_diff_cumulated = [PMMA_electron_u_diff_cumulated, Si_electron_u_diff_cumulated]
 
 structure_process_indexes = [PMMA_process_indexes, Si_process_indexes]
+
+
+# %% plot cross sections
+plt.figure(dpi=300)
+
+labels = 'elastic', 'e-e', 'phonon', 'polaron'
+
+for j in range(len(PMMA_processes_u[0])):
+    plt.loglog(grid.EE, PMMA_processes_u[:, j], label=labels[j])
+
+plt.xlabel('E, eV')
+plt.ylabel(r'$\mu$, nm$^{-1}$')
+plt.ylim(1e-5, 1e+2)
+plt.legend()
+plt.grid()
+plt.show()
 
 
 # %% zz_vac
@@ -225,7 +248,7 @@ def get_ee_phi_theta_phi2nd_theta2nd(delta_E, E):
     return phi, theta, phi_2nd, theta_2nd
 
 
-def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn):
+def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut):
     E = E_0
     coords = coords_0
     flight_ort = flight_ort_0
@@ -239,7 +262,6 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn)
 
     # e_DATA_line: [e_id, par_id, layer_ind, proc_id, x_new, y_new, z_new, E_loss, E_2nd, E_new]
     e_DATA_deque = deque()
-
     e_DATA_initial_line = [e_id, par_id, layer_ind, -1, *coords_0, 0, 0, E]
     e_DATA_deque.append(e_DATA_initial_line)
 
@@ -307,14 +329,16 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn)
             # electron scatters
             else:
                 # print('e surface scattering')
-                # now_z_vac = get_now_z_vac(coords[0], layer_ind)
+                now_z_vac = get_now_z_vac(coords[0], layer_ind)
+
+                # TODO factor ot not?
+                # factor = (coords[-1] - now_z_vac) / np.abs(delta_r[-1])
                 factor = 0
 
                 coords += delta_r * factor  # reach surface
 
-                if not Pn:
-                    e_DATA_line = [e_id, par_id, layer_ind, -5, *coords, 0, 0, E]
-                    e_DATA_deque.append(e_DATA_line)
+                e_DATA_line = [e_id, par_id, layer_ind, -10, *coords, 0, 0, E]
+                e_DATA_deque.append(e_DATA_line)
 
                 delta_r[-1] *= -1
                 coords += delta_r * (1 - factor)
@@ -335,9 +359,8 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn)
             theta = grid.THETA_rad[theta_ind]
             new_flight_ort = get_scattered_flight_ort(flight_ort, phi, theta)
 
-            if not Pn:
-                e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, 0, 0, E]
-                e_DATA_deque.append(e_DATA_line)
+            e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, 0, 0, E]
+            e_DATA_deque.append(e_DATA_line)
 
         # e-e scattering
         elif (layer_ind == 0 and proc_ind == 1) or (layer_ind == 1 and proc_ind >= 1):
@@ -372,9 +395,8 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn)
 
             E -= hw
 
-            if not (Pn and layer_ind == 1):
-                e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, Eb, E_2nd, E]
-                e_DATA_deque.append(e_DATA_line)
+            e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, Eb, E_2nd, E]
+            e_DATA_deque.append(e_DATA_line)
 
         # phonon
         elif layer_ind == 0 and proc_ind == 2:
@@ -387,8 +409,8 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn)
 
         # polaron
         elif layer_ind == 0 and proc_ind == 3:
-            # e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, E, 0, 0]
-            # e_DATA_deque.append(e_DATA_line)
+            e_DATA_line = [e_id, par_id, layer_ind, proc_ind, *coords, E, 0, 0]
+            e_DATA_deque.append(e_DATA_line)
             break
 
         # any other processes?
@@ -398,8 +420,8 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn)
 
         flight_ort = new_flight_ort
 
-    if coords[-1] < 0 and not Pn:  # electron emerges from specimen
-        e_DATA_final_line = [e_id, par_id, -1, -10, *coords, 0, 0, E]
+    if coords[-1] < 0:  # electron emerges from specimen
+        e_DATA_final_line = [e_id, par_id, -1, -2, *coords, 0, 0, E]
         e_DATA_deque.append(e_DATA_final_line)
 
     elif E > structure_E_cut[layer_ind]:  # polaron
@@ -407,17 +429,15 @@ def track_electron(e_id, par_id, E_0, coords_0, flight_ort_0, d_PMMA, z_cut, Pn)
         e_DATA_deque.append(e_DATA_final_line)
 
     elif E < structure_E_cut[layer_ind]:  # electron energy lower than E_cut
-        e_DATA_final_line = [e_id, par_id, layer_ind, 10, *coords, E, 0, 0]
+        e_DATA_final_line = [e_id, par_id, layer_ind, -2, *coords, E, 0, 0]
         e_DATA_deque.append(e_DATA_final_line)
 
-    e_DATA = np.around(np.vstack(e_DATA_deque), decimals=4)
-
-    return e_DATA, e_2nd_deque
+    return e_DATA_deque, e_2nd_deque
 
 
-def track_all_electrons(n_electrons, E0, d_PMMA, z_cut, Pn):
+def track_all_electrons(n_electrons, E0, d_PMMA, z_cut):
     e_deque = deque()
-    e_DATA_deque = deque()
+    total_e_DATA_deque = deque()
 
     next_e_id = 0
 
@@ -443,49 +463,34 @@ def track_all_electrons(n_electrons, E0, d_PMMA, z_cut, Pn):
         if now_par_id == -1:
             progress_bar.update()
 
-        now_e_DATA, now_e_2nd_deque = track_electron(
+        now_e_DATA_deque, now_e_2nd_deque = track_electron(
             now_e_id, now_par_id, now_E0,
             np.array([now_x0, now_y0, now_z0]),
             np.array([now_ort_x, now_ort_y, now_ort_z]),
             d_PMMA,
-            z_cut,
-            Pn
+            z_cut
         )
- 
+
         for e_2nd_line in now_e_2nd_deque:
             e_2nd_line[0] += next_e_id
 
         next_e_id += len(now_e_2nd_deque)
 
-        # total_e_DATA_deque = total_e_DATA_deque + now_e_DATA_deque
+        total_e_DATA_deque = total_e_DATA_deque + now_e_DATA_deque
+        e_deque = now_e_2nd_deque + e_deque
 
-        # for ed in now_e_DATA_deque:
-        #     total_e_DATA_deque.append(ed)
-
-        e_DATA_deque.append(now_e_DATA)
-
-        # e_deque = now_e_2nd_deque + e_deque
-
-        for e2d in now_e_2nd_deque:
-            e_deque.appendleft(e2d)
-
-    return np.concatenate(e_DATA_deque, axis=0)
+    return np.around(np.vstack(total_e_DATA_deque), decimals=4)
 
 
 # %%
-# d_PMMA = [500]
+# d_PMMA = 100
 # d_PMMA = 1e+10
-# d_PMMA = [10, 20, 30, 40, 50, 60, 70, 80]
+d_PMMA = 500
 
-# Harris
-d_PMMA = [500]
+n_files = 100
+n_primaries_in_file = 10
 
-n_files = 2000
-n_primaries_in_file = 100
-
-# E_beam_arr = [20000]
-# E_beam = 20000
-E_beam = 10e+3
+E_beam_arr = [10000]
 
 # E_beam_arr = [700, 1000, 1400]
 # E_beam_arr = [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 800, 1000, 1400]
@@ -498,37 +503,24 @@ for n in range(n_files):
 
     print('File #' + str(n))
 
-    for _, now_d in enumerate(d_PMMA):
-        # print(E_beam, 'eV,', 'elastic factor =', PMMA_elastic_factor)
+    for i, E_beam in enumerate(E_beam_arr):
+        print(E_beam, 'eV,', 'elastic factor =', PMMA_elastic_factor)
         e_DATA = track_all_electrons(
             n_electrons=n_primaries_in_file,
             E0=E_beam,
-            d_PMMA=now_d,
-            z_cut=np.inf,
-            Pn=True
+            d_PMMA=d_PMMA,
+            z_cut=np.inf
         )
-
-        e_DATA_Pn = e_DATA[
-            np.where(
-                np.logical_and(e_DATA[:, 2] == 0, e_DATA[:, 3] >= 1)
-            )
-        ]
 
         # e_DATA_outer = e_DATA[np.where(e_DATA[:, 6] < 0)]
 
         # np.save('data/2ndaries/no_factor/' + str(PMMA_elastic_factor) + '/' + str(E_beam) +
         #         '/e_DATA_' + str(n) + '.npy', e_DATA_outer)
 
-        # np.save('data/4_kin_curves/' + str(now_d) + '/e_DATA_Pn_' + str(n) + '.npy', e_DATA_Pn)
-
-        # np.save('data/4_WET/e_DATA_Pn_' + str(n) + '.npy', e_DATA_Pn)
-        # np.save('data/4_WET_140nm/e_DATA_Pn_' + str(n) + '.npy', e_DATA_Pn)
-        # np.save('data/4_Atoda/e_DATA_Pn_' + str(n) + '.npy', e_DATA_Pn)
+        np.save('data/4Harris/e_DATA_' + str(n) + '.npy', e_DATA)
 
         # np.save('data/4Akkerman/' + str(E_beam) + '/e_DATA_' + str(n) + '.npy', e_DATA)
         # np.save('data/4Akkerman/1keV/e_DATA_' + str(n) + '.npy', e_DATA)
-
-        np.save('/Volumes/Transcend/e_DATA_Pn_Harris/e_DATA_' + str(n) + '.npy', e_DATA)
 
 # %%
 fig, ax = plt.subplots(dpi=300)

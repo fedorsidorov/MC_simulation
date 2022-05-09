@@ -34,38 +34,17 @@ paper_plot = np.loadtxt('notebooks/Si_distr_check/curves/2ndary_spectra.txt')
 paper_x = paper_plot[:, 0]
 paper_y = paper_plot[:, 1]
 
-
 with plt.style.context(['science', 'grid', 'russian-font']):
     fig, ax = plt.subplots(dpi=600)
-    ax.semilogy(paper_x, paper_y, 'ro', label='paper')
-    ax.semilogy(bin_centers, hist_my / 10, '.--', label='my')
+    ax.semilogy(paper_x, paper_y, '.--', label='статья Валентина')
+    ax.semilogy(bin_centers, hist_my / 10, 'r.--', label='моделирование')
 
     # ax.legend(title=r'Число', fontsize=7)
     ax.legend(fontsize=7)
-    ax.set(xlabel=r'E$_{2nd}$, eV')
-    ax.set(ylabel=r'number of 2ndary electrons')
+    ax.set(xlabel=r'энергия вторичного электрона, эВ')
+    ax.set(ylabel=r'количество вторичных электронов')
     ax.autoscale(tight=True)
     # plt.xlim(0.7, 1.2)
     # plt.ylim(0, 2.5)
-    # fig.savefig('figures_final/PMMA_2ndaries.jpg', dpi=600)
-    plt.show()
-
-
-
-
-# %%
-plt.figure(dpi=300)
-
-plt.semilogy(paper_x, paper_y, 'ro', label='paper')
-plt.semilogy(bin_centers, hist_my / 10, '.--', label='my')
-
-plt.xlabel(r'E$_{2nd}$, eV')
-plt.ylabel(r'number of 2ndary electrons')
-
-plt.grid()
-plt.xlim(0, 4)
-plt.ylim(1e-4, 1e+3)
-plt.legend()
-
-plt.show()
-# plt.savefig('2ndary_spectra_my.jpg')
+    # plt.show()
+    fig.savefig('figures_final/Si_2ndaries.jpg', dpi=600)

@@ -16,10 +16,10 @@ mf = importlib.reload(mf)
 
 
 # %% from 0.01 to 0.03
-# weights = [
-#     0.010, 0.011, 0.012, 0.013, 0.014, 0.015, 0.016, 0.017, 0.018, 0.019, 0.020,
-#     0.021, 0.022, 0.023, 0.024, 0.025, 0.026, 0.027, 0.028, 0.029, 0.030
-# ]
+weights = [
+    0.010, 0.011, 0.012, 0.013, 0.014, 0.015, 0.016, 0.017, 0.018, 0.019, 0.020,
+    0.021, 0.022, 0.023, 0.024, 0.025, 0.026, 0.027, 0.028, 0.029, 0.030
+]
 
 # weights = [
 #     0.030, 0.035, 0.040, 0.045, 0.050, 0.055, 0.060, 0.065, 0.070, 0.075, 0.080,
@@ -53,14 +53,15 @@ for weight in weights:
 
         progress_bar.update()
 
-    np.save('data/G_calibration/3/scission_matrix_' + str(weight) + '.npy', e_matrix_sci)
+    # np.save('data/G_calibration/3/scission_matrix_' + str(weight) + '.npy', e_matrix_sci)
+    # np.save('data/G_calibration/3/scission_matrix_' + str(weight) + '.npy', e_matrix_sci)
 
     sample = '3'
 
 # while True:
 
-    resist_matrix = np.load('/Volumes/ELEMENTS/chains_harris/resist_matrix_' + sample + '.npy')
-    chain_lens = np.load('/Volumes/ELEMENTS/chains_harris/prepared_chains_' + sample + '/chain_lens.npy')
+    resist_matrix = np.load('/Volumes/TOSHIBA EXT/chains_harris/resist_matrix_' + sample + '.npy')
+    chain_lens = np.load('/Volumes/TOSHIBA EXT/chains_harris/prepared_chains_' + sample + '/chain_lens.npy')
     n_chains = len(chain_lens)
 
     chain_tables = deque()
@@ -70,7 +71,7 @@ for weight in weights:
 
     for n in range(n_chains):
         now_chain_table =\
-            np.load('/Volumes/ELEMENTS/chains_harris/chain_tables_' + sample + '/chain_table_' + str(n) + '.npy')
+            np.load('/Volumes/TOSHIBA EXT/chains_harris/chain_tables_' + sample + '/chain_table_' + str(n) + '.npy')
         chain_tables.append(now_chain_table)
         progress_bar.update()
 
@@ -78,7 +79,8 @@ for weight in weights:
 
     lens_final = mf.get_chain_lens_fast(chain_tables, count_monomers=False)
 
-    np.save('data/G_calibration/3/harris_lens_final_' + str(weight) + '.npy', lens_final)
+    # np.save('data/G_calibration/3/harris_lens_final_' + str(weight) + '.npy', lens_final)
+    # np.save('data/G_calibration/3/harris_lens_final_' + str(weight) + '.npy', lens_final)
 
 # %%
 Mn = np.average(chain_lens) * const.u_MMA

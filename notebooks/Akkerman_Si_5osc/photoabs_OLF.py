@@ -41,7 +41,7 @@ plt.loglog(EE_total, OLF_total, 'o')
 plt.show()
 
 # %%
-np.save('notebooks/Akkerman_Si_5osc/OLF_Palik+Fano/EE_Palik+Fano.npt', EE_total)
-np.save('notebooks/Akkerman_Si_5osc/OLF_Palik+Fano/OLF_Palik+Fano.npt', OLF_total)
+# np.save('notebooks/Akkerman_Si_5osc/OLF_Palik+Fano/EE_Palik+Fano.npt', EE_total)
+# np.save('notebooks/Akkerman_Si_5osc/OLF_Palik+Fano/OLF_Palik+Fano.npt', OLF_total)
 
 

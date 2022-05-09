@@ -54,23 +54,22 @@ for i in range(len(EE)):
     progress_bar.update()
 
 # %%
-plt.figure(dpi=300)
+with plt.style.context(['science', 'grid', 'russian-font']):
+    fig, ax = plt.subplots(dpi=600)
+    ax.loglog(np.concatenate((paper_range[:1, 0], paper_range[2:, 0])), np.concatenate((paper_range[:1, 1], paper_range[2:, 1])), '.--', label='статья')
+    ax.loglog(EE, true_ranges, 'r.--', label='мое')
 
-plt.loglog(paper_range[:, 0], paper_range[:, 1], 'o-', label='paper ranges')
-plt.loglog(EE, true_ranges, '*-', label='my ranges')
+    # plt.loglog(paper_range_z[:, 0], paper_range_z[:, 1], 'o-', label='paper z ranges')
+    # plt.loglog(paper_range_z_L[:, 0], paper_range_z_L[:, 1], 'o-', label='paper z ranges Livermore')
+    # plt.loglog(EE, proj_ranges, '*-', label='my z ranges')
 
-# plt.loglog(paper_range_z[:, 0], paper_range_z[:, 1], 'o-', label='paper z ranges')
-# plt.loglog(paper_range_z_L[:, 0], paper_range_z_L[:, 1], 'o-', label='paper z ranges Livermore')
-# plt.loglog(EE, proj_ranges, '*-', label='my z ranges')
+    ax.set(xlabel=r'энергия электрона, эВ')
+    ax.set(ylabel='длина пробега, нм')
 
-plt.xlabel('electron energy, eV')
-plt.ylabel('electron range, nm')
+    ax.legend(fontsize=7)
 
-plt.legend()
-plt.grid()
+    # plt.xlim(1e+2, 3e+4)
+    # plt.ylim(1e+0, 1e+5)
 
-# plt.xlim(1e+2, 3e+4)
-# plt.ylim(1e+0, 1e+5)
+    fig.show()
 
-plt.show()
-# plt.savefig('true_z_ranges.jpg')

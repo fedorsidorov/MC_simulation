@@ -78,7 +78,7 @@ tau = np.arange(0, 1, 0.001)
 z0 = 10
 yw_z_0 = [1, z0, ]
 
-# yw_z_sol = odeint(model_general_cut, yw_z_0, tau)
+# yw_z_sol = Boyd_odeint(model_general_cut, yw_z_0, tau)
 yw_z_sol = RK45(model_general_cut, t0=0, y0=yw_z_0, t_bound=1)
 
 yw_sol = yw_z_sol[:, 0]

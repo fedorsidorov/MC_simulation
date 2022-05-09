@@ -60,10 +60,10 @@ for n, sample in enumerate(['3']):
 
     for i, weight in enumerate(weights):
 
-        scission_matrix = np.load('data/G_calibration/' + sample + '/scission_matrix_' + str(weight) + '.npy')
+        scission_matrix = np.load('/Volumes/Transcend/G_calibration/' + sample + '/scission_matrix_' + str(weight) + '.npy')
         e_matrix_E_dep = np.load('data/e_matrix_E_dep.npy')
         chain_lens_initial = np.load('data/chain_lens.npy')
-        chain_lens_final = np.load('data/G_calibration/' + sample + '/harris_lens_final_' + str(weight) + '.npy')
+        chain_lens_final = np.load('/Volumes/Transcend/G_calibration/' + sample + '/harris_lens_final_' + str(weight) + '.npy')
 
         Mn = np.average(chain_lens_initial) * const.u_MMA
         Mf = np.average(chain_lens_final) * const.u_MMA

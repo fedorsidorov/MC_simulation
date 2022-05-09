@@ -136,14 +136,14 @@ x_10_0 = solution_10_0[:, 1] * (solution_10_0[:, 2] + 1)
 x_10_10 = solution_10_10[:, 1] * (solution_10_10[:, 2] + 1)
 
 # %% Figure 1
-gr_1_0p1_m0p8 = np.loadtxt('notebooks/odeint/curves/Boyd_1_0.1_-0.8.txt')
-gr_1_0p1_10 = np.loadtxt('notebooks/odeint/curves/Boyd_1_0.1_10.txt')
+gr_1_0p1_m0p8 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_1_0.1_-0.8.txt')
+gr_1_0p1_10 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_1_0.1_10.txt')
 
-gr_1_1_m0p8 = np.loadtxt('notebooks/odeint/curves/Boyd_1_1_-0.8.txt')
-gr_1_1_10 = np.loadtxt('notebooks/odeint/curves/Boyd_1_1_10.txt')
+gr_1_1_m0p8 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_1_1_-0.8.txt')
+gr_1_1_10 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_1_1_10.txt')
 
-gr_1_10_m0p8 = np.loadtxt('notebooks/odeint/curves/Boyd_1_10_-0.8.txt')
-gr_1_10_10 = np.loadtxt('notebooks/odeint/curves/Boyd_1_10_10.txt')
+gr_1_10_m0p8 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_1_10_-0.8.txt')
+gr_1_10_10 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_1_10_10.txt')
 
 str_1 = r'$x_0/ \gamma^{-1}_0=$'
 str_2 = r'$z_0=$'
@@ -187,16 +187,16 @@ plt.ylim(-1, 0)
 plt.show()
 
 # %% Figure 2
-gr_2_0p1_m0p8 = np.loadtxt('notebooks/odeint/curves/Boyd_2_0.1_-0.8.txt')
-gr_2_0p1_0 = np.loadtxt('notebooks/odeint/curves/Boyd_2_0.1_0.txt')
-gr_2_0p1_10 = np.loadtxt('notebooks/odeint/curves/Boyd_2_0.1_10.txt')
+gr_2_0p1_m0p8 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_2_0.1_-0.8.txt')
+gr_2_0p1_0 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_2_0.1_0.txt')
+gr_2_0p1_10 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_2_0.1_10.txt')
 
-gr_2_2_m0p8 = np.loadtxt('notebooks/odeint/curves/Boyd_2_2_-0.8.txt')
-gr_2_2_0 = np.loadtxt('notebooks/odeint/curves/Boyd_2_2_0.txt')
-gr_2_2_10 = np.loadtxt('notebooks/odeint/curves/Boyd_2_2_10.txt')
+gr_2_2_m0p8 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_2_2_-0.8.txt')
+gr_2_2_0 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_2_2_0.txt')
+gr_2_2_10 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_2_2_10.txt')
 
-gr_2_10_0 = np.loadtxt('notebooks/odeint/curves/Boyd_2_10_0.txt')
-gr_2_10_10 = np.loadtxt('notebooks/odeint/curves/Boyd_2_10_10.txt')
+gr_2_10_0 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_2_10_0.txt')
+gr_2_10_10 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_2_10_10.txt')
 
 plt.figure(dpi=300)
 
@@ -233,10 +233,10 @@ plt.ylim(0.1, 1)
 plt.show()
 
 # %% Figure 3
-gr_3_0p1_m0p8 = np.loadtxt('notebooks/odeint/curves/Boyd_3_0.1_-0.8.txt')
-gr_3_0p1_0 = np.loadtxt('notebooks/odeint/curves/Boyd_3_0.1_0.txt')
-gr_3_0p1_10 = np.loadtxt('notebooks/odeint/curves/Boyd_3_0.1_10.txt')
-gr_3_10_0 = np.loadtxt('notebooks/odeint/curves/Boyd_3_10_0.txt')
+gr_3_0p1_m0p8 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_3_0.1_-0.8.txt')
+gr_3_0p1_0 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_3_0.1_0.txt')
+gr_3_0p1_10 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_3_0.1_10.txt')
+gr_3_10_0 = np.loadtxt('notebooks/Boyd_odeint/curves/Boyd_3_10_0.txt')
 
 plt.figure(dpi=300)
 
