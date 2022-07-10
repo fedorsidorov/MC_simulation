@@ -5,10 +5,10 @@ import numpy as np
 from scipy import interpolate
 
 from mapping import mapping_3p3um_80nm as mapping
-from functions import DEBER_functions as deber
+# from functions import DEBER_functions as deber
 from functions import diffusion_functions as df
 
-deber = importlib.reload(deber)
+# deber = importlib.reload(deber)
 df = importlib.reload(df)
 mapping = importlib.reload(mapping)
 
@@ -80,8 +80,8 @@ plt.ylim(0, 100)
 plt.show()
 
 # %%
-e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(xx, zz_vac, 100, r_beam=100e-7)
-scission_matrix = deber.get_scission_matrix(e_DATA_PMMA_val)
+# e_DATA_PMMA_val = deber.get_e_DATA_PMMA_val(xx, zz_vac, 100, r_beam=100e-7)
+# scission_matrix = deber.get_scission_matrix(e_DATA_PMMA_val)
 
 # %%
 # scission_matrix_sum_y = np.sum(scission_matrix, axis=1)

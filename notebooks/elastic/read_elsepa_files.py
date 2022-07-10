@@ -37,6 +37,7 @@ theta = get_elsepa_theta_diff_cs('notebooks/elastic/raw_data/atomic/C/dcs_1p000e
 #        23000, 24000, 25000])  # 60-62
 
 
+# %%
 for model in ['easy', 'atomic', 'muffin']:
     for element in ['H', 'C', 'O', 'Si']:
 
@@ -62,3 +63,38 @@ for model in ['easy', 'atomic', 'muffin']:
                              '_diff_cs.npy'), diff_cs)
         np.save(os.path.join('notebooks/elastic/raw_arrays', model, element, element + '_' + model +
                              '_cs.npy'), cs)
+
+# %%
+# MELEC = '4'
+MEXCH = '1'
+MCPOL = '1'
+
+# for MCPOL in ['0', '1', '2']:
+for MELEC in ['1', '2', '3', '4']:
+
+    # folder = 'notebooks/elastic/raw_data/root_Hg/root_' + MELEC + MEXCH + MCPOL
+    folder = 'notebooks/elastic/raw_data/root_Si/root_' + MELEC + MEXCH + MCPOL
+
+    diff_cs = np.zeros((len(EE), len(theta)))
+
+    for i, E in enumerate(EE):
+
+        E_str = str(int(E))
+
+        d1 = E_str[0]
+        d2 = E_str[1]
+        exp = str(len(E_str) - 1)
+
+        fname = 'dcs_' + d1 + 'p' + d2 + '00e0' + exp + '.dat'
+
+        diff_cs[i, :] = get_elsepa_theta_diff_cs(os.path.join(folder, fname))[1]
+
+    cs = get_elsepa_EE_cs(folder)[1]
+
+    # np.save('notebooks/elastic/raw_arrays/root_Hg/root_' + MELEC + MEXCH + MCPOL + '_diff_cs.npy', diff_cs)
+    # np.save('notebooks/elastic/raw_arrays/root_Hg/root_' + MELEC + MEXCH + MCPOL + '_cs.npy', cs)
+
+    np.save('notebooks/elastic/raw_arrays/root_Si/root_' + MELEC + MEXCH + MCPOL + '_diff_cs.npy', diff_cs)
+    np.save('notebooks/elastic/raw_arrays/root_Si/root_' + MELEC + MEXCH + MCPOL + '_cs.npy', cs)
+
+

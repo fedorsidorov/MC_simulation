@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from functions import fourier_functions as ff
 from functions import MC_functions as mf
-# from functions import SE_functions as sf
 
 mf = importlib.reload(mf)
 ff = importlib.reload(ff)
@@ -77,9 +76,9 @@ plt.plot(profiles[ind][:, 0], profiles[ind][:, 1], '.')
 plt.show()
 
 # %%
-now_eta = etas_SI[0]
-tt = [0.1, 0.5, 1, 2, 3]
-inds = [7, 14, 28, 54, 83]
+# now_eta = etas_SI[0]
+# tt = [0.1, 0.5, 1, 2, 3]
+# inds = [7, 14, 28, 54, 83]
 
 # now_eta = etas_SI[1]
 # tt = [1, 2, 4, 6, 10]
@@ -109,28 +108,31 @@ inds = [7, 14, 28, 54, 83]
 # tt = [600, 2000, 4000, 6000, 10000]
 # inds = [8, 18, 36, 54, 90]
 
-# now_eta = etas_SI[8]
-# tt = [2000, 7000, 12000, 20000, 30000]
-# inds = [7, 19, 34, 55, 86]
+now_eta = etas_SI[8]
+tt = [2000, 7000, 12000, 20000, 30000]
+inds = [7, 19, 34, 55, 86]
 
 tau_n_array = ff.get_tau_n_easy_array(eta=now_eta, gamma=gamma_SI, h0=An_array[0], l0=l0_m, N=N)
 
-plt.figure(dpi=300)
+with plt.style.context(['science', 'grid', 'russian-font']):
+    fig, ax = plt.subplots(dpi=600)
 
-ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=0)
+    xx_0 = xx_prec_um
+    zz_0 = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=0) * 1e+6
 
-for i in range(len(tt[:5])):
-    zz_t_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=tt[i]) * 1e+6
-    plt.plot(xx_prec_um, zz_t_um, label=str(tt[i]) + ' s')
-    plt.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1], '--', label='scale = ' + str(scales[inds[i]]))
+    ax.plot(xx_0, zz_0, 'k', linewidth=1.5, label='initial profile')
 
-plt.xlim(-1, 1)
-# plt.ylim(0.03, 0.08)
-plt.title(r'$\eta$ = ' + str(int(now_eta)) + ' Pa$\cdot$s')
-plt.xlabel(r'x, $\mu$m')
-plt.ylabel(r'z, $\mu$m')
-plt.legend()
-plt.grid()
+    for i in range(len(tt)):
+        zz_t_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=tt[i]) * 1e+6
+        ax.plot(xx_prec_um, zz_t_um, label='time = ' + str(tt[i]) + ' s')
+        ax.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1], '--', label='scale = ' + str(scales[inds[i]]))
 
-plt.show()
-# plt.savefig('SE_fourier_' + str(int(now_eta)) + '.png')
+    ax.legend(fontsize=7, loc='center right')
+    ax.set(title=r'$\eta$ = ' + str(format(now_eta, '.1e')) + ' Pa$\cdot$s')
+    ax.set(xlabel=r'x, $\mu$m')
+    ax.set(ylabel=r'z, nm')
+    plt.xlim(-1, 4)
+    plt.ylim(0.02, 0.06)
+
+    plt.savefig('figures_final/grating_eta_' + str(int(now_eta)) + '.jpg', dpi=600)
+    plt.show()

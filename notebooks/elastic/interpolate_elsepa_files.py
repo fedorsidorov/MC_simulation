@@ -67,6 +67,8 @@ def interpolate_cs(EE_raw, cs_raw, extrap):
 EE_raw = np.load('notebooks/elastic/raw_arrays/elsepa_EE.npy')
 THETA_deg_raw = np.load('notebooks/elastic/raw_arrays/elsepa_theta.npy')
 
+
+# %%
 for model in ['easy', 'atomic', 'muffin']:
     for element in ['H', 'C', 'O', 'Si']:
         
@@ -140,3 +142,38 @@ plt.semilogy(grid.THETA_deg, ans[indexes.E_20000], '--')
 
 plt.grid()
 plt.show()
+
+
+# %%
+# MELEC = '4'
+MEXCH = '1'
+MCPOL = '1'
+
+# for MCPOL in ['0', '1', '2']:
+for MELEC in ['1', '2', '3', '4']:
+
+    diff_cs_raw = np.load(
+        # 'notebooks/elastic/raw_arrays/root_Hg/root_' + MELEC + MEXCH + MCPOL + '_diff_cs.npy'
+        'notebooks/elastic/raw_arrays/root_Si/root_' + MELEC + MEXCH + MCPOL + '_diff_cs.npy'
+    )
+
+    cs_raw = np.load(
+        # 'notebooks/elastic/raw_arrays/root_Hg/root_' + MELEC + MEXCH + MCPOL + '_cs.npy'
+        'notebooks/elastic/raw_arrays/root_Si/root_' + MELEC + MEXCH + MCPOL + '_cs.npy'
+    )
+
+    diff_cs = interpolate_diff_cs(EE_raw, THETA_deg_raw, diff_cs_raw, extrap=False)
+    cs = interpolate_cs(EE_raw, cs_raw, extrap=False)
+
+    # np.save('notebooks/elastic/final_arrays/root_Hg/root_' + MELEC + MEXCH + MCPOL + '_diff_cs.npy', diff_cs)
+    # np.save('notebooks/elastic/final_arrays/root_Hg/root_' + MELEC + MEXCH + MCPOL + '_cs.npy', cs)
+
+    np.save('notebooks/elastic/final_arrays/root_Si/root_' + MELEC + MEXCH + MCPOL + '_diff_cs.npy', diff_cs)
+    np.save('notebooks/elastic/final_arrays/root_Si/root_' + MELEC + MEXCH + MCPOL + '_cs.npy', cs)
+
+
+
+
+
+
+

@@ -38,3 +38,39 @@ plt.legend()
 plt.grid()
 plt.ylim(-2, 2)
 plt.show()
+
+
+# %%
+sum = 0
+
+for n in range(1, 100000):
+    sum += (-1)**(n * (n-1) / 2) * np.log(1 + 1/n)
+
+print(sum)
+
+
+# %%
+Q = 4e-9
+eps = 7
+R1 = 2e-2
+R2 = 4e-2
+rho = 2e-6
+
+rr = np.linspace(0.01, 6, 1000) * 1e-2
+DD = np.zeros(len(rr))
+
+for i, r in enumerate(rr):
+    if r < 4e-2:
+        DD[i] = Q / (4 * np.pi * r**2) + rho * r / 3 - rho * R1**3 / (3 * r**2)
+    else:
+        DD[i] = (Q + (4 * rho * np.pi * (R2**3 - R1**3)) / 3) / (4 * np.pi * r**2)
+
+DD[np.where(rr < 2e-2)] = 0
+
+plt.figure(dpi=300)
+plt.plot(rr, DD)
+plt.show()
+
+
+
+

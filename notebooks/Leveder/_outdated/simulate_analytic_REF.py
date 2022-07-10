@@ -8,8 +8,8 @@ mf = importlib.reload(mf)
 ff = importlib.reload(ff)
 
 # %% original profile in um
-yy_um = np.load('notebooks/SE/REF/yy_pre.npy')
-zz_um = np.load('notebooks/SE/REF/zz_pre.npy')
+yy_um = np.load('notebooks/SE/REF_Leveder/yy_pre.npy')
+zz_um = np.load('notebooks/SE/REF_Leveder/zz_pre.npy')
 
 yy_nm = yy_um * 1e+3
 zz_nm = zz_um * 1e+3
@@ -56,7 +56,7 @@ plt.show()
 # plt.savefig('SE_fourier_beg.png', dpi=300)
 
 # %%
-SE = np.loadtxt('notebooks/SE/REF/vlist_REF.txt')
+SE = np.loadtxt('notebooks/SE/REF_Leveder/vlist_REF.txt')
 
 times = []
 profiles = []

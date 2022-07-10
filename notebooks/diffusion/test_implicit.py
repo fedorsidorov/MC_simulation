@@ -26,8 +26,9 @@ plt.colorbar()
 plt.show()
 
 
+# %%
 # conc_matrix = deepcopy(conc_matrix_0)
-D = df.get_D(150, 1)  # 2.4e-9
+D = df.get_D(130, 1)  # 2.4e-9
 
 xx = mm.x_centers_50nm * 1e-7
 zz = mm.z_centers_50nm * 1e-7
@@ -37,7 +38,7 @@ total_time = 1
 
 conc_matrix = df.make_simple_diffusion_sim(
     conc_matrix=conc_matrix_0,
-    D=D/100,
+    D=D,
     x_len=len(xx),
     z_len=len(zz),
     time_step=time_step,
