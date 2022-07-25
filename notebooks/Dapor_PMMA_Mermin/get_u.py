@@ -10,7 +10,7 @@ mcf = importlib.reload(mcf)
 const = importlib.reload(const)
 grid = importlib.reload(grid)
 
-DIIMFP = np.load('notebooks/Dapor_PMMA_Mermin/u_diff_prec/DIIMFP_from_parts.npy')
+DIIMFP = np.load('notebooks/Dapor_PMMA_Mermin/u_diff_prec/u_diff_from_parts.npy')
 
 #%% test IMFP - OK
 IIMFP = np.zeros(len(grid.EE_prec))
@@ -21,8 +21,8 @@ for i, E in enumerate(grid.EE_prec):
 
 
 IIMFP_int = mcf.log_log_interp(grid.EE_prec, IIMFP)(grid.EE)
-DB = np.loadtxt('notebooks/Mermin/curves/Dapor_BOOK_grey.txt')
-paper = np.loadtxt('notebooks/MELF-GOS/MELF-GOS.txt')
+DB = np.loadtxt('notebooks/Dapor_PMMA_Mermin/curves/Dapor_BOOK_grey.txt')
+paper = np.loadtxt('notebooks/_outdated/MELF-GOS/MELF-GOS.txt')
 
 u_nm = IIMFP_int * 1e-7
 
@@ -40,5 +40,5 @@ plt.legend()
 plt.show()
 
 # %%
-np.save('notebooks/Dapor_PMMA_Mermin/final_arrays/u_nm.npy', u_nm)
+# np.save('notebooks/Dapor_PMMA_Mermin/final_arrays/u_nm.npy', u_nm)
 

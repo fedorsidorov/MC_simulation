@@ -39,12 +39,12 @@ for i, e in enumerate(grid.EE):
 
 
 # %%
-dapor_OLF = np.loadtxt('notebooks/Dapor_4osc/curves/OLF_fit_2015.txt')
-
-plt.figure(dpi=300)
-plt.loglog(grid.EE, OLF)
-plt.loglog(dapor_OLF[:, 0], dapor_OLF[:, 1], '--')
-plt.show()
+# dapor_OLF = np.loadtxt('notebooks/Dapor_4osc/curves/OLF_fit_2015.txt')
+#
+# plt.figure(dpi=300)
+# plt.loglog(grid.EE, OLF)
+# plt.loglog(dapor_OLF[:, 0], dapor_OLF[:, 1], '--')
+# plt.show()
 
 
 # %%
@@ -92,7 +92,8 @@ def get_S(E_eV):
 
 
 # %%
-EE_sparse = grid.EE[::5]
+# EE_sparse = grid.EE[::5]
+EE_sparse = grid.EE
 
 u = np.zeros(len(EE_sparse))
 S = np.zeros(len(EE_sparse))
@@ -105,7 +106,7 @@ for i, e in enumerate(EE_sparse):
     progress_bar.update()
 
 # %%
-dapor_u = np.loadtxt('notebooks/Dapor_4osc/curves/u_2015.txt')
+dapor_u = np.loadtxt('notebooks/_outdated/Dapor_4osc/curves/u_2015.txt')
 
 plt.figure(dpi=300)
 plt.semilogx(EE_sparse, 1/(u * 1e-1))
@@ -117,7 +118,7 @@ plt.grid()
 plt.show()
 
 # %%
-dapor_S = np.loadtxt('notebooks/Dapor_4osc/curves/S_2015.txt')
+dapor_S = np.loadtxt('notebooks/_outdated/Dapor_4osc/curves/S_2015.txt')
 
 plt.figure(dpi=300)
 plt.semilogx(EE_sparse, S / 1e+1)

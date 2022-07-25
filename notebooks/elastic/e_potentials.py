@@ -25,11 +25,6 @@ rho_TFM = Z / (4 * np.pi * rr) *\
             A3 * (a3 / b)**2 * np.exp(-a3 * rr / b)
     )
 
-# plt.figure(dpi=300)
-# plt.semilogx(rr_a0, hi_TFM)
-# plt.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_TFM / a0)
-# plt.show()
-
 # %% TFD
 x = np.log(Z)
 
@@ -50,11 +45,6 @@ rho_TFD = Z / (4 * np.pi * rr) *\
             B3 * b3**2 * np.exp(-b3 * rr)
     )
 
-# plt.figure(dpi=300)
-# plt.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_TFM * a0)
-# plt.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_TFD * a0)
-# plt.show()
-
 # %% DHFS
 D1 = 0.2098
 D2 = 0.6004
@@ -71,17 +61,40 @@ rho_DHFS = Z / (4 * np.pi * rr) *\
             D3 * d3**2 / a0**2 * np.exp(-d3 * rr / a0)
     )
 
-plt.figure(dpi=300)
-plt.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_TFM * a0)
-plt.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_TFD * a0)
-plt.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_DHFS * a0)
-plt.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_DF * a0)
+with plt.style.context(['science', 'grid', 'russian-font']):
+    fig, ax = plt.subplots(dpi=600)
 
-plt.xlim(1e-4, 1e+1)
-plt.ylim(0, 200)
-plt.grid()
+    ax.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_TFM * a0)
+    ax.semilogx(rr / a0, 4 * np.pi * rr ** 2 * rho_TFD * a0)
+    ax.semilogx(rr / a0, 4 * np.pi * rr ** 2 * rho_DHFS * a0)
+    ax.semilogx(rr / a0, 4 * np.pi * rr ** 2 * rho_DF * a0)
 
-plt.show()
+    # ax.legend(title=r'Число', fontsize=7)
+    # ax.legend(loc=1, fontsize=7)
+    # ax.set(xlabel=r'глубина, нм')
+    # ax.set(ylabel=r'доза, эВ/нм')
+    ax.autoscale(tight=True)
+
+    # plt.xlim(1e-1, 1e+4)
+    # plt.ylim(1e-2, 1e+4)
+    plt.xlim(1e-4, 1e+1)
+    plt.ylim(0, 200)
+
+    plt.show()
+    # fig.savefig('figures_final/Si_spectra.jpg', dpi=600)
+
+
+# plt.figure(dpi=300)
+# plt.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_TFM * a0)
+# plt.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_TFD * a0)
+# plt.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_DHFS * a0)
+# plt.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_DF * a0)
+
+# plt.xlim(1e-4, 1e+1)
+# plt.ylim(0, 200)
+# plt.grid()
+
+# plt.show()
 
 
 # %%
