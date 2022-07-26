@@ -1,0 +1,7 @@
+prepare_surface
+step_1s 6
+save_surface
+save_inner
+save_total
+q
+q

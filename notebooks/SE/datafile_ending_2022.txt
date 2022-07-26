@@ -1,0 +1,255 @@
+/*--------------------SIMULATION START--------------------*/
+read
+
+set_v_constraint_1 := {
+	foreach vertex vv do {if vv.z == 0 then set vv constraint 1}
+	}
+
+set_v_constraints_11_33 := {
+	foreach vertex vv do {
+		if vv.x = -lx/2 then set vv constraint 11;
+		if vv.x = lx/2 then set vv constraint 33;
+		}
+	}
+
+set_v_constraints_22_44 := {
+	foreach vertex vv do {
+		if vv.y = -ly/2 then set vv constraint 22;
+		if vv.y = ly/2 then set vv constraint 44;
+		}
+	}
+
+set_v_constraints_222_444 := {
+	foreach vertex vv do {
+		if abs(vv.y - y_min) < 0.00001 then set vv constraint 222;
+		if abs(vv.y - y_max) < 0.00001 then set vv constraint 444;
+		}
+	}
+
+set_e_constraint_1 := {
+	foreach edge ee do {
+		cnt := 0;
+		foreach ee.vertices vv do {
+			if vv.z == 0 then cnt := cnt + 1
+			};
+		if cnt == 2 then set ee constraint 1
+		};
+	}
+
+set_e_constraint_11_33 := {
+	foreach edge ee do {
+		cnt := 0;
+		foreach ee.vertices vv do {
+			if vv.x == -lx/2 then cnt := cnt - 1;
+			if vv.x == lx/2 then cnt := cnt + 1
+			};
+		if cnt == -2 then set ee constraint 11;
+		if cnt == 2 then set ee constraint 33
+		};
+	}
+
+set_e_constraint_22_44 := {
+	foreach edge ee do {
+		cnt := 0;
+		foreach ee.vertices vv do {
+			if vv.y == -ly/2 then cnt := cnt - 1;
+			if vv.y == ly/2 then cnt := cnt + 1
+			};
+		if cnt == -2 then set ee constraint 22;
+		if cnt == 2 then set ee constraint 44
+		};
+	}
+
+set_e_constraint_222_444 := {
+	foreach edge ee do {
+		cnt := 0;
+		foreach ee.vertices vv do {
+			if abs(vv.y - y_min) < 0.00001 then cnt := cnt - 1;
+			if abs(vv.y - y_max) < 0.00001 then cnt := cnt + 1
+			};
+		if cnt == -2 then set ee constraint 222;
+		if cnt == 2 then set ee constraint 444
+		};
+	}
+
+set_f_tension_resist := {foreach facet ff do {set ff tension TENS_r}}
+
+set_f_tension_surface := {
+	foreach facet ff do {
+		cnt := 0;
+		foreach ff.vertices vv do {
+			if vv.z == 0 then cnt := cnt + 1
+			};
+		if cnt == 3 then set ff tension TENS_s
+		}
+	}
+
+set_f_tension_mirror := {
+	foreach facet ff do {
+		cnt := 0;
+		foreach ff.vertices vv do {
+			if vv.x == -lx/2 then cnt := cnt - 1;
+			if vv.x == lx/2 then cnt := cnt + 1
+			};
+		if abs(cnt) == 3 then set ff tension TENS_m;
+		};
+	foreach facet ff do {
+		cnt := 0;
+		foreach ff.vertices vv do {
+			if vv.y == -ly/2 then cnt := cnt - 1;
+			if vv.y == ly/2 then cnt := cnt + 1
+			};
+		if abs(cnt) == 3 then set ff tension TENS_m;
+		}
+	}
+
+set_f_tension_mirror_xxx := {
+	foreach facet ff do {
+		cnt := 0;
+		foreach ff.vertices vv do {
+			if vv.x == -lx/2 then cnt := cnt - 1;
+			if vv.x == lx/2 then cnt := cnt + 1
+			};
+		if abs(cnt) == 3 then set ff tension TENS_m;
+		};
+	foreach facet ff do {
+		cnt := 0;
+		foreach ff.vertices vv do {
+			if abs(vv.y - y_min) < 0.00001 then cnt := cnt - 1;
+			if abs(vv.y - y_max) < 0.00001 then cnt := cnt + 1
+			};
+		if abs(cnt) == 3 then set ff tension TENS_m;
+		}
+	}
+
+color_surface_edges := {
+	foreach edge ee do {
+		cnt := 0;
+		foreach ee.vertices vv do {
+			if vv.is_surface == 1 then cnt := cnt + 1
+			};
+		if cnt == 2 then set ee color green
+		};
+	}
+
+color_inner_edges := {
+	foreach edge ee do {
+		cnt := 0;
+		foreach ee.vertices vv do {
+			if vv.is_surface == -1 then cnt := cnt + 1
+			};
+		if cnt == 2 then set ee color magenta
+		};
+	}
+
+color_TENS_m_faces := {set facet color brown where tension == TENS_m}
+
+color_TENS_s_faces := {set facet color cyan where tension == TENS_s}
+
+color_TENS_r_faces := {set facet color yellow where tension == TENS_r}
+
+def_vmob := {
+	foreach vertex vv do {
+		if vv vmob == 0 then {
+			cnt := 0;
+			mobsum := 0;
+			foreach vv.edge ee do {
+				foreach ee vertex do {
+					if vmob > 0 then {
+						mobsum := mobsum + vmob;
+						cnt := cnt + 1;
+						};
+					};
+				};
+			set vv vmob mobsum/cnt;
+			};
+		};
+	foreach vertex vv do {
+		if vv vmob == 0 then print "Zero mobility!";
+		}
+	}
+
+prepare_surface := {
+	set_v_constraint_1;
+	set_v_constraints_11_33;
+	//set_v_constraints_22_44;
+	set_v_constraints_222_444;
+	set_e_constraint_1;
+	set_e_constraint_11_33;
+	//set_e_constraint_22_44;
+	set_v_constraints_222_444;
+	set_f_tension_resist;
+	set_f_tension_surface;
+	//set_f_tension_mirror;
+	set_f_tension_mirror_xxx;
+	color_TENS_m_faces;
+	color_TENS_s_faces;
+	color_TENS_r_faces;
+	color_surface_edges;
+	color_inner_edges;
+	area_normalization;
+	def_vmob;
+	}
+
+loopit := {g10; w 0.001; w 0.001; V}
+
+save_surface := {
+	printf "%f %f %f\n", total_time, -100., -100. >>> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_surface.txt";
+	foreach vertex do {
+		if is_surface == 1 then printf "%f %f %f\n", x, y, z >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_surface.txt";
+		}
+	}
+
+save_inner := {
+	printf "%f %f %f\n", total_time, -100., -100. >>> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt";
+	foreach vertex do {
+		if is_surface == -1 then printf "%f %f %f\n", x, y, z >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt";
+		}
+	}
+
+save_total := {
+	printf "%f %f %f\n", total_time, -100., -100. >>> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt";
+	foreach vertex do {
+		printf "%f %f %f\n", x, y, z >> "/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt";
+		}
+	}
+
+step_1s := {
+	now_time := total_time;
+	while total_time < now_time + 1 do {g1; printf "Total time = %f\n",total_time};
+	}
+
+step_2s := {
+	now_time := total_time;
+	while total_time < now_time + 2 do {g1; printf "Total time = %f\n",total_time};
+	}
+
+step_5s := {
+	now_time := total_time;
+	while total_time < now_time + 5 do {g1; printf "Total time = %f\n",total_time};
+	}
+
+step_10s := {
+	now_time := total_time;
+	while total_time < now_time + 10 do {g1; printf "Total time = %f\n",total_time};
+	}
+
+step_100s := {
+	now_time := total_time;
+	while total_time < now_time + 100 do {g1; printf "Total time = %f\n",total_time};
+	}
+
+step_110s := {
+	now_time := total_time;
+	while total_time < now_time + 110 do {g1; printf "Total time = %f\n",total_time};
+	}
+
+step_165s := {
+	now_time := total_time;
+	while total_time < now_time + 165 do {g1; printf "Total time = %f\n",total_time};
+	}
+
+step_331s := {
+	now_time := total_time;
+	while total_time < now_time + 331 do {g1; printf "Total time = %f\n",total_time};
+	}

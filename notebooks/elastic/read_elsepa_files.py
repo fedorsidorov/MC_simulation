@@ -13,13 +13,15 @@ mcf = importlib.reload(mcf)
 #%%
 def get_elsepa_theta_diff_cs(filepath):
 
-    elsepa_file = np.loadtxt(filepath, skiprows=31)
+    # elsepa_file = np.loadtxt(filepath, skiprows=31)
+    elsepa_file = np.loadtxt(filepath)
     return elsepa_file[:, 0], elsepa_file[:, 2]
 
 
 def get_elsepa_EE_cs(dirname):
 
-    tcs_table = np.loadtxt(dirname + '/tcstable.dat', skiprows=7)
+    # tcs_table = np.loadtxt(dirname + '/tcstable.dat', skiprows=7)
+    tcs_table = np.loadtxt(dirname + '/tcstable.dat')
     return tcs_table[:, 0], tcs_table[:, 1]
 
 
@@ -65,15 +67,16 @@ for model in ['easy', 'atomic', 'muffin']:
                              '_cs.npy'), cs)
 
 # %%
-# MELEC = '4'
+MELEC = '4'
 MEXCH = '1'
-MCPOL = '1'
+# MCPOL = '0'
 
-# for MCPOL in ['0', '1', '2']:
-for MELEC in ['1', '2', '3', '4']:
+# for MELEC in ['1', '2', '3', '4']:
+# for MEXCH in ['0', '1', '2', '3']:
+for MCPOL in ['0', '1', '2']:
 
-    # folder = 'notebooks/elastic/raw_data/root_Hg/root_' + MELEC + MEXCH + MCPOL
-    folder = 'notebooks/elastic/raw_data/root_Si/root_' + MELEC + MEXCH + MCPOL
+    folder = 'notebooks/elastic/raw_data/root_Hg/root_' + MELEC + MEXCH + MCPOL
+    # folder = 'notebooks/elastic/raw_data/root_Si/root_' + MELEC + MEXCH + MCPOL
 
     diff_cs = np.zeros((len(EE), len(theta)))
 
@@ -91,10 +94,10 @@ for MELEC in ['1', '2', '3', '4']:
 
     cs = get_elsepa_EE_cs(folder)[1]
 
-    # np.save('notebooks/elastic/raw_arrays/root_Hg/root_' + MELEC + MEXCH + MCPOL + '_diff_cs.npy', diff_cs)
-    # np.save('notebooks/elastic/raw_arrays/root_Hg/root_' + MELEC + MEXCH + MCPOL + '_cs.npy', cs)
+    np.save('notebooks/elastic/raw_arrays/root_Hg/root_' + MELEC + MEXCH + MCPOL + '_diff_cs.npy', diff_cs)
+    np.save('notebooks/elastic/raw_arrays/root_Hg/root_' + MELEC + MEXCH + MCPOL + '_cs.npy', cs)
 
-    np.save('notebooks/elastic/raw_arrays/root_Si/root_' + MELEC + MEXCH + MCPOL + '_diff_cs.npy', diff_cs)
-    np.save('notebooks/elastic/raw_arrays/root_Si/root_' + MELEC + MEXCH + MCPOL + '_cs.npy', cs)
+    # np.save('notebooks/elastic/raw_arrays/root_Si/root_' + MELEC + MEXCH + MCPOL + '_diff_cs.npy', diff_cs)
+    # np.save('notebooks/elastic/raw_arrays/root_Si/root_' + MELEC + MEXCH + MCPOL + '_cs.npy', cs)
 
 

@@ -11,15 +11,15 @@ grid = importlib.reload(grid)
 const = importlib.reload(const)
 mcf = importlib.reload(mcf)
 
-OLF = np.loadtxt('notebooks/OLF_PMMA/PMMA_OLF.txt')
-OLF_RH = np.load('notebooks/OLF_PMMA/Ritsko_Henke_Im.npy')
-OLF_RHD = np.load('notebooks/OLF_PMMA/Ritsko_Henke_Dapor_Im.npy')
+OLF = np.loadtxt('notebooks/_outdated/OLF_PMMA/PMMA_OLF.txt')
+OLF_RH = np.load('notebooks/_outdated/OLF_PMMA/Ritsko_Henke_Im.npy')
+OLF_RHD = np.load('notebooks/_outdated/OLF_PMMA/Ritsko_Henke_Dapor_Im.npy')
 
 # %%
 plt.figure(dpi=300)
-# plt.loglog(OLF[:, 0], OLF[:, 1], '--', label='PMMA OLF')
+plt.loglog(OLF[:, 0], OLF[:, 1], '--', label='PMMA OLF')
 plt.loglog(grid.EE, OLF_RH, '--', label='Ritsko Henke')
-# plt.loglog(grid.EE, OLF_RHD, '--', label='Ritsko Henke Dapor')
+plt.loglog(grid.EE, OLF_RHD, '--', label='Ritsko Henke Dapor')
 
 plt.legend()
 # plt.ylim(1e-7, 1e+1)
