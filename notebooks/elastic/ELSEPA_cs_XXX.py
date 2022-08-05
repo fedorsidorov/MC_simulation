@@ -39,13 +39,13 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.set(xlabel=r'$E$, эВ')
     ax.set(ylabel=r'$\sigma$, Å$^2$')
     ax.autoscale(tight=True)
-    # ax.text(10, 1e+2 * 0.3, r'a)')
+    ax.text(13, 4e+2, r'б)')
 
     plt.xlim(10, 1e+4)
     plt.ylim(1e-1, 1e+3)
 
     plt.show()
-    # fig.savefig('review_figures/cs_models_X10.jpg', dpi=600)
+    fig.savefig('review_figures/cs_models_X10.jpg', dpi=600)
 
 
 # %% 4X0
@@ -69,7 +69,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.set(xlabel=r'$E$, эВ')
     ax.set(ylabel=r'$\sigma$, Å$^2$')
     ax.autoscale(tight=True)
-    # ax.text(10, 1e+2 * 0.3, r'a)')
+    ax.text(13, 4e+2, r'б)')
 
     plt.xlim(10, 1e+4)
     plt.ylim(1e-1, 1e+3)
@@ -99,7 +99,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.set(xlabel=r'$E$, эВ')
     ax.set(ylabel=r'$\sigma$, Å$^2$')
     ax.autoscale(tight=True)
-    # ax.text(10, 1e+2 * 0.3, r'a)')
+    ax.text(13, 4e+2, r'б)')
 
     plt.xlim(10, 1e+4)
     plt.ylim(1e-1, 1e+3)

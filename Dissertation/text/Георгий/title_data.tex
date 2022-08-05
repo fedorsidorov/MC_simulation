@@ -1,0 +1,78 @@
+%%% Основные сведения %%%
+\newcommand{\thesisAuthor}             % Диссертация, ФИО автора
+{%
+    \texorpdfstring{% \texorpdfstring takes two arguments and uses the first for (La)TeX and the second for pdf
+        Сидоров Федор Алексеевич% так будет отображаться на титульном листе или в тексте, где будет использоваться переменная
+    }{%
+        Сидоров, Федор Алексеевич% эта запись для свойств pdf-файла. В таком виде, если pdf будет обработан программами для сбора библиографических сведений, будет правильно представлена фамилия.
+    }%
+}
+\newcommand{\thesisUdk}                % Диссертация, УДК
+{\todo{xxx.xxx}}
+\newcommand{\thesisTitle}              % Диссертация, название
+{\texorpdfstring{\MakeUppercase{Физические механизмы сухого электронно-лучевого травления}}{Физические механизмы сухого электронно-лучевого травления}}
+\newcommand{\thesisSpecialtyNumber}    % Диссертация, специальность, номер
+{XX.XX.XX}
+\newcommand{\thesisSpecialtyTitle}     % Диссертация, специальность, название
+{XXX}
+\newcommand{\thesisDegree}             % Диссертация, научная степень
+{кандидата физико-математических наук}
+\newcommand{\thesisCity}               % Диссертация, город защиты
+{Москва}
+\newcommand{\thesisYear}               % Диссертация, год защиты
+{2022}
+\newcommand{\thesisOrganization}       % Диссертация, организация
+{Федеральное государственное бюджетное учреждение науки «Физико-технологический институт им. К.А. Валиева Российской академии наук»}
+
+\newcommand{\thesisInOrganization}       % Диссертация, организация в предложном падеже: Работа выполнена в ...
+{Федеральном государственном бюджетном учреждении науки «Физико-технологический институт им. К.А. Валиева Российской академии наук»}
+
+\newcommand{\supervisorFio}            % Научный руководитель, ФИО
+{Рогожин Александр Евгеньевич}
+\newcommand{\supervisorRegalia}        % Научный руководитель, регалии
+{кандидат физико-математических наук}
+
+\newcommand{\opponentOneFio}           % Оппонент 1, ФИО
+{\todo{XXX}}
+\newcommand{\opponentOneRegalia}       % Оппонент 1, регалии
+{\todo{регалии}}
+\newcommand{\opponentOneJobPlace}      % Оппонент 1, место работы
+{\todo{место работы}}
+\newcommand{\opponentOneJobPost}       % Оппонент 1, должность
+{\todo{должность}}
+
+\newcommand{\opponentTwoFio}           % Оппонент 2, ФИО
+{\todo{XXX}}
+\newcommand{\opponentTwoRegalia}       % Оппонент 2, регалии
+{\todo{регалии}}
+\newcommand{\opponentTwoJobPlace}      % Оппонент 2, место работы
+{\todo{место работы}}
+\newcommand{\opponentTwoJobPost}       % Оппонент 2, должность
+{\todo{должность}}
+
+\newcommand{\leadingOrganizationTitle} % Ведущая организация, дополнительные строки
+{Ведущая организация}
+
+\newcommand{\defenseDate}              % Защита, дата
+{\underline{\hspace{2em}}.\underline{\hspace{2em}}.2020 в \underline{\hspace{2em}}:\underline{\hspace{2em}}}
+\newcommand{\defenseCouncilNumber}     % Защита, номер диссертационного совета
+{\underline{\hspace{12em}}}
+\newcommand{\defenseCouncilTitle}      % Защита, учреждение диссертационного совета
+{Московском физико-техническом институте}
+\newcommand{\defenseCouncilAddress}    % Защита, адрес учреждение диссертационного совета
+{Московская область, г. Долгопрудный,
+Институтский переулок, д. 9}
+
+\newcommand{\defenseSecretaryFio}      % Секретарь диссертационного совета, ФИО
+{XXX}
+\newcommand{\defenseSecretaryRegalia}  % Секретарь диссертационного совета, регалии
+{регалии}            % Для сокращений есть ГОСТы, например: ГОСТ Р 7.0.12-2011 + http://base.garant.ru/179724/#block_30000
+
+\newcommand{\synopsisLibrary}          % Автореферат, название библиотеки
+{МФТИ и на сайте института: https://mipt.ru/education/post-graduate/soiskateli-fiziko-matematicheskie\\
+-nauki.php}
+\newcommand{\synopsisDate}             % Автореферат, дата рассылки
+{<<\underline{\hspace{2em}}>> \underline{\hspace{8em}} 2020 года}
+
+\newcommand{\keywords}%                 % Ключевые слова для метаданных PDF диссертации и автореферата
+{}

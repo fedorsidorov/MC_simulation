@@ -1,5 +1,7 @@
 import importlib
 import matplotlib.pyplot as plt
+from matplotlib import cm
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 from scipy import integrate
 
@@ -168,6 +170,40 @@ def get_PMMA_OLF_D(hw_eV, params_hw_hg_A):
             A * E_pl_eV ** 2 * hg_eV * hw_eV / ((E_pl_eV ** 2 - hw_eV ** 2) ** 2 + (hg_eV * hw_eV) ** 2)
 
     return PMMA_OLF_D
+
+
+# %%
+n_bins = 50
+xx = np.linspace(1, 100, n_bins)
+yy = np.linspace(0.01, 5, n_bins)
+XX, YY = np.meshgrid(xx, yy)
+ZZ = np.zeros((len(xx), len(yy)))
+
+for i in range(len(xx)):
+    for j in range(len(yy)):
+        ZZ[i, j] = get_PMMA_ELF(yy[j] * const.P_au, xx[i], PMMA_params, 'M')
+
+with plt.style.context(['science', 'russian-font']):
+    factor = 1.2
+    fig = plt.figure(figsize=[6.4*factor, 4.8*factor*1.1], dpi=600)
+    ax = fig.gca(projection='3d')
+    surf = ax.plot_surface(XX, YY, ZZ, cmap=cm.viridis)
+    ax.view_init(30, 40)
+
+    fontsize = 15.8
+    ax.tick_params(axis='both', which='major', labelsize=fontsize)
+
+    ax.set_xlim(0, 100)
+    ax.set_ylim(0, 5)
+    ax.set_zlim(0, 1.4)
+
+    ax.set_xlabel(r'$E$, эВ', fontsize=fontsize)
+    ax.set_ylabel(r'$q$, а.е.', fontsize=fontsize)
+    ax.zaxis.set_rotate_label(False)
+    ax.set_zlabel(r'Im $\left [ \frac{-1}{\varepsilon (q, \omega)} \right ]$', fontsize=fontsize, rotation=90)
+
+    plt.show()
+    fig.savefig('review_figures/ELF_Mermin_15p8.jpg', bbox_inches='tight', pad_inches=0)
 
 
 # %% test PMMA OLF - OK

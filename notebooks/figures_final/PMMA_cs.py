@@ -75,17 +75,26 @@ PMMA_process_indexes = list(range(len(PMMA_processes_u[0, :])))
 labels = 'упр.', 'e-e', 'фонон', 'полярон'
 colors = '', 'g', 'r', 'm'
 
+inds = np.where(grid.EE > 10)
+
 with plt.style.context(['science', 'grid', 'russian-font']):
     fig, ax = plt.subplots(dpi=600)
 
     for j in range(len(PMMA_processes_u[0])):
-        ax.loglog(grid.EE, PMMA_processes_u[:, j], colors[j] + '-', label=labels[j])
 
-    ax.legend(loc=1, fontsize=7)
-    ax.set(xlabel=r'энергия электрона, эВ')
+        now_u = PMMA_processes_u[:, j]
+
+        # ax.loglog(grid.EE, PMMA_processes_u[:, j], colors[j] + '-', label=labels[j])
+        ax.loglog(grid.EE[inds], now_u[inds], label=labels[j])
+
+    ax.legend(loc=1, fontsize=6)
+    # ax.set(xlabel=r'энергия электрона, эВ')
+    ax.set(xlabel=r'$E$, эВ')
     ax.set(ylabel=r'$\lambda^{-1}$, нм$^{-1}$')
     ax.autoscale(tight=True)
+
+    plt.xlim(1e+1, 1e+4)
     plt.ylim(1e-5, 1e+2)
 
-    # plt.show()
-    fig.savefig('figures_final/PMMA_mu.jpg', dpi=600)
+    plt.show()
+    # fig.savefig('figures_final/PMMA_mu_cut.jpg', dpi=600)

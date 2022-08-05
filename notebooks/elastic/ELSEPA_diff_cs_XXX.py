@@ -45,7 +45,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.set(xlabel=r'$\theta$, град')
     ax.set(ylabel=r'$\frac{d \sigma}{d \Omega}$, Å$^2$/ср')
     ax.autoscale(tight=True)
-    ax.text(10, 1e+2 * 0.3, r'a)')
+    ax.text(10, 1e+2 * 0.4, r'a)')
 
     plt.xlim(0, 180)
     plt.ylim(1e-3, 1e+2)
@@ -78,13 +78,13 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.set(xlabel=r'$\theta$, град')
     ax.set(ylabel=r'$\frac{d \sigma}{d \Omega}$, Å$^2$/ср')
     ax.autoscale(tight=True)
-    ax.text(10, 1e+2 * 0.3, r'a)')
+    ax.text(10, 1e+2 * 0.4, r'a)')
 
     plt.xlim(0, 180)
     plt.ylim(1e-3, 1e+2)
 
     plt.show()
-    fig.savefig('review_figures/dcs_models_4X0.jpg', dpi=600)
+    # fig.savefig('review_figures/dcs_models_4X0.jpg', dpi=600)
 
 
 # %% 41X
@@ -100,7 +100,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
 
     ax.semilogy(grid.THETA_deg, arr_410[i, :] * 1e+16, label=r'нет модели')
     ax.semilogy(grid.THETA_deg, arr_411[i, :] * 1e+16, label=r'Б')
-    ax.semilogy(grid.THETA_deg, arr_412[i, :] * 1e+16, label=r'ЛДА')
+    ax.semilogy(grid.THETA_deg, arr_412[i, :] * 1e+16, label=r'ПЛП')
 
     ax.semilogy(grid.THETA_deg, dcs_ruth_Hg * 1e+16, 'C4', label=r'Резерфорд')
     ax.semilogy(hootcamp_cs[:, 0], hootcamp_cs[:, 1], 'k+', markersize=4, label=r'эксперимент')
@@ -109,7 +109,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.set(xlabel=r'$\theta$, град')
     ax.set(ylabel=r'$\frac{d \sigma}{d \Omega}$, Å$^2$/ср')
     ax.autoscale(tight=True)
-    ax.text(10, 1e+2 * 0.3, r'a)')
+    ax.text(10, 1e+2 * 0.4, r'a)')
 
     plt.xlim(0, 180)
     plt.ylim(1e-3, 1e+2)

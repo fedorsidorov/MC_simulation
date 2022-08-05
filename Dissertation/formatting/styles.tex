@@ -1,0 +1,638 @@
+%%% Макет страницы %%%
+% Выставляем значения полей (ГОСТ 7.0.11-2011, 5.3.7)
+\geometry{a4paper,top=2cm,bottom=2cm,left=2.5cm,right=1cm}
+
+%%% Кодировки и шрифты %%%
+\ifxetexorluatex
+    \setmainlanguage[babelshorthands=true]{russian}  % Язык по-умолчанию русский с поддержкой приятных команд пакета babel
+    \setotherlanguage{english}                       % Дополнительный язык = английский (в американской вариации по-умолчанию)
+    \ifXeTeX
+        \defaultfontfeatures{Ligatures=TeX,Mapping=tex-text}
+    \else
+        \defaultfontfeatures{Ligatures=TeX}
+    \fi
+    \setmainfont{Times New Roman}
+    \newfontfamily\cyrillicfont{Times New Roman}
+    \setsansfont{Arial}
+    \newfontfamily\cyrillicfontsf{Arial}
+    \setmonofont{Courier New}
+    \newfontfamily\cyrillicfonttt{Courier New}
+\else
+    \IfFileExists{pscyr.sty}{\renewcommand{\rmdefault}{ftm}}{}
+\fi
+
+%%% Интервалы %%%
+%linespread-реализация ближе к реализации полуторного интервала в ворде.
+%setspace реализация заточена под шрифты 10, 11, 12pt, под остальные кегли хуже, но всё же ближе к типографской классике. 
+%\linespread{1.3}                    % Полуторный интервал (ГОСТ Р 7.0.11-2011, 5.3.6)
+
+%%% Выравнивание и переносы %%%
+\sloppy                             % Избавляемся от переполнений
+\clubpenalty=10000                  % Запрещаем разрыв страницы после первой строки абзаца
+\widowpenalty=10000                 % Запрещаем разрыв страницы после последней строки абзаца
+
+%%% Подписи %%%
+\captionsetup{%
+singlelinecheck=off,                % Многострочные подписи, например у таблиц
+skip=2pt,                           % Вертикальная отбивка между подписью и содержимым рисунка или таблицы определяется ключом
+justification=centering,            % Центрирование подписей, заданных командой \caption
+}
+
+%%% Рисунки %%%
+\DeclareCaptionLabelSeparator*{emdash}{~--- }             % (ГОСТ 2.105, 4.3.1)
+\captionsetup[figure]{labelsep=emdash,font=onehalfspacing,position=bottom}
+
+%%% Таблицы %%%
+\ifthenelse{\equal{\thetabcap}{0}}{%
+    \newcommand{\tabcapalign}{\raggedright}  % по левому краю страницы или аналога parbox
+}
+
+\ifthenelse{\equal{\thetablaba}{0} \AND \equal{\thetabcap}{1}}{%
+    \newcommand{\tabcapalign}{\raggedright}  % по левому краю страницы или аналога parbox
+}
+
+\ifthenelse{\equal{\thetablaba}{1} \AND \equal{\thetabcap}{1}}{%
+    \newcommand{\tabcapalign}{\centering}    % по центру страницы или аналога parbox
+}
+
+\ifthenelse{\equal{\thetablaba}{2} \AND \equal{\thetabcap}{1}}{%
+    \newcommand{\tabcapalign}{\raggedleft}   % по правому краю страницы или аналога parbox
+}
+
+\ifthenelse{\equal{\thetabtita}{0} \AND \equal{\thetabcap}{1}}{%
+    \newcommand{\tabtitalign}{\raggedright}  % по левому краю страницы или аналога parbox
+}
+
+\ifthenelse{\equal{\thetabtita}{1} \AND \equal{\thetabcap}{1}}{%
+    \newcommand{\tabtitalign}{\centering}    % по центру страницы или аналога parbox
+}
+
+\ifthenelse{\equal{\thetabtita}{2} \AND \equal{\thetabcap}{1}}{%
+    \newcommand{\tabtitalign}{\raggedleft}   % по правому краю страницы или аналога parbox
+}
+
+\DeclareCaptionFormat{tablenocaption}{\tabcapalign #1\strut}        % Наименование таблицы отсутствует
+\ifthenelse{\equal{\thetabcap}{0}}{%
+    \DeclareCaptionFormat{tablecaption}{\tabcapalign #1#2#3}
+    \captionsetup[table]{labelsep=emdash}                       % тире как разделитель идентификатора с номером от наименования
+}{%
+    \DeclareCaptionFormat{tablecaption}{\tabcapalign #1#2\par%  % Идентификатор таблицы на отдельной строке
+        \tabtitalign{#3}}                                       % Наименование таблицы строкой ниже
+    \captionsetup[table]{labelsep=space}                        % пробельный разделитель идентификатора с номером от наименования
+}
+\captionsetup[table]{format=tablecaption,singlelinecheck=off,font=onehalfspacing,position=top,skip=0pt}  % многострочные наименования и прочее
+\DeclareCaptionLabelFormat{continued}{Продолжение таблицы~#2}
+
+%%% Подписи подрисунков %%%
+\renewcommand{\thesubfigure}{\asbuk{subfigure}}           % Буквенные номера подрисунков
+\captionsetup[subfigure]{font={normalsize},               % Шрифт подписи названий подрисунков (не отличается от основного)
+    labelformat=brace,                                    % Формат обозначения подрисунка
+    justification=centering,                              % Выключка подписей (форматирование), один из вариантов            
+}
+%\DeclareCaptionFont{font12pt}{\fontsize{12pt}{13pt}\selectfont} % объявляем шрифт 12pt для использования в подписях, тут же надо интерлиньяж объявлять, если не наследуется
+%\captionsetup[subfigure]{font={font12pt}}                 % Шрифт подписи названий подрисунков (всегда 12pt)
+
+%%% Настройки гиперссылок %%%
+\ifLuaTeX
+    \hypersetup{
+        unicode,                % Unicode encoded PDF strings
+    }
+\fi
+
+\hypersetup{
+    linktocpage=true,           % ссылки с номера страницы в оглавлении, списке таблиц и списке рисунков
+%    linktoc=all,                % both the section and page part are links
+%    pdfpagelabels=false,        % set PDF page labels (true|false)
+    plainpages=false,           % Forces page anchors to be named by the Arabic form  of the page number, rather than the formatted form
+    colorlinks,                 % ссылки отображаются раскрашенным текстом, а не раскрашенным прямоугольником, вокруг текста
+    linkcolor={linkcolor},      % цвет ссылок типа ref, eqref и подобных
+    citecolor={citecolor},      % цвет ссылок-цитат
+    urlcolor={urlcolor},        % цвет гиперссылок
+%    hidelinks,                  % Hide links (removing color and border)
+    pdftitle={\thesisTitle},    % Заголовок
+    pdfauthor={\thesisAuthor},  % Автор
+    pdfsubject={\thesisSpecialtyNumber\ \thesisSpecialtyTitle},      % Тема
+%    pdfcreator={Создатель},     % Создатель, Приложение
+%    pdfproducer={Производитель},% Производитель, Производитель PDF
+    pdfkeywords={\keywords},    % Ключевые слова
+    pdflang={ru},
+}
+
+%%% Шаблон %%%
+\DeclareRobustCommand{\todo}{\textcolor{red}}       % решаем проблему превращения названия цвета в результате \MakeUppercase, http://tex.stackexchange.com/a/187930/79756 , \DeclareRobustCommand protects \todo from expanding inside \MakeUppercase
+\setlength{\parindent}{2.5em}                       % Абзацный отступ. Должен быть одинаковым по всему тексту и равен пяти знакам (ГОСТ Р 7.0.11-2011, 5.3.7).
+
+%%% Списки %%%
+% Используем дефис для ненумерованных списков (ГОСТ 2.105-95, 4.1.7)
+\renewcommand{\labelitemi}{\normalfont\bfseries{--}} 
+\setlist{nosep,%                                    % Единый стиль для всех списков (пакет enumitem), без дополнительных интервалов.
+    labelindent=\parindent,leftmargin=*%            % Каждый пункт, подпункт и перечисление записывают с абзацного отступа (ГОСТ 2.105-95, 4.1.8)
+}
+
+%%% Изображения %%%
+\graphicspath{{images/}{Dissertation/images/}}         % Пути к изображениям
+
+\LoadInterface {titlesec}                   % Подгружаем интерфейсы для дополнительных опций управления некоторыми пакетами
+
+%%% Блок управления параметрами для выравнивания заголовков в тексте %%%
+\newlength{\otstuplen}
+\setlength{\otstuplen}{\theotstup\parindent}
+\ifthenelse{\equal{\theheadingalign}{0}}{% выравнивание заголовков в тексте
+    \newcommand{\hdngalign}{\filcenter}                % по центру
+    \newcommand{\hdngaligni}{\hfill\hspace{\otstuplen}}% по центру
+}{%
+    \newcommand{\hdngalign}{\filright}                 % по левому краю
+    \newcommand{\hdngaligni}{\hspace{\otstuplen}}      % по левому краю
+} % В обоих случаях вроде бы без переноса, как и надо (ГОСТ Р 7.0.11-2011, 5.3.5)
+
+%%% Оглавление %%%
+\renewcommand{\cftchapdotsep}{\cftdotsep}                % отбивка точками до номера страницы начала главы/раздела
+\renewcommand{\cfttoctitlefont}{\hdngaligni\fontsize{14pt}{16pt}\selectfont\bfseries}% вместе со следующей строкой
+\renewcommand{\cftaftertoctitle}{\hfill}                 % устанавливает заголовок по центру
+\setlength{\cftbeforetoctitleskip}{-1.4\curtextsize}     % Поскольку этот заголовок всегда является первым на странице, то перед ним отделять пустым тройным интервалом не следует. Независимо от основного шрифта, в этом случае зануление (почти) происходит при -1.4\curtextsize.
+\setlength{\cftaftertoctitleskip}{\theintvl\curtextsize} % Если считаем Оглавление заголовком, то выставляем после него тройной интервал через наше определённое значение
+
+%% Переносить слова в заголовке не допускается (ГОСТ Р 7.0.11-2011, 5.3.5). Заголовки в оглавлении должны точно повторять заголовки в тексте (ГОСТ Р 7.0.11-2011, 5.2.3). Прямого указания на запрет переносов в оглавлении нет, но по той же логике невнесения искажений в смысл, лучше в оглавлении не переносить:
+\cftsetrmarg{2.55em plus1fil}                       %To have the (sectional) titles in the ToC, etc., typeset ragged right with no hyphenation
+\renewcommand{\cftchappagefont}{\normalfont}        % нежирные номера страниц у глав в оглавлении
+\renewcommand{\cftchapleader}{\cftdotfill{\cftchapdotsep}}% нежирные точки до номеров страниц у глав в оглавлении
+%\renewcommand{\cftchapfont}{}                       % нежирные названия глав в оглавлении
+
+\ifthenelse{\theheadingdelim > 0}{%
+    \renewcommand\cftchapaftersnum{.\ }   % добавляет точку с пробелом после номера раздела в оглавлении
+}{%
+\renewcommand\cftchapaftersnum{\quad}     % добавляет \quad после номера раздела в оглавлении
+}
+\ifthenelse{\theheadingdelim > 1}{%
+    \renewcommand\cftsecaftersnum{.\ }    % добавляет точку с пробелом после номера подраздела в оглавлении
+    \renewcommand\cftsubsecaftersnum{.\ } % добавляет точку с пробелом после номера подподраздела в оглавлении
+}{%
+\renewcommand\cftsecaftersnum{\quad}      % добавляет \quad после номера подраздела в оглавлении
+\renewcommand\cftsubsecaftersnum{\quad}   % добавляет \quad после номера подподраздела в оглавлении
+}
+
+\ifthenelse{\equal{\thepgnum}{1}}{%
+    \addtocontents{toc}{~\hfill{Стр.}\par}% добавить Стр. над номерами страниц
+}
+
+%%% Оформление названий глав %%%
+%% настройки заголовка списка рисунков
+\renewcommand{\cftloftitlefont}{\hdngaligni\fontsize{14pt}{16pt}\selectfont\bfseries}% вместе со следующей строкой
+\renewcommand{\cftafterloftitle}{\hfill}                                             % устанавливает заголовок по центру
+\setlength{\cftbeforeloftitleskip}{-1.5\curtextsize}     % Поскольку этот заголовок всегда является первым на странице, то перед ним отделять пустым тройным интервалом не следует. Независимо от основного шрифта, в этом случае зануление (почти) происходит при -1.5\curtextsize.
+\setlength{\cftafterloftitleskip}{\theintvl\curtextsize} % выставляем после него тройной интервал через наше определённое значение
+
+%% настройки заголовка списка таблиц
+\renewcommand{\cftlottitlefont}{\hdngaligni\fontsize{14pt}{16pt}\selectfont\bfseries}% вместе со следующей строкой
+\renewcommand{\cftafterlottitle}{\hfill}                                             % устанавливает заголовок по центру
+\setlength{\cftbeforelottitleskip}{-1.5\curtextsize}     % Поскольку этот заголовок всегда является первым на странице, то перед ним отделять пустым тройным интервалом не следует. Независимо от основного шрифта, в этом случае зануление (почти) происходит при -1.5\curtextsize.
+\setlength{\cftafterlottitleskip}{\theintvl\curtextsize} % выставляем после него тройной интервал через наше определённое значение
+
+\ifnum\curtextsize>\bigtextsize     % Проверяем условие использования базового шрифта 14 pt
+\setlength{\headheight}{17pt}       % Исправляем высоту заголовка
+\else
+\setlength{\headheight}{15pt}       % Исправляем высоту заголовка
+\fi
+
+%%% Колонтитулы %%%
+% Порядковый номер страницы печатают на середине верхнего поля страницы (ГОСТ Р 7.0.11-2011, 5.3.8)
+\makeatletter
+\let\ps@plain\ps@fancy              % Подчиняем первые страницы каждой главы общим правилам
+\makeatother
+\pagestyle{fancy}                   % Меняем стиль оформления страниц
+\fancyhf{}                          % Очищаем текущие значения
+\fancyhead[C]{\thepage}             % Печатаем номер страницы на середине верхнего поля
+\renewcommand{\headrulewidth}{0pt}  % Убираем разделительную линию
+
+%%% Оформление заголовков глав, разделов, подразделов %%%
+%% Работа должна быть выполнена ... размером шрифта 12-14 пунктов (ГОСТ Р 7.0.11-2011, 5.3.8). То есть не должно быть надписей шрифтом более 14. Так и поставим.
+%% Эти установки будут давать одинаковый результат независимо от выбора базовым шрифтом 12 пт или 14 пт
+\titleformat{\chapter}[block]                                % default display;  hang = with a hanging label. (Like the standard \section.); block = typesets the whole title in a block (a paragraph) without additional formatting. Useful in centered titles
+        {\hdngalign\fontsize{14pt}{16pt}\selectfont\bfseries}% 
+        %\fontsize{<size>}{<skip>} % второе число ставим 1.2*первое, чтобы адекватно отрабатывали команды по расчету полуторного интервала (домножая разные комбинации коэффициентов на этот)
+        {\thechapter\cftchapaftersnum}                       % Заголовки в оглавлении должны точно повторять заголовки в тексте (ГОСТ Р 7.0.11-2011, 5.2.3).
+        {0em}% отступ от номера до текста
+        {}%
+
+\titleformat{\section}[block]                                % default hang;  hang = with a hanging label. (Like the standard \section.); block = typesets the whole title in a block (a paragraph) without additional formatting. Useful in centered titles
+        {\hdngalign\fontsize{14pt}{16pt}\selectfont\bfseries}% 
+        %\fontsize{<size>}{<skip>} % второе число ставим 1.2*первое, чтобы адекватно отрабатывали команды по расчету полуторного интервала (домножая разные комбинации коэффициентов на этот)
+        {\thesection\cftsecaftersnum}                        % Заголовки в оглавлении должны точно повторять заголовки в тексте (ГОСТ Р 7.0.11-2011, 5.2.3).
+        {0em}% отступ от номера до текста
+        {}%
+
+\titleformat{\subsection}[block]                             % default hang;  hang = with a hanging label. (Like the standard \section.); block = typesets the whole title in a block (a paragraph) without additional formatting. Useful in centered titles
+        {\hdngalign\fontsize{14pt}{16pt}\selectfont\bfseries}% 
+        %\fontsize{<size>}{<skip>} % второе число ставим 1.2*первое, чтобы адекватно отрабатывали команды по расчету полуторного интервала (домножая разные комбинации коэффициентов на этот)
+        {\thesubsection\cftsubsecaftersnum}                  % Заголовки в оглавлении должны точно повторять заголовки в тексте (ГОСТ Р 7.0.11-2011, 5.2.3).
+        {0em}% отступ от номера до текста
+        {}%
+
+\ifthenelse{\equal{\thechapstyle}{1}}{%
+    \makeatletter\sectionformat{\chapter}{% Параметры заголовков разделов в тексте
+        label=\chaptername\ \thechapter\cftchapaftersnum,
+        labelsep=0em,
+    }\makeatother
+    %% Следующие две строки: будет вписано слово Глава перед каждым номером раздела в оглавлении   
+    \renewcommand{\cftchappresnum}{\chaptername\ }
+    \setlength{\cftchapnumwidth}{\widthof{\cftchapfont\cftchappresnum\thechapter\cftchapaftersnum}}
+}%
+
+%% Интервалы между заголовками
+% На эти величины titlespacing множит через *
+\beforetitleunit=\curtextsize% привязались к нашему размеру шрифта
+\aftertitleunit=\curtextsize% привязались к нашему размеру шрифта
+
+% Счётчик intvl и длина \otstup определены в файле setup
+\titlespacing{\chapter}{\theotstup\parindent}{-1.7em}{*\theintvl}       % Заголовки отделяют от текста сверху и снизу тремя интервалами (ГОСТ Р 7.0.11-2011, 5.3.5). Поскольку название главы всегда является первым на странице, то перед ним отделять пустым тройным интервалом не следует. Независимо от основного шрифта, в этом случае зануление происходит при -1.7em.
+\titlespacing{\section}{\theotstup\parindent}{*\theintvl}{*\theintvl}
+\titlespacing{\subsection}{\theotstup\parindent}{*\theintvl}{*\theintvl}
+\titlespacing{\subsubsection}{\theotstup\parindent}{*\theintvl}{*\theintvl}
+
+%%% Блок дополнительного управления размерами заголовков
+\ifthenelse{\equal{\theheadingsize}{1}}{% Пропорциональные заголовки и базовый шрифт 14 пт
+    \renewcommand{\cfttoctitlefont}{\hdngaligni\Large\bfseries} % Исправляем размер заголовка оглавления
+    \setlength{\cftbeforetoctitleskip}{-1.2\curtextsize}        % Исправляем вертикальный отступ перед заголовком оглавления
+    \renewcommand{\cftloftitlefont}{\hdngaligni\Large\bfseries} % Исправляем размер заголовка списка рисунков
+    \setlength{\cftbeforeloftitleskip}{-1.4\curtextsize}        % Исправляем вертикальный отступ перед заголовком списка рисунков
+    \renewcommand{\cftlottitlefont}{\hdngaligni\Large\bfseries} % Исправляем размер заголовка списка таблиц 
+    \setlength{\cftbeforelottitleskip}{-1.4\curtextsize}        % Исправляем вертикальный отступ перед заголовком списка таблиц
+    \sectionformat{\chapter}{% Параметры заголовков разделов в тексте
+        format=\hdngalign\Large\bfseries, % Исправляем размер заголовка
+        top-=0.4em,                       % Исправляем вертикальный отступ перед заголовком
+    }
+    \sectionformat{\section}{% Параметры заголовков подразделов в тексте
+        format=\hdngalign\large\bfseries, % Исправляем размер заголовка
+    }
+}
+
+\ifthenelse{\equal{\theheadingsize}{1}\AND \curtextsize < \bigtextsize}{% Пропорциональные заголовки и базовый шрифт 14 пт
+    \sectionformat{\chapter}{% Параметры заголовков разделов в тексте
+        top-=0.2em, % Исправляем вертикальный отступ перед заголовком
+    }
+}
+
+%%% Счётчики %%%
+
+%% Упрощённые настройки шаблона диссертации: нумерация формул, таблиц, рисунков
+\ifthenelse{\equal{\thecontnumeq}{1}}{%
+    \counterwithout{equation}{chapter} % Убираем связанность номера формулы с номером главы/раздела
+}
+\ifthenelse{\equal{\thecontnumfig}{1}}{%
+    \counterwithout{figure}{chapter}   % Убираем связанность номера рисунка с номером главы/раздела
+}
+\ifthenelse{\equal{\thecontnumtab}{1}}{%
+    \counterwithout{table}{chapter}    % Убираем связанность номера таблицы с номером главы/раздела
+}
+
+
+%%http://www.linux.org.ru/forum/general/6993203#comment-6994589 (используется totcount)
+\makeatletter
+\def\formbytotal#1#2#3#4#5{%
+    \newcount\@c
+    \@c\totvalue{#1}\relax
+    \newcount\@last
+    \newcount\@pnul
+    \@last\@c\relax
+    \divide\@last 10
+    \@pnul\@last\relax
+    \divide\@pnul 10
+    \multiply\@pnul-10
+    \advance\@pnul\@last
+    \multiply\@last-10
+    \advance\@last\@c
+    \total{#1}~#2%
+    \ifnum\@pnul=1#5\else%
+    \ifcase\@last#5\or#3\or#4\or#4\or#4\else#5\fi
+    \fi
+}
+\makeatother
+
+\AtBeginDocument{
+%% регистрируем счётчики в системе totcounter
+    \regtotcounter{totalcount@figure}
+    \regtotcounter{totalcount@table}       % Если иным способом поставить в преамбуле то ошибка в числе таблиц
+    \regtotcounter{TotPages}               % Если иным способом поставить в преамбуле то ошибка в числе страниц
+}
+
+% для вертикального центрирования ячеек в tabulary
+\def\zz{\ifx\[$\else\aftergroup\zzz\fi}
+\def\zzz{\setbox0\lastbox
+\dimen0\dimexpr\extrarowheight + \ht0-\dp0\relax
+\setbox0\hbox{\raise-.5\dimen0\box0}%
+\ht0=\dimexpr\ht0+\extrarowheight\relax
+\dp0=\dimexpr\dp0+\extrarowheight\relax 
+\box0
+}
+
+
+
+\lstdefinelanguage{Renhanced}%
+{keywords={abbreviate,abline,abs,acos,acosh,action,add1,add,%
+        aggregate,alias,Alias,alist,all,anova,any,aov,aperm,append,apply,%
+        approx,approxfun,apropos,Arg,args,array,arrows,as,asin,asinh,%
+        atan,atan2,atanh,attach,attr,attributes,autoload,autoloader,ave,%
+        axis,backsolve,barplot,basename,besselI,besselJ,besselK,besselY,%
+        beta,binomial,body,box,boxplot,break,browser,bug,builtins,bxp,by,%
+        c,C,call,Call,case,cat,category,cbind,ceiling,character,char,%
+        charmatch,check,chol,chol2inv,choose,chull,class,close,cm,codes,%
+        coef,coefficients,co,col,colnames,colors,colours,commandArgs,%
+        comment,complete,complex,conflicts,Conj,contents,contour,%
+        contrasts,contr,control,helmert,contrib,convolve,cooks,coords,%
+        distance,coplot,cor,cos,cosh,count,fields,cov,covratio,wt,CRAN,%
+        create,crossprod,cummax,cummin,cumprod,cumsum,curve,cut,cycle,D,%
+        data,dataentry,date,dbeta,dbinom,dcauchy,dchisq,de,debug,%
+        debugger,Defunct,default,delay,delete,deltat,demo,de,density,%
+        deparse,dependencies,Deprecated,deriv,description,detach,%
+        dev2bitmap,dev,cur,deviance,off,prev,,dexp,df,dfbetas,dffits,%
+        dgamma,dgeom,dget,dhyper,diag,diff,digamma,dim,dimnames,dir,%
+        dirname,dlnorm,dlogis,dnbinom,dnchisq,dnorm,do,dotplot,double,%
+        download,dpois,dput,drop,drop1,dsignrank,dt,dummy,dump,dunif,%
+        duplicated,dweibull,dwilcox,dyn,edit,eff,effects,eigen,else,%
+        emacs,end,environment,env,erase,eval,equal,evalq,example,exists,%
+        exit,exp,expand,expression,External,extract,extractAIC,factor,%
+        fail,family,fft,file,filled,find,fitted,fivenum,fix,floor,for,%
+        For,formals,format,formatC,formula,Fortran,forwardsolve,frame,%
+        frequency,ftable,ftable2table,function,gamma,Gamma,gammaCody,%
+        gaussian,gc,gcinfo,gctorture,get,getenv,geterrmessage,getOption,%
+        getwd,gl,glm,globalenv,gnome,GNOME,graphics,gray,grep,grey,grid,%
+        gsub,hasTsp,hat,heat,help,hist,home,hsv,httpclient,I,identify,if,%
+        ifelse,Im,image,\%in\%,index,influence,measures,inherits,install,%
+        installed,integer,interaction,interactive,Internal,intersect,%
+        inverse,invisible,IQR,is,jitter,kappa,kronecker,labels,lapply,%
+        layout,lbeta,lchoose,lcm,legend,length,levels,lgamma,library,%
+        licence,license,lines,list,lm,load,local,locator,log,log10,log1p,%
+        log2,logical,loglin,lower,lowess,ls,lsfit,lsf,ls,machine,Machine,%
+        mad,mahalanobis,make,link,margin,match,Math,matlines,mat,matplot,%
+        matpoints,matrix,max,mean,median,memory,menu,merge,methods,min,%
+        missing,Mod,mode,model,response,mosaicplot,mtext,mvfft,na,nan,%
+        names,omit,nargs,nchar,ncol,NCOL,new,next,NextMethod,nextn,%
+        nlevels,nlm,noquote,NotYetImplemented,NotYetUsed,nrow,NROW,null,%
+        numeric,\%o\%,objects,offset,old,on,Ops,optim,optimise,optimize,%
+        options,or,order,ordered,outer,package,packages,page,pairlist,%
+        pairs,palette,panel,par,parent,parse,paste,path,pbeta,pbinom,%
+        pcauchy,pchisq,pentagamma,persp,pexp,pf,pgamma,pgeom,phyper,pico,%
+        pictex,piechart,Platform,plnorm,plogis,plot,pmatch,pmax,pmin,%
+        pnbinom,pnchisq,pnorm,points,poisson,poly,polygon,polyroot,pos,%
+        postscript,power,ppoints,ppois,predict,preplot,pretty,Primitive,%
+        print,prmatrix,proc,prod,profile,proj,prompt,prop,provide,%
+        psignrank,ps,pt,ptukey,punif,pweibull,pwilcox,q,qbeta,qbinom,%
+        qcauchy,qchisq,qexp,qf,qgamma,qgeom,qhyper,qlnorm,qlogis,qnbinom,%
+        qnchisq,qnorm,qpois,qqline,qqnorm,qqplot,qr,Q,qty,qy,qsignrank,%
+        qt,qtukey,quantile,quasi,quit,qunif,quote,qweibull,qwilcox,%
+        rainbow,range,rank,rbeta,rbind,rbinom,rcauchy,rchisq,Re,read,csv,%
+        csv2,fwf,readline,socket,real,Recall,rect,reformulate,regexpr,%
+        relevel,remove,rep,repeat,replace,replications,report,require,%
+        resid,residuals,restart,return,rev,rexp,rf,rgamma,rgb,rgeom,R,%
+        rhyper,rle,rlnorm,rlogis,rm,rnbinom,RNGkind,rnorm,round,row,%
+        rownames,rowsum,rpois,rsignrank,rstandard,rstudent,rt,rug,runif,%
+        rweibull,rwilcox,sample,sapply,save,scale,scan,scan,screen,sd,se,%
+        search,searchpaths,segments,seq,sequence,setdiff,setequal,set,%
+        setwd,show,sign,signif,sin,single,sinh,sink,solve,sort,source,%
+        spline,splinefun,split,sqrt,stars,start,stat,stem,step,stop,%
+        storage,strstrheight,stripplot,strsplit,structure,strwidth,sub,%
+        subset,substitute,substr,substring,sum,summary,sunflowerplot,svd,%
+        sweep,switch,symbol,symbols,symnum,sys,status,system,t,table,%
+        tabulate,tan,tanh,tapply,tempfile,terms,terrain,tetragamma,text,%
+        time,title,topo,trace,traceback,transform,tri,trigamma,trunc,try,%
+        ts,tsp,typeof,unclass,undebug,undoc,union,unique,uniroot,unix,%
+        unlink,unlist,unname,untrace,update,upper,url,UseMethod,var,%
+        variable,vector,Version,vi,warning,warnings,weighted,weights,%
+        which,while,window,write,\%x\%,x11,X11,xedit,xemacs,xinch,xor,%
+        xpdrows,xy,xyinch,yinch,zapsmall,zip},%
+    otherkeywords={!,!=,~,$,*,\%,\&,\%/\%,\%*\%,\%\%,<-,<<-},%
+    alsoother={._$},%
+    sensitive,%
+    morecomment=[l]\#,%
+    morestring=[d]",%
+    morestring=[d]'% 2001 Robert Denham
+}%
+
+%решаем проблему с кириллицей в комментариях (в pdflatex) https://tex.stackexchange.com/a/103712/79756
+\lstset{extendedchars=true,literate={Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {~}{{\textasciitilde}}1
+    {а}{{\selectfont\char224}}1
+    {б}{{\selectfont\char225}}1
+    {в}{{\selectfont\char226}}1
+    {г}{{\selectfont\char227}}1
+    {д}{{\selectfont\char228}}1
+    {е}{{\selectfont\char229}}1
+    {ё}{{\"e}}1
+    {ж}{{\selectfont\char230}}1
+    {з}{{\selectfont\char231}}1
+    {и}{{\selectfont\char232}}1
+    {й}{{\selectfont\char233}}1
+    {к}{{\selectfont\char234}}1
+    {л}{{\selectfont\char235}}1
+    {м}{{\selectfont\char236}}1
+    {н}{{\selectfont\char237}}1
+    {о}{{\selectfont\char238}}1
+    {п}{{\selectfont\char239}}1
+    {р}{{\selectfont\char240}}1
+    {с}{{\selectfont\char241}}1
+    {т}{{\selectfont\char242}}1
+    {у}{{\selectfont\char243}}1
+    {ф}{{\selectfont\char244}}1
+    {х}{{\selectfont\char245}}1
+    {ц}{{\selectfont\char246}}1
+    {ч}{{\selectfont\char247}}1
+    {ш}{{\selectfont\char248}}1
+    {щ}{{\selectfont\char249}}1
+    {ъ}{{\selectfont\char250}}1
+    {ы}{{\selectfont\char251}}1
+    {ь}{{\selectfont\char252}}1
+    {э}{{\selectfont\char253}}1
+    {ю}{{\selectfont\char254}}1
+    {я}{{\selectfont\char255}}1
+    {А}{{\selectfont\char192}}1
+    {Б}{{\selectfont\char193}}1
+    {В}{{\selectfont\char194}}1
+    {Г}{{\selectfont\char195}}1
+    {Д}{{\selectfont\char196}}1
+    {Е}{{\selectfont\char197}}1
+    {Ё}{{\"E}}1
+    {Ж}{{\selectfont\char198}}1
+    {З}{{\selectfont\char199}}1
+    {И}{{\selectfont\char200}}1
+    {Й}{{\selectfont\char201}}1
+    {К}{{\selectfont\char202}}1
+    {Л}{{\selectfont\char203}}1
+    {М}{{\selectfont\char204}}1
+    {Н}{{\selectfont\char205}}1
+    {О}{{\selectfont\char206}}1
+    {П}{{\selectfont\char207}}1
+    {Р}{{\selectfont\char208}}1
+    {С}{{\selectfont\char209}}1
+    {Т}{{\selectfont\char210}}1
+    {У}{{\selectfont\char211}}1
+    {Ф}{{\selectfont\char212}}1
+    {Х}{{\selectfont\char213}}1
+    {Ц}{{\selectfont\char214}}1
+    {Ч}{{\selectfont\char215}}1
+    {Ш}{{\selectfont\char216}}1
+    {Щ}{{\selectfont\char217}}1
+    {Ъ}{{\selectfont\char218}}1
+    {Ы}{{\selectfont\char219}}1
+    {Ь}{{\selectfont\char220}}1
+    {Э}{{\selectfont\char221}}1
+    {Ю}{{\selectfont\char222}}1
+    {Я}{{\selectfont\char223}}1
+    {і}{{\selectfont\char105}}1
+    {ї}{{\selectfont\char168}}1
+    {є}{{\selectfont\char185}}1
+    {ґ}{{\selectfont\char160}}1
+    {І}{{\selectfont\char73}}1
+    {Ї}{{\selectfont\char136}}1
+    {Є}{{\selectfont\char153}}1
+    {Ґ}{{\selectfont\char128}}1
+}
+
+% Ширина текста минус ширина надписи 999
+\newlength{\twless}
+\newlength{\lmarg}
+\setlength{\lmarg}{\widthof{999}}   % ширина надписи 999
+\setlength{\twless}{\textwidth-\lmarg}
+
+
+\lstset{ %
+%    language=R,                     %  Язык указать здесь, если во всех листингах преимущественно один язык, в результате часть настроек может пойти только для этого языка
+    numbers=left,                   % where to put the line-numbers
+    numberstyle=\fontsize{12pt}{14pt}\selectfont\color{Gray},  % the style that is used for the line-numbers
+    firstnumber=2,                  % в этой и следующей строках задаётся поведение нумерации 5, 10, 15...
+    stepnumber=5,                   % the step between two line-numbers. If it's 1, each line will be numbered
+    numbersep=5pt,                  % how far the line-numbers are from the code
+    backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+    showspaces=false,               % show spaces adding particular underscores
+    showstringspaces=false,         % underline spaces within strings
+    showtabs=false,                 % show tabs within strings adding particular underscores
+    frame=leftline,                 % adds a frame of different types around the code
+    rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+    tabsize=2,                      % sets default tabsize to 2 spaces
+    captionpos=t,                   % sets the caption-position to top
+    breaklines=true,                % sets automatic line breaking
+    breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+%    title=\lstname,                 % show the filename of files included with \lstinputlisting;
+    % also try caption instead of title
+    basicstyle=\fontsize{12pt}{14pt}\selectfont\ttfamily,% the size of the fonts that are used for the code
+%    keywordstyle=\color{blue},      % keyword style
+    commentstyle=\color{ForestGreen}\emph,% comment style
+    stringstyle=\color{Mahogany},   % string literal style
+    escapeinside={\%*}{*)},         % if you want to add a comment within your code
+    morekeywords={*,...},           % if you want to add more keywords to the set
+    inputencoding=utf8,             % кодировка кода
+    xleftmargin={\lmarg},           % Чтобы весь код и полоска с номерами строк была смещена влево, так чтобы цифры не вылезали за пределы текста слева
+} 
+
+%http://tex.stackexchange.com/questions/26872/smaller-frame-with-listings
+% Окружение, чтобы листинг был компактнее обведен рамкой, если она задается, а не на всю ширину текста
+\makeatletter
+\newenvironment{SmallListing}[1][]
+{\lstset{#1}\VerbatimEnvironment\begin{VerbatimOut}{VerbEnv.tmp}}
+{\end{VerbatimOut}\settowidth\@tempdima{%
+        \lstinputlisting{VerbEnv.tmp}}
+    \minipage{\@tempdima}\lstinputlisting{VerbEnv.tmp}\endminipage}    
+\makeatother
+
+
+\DefineVerbatimEnvironment% с шрифтом 12 пт
+{Verb}{Verbatim}
+{fontsize=\fontsize{12pt}{14pt}\selectfont}
+
+\RawFloats[figure,table]            % Отмена установок пакета floatrow для всех флотов (плавающих окружений) выбранных типов или подтипов. А то будто мы зря задавали настройки подписей рисунков и таблиц. 
+
+\DeclareNewFloatType{ListingEnv}{
+    placement=htb,
+    within=chapter,
+    fileext=lol,
+    name=Листинг,
+}
+
+\captionsetup[ListingEnv]{
+    format=tablecaption,
+    labelsep=space,                 % Точка после номера листинга задается значением period
+    singlelinecheck=off,
+    font=onehalfspacing,
+    position=top,
+}
+
+
+\floatsetup[ListingEnv]{
+    style=plaintop,
+    captionskip=4pt,
+}
+
+\captionsetup[lstlisting]{
+    format=tablecaption,
+    labelsep=space,                 % Точка после номера листинга задается значением period
+    singlelinecheck=off,
+    font=onehalfspacing,
+    position=top,
+}
+
+\renewcommand{\lstlistingname}{Листинг}
+
+%Общие счётчики окружений листингов
+%http://tex.stackexchange.com/questions/145546/how-to-make-figure-and-listing-share-their-counter
+% Если смешивать плавающие и не плавающие окружения, то могут быть проблемы с нумерацией
+\makeatletter
+\AtBeginDocument{%
+    \let\c@ListingEnv\c@lstlisting
+    \let\theListingEnv\thelstlisting
+    \let\ftype@lstlisting\ftype@ListingEnv % give the floats the same precedence
+}
+\makeatother
+
+% значок С++ — используйте команду \cpp
+\newcommand{\cpp}{%
+    C\nolinebreak\hspace{-.05em}%
+    \raisebox{.2ex}{+}\nolinebreak\hspace{-.10em}%
+    \raisebox{.2ex}{+}%
+}
+
+
+%%% Русская традиция начертания математических знаков
+%\renewcommand{\le}{\ensuremath{\leqslant}}
+%\renewcommand{\leq}{\ensuremath{\leqslant}}
+%\renewcommand{\ge}{\ensuremath{\geqslant}}
+%\renewcommand{\geq}{\ensuremath{\geqslant}}
+%\renewcommand{\emptyset}{\varnothing}
+
+%%% Русская традиция начертания греческих букв (греческие буквы вертикальные, через пакет upgreek)
+%\renewcommand{\epsilon}{\ensuremath{\upvarepsilon}}   %  русская традиция записи
+%\renewcommand{\phi}{\ensuremath{\upvarphi}}
+%%\renewcommand{\kappa}{\ensuremath{\varkappa}}
+%\renewcommand{\alpha}{\upalpha}
+%\renewcommand{\beta}{\upbeta}
+%\renewcommand{\gamma}{\upgamma}
+%\renewcommand{\delta}{\updelta}
+%\renewcommand{\varepsilon}{\upvarepsilon}
+%\renewcommand{\zeta}{\upzeta}
+%\renewcommand{\eta}{\upeta}
+%\renewcommand{\theta}{\uptheta}
+%\renewcommand{\vartheta}{\upvartheta}
+%\renewcommand{\iota}{\upiota}
+%\renewcommand{\kappa}{\upkappa}
+%\renewcommand{\lambda}{\uplambda}
+%\renewcommand{\mu}{\upmu}
+%\renewcommand{\nu}{\upnu}
+%\renewcommand{\xi}{\upxi}
+%\renewcommand{\pi}{\uppi}
+%\renewcommand{\varpi}{\upvarpi}
+%\renewcommand{\rho}{\uprho}
+%%\renewcommand{\varrho}{\upvarrho}
+%\renewcommand{\sigma}{\upsigma}
+%%\renewcommand{\varsigma}{\upvarsigma}
+%\renewcommand{\tau}{\uptau}
+%\renewcommand{\upsilon}{\upupsilon}
+%\renewcommand{\varphi}{\upvarphi}
+%\renewcommand{\chi}{\upchi}
+%\renewcommand{\psi}{\uppsi}
+%\renewcommand{\omega}{\upomega}
+
+\renewcommand{\footnotesize}{\fontsize{14pt}{16pt}\selectfont}

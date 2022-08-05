@@ -1,6 +1,8 @@
 import numpy as np
 import os
 import matplotlib.pyplot as plt
+from matplotlib import cm
+from mpl_toolkits.mplot3d import Axes3D
 import importlib
 from scipy import integrate
 import constants as const
@@ -26,9 +28,9 @@ with plt.style.context(['science', 'grid', 'russian-font']):
 
     ax.legend(loc=1, fontsize=6)
     ax.set(xlabel=r'$E$, эВ')
-    ax.set(ylabel=r'Im $\left [ \frac{-1}{\varepsilon (\omega, 0)} \right ]$')
+    ax.set(ylabel=r'Im $\left [ \frac{-1}{\varepsilon (0, \omega)} \right ]$')
     ax.autoscale(tight=True)
-    ax.text(13, 3e-7, r'a)')
+    ax.text(30, 2, r'a)')
 
     plt.xlim(1e+1, 1e+4)
     plt.ylim(1e-7, 1e+1)
@@ -97,22 +99,57 @@ with plt.style.context(['science', 'grid', 'russian-font']):
 
     ax.legend(loc=1, fontsize=6)
     ax.set(xlabel=r'$E$, эВ')
-    ax.set(ylabel=r'Im $\left [ \frac{-1}{\varepsilon (\omega, 0)} \right ]$')
+    ax.set(ylabel=r'Im $\left [ \frac{-1}{\varepsilon (0, \omega)} \right ]$')
     ax.autoscale(tight=True)
-    # ax.text(13, 3e-7, r'б)')
+    ax.text(30, 2, r'б)')
 
     plt.xlim(1e+1, 1e+4)
     plt.ylim(1e-7, 1e+1)
 
     plt.show()
-    fig.savefig('review_figures/OLF_b.jpg', dpi=600)
+    # fig.savefig('review_figures/OLF_b.jpg', dpi=600)
+
+
+# %% plot ELF
+n_bins = 50
+xx = np.linspace(0, 100, n_bins)
+yy = np.linspace(0, 5, n_bins)
+XX, YY = np.meshgrid(xx, yy)
+ZZ = np.zeros((len(xx), len(yy)))
+
+for i in range(len(xx)):
+    for j in range(len(yy)):
+        ZZ[i, j] = get_ELF(xx[i], yy[j] * const.P_au / const.hbar)
+
+with plt.style.context(['science', 'russian-font']):
+    factor = 1.2
+    fig = plt.figure(figsize=[6.4*factor, 4.8*factor * 1.1], dpi=600)
+    ax = fig.gca(projection='3d')
+    surf = ax.plot_surface(XX, YY, ZZ, cmap=cm.viridis)
+    ax.view_init(30, 40)
+    # ax.view_init(0, 0)
+
+    fontsize = 15.8
+    ax.tick_params(axis='both', which='major', labelsize=fontsize)
+
+    ax.set_xlim(0, 100)
+    ax.set_ylim(0, 5)
+    ax.set_zlim(0, 1.4)
+
+    ax.set_xlabel(r'$E$, эВ', fontsize=fontsize)
+    ax.set_ylabel(r'$q$, а.е.', fontsize=fontsize)
+    ax.zaxis.set_rotate_label(False)
+    ax.set_zlabel(r'Im $\left [ \frac{-1}{\varepsilon (q, \omega)} \right ]$', fontsize=fontsize, rotation=90)
+
+    plt.show()
+    fig.savefig('review_figures/ELF_Drude_15p8.jpg', bbox_inches='tight', pad_inches=0)
 
 
 # %%
-def get_qm_qp(E, hw):
-    qm = np.sqrt(2 * const.m) / const.hbar * (np.sqrt(E) - np.sqrt(E - hw))
-    qp = np.sqrt(2 * const.m) / const.hbar * (np.sqrt(E) + np.sqrt(E - hw))
-    return qm, qp
+def get_km_kp(E, hw):
+    km = np.sqrt(2 * const.m) / const.hbar * (np.sqrt(E) - np.sqrt(E - hw))
+    kp = np.sqrt(2 * const.m) / const.hbar * (np.sqrt(E) + np.sqrt(E - hw))
+    return km, kp
 
 
 def get_DIIMFP(E_eV, hw_eV):
@@ -125,8 +162,8 @@ def get_DIIMFP(E_eV, hw_eV):
     def get_Y(q):
         return get_ELF(hw_eV, q) / q
 
-    qm, qp = get_qm_qp(E, hw)
-    integral = integrate.quad(get_Y, qm, qp)[0]
+    km, kp = get_km_kp(E, hw)
+    integral = integrate.quad(get_Y, km, kp)[0]
 
     du_dE = 1 / (np.pi * const.a0 * E_eV) * integral  # cm^-1 * eV^-1
     return du_dE * 1e-7  # nm^-1 * eV^-1
