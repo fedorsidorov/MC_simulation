@@ -30,10 +30,10 @@ with plt.style.context(['science', 'grid', 'russian-font']):
 
     ax.loglog(grid.EE, arr_110 * 1e+16, label=r'ТФМ')
     ax.loglog(grid.EE, arr_210 * 1e+16, label=r'ТФД')
-    ax.loglog(grid.EE, arr_310 * 1e+16, label=r'ДХФС')
-    ax.loglog(grid.EE, arr_410 * 1e+16, label=r'ДФ')
+    ax.loglog(grid.EE, arr_310 * 1e+16, label=r'ДХФС', color='C3')
+    ax.loglog(grid.EE, arr_410 * 1e+16, label=r'ДФ', color='C2')
 
-    ax.loglog(grid.EE, cs_ruth_Hg * 1e+16, label=r'Резерфорд')
+    ax.loglog(grid.EE, cs_ruth_Hg * 1e+16, label=r'Резерфорд', color='C4')
 
     ax.legend(loc=1, fontsize=6)
     ax.set(xlabel=r'$E$, эВ')
@@ -45,7 +45,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.ylim(1e-1, 1e+3)
 
     plt.show()
-    fig.savefig('review_figures/cs_models_X10.jpg', dpi=600)
+    # fig.savefig('review_figures/cs_models_X10_new.jpg', dpi=600)
 
 
 # %% 4X0
@@ -61,7 +61,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
 
     ax.loglog(grid.EE, arr_410 * 1e+16, label=r'ФМ')
     ax.loglog(grid.EE, arr_420 * 1e+16, label=r'ТФ')
-    ax.loglog(grid.EE, arr_430 * 1e+16, label=r'РТ')
+    ax.loglog(grid.EE, arr_430 * 1e+16, label=r'РТ', color='C3')
 
     ax.loglog(grid.EE, cs_ruth_Hg * 1e+16, 'C4', label=r'Резерфорд')
 
@@ -75,7 +75,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.ylim(1e-1, 1e+3)
 
     plt.show()
-    # fig.savefig('review_figures/cs_models_4X0.jpg', dpi=600)
+    # fig.savefig('review_figures/cs_models_4X0_new.jpg', dpi=600)
 
 
 # %% 41X
@@ -91,7 +91,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
 
     ax.loglog(grid.EE, arr_410 * 1e+16, label=r'нет модели')
     ax.loglog(grid.EE, arr_411 * 1e+16, label=r'Б')
-    ax.loglog(grid.EE, arr_412 * 1e+16, label=r'ЛДА')
+    ax.loglog(grid.EE, arr_412 * 1e+16, label=r'ЛДА', color='C3')
 
     ax.loglog(grid.EE, cs_ruth_Hg * 1e+16, 'C4', label=r'Резерфорд')
 
@@ -105,6 +105,6 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.ylim(1e-1, 1e+3)
 
     plt.show()
-    # fig.savefig('review_figures/cs_models_41X.jpg', dpi=600)
+    fig.savefig('review_figures/cs_models_41X_new.jpg', dpi=600)
 
 

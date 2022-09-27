@@ -1,38 +1,28 @@
 [0] Config.pm:304> INFO - This is Biber 2.14
-[1] Config.pm:307> INFO - Logfile is 'dissertation.blg'
-[199] biber-darwin:322> INFO - === Mon Aug  1, 2022, 22:09:56
-[226] Biber.pm:415> INFO - Reading 'dissertation.bcf'
-[437] Biber.pm:943> INFO - Found 4 citekeys in bib section 0
-[465] Biber.pm:4256> INFO - Processing section 0
-[466] Utils.pm:75> INFO - Globbing data source 'biblio/othercites.bib'
-[466] Utils.pm:91> INFO - Globbed data source 'biblio/othercites.bib' to biblio/othercites.bib
-[466] Utils.pm:75> INFO - Globbing data source 'biblio/authorpapersVAK.bib'
-[466] Utils.pm:91> INFO - Globbed data source 'biblio/authorpapersVAK.bib' to biblio/authorpapersVAK.bib
-[466] Utils.pm:75> INFO - Globbing data source 'biblio/authorpapers.bib'
-[466] Utils.pm:91> INFO - Globbed data source 'biblio/authorpapers.bib' to biblio/authorpapers.bib
-[466] Utils.pm:75> INFO - Globbing data source 'biblio/authorconferences.bib'
-[466] Utils.pm:91> INFO - Globbed data source 'biblio/authorconferences.bib' to biblio/authorconferences.bib
-[481] Biber.pm:4455> INFO - Looking for bibtex format file 'biblio/othercites.bib' for section 0
-[490] bibtex.pm:1653> INFO - LaTeX decoding ...
-[862] bibtex.pm:1471> INFO - Found BibTeX data source 'biblio/othercites.bib'
-[877] Utils.pm:304> WARN - Duplicate entry key: 'semiconductor_handbook' in file 'biblio/othercites.bib', skipping ...
-[881] Biber.pm:4455> INFO - Looking for bibtex format file 'biblio/authorpapersVAK.bib' for section 0
-[881] Utils.pm:304> WARN - Data source 'biblio/authorpapersVAK.bib' is empty, ignoring
-[881] Biber.pm:4455> INFO - Looking for bibtex format file 'biblio/authorpapers.bib' for section 0
-[882] bibtex.pm:1653> INFO - LaTeX decoding ...
-[892] bibtex.pm:1471> INFO - Found BibTeX data source 'biblio/authorpapers.bib'
-[938] Utils.pm:304> WARN - month field 'oct' in entry 'my_plasmon' is not an integer - this will probably not sort properly.
-[948] Biber.pm:4455> INFO - Looking for bibtex format file 'biblio/authorconferences.bib' for section 0
-[948] Utils.pm:304> WARN - Data source 'biblio/authorconferences.bib' is empty, ignoring
-[948] Utils.pm:304> WARN - I didn't find a database entry for 'Sidorov2018a' (section 0)
-[958] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
-[959] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[959] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'ru-RU'
-[959] Biber.pm:4090> INFO - No sort tailoring available for locale 'ru-RU'
-[969] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
-[969] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[969] Biber.pm:4084> INFO - Sorting list 'none/global/7FC56270E7A70FA81A5935B72EACBE29/global/global' of type 'entry' with template 'none' and locale 'ru-RU'
-[969] Biber.pm:4090> INFO - No sort tailoring available for locale 'ru-RU'
-[980] bbl.pm:652> INFO - Writing 'dissertation.bbl' with encoding 'UTF-8'
-[987] bbl.pm:755> INFO - Output to dissertation.bbl
-[988] Biber.pm:128> INFO - WARNINGS: 5
+[0] Config.pm:307> INFO - Logfile is 'dissertation.blg'
+[97] biber-darwin:322> INFO - === Tue Sep 27, 2022, 23:56:20
+[119] Biber.pm:415> INFO - Reading 'dissertation.bcf'
+[311] Biber.pm:943> INFO - Found 9 citekeys in bib section 0
+[338] Biber.pm:4256> INFO - Processing section 0
+[338] Utils.pm:75> INFO - Globbing data source 'biblio/fabrication_cites.bib'
+[338] Utils.pm:91> INFO - Globbed data source 'biblio/fabrication_cites.bib' to biblio/fabrication_cites.bib
+[352] Biber.pm:4455> INFO - Looking for bibtex format file 'biblio/fabrication_cites.bib' for section 0
+[353] bibtex.pm:1653> INFO - LaTeX decoding ...
+[373] bibtex.pm:1471> INFO - Found BibTeX data source 'biblio/fabrication_cites.bib'
+[399] Utils.pm:304> WARN - month field 'nov' in entry 'Hohmann2015' is not an integer - this will probably not sort properly.
+[408] Utils.pm:304> WARN - month field 'aug' in entry 'Kawata2001' is not an integer - this will probably not sort properly.
+[427] Utils.pm:304> WARN - month field 'sep' in entry 'TPL_microfluidics_2' is not an integer - this will probably not sort properly.
+[463] Utils.pm:304> WARN - month field 'feb' in entry 'TPL_optics' is not an integer - this will probably not sort properly.
+[476] Utils.pm:304> WARN - month field 'mar' in entry 'TPL_nanophotonics' is not an integer - this will probably not sort properly.
+[479] Utils.pm:304> WARN - I didn't find a database entry for 'TPL_1' (section 0)
+[496] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[496] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[496] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'ru-RU'
+[496] Biber.pm:4090> INFO - No sort tailoring available for locale 'ru-RU'
+[510] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[510] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[510] Biber.pm:4084> INFO - Sorting list 'none/global/7FC56270E7A70FA81A5935B72EACBE29/global/global' of type 'entry' with template 'none' and locale 'ru-RU'
+[510] Biber.pm:4090> INFO - No sort tailoring available for locale 'ru-RU'
+[524] bbl.pm:652> INFO - Writing 'dissertation.bbl' with encoding 'UTF-8'
+[542] bbl.pm:755> INFO - Output to dissertation.bbl
+[542] Biber.pm:128> INFO - WARNINGS: 6

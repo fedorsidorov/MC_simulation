@@ -47,7 +47,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.autoscale(tight=True)
     # plt.xlim(0.7, 1.2)
     # plt.ylim(0, 2.5)
-    # fig.savefig('figures_final/PMMA_2ndaries.jpg', dpi=600)
+    # fig.savefig('figures/PMMA_2ndaries.jpg', dpi=600)
     plt.show()
 
 

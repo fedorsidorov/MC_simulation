@@ -66,8 +66,8 @@ with plt.style.context(['science', 'grid', 'russian-font']):
 
     ax.semilogx(rr / a0, 4 * np.pi * rr**2 * rho_TFM * a0, label=r'ТФМ')
     ax.semilogx(rr / a0, 4 * np.pi * rr ** 2 * rho_TFD * a0, label=r'ТФД')
-    ax.semilogx(rr / a0, 4 * np.pi * rr ** 2 * rho_DHFS * a0, label=r'ДХФС')
-    ax.semilogx(rr / a0, 4 * np.pi * rr ** 2 * rho_DF * a0, label=r'ДФ')
+    ax.semilogx(rr / a0, 4 * np.pi * rr ** 2 * rho_DHFS * a0, label=r'ДХФС', color='C3')
+    ax.semilogx(rr / a0, 4 * np.pi * rr ** 2 * rho_DF * a0, label=r'ДФ', color='C2')
 
     ax.legend(loc=1, fontsize=6)
     ax.text(0.00015, 200 * 0.9, r'а)')
@@ -79,7 +79,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.ylim(0, 200)
 
     plt.show()
-    fig.savefig('review_figures/e_density_models.jpg', dpi=600)
+    # fig.savefig('review_figures/e_density_models_new.jpg', dpi=600)
 
 
 # %%
@@ -100,8 +100,8 @@ with plt.style.context(['science', 'grid', 'russian-font']):
 
     ax.semilogx(rr / a0, get_phi(rho_TFM), label=r'ТФМ')
     ax.semilogx(rr / a0, get_phi(rho_TFD), label=r'ТФД')
-    ax.semilogx(rr / a0, get_phi(rho_DHFS), label=r'ДХФС')
-    ax.semilogx(rr / a0, get_phi(rho_DF), label=r'ДФ')
+    ax.semilogx(rr / a0, get_phi(rho_DHFS), label=r'ДХФС', color='C3')
+    ax.semilogx(rr / a0, get_phi(rho_DF), label=r'ДФ', color='C2')
 
     ax.legend(loc=1, fontsize=6)
     ax.text(0.00015, 100 * 0.9, r'б)')
@@ -113,4 +113,4 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.ylim(0, 100)
 
     plt.show()
-    fig.savefig('review_figures/phi_models.jpg', dpi=600)
+    fig.savefig('review_figures/phi_models_new.jpg', dpi=600)

@@ -54,10 +54,14 @@ date=year
             replace={$3-$2-$1$4}, % $4 вставлен исключительно ради нормальной работы программ подсветки синтаксиса, которые некорректно обрабатывают $ в таких конструкциях
             final]
         }
-        \map[overwrite]{ % добавляем ключевые слова, чтобы различать источники
-            \perdatasource{biblio/othercites.bib}
-            \step[fieldset=keywords, fieldvalue={biblioother,bibliofull}]
-        }
+    	\map[overwrite]{ % добавляем ключевые слова, чтобы различать источники
+    		\perdatasource{biblio/fabrication_cites.bib}
+    		\step[fieldset=keywords, fieldvalue={biblioother,bibliofull}]
+    	}
+%        \map[overwrite]{ % добавляем ключевые слова, чтобы различать источники
+%            \perdatasource{biblio/othercites.bib}
+%            \step[fieldset=keywords, fieldvalue={biblioother,bibliofull}]
+%        }
         \map[overwrite]{ % добавляем ключевые слова, чтобы различать источники
             \perdatasource{biblio/authorpapersVAK.bib}
             \step[fieldset=keywords, fieldvalue={biblioauthorvak,biblioauthor,bibliofull}]
@@ -169,10 +173,11 @@ date=year
 %  {\item}
 
 %%% Подключение файлов bib %%%
-\addbibresource{biblio/othercites.bib}
-\addbibresource{biblio/authorpapersVAK.bib}
-\addbibresource{biblio/authorpapers.bib}
-\addbibresource{biblio/authorconferences.bib}
+\addbibresource{biblio/fabrication_cites.bib}
+%\addbibresource{biblio/othercites.bib}
+%\addbibresource{biblio/authorpapersVAK.bib}
+%\addbibresource{biblio/authorpapers.bib}
+%\addbibresource{biblio/authorconferences.bib}
 
 
 %% Счётчик использованных ссылок на литературу, обрабатывающий с учётом неоднократных ссылок

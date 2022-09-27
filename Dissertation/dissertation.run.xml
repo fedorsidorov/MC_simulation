@@ -86,10 +86,7 @@
       <file>dissertation.bcf</file>
     </requires>
     <requires type="editable">
-      <file>biblio/othercites.bib</file>
-      <file>biblio/authorpapersVAK.bib</file>
-      <file>biblio/authorpapers.bib</file>
-      <file>biblio/authorconferences.bib</file>
+      <file>biblio/fabrication_cites.bib</file>
     </requires>
   </external>
 </requests>

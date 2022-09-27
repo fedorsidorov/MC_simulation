@@ -24,7 +24,8 @@ with plt.style.context(['science', 'grid', 'russian-font']):
 
     # ax.loglog(OLF_PMMA[:, 0], OLF_PMMA[:, 1], label=r'ПММА')
     ax.loglog(grid.EE, OLF_PMMA, label=r'ПММА')
-    ax.loglog(EE_Si, OLF_Si, 'C3', label=r'Si')
+    # ax.loglog(EE_Si, OLF_Si, 'C3', label=r'Si')
+    ax.loglog(EE_Si, OLF_Si, label=r'Si')
 
     ax.legend(loc=1, fontsize=6)
     ax.set(xlabel=r'$E$, эВ')
@@ -36,7 +37,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.ylim(1e-7, 1e+1)
 
     plt.show()
-    # fig.savefig('review_figures/OLF_a.jpg', dpi=600)
+    # fig.savefig('review_figures/OLF_a_new.jpg', dpi=600)
 
 
 # %%
@@ -94,8 +95,8 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.loglog(grid.EE, OLF, 'C3', label=r'сумма осцилляторов')
     ax.loglog(grid.EE, osc_0, '--', linewidth=0.7, color='C1', label=r'осц. 1')
     ax.loglog(grid.EE, osc_1, '--', linewidth=0.7, color='C2', label=r'осц. 2')
-    ax.loglog(grid.EE, osc_2, '--', linewidth=0.7, color='C4', label=r'осц. 3')
-    ax.loglog(grid.EE, osc_3, '--', linewidth=0.7, color='C5', label=r'осц. 4')
+    ax.loglog(grid.EE, osc_2, '--', linewidth=0.7, color='C3', label=r'осц. 3')
+    ax.loglog(grid.EE, osc_3, '--', linewidth=0.7, color='C4', label=r'осц. 4')
 
     ax.legend(loc=1, fontsize=6)
     ax.set(xlabel=r'$E$, эВ')
@@ -107,7 +108,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.ylim(1e-7, 1e+1)
 
     plt.show()
-    # fig.savefig('review_figures/OLF_b.jpg', dpi=600)
+    fig.savefig('review_figures/OLF_b_new.jpg', dpi=600)
 
 
 # %% plot ELF

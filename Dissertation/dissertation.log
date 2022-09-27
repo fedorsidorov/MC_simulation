@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.9.18)  4 AUG 2022 17:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.9.18)  27 SEP 2022 23:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -994,9 +994,9 @@ Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 \c@tabtita=\count329
 )
 (./text/title_data.tex) (./formatting/styles.tex
-Package hyperref Info: Option `linktocpage' set `true' on input line 119.
-Package hyperref Info: Option `plainpages' set `false' on input line 119.
-Package hyperref Info: Option `colorlinks' set `true' on input line 119.
+Package hyperref Info: Option `linktocpage' set `true' on input line 120.
+Package hyperref Info: Option `plainpages' set `false' on input line 120.
+Package hyperref Info: Option `colorlinks' set `true' on input line 120.
 
 (/usr/local/texlive/2020/texmf-dist/tex/latex/interfaces/interfaces-titlesec.st
 y
@@ -1337,10 +1337,10 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 11.
 LaTeX Font Info:    ... okay on input line 11.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 11.
 LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Trying to load font information for T2A+ftm on input line 1
+LaTeX Font Info:    Trying to load font information for T2A+faq on input line 1
 1.
- (/usr/local/texlive/texmf-local/tex/latex/pscyr/t2aftm.fd
-File: t2aftm.fd 2001/12/09 Fontinst v1.914 font definitions for T2A/ftm.
+ (/usr/local/texlive/texmf-local/tex/latex/pscyr/t2afaq.fd
+File: t2afaq.fd 2004/09/23 Fontinst v1.914 font definitions for T2A/faq.
 ) (/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count496
@@ -1486,35 +1486,30 @@ Package biblatex Info: ... file 'dissertation.bbl' found.
 
 Package biblatex Warning: The following entry could not be found
 (biblatex)                in the database:
-(biblatex)                Sidorov2018a
+(biblatex)                TPL_1
 (biblatex)                Please verify the spelling and rerun
 (biblatex)                LaTeX afterwards.
 
 )
 
-Package biblatex Warning: citation 'Sidorov2018a' was not found at all in the .
-bbl, bibliography labels cannot be generated, please correct the citation.
+Package biblatex Warning: citation 'TPL_1' was not found at all in the .bbl, bi
+bliography labels cannot be generated, please correct the citation.
 
 Package biblatex Info: Reference section=0 on input line 11.
 Package biblatex Info: Reference segment=0 on input line 11.
-(./formatting/renames.tex) (./formatted_text/dissertation_title.tex
-LaTeX Font Info:    Font shape `T2A/ftm/b/n' in size <14.4> not available
-(Font)              Font shape `T2A/ftm/bx/n' tried instead on input line 21.
-LaTeX Font Info:    Font shape `T2A/ftm/b/n' in size <17.28> not available
-(Font)              Font shape `T2A/ftm/bx/n' tried instead on input line 21.
- [1.1
-
-{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
-LaTeX Font Info:    Font shape `T2A/ftm/b/n' in size <14> not available
-(Font)              Font shape `T2A/ftm/bx/n' tried instead on input line 15.
-
-(./dissertation.toc
-LaTeX Font Info:    Trying to load font information for OT1+ftm on input line 3
+(./formatting/renames.tex)
+LaTeX Font Info:    Font shape `T2A/faq/b/n' in size <14> not available
+(Font)              Font shape `T2A/faq/bx/n' tried instead on input line 15.
+ (./dissertation.toc
+LaTeX Font Info:    Trying to load font information for OT1+faq on input line 3
 .
- (/usr/local/texlive/texmf-local/tex/latex/pscyr/ot1ftm.fd
-File: ot1ftm.fd 2001/12/09 Fontinst v1.914 font definitions for OT1/ftm.
+
+(/usr/local/texlive/texmf-local/tex/latex/pscyr/ot1faq.fd
+File: ot1faq.fd 2001/12/09 Fontinst v1.914 font definitions for OT1/faq.
 )<<ot1.cmap>>
 Package cleveref Info: loaded `russian' language definitions on input line 3.
+LaTeX Font Info:    Font shape `T2A/faq/b/n' in size <14.4> not available
+(Font)              Font shape `T2A/faq/bx/n' tried instead on input line 5.
 <<oml.cmap>><<oms.cmap>><<omx.cmap>>
 LaTeX Font Info:    Trying to load font information for U+msa on input line 5.
 
@@ -1526,141 +1521,121 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 5.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Package cleveref Info: loaded `russian' language definitions on input line 11.
-Package cleveref Info: loaded `russian' language definitions on input line 13.
-Package cleveref Info: loaded `russian' language definitions on input line 15.
-Package cleveref Info: loaded `russian' language definitions on input line 17.
-Package cleveref Info: loaded `russian' language definitions on input line 19.
-Package cleveref Info: loaded `russian' language definitions on input line 21.
+Overfull \hbox (1.85297pt too wide) detected at line 7
+\T2A/faq/m/n/14.4 1.1  
+ []
+
+
+Overfull \hbox (1.00789pt too wide) detected at line 9
+\T2A/faq/m/n/14.4 1.1.1  
+ []
+
+
+Overfull \hbox (1.00789pt too wide) detected at line 11
+\T2A/faq/m/n/14.4 1.1.2  
+ []
+
+
+Overfull \hbox (1.00789pt too wide) detected at line 13
+\T2A/faq/m/n/14.4 1.1.3  
+ []
+
+
+Overfull \hbox (1.00789pt too wide) detected at line 15
+\T2A/faq/m/n/14.4 1.1.4  
+ []
+
 )
 \tf@toc=\write6
 \openout6 = `dissertation.toc'.
 
-
-(./formatted_text/intro_formatted.tex [2.2] (./text/introduction.tex [3.3
+ (./text/chapter_1.tex [1.1{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/
+updmap/pdftex.map}
 
 ]
-[4.4]
-LaTeX Font Info:    Trying to load font information for TS1+ftm on input line 2
-6.
-LaTeX Font Info:    No file TS1ftm.fd. on input line 26.
+{\cyrillictext \CYRG \cyrl \cyra \cyrv \cyra } 1.
+[2.2
 
-
-LaTeX Font Warning: Font shape `TS1/ftm/m/n' undefined
-(Font)              using `TS1/cmr/m/n' instead
-(Font)              for symbol `textdegree' on input line 26.
-
-
-Underfull \hbox (badness 2103) in paragraph at lines 27--28
-[]\T2A/ftm/m/n/14.4 ќбласть оп^^?ти^^?маль^^?ных тем^^?пе^^?ра^^?тур дл€ ме^^?т
-о^^?да —ЁЋ“– со^^?став^^?л€^^?ет
+] [3.3]) (./formatted_text/references.tex [4.4]
+Underfull \hbox (badness 3417) in paragraph at lines 7--7
+\T2A/faq/m/n/14.4 Correlation Spectroscopy for Controlling Molecular Transport 
+in
  []
 
 
-Underfull \hbox (badness 2229) in paragraph at lines 34--35
-[]\T2A/ftm/m/n/14.4 ¬первые пред^^?ло^^?же^^?на ко^^?ли^^?че^^?ствен^^?на€ мо^^
-?дель, опи^^?сы^^?ва^^?ю^^?ща€ элек^^?
+Underfull \hbox (badness 1622) in paragraph at lines 7--7
+[][][]\T2A/faq/m/n/14.4 Two-Photon Polymerization of Sub-^^?micrometric Pattern
+ed Surfaces:
  []
 
-[5.5] [6.6]
-Underfull \hbox (badness 10000) in paragraph at lines 54--55
-[]\T2A/ftm/m/n/14.4 International School and Conference "Saint-^^?Petersburg OP
-EN"on
- []
+[5.5
 
 
-Underfull \hbox (badness 5548) in paragraph at lines 54--55
-\T2A/ftm/m/n/14.4 Optoelectronics, Photonics, Engineering and Nanostructures, —
-анкт-^^?
- []
+]
 
-[7.7])) (./formatted_text/references.tex [8.8]
-
-Package biblatex Warning: Keyword 'biblioother' not found on input line 7.
+Package biblatex Warning: Keyword 'biblioauthor' not found on input line 11.
 
 
-LaTeX Warning: Empty bibliography on input line 7.
+LaTeX Warning: Empty bibliography on input line 11.
 
 
-Package biblatex Warning: Keyword 'biblioother' not found on input line 7.
+Package biblatex Warning: Keyword 'biblioauthor' not found on input line 11.
 
 
-LaTeX Warning: Empty bibliography on input line 7.
+LaTeX Warning: Empty bibliography on input line 11.
 
-Package cleveref Info: loaded `russian' language definitions on input line 11.
-Package cleveref Info: loaded `russian' language definitions on input line 11.
-Package cleveref Info: loaded `russian' language definitions on input line 11.
-Package cleveref Info: loaded `russian' language definitions on input line 11.
-Package cleveref Info: loaded `russian' language definitions on input line 11.
-Package cleveref Info: loaded `russian' language definitions on input line 11.
 )
 
-Package caption Warning: Unused \captionsetup[figure] on input line 43.
+Package caption Warning: Unused \captionsetup[figure] on input line 44.
 See the caption package documentation for explanation.
 
 
-Package caption Warning: Unused \captionsetup[table] on input line 82.
+Package caption Warning: Unused \captionsetup[table] on input line 83.
 See the caption package documentation for explanation.
 
 
-Package caption Warning: Unused \captionsetup[subfigure] on input line 91.
+Package caption Warning: Unused \captionsetup[subfigure] on input line 92.
 See the caption package documentation for explanation.
 
 
-Package caption Warning: Unused \captionsetup[ListingEnv] on input line 562.
+Package caption Warning: Unused \captionsetup[ListingEnv] on input line 563.
 See the caption package documentation for explanation.
 
 
-Package caption Warning: Unused \captionsetup[lstlisting] on input line 576.
+Package caption Warning: Unused \captionsetup[lstlisting] on input line 577.
 See the caption package documentation for explanation.
 
-[9.9
-
-
-
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 23.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 23.
- (./dissertation.aux
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 20.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 20.
+(./dissertation.aux
 Package cleveref Info: loaded `russian' language definitions on input line 27.
-Package cleveref Info: loaded `russian' language definitions on input line 56.
-Package cleveref Info: loaded `russian' language definitions on input line 58.
-Package cleveref Info: loaded `russian' language definitions on input line 60.
-Package cleveref Info: loaded `russian' language definitions on input line 62.
-Package cleveref Info: loaded `russian' language definitions on input line 64.
-Package cleveref Info: loaded `russian' language definitions on input line 66.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 23.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 23.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 20.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 20.
 Package rerunfilecheck Info: File `dissertation.out' has not changed.
-(rerunfilecheck)             Checksum: 99CD34D6B228A628532E423ACD6FA179;628.
-
-
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
+(rerunfilecheck)             Checksum: 0DB5E52CB31E5BE6BC6C734495E00953;2142.
 Package logreq Info: Writing requests to 'dissertation.run.xml'.
 \openout1 = `dissertation.run.xml'.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 23.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 20.
  ) 
 Here is how much of TeX's memory you used:
- 29173 strings out of 480608
- 504988 string characters out of 5903630
- 1433029 words of memory out of 5000000
- 44499 multiletter control sequences out of 15000+600000
- 546622 words of font info for 53 fonts, out of 8000000 for 9000
+ 29109 strings out of 480608
+ 504562 string characters out of 5903630
+ 1432424 words of memory out of 5000000
+ 44463 multiletter control sequences out of 15000+600000
+ 545370 words of font info for 44 fonts, out of 8000000 for 9000
  1146 hyphenation exceptions out of 8191
- 50i,11n,86p,4511b,3656s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/t
-exlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{/usr/local/te
-xlive/2020/texmf-dist/fonts/enc/t2/t2a.enc}</usr/local/texlive/2020/texmf-dist/
-fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/texmf-local/fonts/
-type1/public/pscyr/times.pfb></usr/local/texlive/texmf-local/fonts/type1/public
-/pscyr/timesbd.pfb>
-Output written on dissertation.pdf (9 pages, 73676 bytes).
+ 50i,11n,86p,2691b,2920s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2020/texmf-dist/fonts/enc/t2/t2a.enc}</usr/local/texlive/
+texmf-local/fonts/type1/public/pscyr/antiq5.pfb></usr/local/texlive/texmf-local
+/fonts/type1/public/pscyr/antiq6.pfb></usr/local/texlive/texmf-local/fonts/type
+1/public/pscyr/antiq7.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmmi12.pfb>
+Output written on dissertation.pdf (5 pages, 65563 bytes).
 PDF statistics:
- 118 PDF objects out of 1000 (max. 8388607)
- 98 compressed objects within 1 object stream
- 33 named destinations out of 1000 (max. 500000)
- 45 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 122 PDF objects out of 1000 (max. 8388607)
+ 104 compressed objects within 2 object streams
+ 22 named destinations out of 1000 (max. 500000)
+ 77 words of extra memory for PDF output out of 10000 (max. 10000000)
 

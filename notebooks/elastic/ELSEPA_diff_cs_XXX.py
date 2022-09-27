@@ -35,10 +35,10 @@ with plt.style.context(['science', 'grid', 'russian-font']):
 
     ax.semilogy(grid.THETA_deg, arr_110[i, :] * 1e+16, label=r'ТФМ')
     ax.semilogy(grid.THETA_deg, arr_210[i, :] * 1e+16, label=r'ТФД')
-    ax.semilogy(grid.THETA_deg, arr_310[i, :] * 1e+16, label=r'ДХФС')
-    ax.semilogy(grid.THETA_deg, arr_410[i, :] * 1e+16, label=r'ДФ')
+    ax.semilogy(grid.THETA_deg, arr_310[i, :] * 1e+16, label=r'ДХФС', color='C3')
+    ax.semilogy(grid.THETA_deg, arr_410[i, :] * 1e+16, label=r'ДФ', color='C2')
 
-    ax.semilogy(grid.THETA_deg, dcs_ruth_Hg * 1e+16, label=r'Резерфорд')
+    ax.semilogy(grid.THETA_deg, dcs_ruth_Hg * 1e+16, label=r'Резерфорд', color='C4')
     ax.semilogy(hootcamp_cs[:, 0], hootcamp_cs[:, 1], 'k+', markersize=4, label=r'эксперимент')
 
     ax.legend(loc=1, fontsize=6)
@@ -51,7 +51,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.ylim(1e-3, 1e+2)
 
     plt.show()
-    fig.savefig('review_figures/dcs_models_X10.jpg', dpi=600)
+    # fig.savefig('review_figures/dcs_models_X10_new.jpg', dpi=600)
 
 
 # %% 4X0
@@ -69,7 +69,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     # ax.semilogy(grid.THETA_deg, arr_400[i, :] * 1e+16, label=r'ТФМ')
     ax.semilogy(grid.THETA_deg, arr_410[i, :] * 1e+16, label=r'ФМ')
     ax.semilogy(grid.THETA_deg, arr_420[i, :] * 1e+16, label=r'ТФ')
-    ax.semilogy(grid.THETA_deg, arr_430[i, :] * 1e+16, label=r'РТ')
+    ax.semilogy(grid.THETA_deg, arr_430[i, :] * 1e+16, label=r'РТ', color='C3')
 
     ax.semilogy(grid.THETA_deg, dcs_ruth_Hg * 1e+16, 'C4', label=r'Резерфорд')
     ax.semilogy(hootcamp_cs[:, 0], hootcamp_cs[:, 1], 'k+', markersize=4, label=r'эксперимент')
@@ -84,7 +84,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.ylim(1e-3, 1e+2)
 
     plt.show()
-    # fig.savefig('review_figures/dcs_models_4X0.jpg', dpi=600)
+    fig.savefig('review_figures/dcs_models_4X0_new.jpg', dpi=600)
 
 
 # %% 41X
@@ -100,7 +100,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
 
     ax.semilogy(grid.THETA_deg, arr_410[i, :] * 1e+16, label=r'нет модели')
     ax.semilogy(grid.THETA_deg, arr_411[i, :] * 1e+16, label=r'Б')
-    ax.semilogy(grid.THETA_deg, arr_412[i, :] * 1e+16, label=r'ПЛП')
+    ax.semilogy(grid.THETA_deg, arr_412[i, :] * 1e+16, label=r'ПЛП', color='C3')
 
     ax.semilogy(grid.THETA_deg, dcs_ruth_Hg * 1e+16, 'C4', label=r'Резерфорд')
     ax.semilogy(hootcamp_cs[:, 0], hootcamp_cs[:, 1], 'k+', markersize=4, label=r'эксперимент')
@@ -115,6 +115,6 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.ylim(1e-3, 1e+2)
 
     plt.show()
-    fig.savefig('review_figures/dcs_models_41X.jpg', dpi=600)
+    fig.savefig('review_figures/dcs_models_41X_new.jpg', dpi=600)
 
 

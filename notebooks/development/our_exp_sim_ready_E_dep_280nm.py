@@ -141,5 +141,5 @@ plt.ylabel('z, um')
 plt.grid()
 plt.legend()
 
-plt.savefig('figures_final/slice_sim_10nm_normal/dose_x' + str(dose_factor) + '_sigma_' + str(beam_sigma) + '.jpg', dpi=300)
+plt.savefig('figures/slice_sim_10nm_normal/dose_x' + str(dose_factor) + '_sigma_' + str(beam_sigma) + '.jpg', dpi=300)
 plt.show()
