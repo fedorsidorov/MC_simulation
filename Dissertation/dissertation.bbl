@@ -19,948 +19,1398 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global}
-    \entry{Hohmann2015}{article}{useauthor=false}
-      \name{author}{4}{}{%
-        {{hash=406538682540dda03e5cb98a5f8eb8c7}{%
-           family={Hohmann},
-           familyi={H\bibinitperiod},
-           given={Judith\bibnamedelima K.},
-           giveni={J\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
-        {{hash=805aef347db53dc5d1c0581b3825623b}{%
-           family={Renner},
-           familyi={R\bibinitperiod},
-           given={Michael},
+    \entry{Dapor_large_book}{book}{}
+      \name{author}{1}{}{%
+        {{hash=2206e50afe71eeb786d3c623fbb1e0ec}{%
+           family={Dapor},
+           familyi={D\bibinitperiod},
+           given={Maurizio},
            giveni={M\bibinitperiod}}}%
-        {{hash=34f3f2ab2a9d38d1e6c030fec229fe77}{%
-           family={Waller},
-           familyi={W\bibinitperiod},
-           given={Erik\bibnamedelima H.},
-           giveni={E\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
-        {{hash=e700726d89f98aadd247c9e3665beef8}{%
-           family={Freymann},
-           familyi={F\bibinitperiod},
-           given={Georg},
-           giveni={G\bibinitperiod},
-           prefix={von},
-           prefixi={v\bibinitperiod}}}%
       }
-      \strng{authorbibnamehash}{9042d2522d779e3308c6f5c48f2f99e7}
-      \strng{authornamehash}{9042d2522d779e3308c6f5c48f2f99e7}
-      \strng{authorfullhash}{f9089b3fc9960067e958b03501313a93}
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer International Publishing}%
+      }
+      \strng{namehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{fullhash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{bibnamehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{authorbibnamehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{authornamehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{authorfullhash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \field{extraname}{1}
       \field{sortinit}{1}
       \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Advanced Optical Materials}
-      \field{month}{11}
-      \field{title}{{Three-Dimensional $\mu$-Printing: An Enabling Technology}}
-      \field{year}{2015}
-      \field{number}{11}
-      \range{number}{1}
-      \field{pages}{1488\bibrangedash 1507}
-      \range{pages}{20}
-      \field{volume}{3}
+      \field{isbn}{978-3-319-03882-7}
+      \field{series}{Springer Tracts in Modern Physics}
+      \field{title}{{Transport of Energetic Electrons in Solids}}
+      \field{year}{2014}
+      \field{volume}{257}
       \range{volume}{1}
       \verb{doi}
-      \verb 10.1002/adom.201500328
-      \endverb
-      \verb{file}
-      \verb :Volumes/Transcend/Mendeley/Hohmann et al/Hohmann et al.{\_}2015{\_}Three-Dimensional $\mu$-Printing An Enabling Technology.pdf:pdf
+      \verb 10.1007/978-3-319-03883-4
       \endverb
       \verb{urlraw}
-      \verb https://onlinelibrary.wiley.com/doi/10.1002/adom.201500328
+      \verb http://link.springer.com/10.1007/978-3-319-03883-4
       \endverb
       \verb{url}
-      \verb https://onlinelibrary.wiley.com/doi/10.1002/adom.201500328
+      \verb http://link.springer.com/10.1007/978-3-319-03883-4
       \endverb
       \keyw{biblioother,bibliofull}
     \endentry
-    \entry{Kawata2001}{article}{useauthor=false}
+    \entry{Czyzewski_mott_cs}{article}{useauthor=false}
       \name{author}{4}{}{%
-        {{hash=81246e8925fb80fe420c8f7656f75a06}{%
-           family={Kawata},
-           familyi={K\bibinitperiod},
-           given={Satoshi},
-           giveni={S\bibinitperiod}}}%
-        {{hash=e88668b0f9b5043041a89a3a70e808ba}{%
-           family={Sun},
-           familyi={S\bibinitperiod},
-           given={Hong-Bo},
-           giveni={H\bibinithyphendelim B\bibinitperiod}}}%
-        {{hash=2b2a434891a645d260ff6e615e8a2b1d}{%
-           family={Tanaka},
-           familyi={T\bibinitperiod},
-           given={Tomokazu},
-           giveni={T\bibinitperiod}}}%
-        {{hash=598905a77a1b39999b5147532c930fd4}{%
-           family={Takada},
-           familyi={T\bibinitperiod},
-           given={Kenji},
-           giveni={K\bibinitperiod}}}%
-      }
-      \strng{authorbibnamehash}{d61fa8bdce8ef772b3e249d41edd0a15}
-      \strng{authornamehash}{d61fa8bdce8ef772b3e249d41edd0a15}
-      \strng{authorfullhash}{6e8a7b8adf816f4f9a7d2b3633ff725b}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Nature}
-      \field{month}{8}
-      \field{title}{{Finer features for functional microdevices}}
-      \field{year}{2001}
-      \field{number}{6848}
-      \range{number}{1}
-      \field{pages}{697\bibrangedash 698}
-      \range{pages}{2}
-      \field{volume}{412}
-      \range{volume}{1}
-      \verb{doi}
-      \verb 10.1038/35089130
-      \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1038/35089130 http://www.nature.com/articles/35089130
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1038/35089130%20http://www.nature.com/articles/35089130
-      \endverb
-      \keyw{biblioother,bibliofull}
-    \endentry
-    \entry{TPL_microfluidics_1}{article}{useauthor=false}
-      \name{author}{7}{}{%
-        {{hash=759f18319d97f16c5ca893f869363dd2}{%
-           family={Waheed},
-           familyi={W\bibinitperiod},
-           given={Sidra},
-           giveni={S\bibinitperiod}}}%
-        {{hash=303a0a37c831ae28fc43c9aaf23ae7ba}{%
-           family={Cabot},
+        {{hash=39df7097cad2bffab7b8ea5d7c918eb8}{%
+           family={Czy{ż}ewski},
            familyi={C\bibinitperiod},
-           given={Joan\bibnamedelima M.},
-           giveni={J\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
-        {{hash=ca7eec2a98113be0bdf5e071015180b7}{%
-           family={Macdonald},
+           given={Zbigniew},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=fc166bd889d6580acb17163455742cfa}{%
+           family={MacCallum},
            familyi={M\bibinitperiod},
-           given={Niall\bibnamedelima P.},
-           giveni={N\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
-        {{hash=8e23c30f7d4cb6089e91594c7aa51e0b}{%
-           family={Lewis},
-           familyi={L\bibinitperiod},
-           given={Trevor},
-           giveni={T\bibinitperiod}}}%
-        {{hash=8c132c7ce3e05f8dd40c55c039b6ca4c}{%
-           family={Guijt},
-           familyi={G\bibinitperiod},
-           given={Rosanne\bibnamedelima M.},
-           giveni={R\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
-        {{hash=01823dc754ce1bd8cbf43797c18fa580}{%
-           family={Paull},
-           familyi={P\bibinitperiod},
-           given={Brett},
-           giveni={B\bibinitperiod}}}%
-        {{hash=f0f219f35d9ab3ba2a1b525e4f8bead7}{%
-           family={Breadmore},
-           familyi={B\bibinitperiod},
-           given={Michael\bibnamedelima C.},
-           giveni={M\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+           given={Danny\bibnamedelima O.Neill},
+           giveni={D\bibinitperiod\bibinitdelim O\bibinitperiod}}}%
+        {{hash=df40f7bd8189fb7e04aaa2ad9fa44dfd}{%
+           family={Romig},
+           familyi={R\bibinitperiod},
+           given={Alton},
+           giveni={A\bibinitperiod}}}%
+        {{hash=51f488b1ec88e76dc5ed103d26fbdd47}{%
+           family={Joy},
+           familyi={J\bibinitperiod},
+           given={David\bibnamedelima C.},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
       }
-      \strng{authorbibnamehash}{d8fd77e3c71c0be270bf1a41885f1507}
-      \strng{authornamehash}{d8fd77e3c71c0be270bf1a41885f1507}
-      \strng{authorfullhash}{5c883fac2b8a30e1fe0baf4c2f282e32}
+      \strng{authorbibnamehash}{d73b6af500efb9ba1169934ffc69ff5d}
+      \strng{authornamehash}{d73b6af500efb9ba1169934ffc69ff5d}
+      \strng{authorfullhash}{95fb6fc3f47b50f1f1506af91ad54e65}
       \field{sortinit}{2}
       \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Lab on a Chip}
-      \field{title}{{3D printed microfluidic devices: enablers and barriers}}
-      \field{year}{2016}
-      \field{number}{11}
+      \field{journaltitle}{Journal of Applied Physics}
+      \field{month}{10}
+      \field{title}{{Calculations of Mott scattering cross section}}
+      \field{year}{1990}
+      \field{number}{7}
       \range{number}{1}
-      \field{pages}{1993\bibrangedash 2013}
-      \range{pages}{21}
-      \field{volume}{16}
+      \field{pages}{3066\bibrangedash 3072}
+      \range{pages}{7}
+      \field{volume}{68}
       \range{volume}{1}
       \verb{doi}
-      \verb 10.1039/C6LC00284F
-      \endverb
-      \verb{file}
-      \verb :Volumes/Transcend/Mendeley/Waheed et al/Waheed et al.{\_}2016{\_}3D printed microfluidic devices Enablers and barriers.pdf:pdf
+      \verb 10.1063/1.346400
       \endverb
       \verb{urlraw}
-      \verb http://xlink.rsc.org/?DOI=C6LC00284F
+      \verb http://aip.scitation.org/doi/10.1063/1.346400
       \endverb
       \verb{url}
-      \verb http://xlink.rsc.org/?DOI=C6LC00284F
+      \verb http://aip.scitation.org/doi/10.1063/1.346400
       \endverb
       \keyw{biblioother,bibliofull}
     \endentry
-    \entry{TPL_microfluidics_2}{article}{}
-      \name{author}{2}{}{%
-        {{hash=4fe1e1adf61b6cc80cd9fcfb4a46a182}{%
-           family={Dittrich},
+    \entry{Ciappa_2010}{article}{}
+      \name{author}{3}{}{%
+        {{hash=2206e50afe71eeb786d3c623fbb1e0ec}{%
+           family={Dapor},
            familyi={D\bibinitperiod},
-           given={Petra\bibnamedelima S.},
-           giveni={P\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
-        {{hash=e5ef1d5b35a8e3436eb2c239a5fb5a64}{%
-           family={Schwille},
-           familyi={S\bibinitperiod},
-           given={Petra},
-           giveni={P\bibinitperiod}}}%
+           given={Maurizio},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8a35e53add11036835a5513bfe2dfad5}{%
+           family={Ciappa},
+           familyi={C\bibinitperiod},
+           given={Mauro},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8ca3caf70a7f02822d9c15d6a37bb77d}{%
+           family={Fichtner},
+           familyi={F\bibinitperiod},
+           given={Wolfgang},
+           giveni={W\bibinitperiod}}}%
       }
-      \strng{namehash}{d607053a5cce2b7573b68f6e276c65fd}
-      \strng{fullhash}{d607053a5cce2b7573b68f6e276c65fd}
-      \strng{bibnamehash}{d607053a5cce2b7573b68f6e276c65fd}
-      \strng{authorbibnamehash}{d607053a5cce2b7573b68f6e276c65fd}
-      \strng{authornamehash}{d607053a5cce2b7573b68f6e276c65fd}
-      \strng{authorfullhash}{d607053a5cce2b7573b68f6e276c65fd}
+      \list{publisher}{1}{%
+        {SPIE}%
+      }
+      \strng{namehash}{f0fcac25e879411045116959ad69c559}
+      \strng{fullhash}{f0fcac25e879411045116959ad69c559}
+      \strng{bibnamehash}{f0fcac25e879411045116959ad69c559}
+      \strng{authorbibnamehash}{f0fcac25e879411045116959ad69c559}
+      \strng{authornamehash}{f0fcac25e879411045116959ad69c559}
+      \strng{authorfullhash}{f0fcac25e879411045116959ad69c559}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Micro/Nanolithography, MEMS, and MOEMS}
+      \field{title}{Monte Carlo modeling in the low-energy domain of the secondary electron emission of polymethylmethacrylate for critical-dimension scanning electron microscopy}
+      \field{year}{2010}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{023001}
+      \range{pages}{1}
+      \field{volume}{9}
+      \range{volume}{1}
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Bethe}{article}{}
+      \name{author}{1}{}{%
+        {{hash=edf7e1f0f9e42da57d807260b538c886}{%
+           family={Bethe},
+           familyi={B\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{edf7e1f0f9e42da57d807260b538c886}
+      \strng{fullhash}{edf7e1f0f9e42da57d807260b538c886}
+      \strng{bibnamehash}{edf7e1f0f9e42da57d807260b538c886}
+      \strng{authorbibnamehash}{edf7e1f0f9e42da57d807260b538c886}
+      \strng{authornamehash}{edf7e1f0f9e42da57d807260b538c886}
+      \strng{authorfullhash}{edf7e1f0f9e42da57d807260b538c886}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{7}
+      \field{title}{{Theory of the Passage of Fast Corpuscular Rays Through Matter}}
+      \field{year}{1930}
+      \field{number}{5}
+      \range{number}{1}
+      \field{pages}{77\bibrangedash 154}
+      \range{pages}{78}
+      \field{volume}{5}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb http://www.worldscientific.com/doi/abs/10.1142/9789812795755{\_}0003
+      \endverb
+      \verb{url}
+      \verb http://www.worldscientific.com/doi/abs/10.1142/9789812795755%7B%5C_%7D0003
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Bethe_corrected}{article}{}
+      \name{author}{2}{}{%
+        {{hash=1ee6ec30df4b548b025373f22f2a11fb}{%
+           family={Rao‐Sahib},
+           familyi={R\bibinithyphendelim S\bibinitperiod},
+           given={T.\bibnamedelimi S.},
+           giveni={T\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=2327c975ef2234b3c4050ad131c3fbbb}{%
+           family={Wittry},
+           familyi={W\bibinitperiod},
+           given={D.\bibnamedelimi B.},
+           giveni={D\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \strng{namehash}{3fab92913a424a6ef0b9a3497dfbe68b}
+      \strng{fullhash}{3fab92913a424a6ef0b9a3497dfbe68b}
+      \strng{bibnamehash}{3fab92913a424a6ef0b9a3497dfbe68b}
+      \strng{authorbibnamehash}{3fab92913a424a6ef0b9a3497dfbe68b}
+      \strng{authornamehash}{3fab92913a424a6ef0b9a3497dfbe68b}
+      \strng{authorfullhash}{3fab92913a424a6ef0b9a3497dfbe68b}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Applied Physics}
+      \field{month}{11}
+      \field{title}{{X‐ray continuum from thick elemental targets for 10–50‐keV electrons}}
+      \field{year}{1974}
+      \field{number}{11}
+      \range{number}{1}
+      \field{pages}{5060\bibrangedash 5068}
+      \range{pages}{9}
+      \field{volume}{45}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1063/1.1663184
+      \endverb
+      \verb{urlraw}
+      \verb http://aip.scitation.org/doi/10.1063/1.1663184
+      \endverb
+      \verb{url}
+      \verb http://aip.scitation.org/doi/10.1063/1.1663184
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Bethe_corr_2ndary_e}{article}{}
+      \name{author}{1}{}{%
+        {{hash=51f488b1ec88e76dc5ed103d26fbdd47}{%
+           family={Joy},
+           familyi={J\bibinitperiod},
+           given={David\bibnamedelima C.},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \strng{namehash}{51f488b1ec88e76dc5ed103d26fbdd47}
+      \strng{fullhash}{51f488b1ec88e76dc5ed103d26fbdd47}
+      \strng{bibnamehash}{51f488b1ec88e76dc5ed103d26fbdd47}
+      \strng{authorbibnamehash}{51f488b1ec88e76dc5ed103d26fbdd47}
+      \strng{authornamehash}{51f488b1ec88e76dc5ed103d26fbdd47}
+      \strng{authorfullhash}{51f488b1ec88e76dc5ed103d26fbdd47}
+      \field{sortinit}{7}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Microscopy}
+      \field{title}{{A model for calculating secondary and backscattered electron yields}}
+      \field{year}{1987}
+      \field{number}{1}
+      \range{number}{1}
+      \field{pages}{51\bibrangedash 64}
+      \range{pages}{14}
+      \field{volume}{147}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1111/j.1365-2818.1987.tb02817.x
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Shimizu_Review}{article}{}
+      \name{author}{2}{}{%
+        {{hash=bfa6f7d444fafd13f6b5660e06345606}{%
+           family={Shimizu},
+           familyi={S\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=8db0628c8b4bb56d89660b1ecacf2b10}{%
+           family={Ze-Jun},
+           familyi={Z\bibinithyphendelim J\bibinitperiod},
+           given={Ding},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{f4e4d20e2fdc20d977cadcc661aed839}
+      \strng{fullhash}{f4e4d20e2fdc20d977cadcc661aed839}
+      \strng{bibnamehash}{f4e4d20e2fdc20d977cadcc661aed839}
+      \strng{authorbibnamehash}{f4e4d20e2fdc20d977cadcc661aed839}
+      \strng{authornamehash}{f4e4d20e2fdc20d977cadcc661aed839}
+      \strng{authorfullhash}{f4e4d20e2fdc20d977cadcc661aed839}
+      \field{sortinit}{8}
+      \field{sortinithash}{1b24cab5087933ef0826a7cd3b99e994}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Reports on Progress in Physics}
+      \field{month}{4}
+      \field{title}{{Monte Carlo modelling of electron-solid interactions}}
+      \field{year}{1992}
+      \field{number}{4}
+      \range{number}{1}
+      \field{pages}{487\bibrangedash 531}
+      \range{pages}{45}
+      \field{volume}{55}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1088/0034-4885/55/4/002
+      \endverb
+      \verb{urlraw}
+      \verb https://iopscience.iop.org/article/10.1088/0034-4885/55/4/002
+      \endverb
+      \verb{url}
+      \verb https://iopscience.iop.org/article/10.1088/0034-4885/55/4/002
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Ritchie_ELF}{article}{}
+      \name{author}{1}{}{%
+        {{hash=6b1a9e0f99332ec51bc1fd30b0c121ec}{%
+           family={Ritchie},
+           familyi={R\bibinitperiod},
+           given={R.\bibnamedelimi H.},
+           giveni={R\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{6b1a9e0f99332ec51bc1fd30b0c121ec}
+      \strng{fullhash}{6b1a9e0f99332ec51bc1fd30b0c121ec}
+      \strng{bibnamehash}{6b1a9e0f99332ec51bc1fd30b0c121ec}
+      \strng{authorbibnamehash}{6b1a9e0f99332ec51bc1fd30b0c121ec}
+      \strng{authornamehash}{6b1a9e0f99332ec51bc1fd30b0c121ec}
+      \strng{authorfullhash}{6b1a9e0f99332ec51bc1fd30b0c121ec}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review}
+      \field{month}{5}
+      \field{title}{{Interaction of Charged Particles with a Degenerate Fermi-Dirac Electron Gas}}
+      \field{year}{1959}
+      \field{number}{3}
+      \range{number}{1}
+      \field{pages}{644\bibrangedash 654}
+      \range{pages}{11}
+      \field{volume}{114}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1103/PhysRev.114.644
+      \endverb
+      \verb{urlraw}
+      \verb https://link.aps.org/doi/10.1103/PhysRev.114.644
+      \endverb
+      \verb{url}
+      \verb https://link.aps.org/doi/10.1103/PhysRev.114.644
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Dapor_2015_oscillators}{article}{}
+      \name{author}{1}{}{%
+        {{hash=2206e50afe71eeb786d3c623fbb1e0ec}{%
+           family={Dapor},
+           familyi={D\bibinitperiod},
+           given={Maurizio},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier B.V.}%
+      }
+      \strng{namehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{fullhash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{bibnamehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{authorbibnamehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{authornamehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{authorfullhash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nuclear Instruments and Methods in Physics Research, Section B: Beam Interactions with Materials and Atoms}
+      \field{title}{{Energy loss of fast electrons impinging upon polymethylmethacrylate}}
+      \field{year}{2015}
+      \field{pages}{190\bibrangedash 194}
+      \range{pages}{5}
+      \field{volume}{352}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1016/j.nimb.2014.11.101
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1016/j.nimb.2014.11.101
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1016/j.nimb.2014.11.101
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Palik}{book}{}
+      \name{author}{1}{}{%
+        {{hash=39a65f27d4d69ead10cddf83f35e64d6}{%
+           family={Palik},
+           familyi={P\bibinitperiod},
+           given={Edward\bibnamedelima D.},
+           giveni={E\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=39a65f27d4d69ead10cddf83f35e64d6}{%
+           family={Palik},
+           familyi={P\bibinitperiod},
+           given={Edward\bibnamedelima D.},
+           giveni={E\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {USA}%
+      }
+      \list{publisher}{1}{%
+        {Academic Press}%
+      }
+      \strng{namehash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{fullhash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{bibnamehash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{authorbibnamehash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{authornamehash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{authorfullhash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{editorbibnamehash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{editornamehash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{editorfullhash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Handbook of Optical Constants of Solids}
+      \field{title}{{Handbook of Optical Constants of Solids}}
+      \field{year}{1998}
+      \verb{file}
+      \verb :Volumes/Transcend/Mendeley/Palik/Palik{\_}1998{\_}Handbook of Optical Constants of Solids.pdf:pdf
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Henke_photoabs}{article}{}
+      \name{author}{3}{}{%
+        {{hash=f3ab85a0e112631d30b076d0cdfaf1f7}{%
+           family={Henke},
+           familyi={H\bibinitperiod},
+           given={B.L.},
+           giveni={B\bibinitperiod}}}%
+        {{hash=44414309469ad09e560737306fa97488}{%
+           family={Gullikson},
+           familyi={G\bibinitperiod},
+           given={E.M.},
+           giveni={E\bibinitperiod}}}%
+        {{hash=f3db1dcf1efe8b0cc7977fee422561a4}{%
+           family={Davis},
+           familyi={D\bibinitperiod},
+           given={J.C.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{52a3e900bfd52a2ed7e5b11c1782e53a}
+      \strng{fullhash}{52a3e900bfd52a2ed7e5b11c1782e53a}
+      \strng{bibnamehash}{52a3e900bfd52a2ed7e5b11c1782e53a}
+      \strng{authorbibnamehash}{52a3e900bfd52a2ed7e5b11c1782e53a}
+      \strng{authornamehash}{52a3e900bfd52a2ed7e5b11c1782e53a}
+      \strng{authorfullhash}{52a3e900bfd52a2ed7e5b11c1782e53a}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Atomic Data and Nuclear Data Tables}
+      \field{month}{7}
+      \field{title}{{X-Ray Interactions: Photoabsorption, Scattering, Transmission, and Reflection at E = 50-30,000 eV, Z = 1-92}}
+      \field{year}{1993}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{181\bibrangedash 342}
+      \range{pages}{162}
+      \field{volume}{54}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1006/adnd.1993.1013
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0092640X83710132
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0092640X83710132
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Biggs_cs}{report}{}
+      \name{author}{2}{}{%
+        {{hash=64e4e574b1f14783eb706073626ccf9b}{%
+           family={Biggs},
+           familyi={B\bibinitperiod},
+           given={Frank},
+           giveni={F\bibinitperiod}}}%
+        {{hash=f7a242f0530484a2c3a93ec203d7c7b2}{%
+           family={Lighthill},
+           familyi={L\bibinitperiod},
+           given={Ruth},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Sandia National Labs., Albuquerque, NM (USA)}%
+      }
+      \strng{namehash}{783cdab67347710f4f272cc8b6f95598}
+      \strng{fullhash}{783cdab67347710f4f272cc8b6f95598}
+      \strng{bibnamehash}{783cdab67347710f4f272cc8b6f95598}
+      \strng{authorbibnamehash}{783cdab67347710f4f272cc8b6f95598}
+      \strng{authornamehash}{783cdab67347710f4f272cc8b6f95598}
+      \strng{authorfullhash}{783cdab67347710f4f272cc8b6f95598}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Analytical approximations for x-ray cross sections III}
+      \field{type}{techreport}
+      \field{year}{1988}
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Ashley_LxSx}{article}{}
+      \name{author}{1}{}{%
+        {{hash=63dd7d1e9b7899022fa420c95d677947}{%
+           family={Ashley},
+           familyi={A\bibinitperiod},
+           given={J.C.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{63dd7d1e9b7899022fa420c95d677947}
+      \strng{fullhash}{63dd7d1e9b7899022fa420c95d677947}
+      \strng{bibnamehash}{63dd7d1e9b7899022fa420c95d677947}
+      \strng{authorbibnamehash}{63dd7d1e9b7899022fa420c95d677947}
+      \strng{authornamehash}{63dd7d1e9b7899022fa420c95d677947}
+      \strng{authorfullhash}{63dd7d1e9b7899022fa420c95d677947}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Electron Spectroscopy and Related Phenomena}
+      \field{month}{1}
+      \field{title}{{Simple model for electron inelastic mean free paths: Application to condensed organic materials}}
+      \field{year}{1982}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{177\bibrangedash 194}
+      \range{pages}{18}
+      \field{volume}{28}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1016/0368-2048(82)85041-X
+      \endverb
+      \verb{file}
+      \verb :Volumes/Transcend/Mendeley/Ashley/Ashley{\_}1982{\_}Simple model for electron inelastic mean free paths Application to condensed organic materials.pdf:pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/036820488285041X
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/036820488285041X
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Ritchie_Drude}{article}{}
+      \name{author}{2}{}{%
+        {{hash=6b1a9e0f99332ec51bc1fd30b0c121ec}{%
+           family={Ritchie},
+           familyi={R\bibinitperiod},
+           given={R.\bibnamedelimi H.},
+           giveni={R\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=68538d7d128f3452f9104863a928df7a}{%
+           family={Howie},
+           familyi={H\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{dcf20b4d71ac2a352e79d92470a37848}
+      \strng{fullhash}{dcf20b4d71ac2a352e79d92470a37848}
+      \strng{bibnamehash}{dcf20b4d71ac2a352e79d92470a37848}
+      \strng{authorbibnamehash}{dcf20b4d71ac2a352e79d92470a37848}
+      \strng{authornamehash}{dcf20b4d71ac2a352e79d92470a37848}
+      \strng{authorfullhash}{dcf20b4d71ac2a352e79d92470a37848}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Philosophical Magazine}
+      \field{title}{{Electron excitation and the optical potential in electron microscopy}}
+      \field{year}{1977}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{463\bibrangedash 481}
+      \range{pages}{19}
+      \field{volume}{36}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1080/14786437708244948
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Mermin}{article}{}
+      \name{author}{1}{}{%
+        {{hash=b5f10f77e7a1e023c7eacaca5e364c2c}{%
+           family={Mermin},
+           familyi={M\bibinitperiod},
+           given={N.\bibnamedelimi D.},
+           giveni={N\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{b5f10f77e7a1e023c7eacaca5e364c2c}
+      \strng{fullhash}{b5f10f77e7a1e023c7eacaca5e364c2c}
+      \strng{bibnamehash}{b5f10f77e7a1e023c7eacaca5e364c2c}
+      \strng{authorbibnamehash}{b5f10f77e7a1e023c7eacaca5e364c2c}
+      \strng{authornamehash}{b5f10f77e7a1e023c7eacaca5e364c2c}
+      \strng{authorfullhash}{b5f10f77e7a1e023c7eacaca5e364c2c}
       \field{sortinit}{2}
       \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Analytical Chemistry}
-      \field{month}{9}
-      \field{title}{{Spatial Two-Photon Fluorescence Cross-Correlation Spectroscopy for Controlling Molecular Transport in Microfluidic Structures}}
-      \field{year}{2002}
-      \field{number}{17}
-      \range{number}{1}
-      \field{pages}{4472\bibrangedash 4479}
-      \range{pages}{8}
-      \field{volume}{74}
-      \range{volume}{1}
-      \verb{doi}
-      \verb 10.1021/ac025625p
-      \endverb
-      \verb{urlraw}
-      \verb https://pubs.acs.org/doi/10.1021/ac025625p
-      \endverb
-      \verb{url}
-      \verb https://pubs.acs.org/doi/10.1021/ac025625p
-      \endverb
-      \keyw{biblioother,bibliofull}
-    \endentry
-    \entry{TPL_biology_1}{article}{useauthor=false}
-      \name{author}{5}{}{%
-        {{hash=1653fe142b8561786ef8138666f0bb39}{%
-           family={Marino},
-           familyi={M\bibinitperiod},
-           given={Attilio},
-           giveni={A\bibinitperiod}}}%
-        {{hash=f09853216d58ea07a1018780c771e436}{%
-           family={Filippeschi},
-           familyi={F\bibinitperiod},
-           given={Carlo},
-           giveni={C\bibinitperiod}}}%
-        {{hash=5aa92408a1e708d300818aa7525b86ac}{%
-           family={Mattoli},
-           familyi={M\bibinitperiod},
-           given={Virgilio},
-           giveni={V\bibinitperiod}}}%
-        {{hash=4157eb539f9689a48f9cb20ad91c8dd0}{%
-           family={Mazzolai},
-           familyi={M\bibinitperiod},
-           given={Barbara},
-           giveni={B\bibinitperiod}}}%
-        {{hash=a6425b11cfed79c24484233bccf4a997}{%
-           family={Ciofani},
-           familyi={C\bibinitperiod},
-           given={Gianni},
-           giveni={G\bibinitperiod}}}%
-      }
-      \strng{authorbibnamehash}{6cf565dfbcb0ff25e33de95a6b9c7b41}
-      \strng{authornamehash}{6cf565dfbcb0ff25e33de95a6b9c7b41}
-      \strng{authorfullhash}{15063fb7dcf0ba9eebf6f8c53cdef890}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Nanoscale}
-      \field{title}{{Biomimicry at the nanoscale: current research and perspectives of two-photon polymerization}}
-      \field{year}{2015}
-      \field{number}{7}
-      \range{number}{1}
-      \field{pages}{2841\bibrangedash 2850}
-      \range{pages}{10}
-      \field{volume}{7}
-      \range{volume}{1}
-      \verb{doi}
-      \verb 10.1039/C4NR06500J
-      \endverb
-      \verb{urlraw}
-      \verb http://xlink.rsc.org/?DOI=C4NR06500J
-      \endverb
-      \verb{url}
-      \verb http://xlink.rsc.org/?DOI=C4NR06500J
-      \endverb
-      \keyw{biblioother,bibliofull}
-    \endentry
-    \entry{TPL_biology_2}{article}{useauthor=false}
-      \name{author}{9}{}{%
-        {{hash=1653fe142b8561786ef8138666f0bb39}{%
-           family={Marino},
-           familyi={M\bibinitperiod},
-           given={Attilio},
-           giveni={A\bibinitperiod}}}%
-        {{hash=a6425b11cfed79c24484233bccf4a997}{%
-           family={Ciofani},
-           familyi={C\bibinitperiod},
-           given={Gianni},
-           giveni={G\bibinitperiod}}}%
-        {{hash=f09853216d58ea07a1018780c771e436}{%
-           family={Filippeschi},
-           familyi={F\bibinitperiod},
-           given={Carlo},
-           giveni={C\bibinitperiod}}}%
-        {{hash=d04564a0d88782d919e05dd0f1545326}{%
-           family={Pellegrino},
-           familyi={P\bibinitperiod},
-           given={Mario},
-           giveni={M\bibinitperiod}}}%
-        {{hash=7da49ce9cb9e1fd5c0634c92c3c6d8a5}{%
-           family={Pellegrini},
-           familyi={P\bibinitperiod},
-           given={Monica},
-           giveni={M\bibinitperiod}}}%
-        {{hash=50fe9078ca6764ae1b08aa3510ec3701}{%
-           family={Orsini},
-           familyi={O\bibinitperiod},
-           given={Paolo},
-           giveni={P\bibinitperiod}}}%
-        {{hash=b7bde632286b4c213bcb0acff1b42ad8}{%
-           family={Pasqualetti},
-           familyi={P\bibinitperiod},
-           given={Massimo},
-           giveni={M\bibinitperiod}}}%
-        {{hash=5aa92408a1e708d300818aa7525b86ac}{%
-           family={Mattoli},
-           familyi={M\bibinitperiod},
-           given={Virgilio},
-           giveni={V\bibinitperiod}}}%
-        {{hash=4157eb539f9689a48f9cb20ad91c8dd0}{%
-           family={Mazzolai},
-           familyi={M\bibinitperiod},
-           given={Barbara},
-           giveni={B\bibinitperiod}}}%
-      }
-      \strng{authorbibnamehash}{6cf565dfbcb0ff25e33de95a6b9c7b41}
-      \strng{authornamehash}{6cf565dfbcb0ff25e33de95a6b9c7b41}
-      \strng{authorfullhash}{d74c54fa6686ffc7b862f75b79c96b4a}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{ACS Applied Materials \& Interfaces}
-      \field{note}{PMID: 24309089}
-      \field{title}{Two-Photon Polymerization of Sub-micrometric Patterned Surfaces: Investigation of Cell-Substrate Interactions and Improved Differentiation of Neuron-like Cells}
-      \field{year}{2013}
-      \field{number}{24}
-      \range{number}{1}
-      \field{pages}{13012\bibrangedash 13021}
-      \range{pages}{10}
-      \field{volume}{5}
-      \range{volume}{1}
-      \verb{doi}
-      \verb 10.1021/am403895k
-      \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1021/am403895k
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1021/am403895k
-      \endverb
-      \keyw{biblioother,bibliofull}
-    \endentry
-    \entry{TPL_optics}{article}{useauthor=false}
-      \name{author}{5}{}{%
-        {{hash=ddf1164344894bc6bd4236b57d619c3e}{%
-           family={Thiele},
-           familyi={T\bibinitperiod},
-           given={Simon},
-           giveni={S\bibinitperiod}}}%
-        {{hash=328218bb928f0f4abde4d871306342d9}{%
-           family={Arzenbacher},
-           familyi={A\bibinitperiod},
-           given={Kathrin},
-           giveni={K\bibinitperiod}}}%
-        {{hash=c90c814b4c48a144b3bc5ba5066cc9ec}{%
-           family={Gissibl},
-           familyi={G\bibinitperiod},
-           given={Timo},
-           giveni={T\bibinitperiod}}}%
-        {{hash=08adbdd26d4d3f30af95ed584e84baeb}{%
-           family={Giessen},
-           familyi={G\bibinitperiod},
-           given={Harald},
-           giveni={H\bibinitperiod}}}%
-        {{hash=b0388703e8bd1f3d45ed5afcaa967bc0}{%
-           family={Herkommer},
-           familyi={H\bibinitperiod},
-           given={Alois\bibnamedelima M.},
-           giveni={A\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
-      }
-      \strng{authorbibnamehash}{9bb280e8a1945aeac760dc2d7e321e9b}
-      \strng{authornamehash}{9bb280e8a1945aeac760dc2d7e321e9b}
-      \strng{authorfullhash}{fc6322e9cd5dbde73808733d7bb1ce50}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Science Advances}
-      \field{month}{2}
-      \field{title}{{3D-printed eagle eye: Compound microlens system for foveated imaging}}
-      \field{year}{2017}
-      \field{number}{2}
-      \range{number}{1}
-      \field{volume}{3}
-      \range{volume}{1}
-      \verb{doi}
-      \verb 10.1126/sciadv.1602655
-      \endverb
-      \verb{urlraw}
-      \verb https://www.science.org/doi/10.1126/sciadv.1602655
-      \endverb
-      \verb{url}
-      \verb https://www.science.org/doi/10.1126/sciadv.1602655
-      \endverb
-      \keyw{biblioother,bibliofull}
-    \endentry
-    \entry{TPL_nanophotonics}{article}{useauthor=false}
-      \name{author}{7}{}{%
-        {{hash=e700726d89f98aadd247c9e3665beef8}{%
-           family={Freymann},
-           familyi={F\bibinitperiod},
-           given={Georg},
-           giveni={G\bibinitperiod},
-           prefix={von},
-           prefixi={v\bibinitperiod}}}%
-        {{hash=5af816823fe461614d252b4d23133f78}{%
-           family={Ledermann},
-           familyi={L\bibinitperiod},
-           given={Alexandra},
-           giveni={A\bibinitperiod}}}%
-        {{hash=e7183ddbaca2f7e56be7d33f3e90ab1a}{%
-           family={Thiel},
-           familyi={T\bibinitperiod},
-           given={Michael},
-           giveni={M\bibinitperiod}}}%
-        {{hash=d97291d0e9241a51fdf43e96e1238312}{%
-           family={Staude},
-           familyi={S\bibinitperiod},
-           given={Isabelle},
-           giveni={I\bibinitperiod}}}%
-        {{hash=e487869477a6802e90b91b3e649d7092}{%
-           family={Essig},
-           familyi={E\bibinitperiod},
-           given={Sabine},
-           giveni={S\bibinitperiod}}}%
-        {{hash=1267b9e92cc3361803178977ed32b3fd}{%
-           family={Busch},
-           familyi={B\bibinitperiod},
-           given={Kurt},
-           giveni={K\bibinitperiod}}}%
-        {{hash=66b578c79b438aed8f1c488220986917}{%
-           family={Wegener},
-           familyi={W\bibinitperiod},
-           given={Martin},
-           giveni={M\bibinitperiod}}}%
-      }
-      \strng{authorbibnamehash}{cd3d0076f9f64470eae1355da86deb75}
-      \strng{authornamehash}{cd3d0076f9f64470eae1355da86deb75}
-      \strng{authorfullhash}{16f06820f841bdc587dc1b8ab395451d}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Advanced Functional Materials}
+      \field{journaltitle}{Physical Review B}
       \field{month}{3}
-      \field{title}{{Three-Dimensional Nanostructures for Photonics}}
-      \field{year}{2010}
-      \field{number}{7}
+      \field{title}{{Lindhard Dielectric Function in the Relaxation-Time Approximation}}
+      \field{year}{1970}
+      \field{number}{5}
       \range{number}{1}
-      \field{pages}{1038\bibrangedash 1052}
-      \range{pages}{15}
-      \field{volume}{20}
+      \field{pages}{2362\bibrangedash 2363}
+      \range{pages}{2}
+      \field{volume}{1}
       \range{volume}{1}
       \verb{doi}
-      \verb 10.1002/adfm.200901838
+      \verb 10.1103/PhysRevB.1.2362
       \endverb
       \verb{urlraw}
-      \verb https://onlinelibrary.wiley.com/doi/10.1002/adfm.200901838
+      \verb https://link.aps.org/doi/10.1103/PhysRevB.1.2362
       \endverb
       \verb{url}
-      \verb https://onlinelibrary.wiley.com/doi/10.1002/adfm.200901838
+      \verb https://link.aps.org/doi/10.1103/PhysRevB.1.2362
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Lindhard}{book}{useauthor=false}
+      \true{moreauthor}
+      \name{author}{2}{}{%
+        {{hash=e951bf79b2daa90ab097a07f4a5d9593}{%
+           family={Lindhard},
+           familyi={L\bibinitperiod},
+           given={Jens},
+           giveni={J\bibinitperiod}}}%
+        {{hash=c486ee3603efe53079a0a054e8603204}{%
+           family={Winther},
+           familyi={W\bibinitperiod},
+           given={Aage},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Munksgaard}%
+      }
+      \strng{authorbibnamehash}{bc7a358b79baf9738be079ec4c90b543}
+      \strng{authornamehash}{bc7a358b79baf9738be079ec4c90b543}
+      \strng{authorfullhash}{bc7a358b79baf9738be079ec4c90b543}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labeltitlesource}{title}
+      \field{title}{Stopping power of electron gas and equipartition rule}
+      \field{year}{1964}
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{DeVera_MELF_params}{article}{}
+      \name{author}{3}{}{%
+        {{hash=68ef1baba3ed11180ffc3b04880cdc52}{%
+           family={Vera},
+           familyi={V\bibinitperiod},
+           given={Pablo},
+           giveni={P\bibinitperiod},
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+        {{hash=3b84e3c708d56a6efa20d64b7cef5978}{%
+           family={Abril},
+           familyi={A\bibinitperiod},
+           given={Isabel},
+           giveni={I\bibinitperiod}}}%
+        {{hash=106cc040389a900a9395437d5be930d8}{%
+           family={Garcia-Molina},
+           familyi={G\bibinithyphendelim M\bibinitperiod},
+           given={Rafael},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{a07f5d3aef9d2d654ee1056d03894a2b}
+      \strng{fullhash}{a07f5d3aef9d2d654ee1056d03894a2b}
+      \strng{bibnamehash}{a07f5d3aef9d2d654ee1056d03894a2b}
+      \strng{authorbibnamehash}{a07f5d3aef9d2d654ee1056d03894a2b}
+      \strng{authornamehash}{a07f5d3aef9d2d654ee1056d03894a2b}
+      \strng{authorfullhash}{a07f5d3aef9d2d654ee1056d03894a2b}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Applied Physics}
+      \field{month}{5}
+      \field{title}{{Inelastic scattering of electron and light ion beams in organic polymers}}
+      \field{year}{2011}
+      \field{number}{9}
+      \range{number}{1}
+      \field{pages}{094901}
+      \range{pages}{1}
+      \field{volume}{109}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1063/1.3581120
+      \endverb
+      \verb{urlraw}
+      \verb http://aip.scitation.org/doi/10.1063/1.3581120
+      \endverb
+      \verb{url}
+      \verb http://aip.scitation.org/doi/10.1063/1.3581120
       \endverb
       \keyw{biblioother,bibliofull}
     \endentry
   \enddatalist
   \datalist[entry]{none/global/7FC56270E7A70FA81A5935B72EACBE29/global/global}
-    \entry{Hohmann2015}{article}{useauthor=false}
-      \name{author}{4}{}{%
-        {{hash=406538682540dda03e5cb98a5f8eb8c7}{%
-           family={Hohmann},
-           familyi={H\bibinitperiod},
-           given={Judith\bibnamedelima K.},
-           giveni={J\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
-        {{hash=805aef347db53dc5d1c0581b3825623b}{%
-           family={Renner},
-           familyi={R\bibinitperiod},
-           given={Michael},
+    \entry{Dapor_large_book}{book}{}
+      \name{author}{1}{}{%
+        {{hash=2206e50afe71eeb786d3c623fbb1e0ec}{%
+           family={Dapor},
+           familyi={D\bibinitperiod},
+           given={Maurizio},
            giveni={M\bibinitperiod}}}%
-        {{hash=34f3f2ab2a9d38d1e6c030fec229fe77}{%
-           family={Waller},
-           familyi={W\bibinitperiod},
-           given={Erik\bibnamedelima H.},
-           giveni={E\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
-        {{hash=e700726d89f98aadd247c9e3665beef8}{%
-           family={Freymann},
-           familyi={F\bibinitperiod},
-           given={Georg},
-           giveni={G\bibinitperiod},
-           prefix={von},
-           prefixi={v\bibinitperiod}}}%
       }
-      \strng{authorbibnamehash}{9042d2522d779e3308c6f5c48f2f99e7}
-      \strng{authornamehash}{9042d2522d779e3308c6f5c48f2f99e7}
-      \strng{authorfullhash}{f9089b3fc9960067e958b03501313a93}
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer International Publishing}%
+      }
+      \strng{namehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{fullhash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{bibnamehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{authorbibnamehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{authornamehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{authorfullhash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \field{extraname}{1}
       \field{sortinit}{1}
       \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labelprefix}{A}
+      \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Advanced Optical Materials}
-      \field{month}{11}
-      \field{title}{{Three-Dimensional $\mu$-Printing: An Enabling Technology}}
-      \field{year}{2015}
-      \field{number}{11}
-      \range{number}{1}
-      \field{pages}{1488\bibrangedash 1507}
-      \range{pages}{20}
-      \field{volume}{3}
+      \field{isbn}{978-3-319-03882-7}
+      \field{series}{Springer Tracts in Modern Physics}
+      \field{title}{{Transport of Energetic Electrons in Solids}}
+      \field{year}{2014}
+      \field{volume}{257}
       \range{volume}{1}
       \verb{doi}
-      \verb 10.1002/adom.201500328
-      \endverb
-      \verb{file}
-      \verb :Volumes/Transcend/Mendeley/Hohmann et al/Hohmann et al.{\_}2015{\_}Three-Dimensional $\mu$-Printing An Enabling Technology.pdf:pdf
+      \verb 10.1007/978-3-319-03883-4
       \endverb
       \verb{urlraw}
-      \verb https://onlinelibrary.wiley.com/doi/10.1002/adom.201500328
+      \verb http://link.springer.com/10.1007/978-3-319-03883-4
       \endverb
       \verb{url}
-      \verb https://onlinelibrary.wiley.com/doi/10.1002/adom.201500328
+      \verb http://link.springer.com/10.1007/978-3-319-03883-4
       \endverb
       \keyw{biblioother,bibliofull}
     \endentry
-    \entry{Kawata2001}{article}{useauthor=false}
+    \entry{Czyzewski_mott_cs}{article}{useauthor=false}
       \name{author}{4}{}{%
-        {{hash=81246e8925fb80fe420c8f7656f75a06}{%
-           family={Kawata},
-           familyi={K\bibinitperiod},
-           given={Satoshi},
-           giveni={S\bibinitperiod}}}%
-        {{hash=e88668b0f9b5043041a89a3a70e808ba}{%
-           family={Sun},
-           familyi={S\bibinitperiod},
-           given={Hong-Bo},
-           giveni={H\bibinithyphendelim B\bibinitperiod}}}%
-        {{hash=2b2a434891a645d260ff6e615e8a2b1d}{%
-           family={Tanaka},
-           familyi={T\bibinitperiod},
-           given={Tomokazu},
-           giveni={T\bibinitperiod}}}%
-        {{hash=598905a77a1b39999b5147532c930fd4}{%
-           family={Takada},
-           familyi={T\bibinitperiod},
-           given={Kenji},
-           giveni={K\bibinitperiod}}}%
-      }
-      \strng{authorbibnamehash}{d61fa8bdce8ef772b3e249d41edd0a15}
-      \strng{authornamehash}{d61fa8bdce8ef772b3e249d41edd0a15}
-      \strng{authorfullhash}{6e8a7b8adf816f4f9a7d2b3633ff725b}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
-      \field{labelprefix}{A}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Nature}
-      \field{month}{8}
-      \field{title}{{Finer features for functional microdevices}}
-      \field{year}{2001}
-      \field{number}{6848}
-      \range{number}{1}
-      \field{pages}{697\bibrangedash 698}
-      \range{pages}{2}
-      \field{volume}{412}
-      \range{volume}{1}
-      \verb{doi}
-      \verb 10.1038/35089130
-      \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1038/35089130 http://www.nature.com/articles/35089130
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1038/35089130%20http://www.nature.com/articles/35089130
-      \endverb
-      \keyw{biblioother,bibliofull}
-    \endentry
-    \entry{TPL_microfluidics_1}{article}{useauthor=false}
-      \name{author}{7}{}{%
-        {{hash=759f18319d97f16c5ca893f869363dd2}{%
-           family={Waheed},
-           familyi={W\bibinitperiod},
-           given={Sidra},
-           giveni={S\bibinitperiod}}}%
-        {{hash=303a0a37c831ae28fc43c9aaf23ae7ba}{%
-           family={Cabot},
+        {{hash=39df7097cad2bffab7b8ea5d7c918eb8}{%
+           family={Czy{ż}ewski},
            familyi={C\bibinitperiod},
-           given={Joan\bibnamedelima M.},
-           giveni={J\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
-        {{hash=ca7eec2a98113be0bdf5e071015180b7}{%
-           family={Macdonald},
+           given={Zbigniew},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=fc166bd889d6580acb17163455742cfa}{%
+           family={MacCallum},
            familyi={M\bibinitperiod},
-           given={Niall\bibnamedelima P.},
-           giveni={N\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
-        {{hash=8e23c30f7d4cb6089e91594c7aa51e0b}{%
-           family={Lewis},
-           familyi={L\bibinitperiod},
-           given={Trevor},
-           giveni={T\bibinitperiod}}}%
-        {{hash=8c132c7ce3e05f8dd40c55c039b6ca4c}{%
-           family={Guijt},
-           familyi={G\bibinitperiod},
-           given={Rosanne\bibnamedelima M.},
-           giveni={R\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
-        {{hash=01823dc754ce1bd8cbf43797c18fa580}{%
-           family={Paull},
-           familyi={P\bibinitperiod},
-           given={Brett},
-           giveni={B\bibinitperiod}}}%
-        {{hash=f0f219f35d9ab3ba2a1b525e4f8bead7}{%
-           family={Breadmore},
-           familyi={B\bibinitperiod},
-           given={Michael\bibnamedelima C.},
-           giveni={M\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+           given={Danny\bibnamedelima O.Neill},
+           giveni={D\bibinitperiod\bibinitdelim O\bibinitperiod}}}%
+        {{hash=df40f7bd8189fb7e04aaa2ad9fa44dfd}{%
+           family={Romig},
+           familyi={R\bibinitperiod},
+           given={Alton},
+           giveni={A\bibinitperiod}}}%
+        {{hash=51f488b1ec88e76dc5ed103d26fbdd47}{%
+           family={Joy},
+           familyi={J\bibinitperiod},
+           given={David\bibnamedelima C.},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
       }
-      \strng{authorbibnamehash}{d8fd77e3c71c0be270bf1a41885f1507}
-      \strng{authornamehash}{d8fd77e3c71c0be270bf1a41885f1507}
-      \strng{authorfullhash}{5c883fac2b8a30e1fe0baf4c2f282e32}
+      \strng{authorbibnamehash}{d73b6af500efb9ba1169934ffc69ff5d}
+      \strng{authornamehash}{d73b6af500efb9ba1169934ffc69ff5d}
+      \strng{authorfullhash}{95fb6fc3f47b50f1f1506af91ad54e65}
       \field{sortinit}{2}
       \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
       \field{labelprefix}{A}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Lab on a Chip}
-      \field{title}{{3D printed microfluidic devices: enablers and barriers}}
-      \field{year}{2016}
-      \field{number}{11}
+      \field{journaltitle}{Journal of Applied Physics}
+      \field{month}{10}
+      \field{title}{{Calculations of Mott scattering cross section}}
+      \field{year}{1990}
+      \field{number}{7}
       \range{number}{1}
-      \field{pages}{1993\bibrangedash 2013}
-      \range{pages}{21}
-      \field{volume}{16}
+      \field{pages}{3066\bibrangedash 3072}
+      \range{pages}{7}
+      \field{volume}{68}
       \range{volume}{1}
       \verb{doi}
-      \verb 10.1039/C6LC00284F
-      \endverb
-      \verb{file}
-      \verb :Volumes/Transcend/Mendeley/Waheed et al/Waheed et al.{\_}2016{\_}3D printed microfluidic devices Enablers and barriers.pdf:pdf
+      \verb 10.1063/1.346400
       \endverb
       \verb{urlraw}
-      \verb http://xlink.rsc.org/?DOI=C6LC00284F
+      \verb http://aip.scitation.org/doi/10.1063/1.346400
       \endverb
       \verb{url}
-      \verb http://xlink.rsc.org/?DOI=C6LC00284F
+      \verb http://aip.scitation.org/doi/10.1063/1.346400
       \endverb
       \keyw{biblioother,bibliofull}
     \endentry
-    \entry{TPL_microfluidics_2}{article}{}
-      \name{author}{2}{}{%
-        {{hash=4fe1e1adf61b6cc80cd9fcfb4a46a182}{%
-           family={Dittrich},
+    \entry{Ciappa_2010}{article}{}
+      \name{author}{3}{}{%
+        {{hash=2206e50afe71eeb786d3c623fbb1e0ec}{%
+           family={Dapor},
            familyi={D\bibinitperiod},
-           given={Petra\bibnamedelima S.},
-           giveni={P\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
-        {{hash=e5ef1d5b35a8e3436eb2c239a5fb5a64}{%
-           family={Schwille},
-           familyi={S\bibinitperiod},
-           given={Petra},
-           giveni={P\bibinitperiod}}}%
+           given={Maurizio},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8a35e53add11036835a5513bfe2dfad5}{%
+           family={Ciappa},
+           familyi={C\bibinitperiod},
+           given={Mauro},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8ca3caf70a7f02822d9c15d6a37bb77d}{%
+           family={Fichtner},
+           familyi={F\bibinitperiod},
+           given={Wolfgang},
+           giveni={W\bibinitperiod}}}%
       }
-      \strng{namehash}{d607053a5cce2b7573b68f6e276c65fd}
-      \strng{fullhash}{d607053a5cce2b7573b68f6e276c65fd}
-      \strng{bibnamehash}{d607053a5cce2b7573b68f6e276c65fd}
-      \strng{authorbibnamehash}{d607053a5cce2b7573b68f6e276c65fd}
-      \strng{authornamehash}{d607053a5cce2b7573b68f6e276c65fd}
-      \strng{authorfullhash}{d607053a5cce2b7573b68f6e276c65fd}
+      \list{publisher}{1}{%
+        {SPIE}%
+      }
+      \strng{namehash}{f0fcac25e879411045116959ad69c559}
+      \strng{fullhash}{f0fcac25e879411045116959ad69c559}
+      \strng{bibnamehash}{f0fcac25e879411045116959ad69c559}
+      \strng{authorbibnamehash}{f0fcac25e879411045116959ad69c559}
+      \strng{authornamehash}{f0fcac25e879411045116959ad69c559}
+      \strng{authorfullhash}{f0fcac25e879411045116959ad69c559}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Micro/Nanolithography, MEMS, and MOEMS}
+      \field{title}{Monte Carlo modeling in the low-energy domain of the secondary electron emission of polymethylmethacrylate for critical-dimension scanning electron microscopy}
+      \field{year}{2010}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{023001}
+      \range{pages}{1}
+      \field{volume}{9}
+      \range{volume}{1}
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Bethe}{article}{}
+      \name{author}{1}{}{%
+        {{hash=edf7e1f0f9e42da57d807260b538c886}{%
+           family={Bethe},
+           familyi={B\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{edf7e1f0f9e42da57d807260b538c886}
+      \strng{fullhash}{edf7e1f0f9e42da57d807260b538c886}
+      \strng{bibnamehash}{edf7e1f0f9e42da57d807260b538c886}
+      \strng{authorbibnamehash}{edf7e1f0f9e42da57d807260b538c886}
+      \strng{authornamehash}{edf7e1f0f9e42da57d807260b538c886}
+      \strng{authorfullhash}{edf7e1f0f9e42da57d807260b538c886}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{7}
+      \field{title}{{Theory of the Passage of Fast Corpuscular Rays Through Matter}}
+      \field{year}{1930}
+      \field{number}{5}
+      \range{number}{1}
+      \field{pages}{77\bibrangedash 154}
+      \range{pages}{78}
+      \field{volume}{5}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb http://www.worldscientific.com/doi/abs/10.1142/9789812795755{\_}0003
+      \endverb
+      \verb{url}
+      \verb http://www.worldscientific.com/doi/abs/10.1142/9789812795755%7B%5C_%7D0003
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Bethe_corrected}{article}{}
+      \name{author}{2}{}{%
+        {{hash=1ee6ec30df4b548b025373f22f2a11fb}{%
+           family={Rao‐Sahib},
+           familyi={R\bibinithyphendelim S\bibinitperiod},
+           given={T.\bibnamedelimi S.},
+           giveni={T\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=2327c975ef2234b3c4050ad131c3fbbb}{%
+           family={Wittry},
+           familyi={W\bibinitperiod},
+           given={D.\bibnamedelimi B.},
+           giveni={D\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \strng{namehash}{3fab92913a424a6ef0b9a3497dfbe68b}
+      \strng{fullhash}{3fab92913a424a6ef0b9a3497dfbe68b}
+      \strng{bibnamehash}{3fab92913a424a6ef0b9a3497dfbe68b}
+      \strng{authorbibnamehash}{3fab92913a424a6ef0b9a3497dfbe68b}
+      \strng{authornamehash}{3fab92913a424a6ef0b9a3497dfbe68b}
+      \strng{authorfullhash}{3fab92913a424a6ef0b9a3497dfbe68b}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Applied Physics}
+      \field{month}{11}
+      \field{title}{{X‐ray continuum from thick elemental targets for 10–50‐keV electrons}}
+      \field{year}{1974}
+      \field{number}{11}
+      \range{number}{1}
+      \field{pages}{5060\bibrangedash 5068}
+      \range{pages}{9}
+      \field{volume}{45}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1063/1.1663184
+      \endverb
+      \verb{urlraw}
+      \verb http://aip.scitation.org/doi/10.1063/1.1663184
+      \endverb
+      \verb{url}
+      \verb http://aip.scitation.org/doi/10.1063/1.1663184
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Bethe_corr_2ndary_e}{article}{}
+      \name{author}{1}{}{%
+        {{hash=51f488b1ec88e76dc5ed103d26fbdd47}{%
+           family={Joy},
+           familyi={J\bibinitperiod},
+           given={David\bibnamedelima C.},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \strng{namehash}{51f488b1ec88e76dc5ed103d26fbdd47}
+      \strng{fullhash}{51f488b1ec88e76dc5ed103d26fbdd47}
+      \strng{bibnamehash}{51f488b1ec88e76dc5ed103d26fbdd47}
+      \strng{authorbibnamehash}{51f488b1ec88e76dc5ed103d26fbdd47}
+      \strng{authornamehash}{51f488b1ec88e76dc5ed103d26fbdd47}
+      \strng{authorfullhash}{51f488b1ec88e76dc5ed103d26fbdd47}
+      \field{sortinit}{7}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Microscopy}
+      \field{title}{{A model for calculating secondary and backscattered electron yields}}
+      \field{year}{1987}
+      \field{number}{1}
+      \range{number}{1}
+      \field{pages}{51\bibrangedash 64}
+      \range{pages}{14}
+      \field{volume}{147}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1111/j.1365-2818.1987.tb02817.x
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Shimizu_Review}{article}{}
+      \name{author}{2}{}{%
+        {{hash=bfa6f7d444fafd13f6b5660e06345606}{%
+           family={Shimizu},
+           familyi={S\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=8db0628c8b4bb56d89660b1ecacf2b10}{%
+           family={Ze-Jun},
+           familyi={Z\bibinithyphendelim J\bibinitperiod},
+           given={Ding},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{f4e4d20e2fdc20d977cadcc661aed839}
+      \strng{fullhash}{f4e4d20e2fdc20d977cadcc661aed839}
+      \strng{bibnamehash}{f4e4d20e2fdc20d977cadcc661aed839}
+      \strng{authorbibnamehash}{f4e4d20e2fdc20d977cadcc661aed839}
+      \strng{authornamehash}{f4e4d20e2fdc20d977cadcc661aed839}
+      \strng{authorfullhash}{f4e4d20e2fdc20d977cadcc661aed839}
+      \field{sortinit}{8}
+      \field{sortinithash}{1b24cab5087933ef0826a7cd3b99e994}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Reports on Progress in Physics}
+      \field{month}{4}
+      \field{title}{{Monte Carlo modelling of electron-solid interactions}}
+      \field{year}{1992}
+      \field{number}{4}
+      \range{number}{1}
+      \field{pages}{487\bibrangedash 531}
+      \range{pages}{45}
+      \field{volume}{55}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1088/0034-4885/55/4/002
+      \endverb
+      \verb{urlraw}
+      \verb https://iopscience.iop.org/article/10.1088/0034-4885/55/4/002
+      \endverb
+      \verb{url}
+      \verb https://iopscience.iop.org/article/10.1088/0034-4885/55/4/002
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Ritchie_ELF}{article}{}
+      \name{author}{1}{}{%
+        {{hash=6b1a9e0f99332ec51bc1fd30b0c121ec}{%
+           family={Ritchie},
+           familyi={R\bibinitperiod},
+           given={R.\bibnamedelimi H.},
+           giveni={R\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{6b1a9e0f99332ec51bc1fd30b0c121ec}
+      \strng{fullhash}{6b1a9e0f99332ec51bc1fd30b0c121ec}
+      \strng{bibnamehash}{6b1a9e0f99332ec51bc1fd30b0c121ec}
+      \strng{authorbibnamehash}{6b1a9e0f99332ec51bc1fd30b0c121ec}
+      \strng{authornamehash}{6b1a9e0f99332ec51bc1fd30b0c121ec}
+      \strng{authorfullhash}{6b1a9e0f99332ec51bc1fd30b0c121ec}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review}
+      \field{month}{5}
+      \field{title}{{Interaction of Charged Particles with a Degenerate Fermi-Dirac Electron Gas}}
+      \field{year}{1959}
+      \field{number}{3}
+      \range{number}{1}
+      \field{pages}{644\bibrangedash 654}
+      \range{pages}{11}
+      \field{volume}{114}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1103/PhysRev.114.644
+      \endverb
+      \verb{urlraw}
+      \verb https://link.aps.org/doi/10.1103/PhysRev.114.644
+      \endverb
+      \verb{url}
+      \verb https://link.aps.org/doi/10.1103/PhysRev.114.644
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Dapor_2015_oscillators}{article}{}
+      \name{author}{1}{}{%
+        {{hash=2206e50afe71eeb786d3c623fbb1e0ec}{%
+           family={Dapor},
+           familyi={D\bibinitperiod},
+           given={Maurizio},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier B.V.}%
+      }
+      \strng{namehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{fullhash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{bibnamehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{authorbibnamehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{authornamehash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \strng{authorfullhash}{2206e50afe71eeb786d3c623fbb1e0ec}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nuclear Instruments and Methods in Physics Research, Section B: Beam Interactions with Materials and Atoms}
+      \field{title}{{Energy loss of fast electrons impinging upon polymethylmethacrylate}}
+      \field{year}{2015}
+      \field{pages}{190\bibrangedash 194}
+      \range{pages}{5}
+      \field{volume}{352}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1016/j.nimb.2014.11.101
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1016/j.nimb.2014.11.101
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1016/j.nimb.2014.11.101
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Palik}{book}{}
+      \name{author}{1}{}{%
+        {{hash=39a65f27d4d69ead10cddf83f35e64d6}{%
+           family={Palik},
+           familyi={P\bibinitperiod},
+           given={Edward\bibnamedelima D.},
+           giveni={E\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=39a65f27d4d69ead10cddf83f35e64d6}{%
+           family={Palik},
+           familyi={P\bibinitperiod},
+           given={Edward\bibnamedelima D.},
+           giveni={E\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {USA}%
+      }
+      \list{publisher}{1}{%
+        {Academic Press}%
+      }
+      \strng{namehash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{fullhash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{bibnamehash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{authorbibnamehash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{authornamehash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{authorfullhash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{editorbibnamehash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{editornamehash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \strng{editorfullhash}{39a65f27d4d69ead10cddf83f35e64d6}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Handbook of Optical Constants of Solids}
+      \field{title}{{Handbook of Optical Constants of Solids}}
+      \field{year}{1998}
+      \verb{file}
+      \verb :Volumes/Transcend/Mendeley/Palik/Palik{\_}1998{\_}Handbook of Optical Constants of Solids.pdf:pdf
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Henke_photoabs}{article}{}
+      \name{author}{3}{}{%
+        {{hash=f3ab85a0e112631d30b076d0cdfaf1f7}{%
+           family={Henke},
+           familyi={H\bibinitperiod},
+           given={B.L.},
+           giveni={B\bibinitperiod}}}%
+        {{hash=44414309469ad09e560737306fa97488}{%
+           family={Gullikson},
+           familyi={G\bibinitperiod},
+           given={E.M.},
+           giveni={E\bibinitperiod}}}%
+        {{hash=f3db1dcf1efe8b0cc7977fee422561a4}{%
+           family={Davis},
+           familyi={D\bibinitperiod},
+           given={J.C.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{52a3e900bfd52a2ed7e5b11c1782e53a}
+      \strng{fullhash}{52a3e900bfd52a2ed7e5b11c1782e53a}
+      \strng{bibnamehash}{52a3e900bfd52a2ed7e5b11c1782e53a}
+      \strng{authorbibnamehash}{52a3e900bfd52a2ed7e5b11c1782e53a}
+      \strng{authornamehash}{52a3e900bfd52a2ed7e5b11c1782e53a}
+      \strng{authorfullhash}{52a3e900bfd52a2ed7e5b11c1782e53a}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Atomic Data and Nuclear Data Tables}
+      \field{month}{7}
+      \field{title}{{X-Ray Interactions: Photoabsorption, Scattering, Transmission, and Reflection at E = 50-30,000 eV, Z = 1-92}}
+      \field{year}{1993}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{181\bibrangedash 342}
+      \range{pages}{162}
+      \field{volume}{54}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1006/adnd.1993.1013
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0092640X83710132
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0092640X83710132
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Biggs_cs}{report}{}
+      \name{author}{2}{}{%
+        {{hash=64e4e574b1f14783eb706073626ccf9b}{%
+           family={Biggs},
+           familyi={B\bibinitperiod},
+           given={Frank},
+           giveni={F\bibinitperiod}}}%
+        {{hash=f7a242f0530484a2c3a93ec203d7c7b2}{%
+           family={Lighthill},
+           familyi={L\bibinitperiod},
+           given={Ruth},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Sandia National Labs., Albuquerque, NM (USA)}%
+      }
+      \strng{namehash}{783cdab67347710f4f272cc8b6f95598}
+      \strng{fullhash}{783cdab67347710f4f272cc8b6f95598}
+      \strng{bibnamehash}{783cdab67347710f4f272cc8b6f95598}
+      \strng{authorbibnamehash}{783cdab67347710f4f272cc8b6f95598}
+      \strng{authornamehash}{783cdab67347710f4f272cc8b6f95598}
+      \strng{authorfullhash}{783cdab67347710f4f272cc8b6f95598}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Analytical approximations for x-ray cross sections III}
+      \field{type}{techreport}
+      \field{year}{1988}
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Ashley_LxSx}{article}{}
+      \name{author}{1}{}{%
+        {{hash=63dd7d1e9b7899022fa420c95d677947}{%
+           family={Ashley},
+           familyi={A\bibinitperiod},
+           given={J.C.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{63dd7d1e9b7899022fa420c95d677947}
+      \strng{fullhash}{63dd7d1e9b7899022fa420c95d677947}
+      \strng{bibnamehash}{63dd7d1e9b7899022fa420c95d677947}
+      \strng{authorbibnamehash}{63dd7d1e9b7899022fa420c95d677947}
+      \strng{authornamehash}{63dd7d1e9b7899022fa420c95d677947}
+      \strng{authorfullhash}{63dd7d1e9b7899022fa420c95d677947}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Electron Spectroscopy and Related Phenomena}
+      \field{month}{1}
+      \field{title}{{Simple model for electron inelastic mean free paths: Application to condensed organic materials}}
+      \field{year}{1982}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{177\bibrangedash 194}
+      \range{pages}{18}
+      \field{volume}{28}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1016/0368-2048(82)85041-X
+      \endverb
+      \verb{file}
+      \verb :Volumes/Transcend/Mendeley/Ashley/Ashley{\_}1982{\_}Simple model for electron inelastic mean free paths Application to condensed organic materials.pdf:pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/036820488285041X
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/036820488285041X
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Ritchie_Drude}{article}{}
+      \name{author}{2}{}{%
+        {{hash=6b1a9e0f99332ec51bc1fd30b0c121ec}{%
+           family={Ritchie},
+           familyi={R\bibinitperiod},
+           given={R.\bibnamedelimi H.},
+           giveni={R\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=68538d7d128f3452f9104863a928df7a}{%
+           family={Howie},
+           familyi={H\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{dcf20b4d71ac2a352e79d92470a37848}
+      \strng{fullhash}{dcf20b4d71ac2a352e79d92470a37848}
+      \strng{bibnamehash}{dcf20b4d71ac2a352e79d92470a37848}
+      \strng{authorbibnamehash}{dcf20b4d71ac2a352e79d92470a37848}
+      \strng{authornamehash}{dcf20b4d71ac2a352e79d92470a37848}
+      \strng{authorfullhash}{dcf20b4d71ac2a352e79d92470a37848}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Philosophical Magazine}
+      \field{title}{{Electron excitation and the optical potential in electron microscopy}}
+      \field{year}{1977}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{463\bibrangedash 481}
+      \range{pages}{19}
+      \field{volume}{36}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1080/14786437708244948
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Mermin}{article}{}
+      \name{author}{1}{}{%
+        {{hash=b5f10f77e7a1e023c7eacaca5e364c2c}{%
+           family={Mermin},
+           familyi={M\bibinitperiod},
+           given={N.\bibnamedelimi D.},
+           giveni={N\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{b5f10f77e7a1e023c7eacaca5e364c2c}
+      \strng{fullhash}{b5f10f77e7a1e023c7eacaca5e364c2c}
+      \strng{bibnamehash}{b5f10f77e7a1e023c7eacaca5e364c2c}
+      \strng{authorbibnamehash}{b5f10f77e7a1e023c7eacaca5e364c2c}
+      \strng{authornamehash}{b5f10f77e7a1e023c7eacaca5e364c2c}
+      \strng{authorfullhash}{b5f10f77e7a1e023c7eacaca5e364c2c}
       \field{sortinit}{2}
       \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
       \field{labelprefix}{A}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Analytical Chemistry}
-      \field{month}{9}
-      \field{title}{{Spatial Two-Photon Fluorescence Cross-Correlation Spectroscopy for Controlling Molecular Transport in Microfluidic Structures}}
-      \field{year}{2002}
-      \field{number}{17}
-      \range{number}{1}
-      \field{pages}{4472\bibrangedash 4479}
-      \range{pages}{8}
-      \field{volume}{74}
-      \range{volume}{1}
-      \verb{doi}
-      \verb 10.1021/ac025625p
-      \endverb
-      \verb{urlraw}
-      \verb https://pubs.acs.org/doi/10.1021/ac025625p
-      \endverb
-      \verb{url}
-      \verb https://pubs.acs.org/doi/10.1021/ac025625p
-      \endverb
-      \keyw{biblioother,bibliofull}
-    \endentry
-    \entry{TPL_biology_1}{article}{useauthor=false}
-      \name{author}{5}{}{%
-        {{hash=1653fe142b8561786ef8138666f0bb39}{%
-           family={Marino},
-           familyi={M\bibinitperiod},
-           given={Attilio},
-           giveni={A\bibinitperiod}}}%
-        {{hash=f09853216d58ea07a1018780c771e436}{%
-           family={Filippeschi},
-           familyi={F\bibinitperiod},
-           given={Carlo},
-           giveni={C\bibinitperiod}}}%
-        {{hash=5aa92408a1e708d300818aa7525b86ac}{%
-           family={Mattoli},
-           familyi={M\bibinitperiod},
-           given={Virgilio},
-           giveni={V\bibinitperiod}}}%
-        {{hash=4157eb539f9689a48f9cb20ad91c8dd0}{%
-           family={Mazzolai},
-           familyi={M\bibinitperiod},
-           given={Barbara},
-           giveni={B\bibinitperiod}}}%
-        {{hash=a6425b11cfed79c24484233bccf4a997}{%
-           family={Ciofani},
-           familyi={C\bibinitperiod},
-           given={Gianni},
-           giveni={G\bibinitperiod}}}%
-      }
-      \strng{authorbibnamehash}{6cf565dfbcb0ff25e33de95a6b9c7b41}
-      \strng{authornamehash}{6cf565dfbcb0ff25e33de95a6b9c7b41}
-      \strng{authorfullhash}{15063fb7dcf0ba9eebf6f8c53cdef890}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
-      \field{labelprefix}{A}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Nanoscale}
-      \field{title}{{Biomimicry at the nanoscale: current research and perspectives of two-photon polymerization}}
-      \field{year}{2015}
-      \field{number}{7}
-      \range{number}{1}
-      \field{pages}{2841\bibrangedash 2850}
-      \range{pages}{10}
-      \field{volume}{7}
-      \range{volume}{1}
-      \verb{doi}
-      \verb 10.1039/C4NR06500J
-      \endverb
-      \verb{urlraw}
-      \verb http://xlink.rsc.org/?DOI=C4NR06500J
-      \endverb
-      \verb{url}
-      \verb http://xlink.rsc.org/?DOI=C4NR06500J
-      \endverb
-      \keyw{biblioother,bibliofull}
-    \endentry
-    \entry{TPL_biology_2}{article}{useauthor=false}
-      \name{author}{9}{}{%
-        {{hash=1653fe142b8561786ef8138666f0bb39}{%
-           family={Marino},
-           familyi={M\bibinitperiod},
-           given={Attilio},
-           giveni={A\bibinitperiod}}}%
-        {{hash=a6425b11cfed79c24484233bccf4a997}{%
-           family={Ciofani},
-           familyi={C\bibinitperiod},
-           given={Gianni},
-           giveni={G\bibinitperiod}}}%
-        {{hash=f09853216d58ea07a1018780c771e436}{%
-           family={Filippeschi},
-           familyi={F\bibinitperiod},
-           given={Carlo},
-           giveni={C\bibinitperiod}}}%
-        {{hash=d04564a0d88782d919e05dd0f1545326}{%
-           family={Pellegrino},
-           familyi={P\bibinitperiod},
-           given={Mario},
-           giveni={M\bibinitperiod}}}%
-        {{hash=7da49ce9cb9e1fd5c0634c92c3c6d8a5}{%
-           family={Pellegrini},
-           familyi={P\bibinitperiod},
-           given={Monica},
-           giveni={M\bibinitperiod}}}%
-        {{hash=50fe9078ca6764ae1b08aa3510ec3701}{%
-           family={Orsini},
-           familyi={O\bibinitperiod},
-           given={Paolo},
-           giveni={P\bibinitperiod}}}%
-        {{hash=b7bde632286b4c213bcb0acff1b42ad8}{%
-           family={Pasqualetti},
-           familyi={P\bibinitperiod},
-           given={Massimo},
-           giveni={M\bibinitperiod}}}%
-        {{hash=5aa92408a1e708d300818aa7525b86ac}{%
-           family={Mattoli},
-           familyi={M\bibinitperiod},
-           given={Virgilio},
-           giveni={V\bibinitperiod}}}%
-        {{hash=4157eb539f9689a48f9cb20ad91c8dd0}{%
-           family={Mazzolai},
-           familyi={M\bibinitperiod},
-           given={Barbara},
-           giveni={B\bibinitperiod}}}%
-      }
-      \strng{authorbibnamehash}{6cf565dfbcb0ff25e33de95a6b9c7b41}
-      \strng{authornamehash}{6cf565dfbcb0ff25e33de95a6b9c7b41}
-      \strng{authorfullhash}{d74c54fa6686ffc7b862f75b79c96b4a}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
-      \field{labelprefix}{A}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{ACS Applied Materials \& Interfaces}
-      \field{note}{PMID: 24309089}
-      \field{title}{Two-Photon Polymerization of Sub-micrometric Patterned Surfaces: Investigation of Cell-Substrate Interactions and Improved Differentiation of Neuron-like Cells}
-      \field{year}{2013}
-      \field{number}{24}
-      \range{number}{1}
-      \field{pages}{13012\bibrangedash 13021}
-      \range{pages}{10}
-      \field{volume}{5}
-      \range{volume}{1}
-      \verb{doi}
-      \verb 10.1021/am403895k
-      \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1021/am403895k
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1021/am403895k
-      \endverb
-      \keyw{biblioother,bibliofull}
-    \endentry
-    \entry{TPL_optics}{article}{useauthor=false}
-      \name{author}{5}{}{%
-        {{hash=ddf1164344894bc6bd4236b57d619c3e}{%
-           family={Thiele},
-           familyi={T\bibinitperiod},
-           given={Simon},
-           giveni={S\bibinitperiod}}}%
-        {{hash=328218bb928f0f4abde4d871306342d9}{%
-           family={Arzenbacher},
-           familyi={A\bibinitperiod},
-           given={Kathrin},
-           giveni={K\bibinitperiod}}}%
-        {{hash=c90c814b4c48a144b3bc5ba5066cc9ec}{%
-           family={Gissibl},
-           familyi={G\bibinitperiod},
-           given={Timo},
-           giveni={T\bibinitperiod}}}%
-        {{hash=08adbdd26d4d3f30af95ed584e84baeb}{%
-           family={Giessen},
-           familyi={G\bibinitperiod},
-           given={Harald},
-           giveni={H\bibinitperiod}}}%
-        {{hash=b0388703e8bd1f3d45ed5afcaa967bc0}{%
-           family={Herkommer},
-           familyi={H\bibinitperiod},
-           given={Alois\bibnamedelima M.},
-           giveni={A\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
-      }
-      \strng{authorbibnamehash}{9bb280e8a1945aeac760dc2d7e321e9b}
-      \strng{authornamehash}{9bb280e8a1945aeac760dc2d7e321e9b}
-      \strng{authorfullhash}{fc6322e9cd5dbde73808733d7bb1ce50}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
-      \field{labelprefix}{A}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Science Advances}
-      \field{month}{2}
-      \field{title}{{3D-printed eagle eye: Compound microlens system for foveated imaging}}
-      \field{year}{2017}
-      \field{number}{2}
-      \range{number}{1}
-      \field{volume}{3}
-      \range{volume}{1}
-      \verb{doi}
-      \verb 10.1126/sciadv.1602655
-      \endverb
-      \verb{urlraw}
-      \verb https://www.science.org/doi/10.1126/sciadv.1602655
-      \endverb
-      \verb{url}
-      \verb https://www.science.org/doi/10.1126/sciadv.1602655
-      \endverb
-      \keyw{biblioother,bibliofull}
-    \endentry
-    \entry{TPL_nanophotonics}{article}{useauthor=false}
-      \name{author}{7}{}{%
-        {{hash=e700726d89f98aadd247c9e3665beef8}{%
-           family={Freymann},
-           familyi={F\bibinitperiod},
-           given={Georg},
-           giveni={G\bibinitperiod},
-           prefix={von},
-           prefixi={v\bibinitperiod}}}%
-        {{hash=5af816823fe461614d252b4d23133f78}{%
-           family={Ledermann},
-           familyi={L\bibinitperiod},
-           given={Alexandra},
-           giveni={A\bibinitperiod}}}%
-        {{hash=e7183ddbaca2f7e56be7d33f3e90ab1a}{%
-           family={Thiel},
-           familyi={T\bibinitperiod},
-           given={Michael},
-           giveni={M\bibinitperiod}}}%
-        {{hash=d97291d0e9241a51fdf43e96e1238312}{%
-           family={Staude},
-           familyi={S\bibinitperiod},
-           given={Isabelle},
-           giveni={I\bibinitperiod}}}%
-        {{hash=e487869477a6802e90b91b3e649d7092}{%
-           family={Essig},
-           familyi={E\bibinitperiod},
-           given={Sabine},
-           giveni={S\bibinitperiod}}}%
-        {{hash=1267b9e92cc3361803178977ed32b3fd}{%
-           family={Busch},
-           familyi={B\bibinitperiod},
-           given={Kurt},
-           giveni={K\bibinitperiod}}}%
-        {{hash=66b578c79b438aed8f1c488220986917}{%
-           family={Wegener},
-           familyi={W\bibinitperiod},
-           given={Martin},
-           giveni={M\bibinitperiod}}}%
-      }
-      \strng{authorbibnamehash}{cd3d0076f9f64470eae1355da86deb75}
-      \strng{authornamehash}{cd3d0076f9f64470eae1355da86deb75}
-      \strng{authorfullhash}{16f06820f841bdc587dc1b8ab395451d}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
-      \field{labelprefix}{A}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Advanced Functional Materials}
+      \field{journaltitle}{Physical Review B}
       \field{month}{3}
-      \field{title}{{Three-Dimensional Nanostructures for Photonics}}
-      \field{year}{2010}
-      \field{number}{7}
+      \field{title}{{Lindhard Dielectric Function in the Relaxation-Time Approximation}}
+      \field{year}{1970}
+      \field{number}{5}
       \range{number}{1}
-      \field{pages}{1038\bibrangedash 1052}
-      \range{pages}{15}
-      \field{volume}{20}
+      \field{pages}{2362\bibrangedash 2363}
+      \range{pages}{2}
+      \field{volume}{1}
       \range{volume}{1}
       \verb{doi}
-      \verb 10.1002/adfm.200901838
+      \verb 10.1103/PhysRevB.1.2362
       \endverb
       \verb{urlraw}
-      \verb https://onlinelibrary.wiley.com/doi/10.1002/adfm.200901838
+      \verb https://link.aps.org/doi/10.1103/PhysRevB.1.2362
       \endverb
       \verb{url}
-      \verb https://onlinelibrary.wiley.com/doi/10.1002/adfm.200901838
+      \verb https://link.aps.org/doi/10.1103/PhysRevB.1.2362
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Lindhard}{book}{useauthor=false}
+      \true{moreauthor}
+      \name{author}{2}{}{%
+        {{hash=e951bf79b2daa90ab097a07f4a5d9593}{%
+           family={Lindhard},
+           familyi={L\bibinitperiod},
+           given={Jens},
+           giveni={J\bibinitperiod}}}%
+        {{hash=c486ee3603efe53079a0a054e8603204}{%
+           family={Winther},
+           familyi={W\bibinitperiod},
+           given={Aage},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Munksgaard}%
+      }
+      \strng{authorbibnamehash}{bc7a358b79baf9738be079ec4c90b543}
+      \strng{authornamehash}{bc7a358b79baf9738be079ec4c90b543}
+      \strng{authorfullhash}{bc7a358b79baf9738be079ec4c90b543}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelprefix}{A}
+      \field{labeltitlesource}{title}
+      \field{title}{Stopping power of electron gas and equipartition rule}
+      \field{year}{1964}
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{DeVera_MELF_params}{article}{}
+      \name{author}{3}{}{%
+        {{hash=68ef1baba3ed11180ffc3b04880cdc52}{%
+           family={Vera},
+           familyi={V\bibinitperiod},
+           given={Pablo},
+           giveni={P\bibinitperiod},
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+        {{hash=3b84e3c708d56a6efa20d64b7cef5978}{%
+           family={Abril},
+           familyi={A\bibinitperiod},
+           given={Isabel},
+           giveni={I\bibinitperiod}}}%
+        {{hash=106cc040389a900a9395437d5be930d8}{%
+           family={Garcia-Molina},
+           familyi={G\bibinithyphendelim M\bibinitperiod},
+           given={Rafael},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{a07f5d3aef9d2d654ee1056d03894a2b}
+      \strng{fullhash}{a07f5d3aef9d2d654ee1056d03894a2b}
+      \strng{bibnamehash}{a07f5d3aef9d2d654ee1056d03894a2b}
+      \strng{authorbibnamehash}{a07f5d3aef9d2d654ee1056d03894a2b}
+      \strng{authornamehash}{a07f5d3aef9d2d654ee1056d03894a2b}
+      \strng{authorfullhash}{a07f5d3aef9d2d654ee1056d03894a2b}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Applied Physics}
+      \field{month}{5}
+      \field{title}{{Inelastic scattering of electron and light ion beams in organic polymers}}
+      \field{year}{2011}
+      \field{number}{9}
+      \range{number}{1}
+      \field{pages}{094901}
+      \range{pages}{1}
+      \field{volume}{109}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1063/1.3581120
+      \endverb
+      \verb{urlraw}
+      \verb http://aip.scitation.org/doi/10.1063/1.3581120
+      \endverb
+      \verb{url}
+      \verb http://aip.scitation.org/doi/10.1063/1.3581120
       \endverb
       \keyw{biblioother,bibliofull}
     \endentry
   \enddatalist
-  \missing{TPL_1}
 \endrefsection
 \endinput
 

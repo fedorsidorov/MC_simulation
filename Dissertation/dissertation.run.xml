@@ -41,7 +41,7 @@
   >
 ]>
 <requests version="1.0">
-  <internal package="biblatex" priority="9" active="0">
+  <internal package="biblatex" priority="9" active="1">
     <generic>latex</generic>
     <provides type="dynamic">
       <file>dissertation.bcf</file>
@@ -86,7 +86,7 @@
       <file>dissertation.bcf</file>
     </requires>
     <requires type="editable">
-      <file>biblio/fabrication_cites.bib</file>
+      <file>biblio/all_cites.bib</file>
     </requires>
   </external>
 </requests>
