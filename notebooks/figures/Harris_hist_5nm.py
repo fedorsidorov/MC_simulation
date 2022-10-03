@@ -102,6 +102,19 @@ for n, now_chain in enumerate(chain_list):
 
 
 # %%
+plt.figure(dpi=600, figsize=[2.5, 5.5])
+plt.imshow(np.average(hist_5nm, axis=0).transpose(), extent=[-50, 50, 0, 500])
+
+plt.colorbar()
+
+plt.xlabel('x, нм')
+plt.ylabel('z, нм')
+
+plt.savefig('figures/Harris_hist_5nm.jpg', dpi=600, bbox_inches='tight')
+plt.show()
+
+
+# %%
 # plt.imshow(np.average(hist_5nm, axis=0))
 # plt.show()
 

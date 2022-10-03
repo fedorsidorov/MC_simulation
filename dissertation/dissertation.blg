@@ -1,0 +1,35 @@
+[0] Config.pm:304> INFO - This is Biber 2.14
+[1] Config.pm:307> INFO - Logfile is 'dissertation.blg'
+[157] biber-darwin:322> INFO - === Mon Oct  3, 2022, 18:13:10
+[195] Biber.pm:415> INFO - Reading 'dissertation.bcf'
+[489] Biber.pm:943> INFO - Found 50 citekeys in bib section 0
+[527] Biber.pm:4256> INFO - Processing section 0
+[528] Utils.pm:75> INFO - Globbing data source 'biblio/all_cites.bib'
+[528] Utils.pm:91> INFO - Globbed data source 'biblio/all_cites.bib' to biblio/all_cites.bib
+[549] Biber.pm:4455> INFO - Looking for bibtex format file 'biblio/all_cites.bib' for section 0
+[556] bibtex.pm:1653> INFO - LaTeX decoding ...
+[806] bibtex.pm:1471> INFO - Found BibTeX data source 'biblio/all_cites.bib'
+[1428] Utils.pm:304> WARN - month field 'oct' in entry 'depol_general_1' is not an integer - this will probably not sort properly.
+[1442] Utils.pm:304> WARN - month field 'mar' in entry 'depol_general_2' is not an integer - this will probably not sort properly.
+[1463] Utils.pm:304> WARN - month field 'may' in entry 'Mita_PMMA_zip_lengths_T' is not an integer - this will probably not sort properly.
+[1499] Utils.pm:304> WARN - month field 'apr' in entry 'depol_fabrication_probe' is not an integer - this will probably not sort properly.
+[1509] Utils.pm:304> WARN - month field 'may' in entry 'depol_fabrication_laser' is not an integer - this will probably not sort properly.
+[1518] Utils.pm:304> WARN - month field 'nov' in entry 'Greeneich1979_Mf_Mn' is not an integer - this will probably not sort properly.
+[1527] Utils.pm:304> WARN - month field 'dec' in entry 'Charlesby_1964_Gs' is not an integer - this will probably not sort properly.
+[1551] Utils.pm:304> WARN - month field 'aug' in entry 'Boyd_1' is not an integer - this will probably not sort properly.
+[1559] Utils.pm:304> WARN - month field 'dec' in entry 'chain_transfer_polymerization' is not an integer - this will probably not sort properly.
+[1568] Utils.pm:304> WARN - month field 'aug' in entry 'Boyd_3' is not an integer - this will probably not sort properly.
+[1574] Utils.pm:304> WARN - month field 'mar' in entry 'Schulz-Zimm_distribution' is not an integer - this will probably not sort properly.
+[1584] Utils.pm:304> WARN - month field 'nov' in entry 'Schulz-Zimm_distribution_proof' is not an integer - this will probably not sort properly.
+[1617] Utils.pm:304> WARN - month field 'aug' in entry 'Leveder_2011' is not an integer - this will probably not sort properly.
+[1715] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1715] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1715] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'ru-RU'
+[1715] Biber.pm:4090> INFO - No sort tailoring available for locale 'ru-RU'
+[1784] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1785] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1785] Biber.pm:4084> INFO - Sorting list 'none/global/7FC56270E7A70FA81A5935B72EACBE29/global/global' of type 'entry' with template 'none' and locale 'ru-RU'
+[1785] Biber.pm:4090> INFO - No sort tailoring available for locale 'ru-RU'
+[1877] bbl.pm:652> INFO - Writing 'dissertation.bbl' with encoding 'UTF-8'
+[2019] bbl.pm:755> INFO - Output to dissertation.bbl
+[2021] Biber.pm:128> INFO - WARNINGS: 13

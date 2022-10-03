@@ -6,6 +6,8 @@ from tqdm import tqdm
 from functions import MC_functions as mcf
 import grid
 
+# plt.rcParams.update({'font.size': 12})
+
 grid = importlib.reload(grid)
 mcf = importlib.reload(mcf)
 
@@ -72,30 +74,58 @@ PMMA_process_indexes = list(range(len(PMMA_processes_u[0, :])))
 
 
 # %% plot cross sections
-labels = 'упр.', 'e-e', 'фонон', 'полярон'
+labels = 'упр.', 'э-э', 'э-фон.', 'э-пол.'
 # colors = '', 'g', 'r', 'm'
-colors = 'C0', 'C1', 'C3', 'C2'
+# colors = 'C0', 'C1', 'C3', 'C2'
 
 inds = np.where(grid.EE > 10)
 
-with plt.style.context(['science', 'grid', 'russian-font']):
-    fig, ax = plt.subplots(dpi=600)
+# plt.figure(dpi=600, figsize=[6.4, 4.8])
+plt.figure(dpi=600, figsize=[6.4 / 1.9, 4.8 / 1.9])
 
-    for j in range(len(PMMA_processes_u[0])):
+for j in range(len(PMMA_processes_u[0])):
 
-        now_u = PMMA_processes_u[:, j]
+    now_u = PMMA_processes_u[:, j]
 
-        ax.loglog(grid.EE[inds], now_u[inds], colors[j] + '-', label=labels[j])
-        # ax.loglog(grid.EE[inds], now_u[inds], label=labels[j])
+    # ax.loglog(grid.EE[inds], now_u[inds], colors[j] + '-', label=labels[j])
+    plt.loglog(grid.EE[inds], now_u[inds], label=labels[j])
+    # ax.loglog(grid.EE[inds], now_u[inds], label=labels[j])
 
-    ax.legend(loc=1, fontsize=6)
-    # ax.set(xlabel=r'энергия электрона, эВ')
-    ax.set(xlabel=r'$E$, эВ')
-    ax.set(ylabel=r'$\lambda^{-1}$, нм$^{-1}$')
-    ax.autoscale(tight=True)
+plt.xlabel(r'$E$, эВ')
+plt.ylabel(r'$\lambda^{-1}$, нм$^{-1}$')
+# plt.text(-300, 2.16, 'a)', fontsize=12)
 
-    plt.xlim(1e+1, 1e+4)
-    plt.ylim(1e-5, 1e+2)
+plt.legend(loc='lower right')
+plt.grid()
 
-    plt.show()
-    fig.savefig('figures/PMMA_mu_cut_new.jpg', dpi=600)
+plt.xlim(1e+1, 1e+4)
+plt.ylim(1e-5, 1e+2)
+
+# plt.savefig('figures/PMMA_mu_cut_new.pdf', bbox_inches='tight')
+plt.savefig('figures/PMMA_mu_cut_new.pdf', bbox_inches='tight')
+# plt.show()
+
+
+# %%
+# with plt.style.context(['science', 'grid', 'russian-font']):
+#     fig, ax = plt.subplots(dpi=600)
+#
+#     for j in range(len(PMMA_processes_u[0])):
+#
+#         now_u = PMMA_processes_u[:, j]
+#
+#         # ax.loglog(grid.EE[inds], now_u[inds], colors[j] + '-', label=labels[j])
+#         ax.loglog(grid.EE[inds], now_u[inds], label=labels[j])
+#         # ax.loglog(grid.EE[inds], now_u[inds], label=labels[j])
+#
+#     ax.legend(loc=1, fontsize=6)
+#     # ax.set(xlabel=r'энергия электрона, эВ')
+#     ax.set(xlabel=r'$E$, эВ')
+#     ax.set(ylabel=r'$\lambda^{-1}$, нм$^{-1}$')
+#     ax.autoscale(tight=True)
+#
+#     plt.xlim(1e+1, 1e+4)
+#     plt.ylim(1e-5, 1e+2)
+#
+#     plt.show()
+#     fig.savefig('figures/PMMA_mu_cut_new.jpg', dpi=600)

@@ -6,6 +6,8 @@ import constants as const
 
 const = importlib.reload(const)
 
+# plt.rcParams.update({'font.size': 12})
+
 D_sim = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/PMMA_2ndary_check/Dapor_sim.txt')
 D_exp = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/PMMA_2ndary_check/Dapor_exp.txt')
 
@@ -17,7 +19,7 @@ def get_2ndary_yield(source_folder, n_primaries=100):
     E_list = []
 
     for E_str in E_str_list:
-        if E_str == '.DS_Store':
+        if 'DS_Store' in E_str:
             continue
 
         E_list.append(int(E_str))
@@ -35,7 +37,7 @@ def get_2ndary_yield(source_folder, n_primaries=100):
 
         for fname in filenames:
 
-            if fname == '.DS_Store':
+            if 'DS_Store' in fname:
                 continue
 
             DATA_outer = np.load(os.path.join(source, fname))
@@ -53,24 +55,52 @@ def get_2ndary_yield(source_folder, n_primaries=100):
 
 
 # %%
-folder_nf_0p02 = 'data/2ndaries/no_factor/0.02/'
+folder_nf_0p02 = '/Volumes/Transcend/2ndaries/no_factor/0.02/'
 energies_delta_nf_0p02 = get_2ndary_yield(folder_nf_0p02)
 
 
 # %%
-with plt.style.context(['science', 'grid', 'russian-font']):
-    fig, ax = plt.subplots(dpi=600)
-    ax.plot(D_sim[:, 0], D_sim[:, 1], 'b.--', label='статья Дапора')
-    ax.plot(D_exp[:, 0], D_exp[:, 1], 'g.--', label='эксперимент')
-    ax.plot(energies_delta_nf_0p02[0], energies_delta_nf_0p02[1], 'r.--', label='моделирование')
+# plt.figure(dpi=600, figsize=[6.4, 4.8])
+plt.figure(dpi=600, figsize=[6.4 / 1.9, 4.8 / 1.9])
 
-    # ax.legend(title=r'Число', fontsize=7)
-    ax.legend(fontsize=7)
-    ax.legend(fontsize=7)
-    ax.set(xlabel=r'энергия электрона, эВ')
-    ax.set(ylabel=r'выход вторичных электронов')
-    ax.autoscale(tight=True)
-    # plt.xlim(0.7, 1.2)
-    plt.ylim(0, 2.5)
-    fig.savefig('figures/PMMA_2ndaries_new.jpg', dpi=600)
-    # plt.show()
+# plt.plot(D_sim[:, 0], D_sim[:, 1], '.--', label='статья Дапора')
+plt.plot(D_exp[:, 0], D_exp[:, 1], '.--', label='эксперимент')
+plt.plot(energies_delta_nf_0p02[0], energies_delta_nf_0p02[1], '.--', label='моделирование')
+
+# plt.plot(D_exp[:, 0], D_exp[:, 1], 'o', label='эксперимент')
+# plt.plot(energies_delta_nf_0p02[0], energies_delta_nf_0p02[1], '*', label='моделирование')
+
+plt.xlabel(r'$E$, эВ')
+plt.ylabel(r'$\delta$')
+# plt.text(-300, 2.16, 'a)', fontsize=12)
+
+plt.xlim(0, 1500)
+plt.ylim(0, 2.5)
+
+plt.legend()
+plt.grid()
+
+# plt.savefig('figures/2ndary_yield.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('figures/2ndary_yield_1p9.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('figures/2ndary_yield_1p9.pdf', bbox_inches='tight')
+
+plt.show()
+
+
+# %%with plt.style.context(['science', 'grid', 'russian-font']):
+# #     fig, ax = plt.subplots(dpi=600)
+# #     ax.plot(D_sim[:, 0], D_sim[:, 1], 'b.--', label='статья Дапора')
+# #     ax.plot(D_exp[:, 0], D_exp[:, 1], 'g.--', label='эксперимент')
+# #     ax.plot(energies_delta_nf_0p02[0], energies_delta_nf_0p02[1], 'r.--', label='моделирование')
+# #
+# #     # ax.legend(title=r'Число', fontsize=7)
+# #     ax.legend(fontsize=7)
+# #     ax.legend(fontsize=7)
+# #     ax.set(xlabel=r'энергия электрона, эВ')
+# #     ax.set(ylabel=r'выход вторичных электронов')
+# #     ax.autoscale(tight=True)
+# #     # plt.xlim(0.7, 1.2)
+# #     plt.ylim(0, 2.5)
+# #     # fig.savefig('figures/PMMA_2ndaries_new.jpg', dpi=600)
+# #     plt.show()
+#
