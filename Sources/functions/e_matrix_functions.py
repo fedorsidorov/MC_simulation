@@ -65,3 +65,8 @@ def delete_snaked_vacuum_events(e_DATA, xx_vac, zz_vac):
             delete_inds.append(i)
 
     return np.delete(e_DATA, delete_inds, axis=0)
+
+def get_n_electrons_2D(dose_uC_cm2, lx_nm, ly_nm):
+    A_cm2 = lx_nm * ly_nm * 1e-14
+    Q_C = dose_uC_cm2 * 1e-6 * A_cm2
+    return int(np.round(Q_C / const.e_SI))

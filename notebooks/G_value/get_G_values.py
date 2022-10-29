@@ -43,15 +43,16 @@ weights = [
 GG_sim = np.zeros(len(weights))
 GG_theor = np.zeros(len(weights))
 
-# sample = '3'
+sample = '3'
 
 # plt.figure(dpi=300)
 
-fontsize = 10
+fontsize = 14
 
 _, ax = plt.subplots(dpi=300)
 fig = plt.gcf()
-fig.set_size_inches(4, 3)
+# fig.set_size_inches(4, 3)
+fig.set_size_inches(6, 4.5)
 
 markers = 'v-', '^-', '*-'
 
@@ -60,21 +61,26 @@ for n, sample in enumerate(['3']):
 
     for i, weight in enumerate(weights):
 
-        scission_matrix = np.load('/Volumes/Transcend/G_calibration/' + sample + '/scission_matrix_' + str(weight) + '.npy')
+        # scission_matrix = np.load('/Volumes/Transcend/G_calibration/' + sample +
+        #                           '/scission_matrix_' + str(weight) + '.npy')
+
         e_matrix_E_dep = np.load('data/e_matrix_E_dep.npy')
+
         chain_lens_initial = np.load('data/chain_lens.npy')
-        chain_lens_final = np.load('/Volumes/Transcend/G_calibration/' + sample + '/harris_lens_final_' + str(weight) + '.npy')
+
+        chain_lens_final = np.load('/Volumes/TOSHIBA EXT/G_calibration/' + sample +
+                                   '/harris_lens_final_' + str(weight) + '.npy')
 
         Mn = np.average(chain_lens_initial) * const.u_MMA
         Mf = np.average(chain_lens_final) * const.u_MMA
 
-        total_E_loss = np.sum(e_matrix_E_dep)
+        # total_E_loss = np.sum(e_matrix_E_dep)
 
         GG_sim[i] = (Mn / Mf - 1) * const.rho_PMMA * const.Na / (total_E_loss / mapping.volume_cm3 * Mn) * 100
-        GG_theor[i] = np.sum(scission_matrix) / np.sum(e_matrix_E_dep) * 100
+        # GG_theor[i] = np.sum(scission_matrix) / np.sum(e_matrix_E_dep) * 100
 
     TT_sim = Gf.get_T(GG_sim)
-    TT_theor = Gf.get_T(GG_theor)
+    # TT_theor = Gf.get_T(GG_theor)
 
     # plt.plot(TT_sim, weights, markers[n], markersize=10, label='simulation ' + str(n))
     # plt.plot(TT_theor, weights, markers[n], markersize=10, label='theory ' + str(n))
@@ -82,8 +88,8 @@ for n, sample in enumerate(['3']):
     # plt.plot(TT_sim, weights, markers[n], markersize=10, label='simulation')
     # plt.plot(TT_theor, weights, markers[n], markersize=10, label='theory')
 
-    plt.plot(TT_sim, weights, '--o', label='simulation')
-    plt.plot(TT_theor, weights, '--o', label='theory')
+    plt.plot(TT_sim, weights, 'r-o', linewidth=3, label='моделирование G$_S$ на основе M$_n$')
+    # plt.plot(TT_theor, weights, '--o', color='C0', linewidth=3, label='моделирование G$_S$ на основе E$_{dep}$')
 
 for tick in ax.xaxis.get_major_ticks():
     tick.label.set_fontsize(fontsize)
@@ -93,15 +99,24 @@ for tick in ax.yaxis.get_major_ticks():
 plt.xlim(0, 200)
 plt.ylim(0.02, 0.12)
 plt.xlabel('T, °C', fontsize=fontsize)
-plt.ylabel('scission probability', fontsize=fontsize)
+plt.ylabel('вероятность разрыва (P$_S$)', fontsize=fontsize)
 plt.legend(fontsize=fontsize)
 
 plt.grid()
 plt.show()
+
 # plt.savefig('G.jpg', bbox_inches='tight')
 
+#
+# mcf.lin_lin_interp(TT_sim, weights)(130)
+
 # %%
-mcf.lin_lin_interp(TT_sim, weights)(130)
+ans = np.load('data/e_matrix_val_TRUE.npy')
+cns = np.load('data/e_matrix_val_TRUE_1.npy')
+bns = np.load('data/e_matrix_val_TRUE_2.npy')
+
+
+
 
 
 

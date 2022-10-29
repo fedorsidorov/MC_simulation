@@ -9,14 +9,12 @@ import grid
 import constants as const
 from mapping import mapping_3um_500nm as mm
 # from mapping import mapping_5um_900nm as mm
-from functions import SE_functions as ef
 from functions import array_functions as af
 from functions import e_matrix_functions as emf
 import indexes as ind
 
 af = importlib.reload(af)
 const = importlib.reload(const)
-ef = importlib.reload(ef)
 emf = importlib.reload(emf)
 grid = importlib.reload(grid)
 ind = importlib.reload(ind)
@@ -476,28 +474,28 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, z0, beam_sigma, d_PMMA,
 
 
 # %% experiment constants
-xx_366 = np.load('notebooks/DEBER_simulation/exp_profiles/xx_366.npy')
-zz_366 = np.load('notebooks/DEBER_simulation/exp_profiles/zz_366.npy')
+# xx_366 = np.load('notebooks/DEBER_simulation/exp_profiles/xx_366.npy')
+# zz_366 = np.load('notebooks/DEBER_simulation/exp_profiles/zz_366.npy')
 
-dose_factor = 3.8
+# dose_factor = 3.8
 
-exposure_time = 100
-I = 1.2e-9
-It = I * exposure_time  # C
-n_lines = 625
+# exposure_time = 100
+# I = 1.2e-9
+# It = I * exposure_time  # C
+# n_lines = 625
 
-pitch = 3e-4  # cm
-ratio = 1.3 / 1
-L_line = pitch * n_lines * ratio
+# pitch = 3e-4  # cm
+# ratio = 1.3 / 1
+# L_line = pitch * n_lines * ratio
 
-It_line = It / n_lines  # C
-It_line_l = It_line / L_line
+# It_line = It / n_lines  # C
+# It_line_l = It_line / L_line
 
-y_depth = mm.ly * 1e-7  # cm
+# y_depth = mm.ly * 1e-7  # cm
 
-sim_dose = It_line_l * y_depth * dose_factor
-n_electrons_required = sim_dose / 1.6e-19
-n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870.77
+# sim_dose = It_line_l * y_depth * dose_factor
+# n_electrons_required = sim_dose / 1.6e-19
+# n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870.77
 
 # n_electrons_in_file = 93
 n_electrons_in_file = 31
@@ -505,7 +503,7 @@ n_electrons_in_file = 31
 d_PMMA = 500
 E_beam = 20e+3
 
-time_step = 1
+# time_step = 1
 
 # %% SIMULATION
 # vacuum
@@ -516,12 +514,14 @@ zz_vacuum = np.zeros(len(xx_vacuum))
 # z0 = 200
 
 # z0_arr = [50, 100, 150, 200, 250, 300, 350, 400]
-z0_arr = [450]
+z0_arr = [0]
 
 beam_sigma = 0
 
 n = 0
 # n = 583
+
+stop = False
 
 while True:
 
@@ -547,6 +547,11 @@ while True:
                 now_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))
         ]
 
+        # if len(np.where(now_e_DATA_Pv[:, 6] > d_PMMA)[0]) > 0:
+        #     print('here!')
+        #     stop = True
+        #     break
+
         # af.snake_array(
         #     array=now_e_DATA_Pv,
         #     x_ind=ind.e_DATA_x_ind,
@@ -557,22 +562,27 @@ while True:
         # )
 
         np.save(
-            'notebooks/DEBER_simulation/e_DATA_500nm_point/' + str(z0) + '/e_DATA_Pv_' + str(n) + '.npy',
+            '/Volumes/Transcend/e_DATA_500nm_point_NEW/0/e_DATA_Pv_' + str(n) + '.npy',
             now_e_DATA_Pv
         )
+
+    if stop:
+        break
 
     n += 1
 
 
 # %%
-ans = np.load('notebooks/DEBER_simulation/e_DATA_500nm_point/400/e_DATA_Pv_10.npy')
+ans = np.load('/Volumes/Transcend/e_DATA_500nm_point/0/e_DATA_Pv_3.npy')
 
-plt.figure(dpi=300)
-plt.plot(ans[:, 4], ans[:, 6], '.')
+len(np.where(ans[:, 6] > d_PMMA)[0])
+
+# plt.figure(dpi=300)
+# plt.plot(ans[:, 4], ans[:, 6], '.')
 
 # plt.ylim(0, 300)
 
-plt.grid()
-plt.show()
+# plt.grid()
+# plt.show()
 
 

@@ -16,24 +16,30 @@ mf = importlib.reload(mf)
 
 
 # %% from 0.01 to 0.03
-weights = [
-    0.010, 0.011, 0.012, 0.013, 0.014, 0.015, 0.016, 0.017, 0.018, 0.019, 0.020,
-    0.021, 0.022, 0.023, 0.024, 0.025, 0.026, 0.027, 0.028, 0.029, 0.030
-]
-
 # weights = [
-#     0.030, 0.035, 0.040, 0.045, 0.050, 0.055, 0.060, 0.065, 0.070, 0.075, 0.080,
-#     0.085, 0.090, 0.095, 0.100, 0.105, 0.110, 0.115, 0.120, 0.125, 0.130, 0.153
+#     0.010, 0.011, 0.012, 0.013, 0.014, 0.015, 0.016, 0.017, 0.018, 0.019, 0.020,
+#     0.021, 0.022, 0.023, 0.024, 0.025, 0.026, 0.027, 0.028, 0.029, 0.030
 # ]
 
-weights = [0.135]
+weights = [
+    # 0.030, 0.035,
+    0.040, 0.045, 0.050, 0.055, 0.060,
+    # 0.065, 0.070, 0.075, 0.080,
+    # 0.085, 0.090, 0.095, 0.100, 0.105, 0.110, 0.115, 0.120, 0.125, 0.130, 0.135
+]
+
+# weights = [0.135]
+
 
 for weight in weights:
 
     print(weight)
 
-    e_matrix_val = np.load('/Users/fedor/PycharmProjects/MC_simulation/data/e_matrix_val_TRUE.npy')
-    e_matrix_dE = np.load('data/e_matrix_E_dep.npy')
+    # e_matrix_val = np.load('/Users/fedor/PycharmProjects/MC_simulation/data/e_matrix_val_TRUE.npy')
+    # e_matrix_dE = np.load('data/e_matrix_E_dep.npy')
+
+    e_matrix_val = np.load('/Users/fedor/PycharmProjects/MC_simulation/data/e_matrix_val_TRUE_2.npy')
+    # e_matrix_dE = np.load('data/e_matrix_E_dep_1.npy')
 
     resist_shape = np.shape(e_matrix_val)
 
@@ -52,9 +58,6 @@ for weight in weights:
                 e_matrix_sci[x_ind, y_ind, z_ind] = len(scissions)
 
         progress_bar.update()
-
-    # np.save('data/G_calibration/3/scission_matrix_' + str(weight) + '.npy', e_matrix_sci)
-    # np.save('data/G_calibration/3/scission_matrix_' + str(weight) + '.npy', e_matrix_sci)
 
     sample = '3'
 
@@ -79,15 +82,17 @@ for weight in weights:
 
     lens_final = mf.get_chain_lens_fast(chain_tables, count_monomers=False)
 
-    # np.save('data/G_calibration/3/harris_lens_final_' + str(weight) + '.npy', lens_final)
-    # np.save('data/G_calibration/3/harris_lens_final_' + str(weight) + '.npy', lens_final)
+    np.save('/Volumes/TOSHIBA EXT/G_calibration/' + sample + '_new/scission_matrix_' + str(weight) + '.npy',
+            e_matrix_sci)
+    np.save('/Volumes/TOSHIBA EXT/G_calibration/' + sample + '_new/harris_lens_final_' + str(weight) + '.npy',
+            lens_final)
 
 # %%
-Mn = np.average(chain_lens) * const.u_MMA
-Mf = np.average(lens_final) * const.u_MMA
-
-total_E_loss = np.sum(e_matrix_dE)
-GG_sim = (Mn / Mf - 1) * const.rho_PMMA * const.Na / (total_E_loss / mapping.volume_cm3 * Mn) * 100
-
-GG_theor = np.sum(e_matrix_sci) / total_E_loss * 100
+# Mn = np.average(chain_lens) * const.u_MMA
+# Mf = np.average(lens_final) * const.u_MMA
+#
+# total_E_loss = np.sum(e_matrix_dE)
+# GG_sim = (Mn / Mf - 1) * const.rho_PMMA * const.Na / (total_E_loss / mapping.volume_cm3 * Mn) * 100
+#
+# GG_theor = np.sum(e_matrix_sci) / total_E_loss * 100
 

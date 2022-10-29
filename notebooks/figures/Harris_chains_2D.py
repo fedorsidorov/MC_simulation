@@ -25,58 +25,55 @@ for n in range(1447):
 fig = plt.figure(dpi=600)
 # fig = plt.figure(dpi=600, figsize=[6.4 / 1.9, 4.8 / 1.9])
 # fig = plt.figure(dpi=600, figsize=[4.8 / 1.9, 4.8 / 1.9])
-ax = fig.gca(projection='3d')
+# ax = fig.gca(projection='3d')
 
-fig = plt.gcf()
+# fig = plt.gcf()
 # fig.set_size_inches(3, 3)
 # fig.set_size_inches(5, 5)
-fig.set_size_inches(5.5, 5.5)
+# fig.set_size_inches(5.5, 5.5)
 
 step = 1
 
-# for chain in chain_list[4::45]:
-for chain in chain_list[4::1]:
+for chain in chain_list[4::45]:
+# for chain in chain_list[4::15]:
+# for chain in chain_list[4::1]:
 
-    # ax.plot(chain[::step, 0], chain[::step, 1], chain[::step, 2], '.', markersize=1)
-    ax.plot(chain[::step, 0], chain[::step, 1], chain[::step, 2], '.', markersize=0.5)
+    plt.plot(chain[::step, 0], chain[::step, 2], '.', markersize=0.5)
 
 # ax.set_xlabel(r'x, nm', fontsize=font_size)
 # ax.set_ylabel(r'y, nm', fontsize=font_size)
 # ax.set_zlabel(r'z, nm', fontsize=font_size)
 
-ax.set_xlabel(r'x, нм')
-ax.set_ylabel(r'y, нм')
-ax.set_zlabel(r'z, нм')
+plt.xlabel(r'x, нм', fontsize=18)
+plt.ylabel(r'z, нм', fontsize=18)
 
-ax.plot(np.linspace(mm.x_min, mm.x_max, mm.l_x), np.ones(mm.l_x) * mm.y_min,
-        np.ones(mm.l_x) * mm.z_min, 'k')
-# ax.plot(np.linspace(mm.x_min, mm.x_max, mm.l_x), np.ones(mm.l_x) * mm.y_max,
+# plt.plot(np.linspace(mm.x_min, mm.x_max, mm.l_x), np.ones(mm.l_x) * mm.y_min,
 #         np.ones(mm.l_x) * mm.z_min, 'k')
-ax.plot(np.linspace(mm.x_min, mm.x_max, mm.l_x), np.ones(mm.l_x) * mm.y_min,
-        np.ones(mm.l_x) * mm.z_max, 'k')
-ax.plot(np.linspace(mm.x_min, mm.x_max, mm.l_x), np.ones(mm.l_x) * mm.y_max,
-        np.ones(mm.l_x) * mm.z_max, 'k')
+# plt.plot(np.linspace(mm.x_min, mm.x_max, mm.l_x), np.ones(mm.l_x) * mm.y_min,
+#         np.ones(mm.l_x) * mm.z_max, 'k')
+# ax.plot(np.linspace(mm.x_min, mm.x_max, mm.l_x), np.ones(mm.l_x) * mm.y_max,
+#         np.ones(mm.l_x) * mm.z_max, 'k')
 
 # ax.plot(np.ones(mm.l_y) * mm.x_min, np.linspace(mm.y_min, mm.y_max, mm.l_y),
 #         np.ones(mm.l_y) * mm.z_min, 'k')
-ax.plot(np.ones(mm.l_y) * mm.x_max, np.linspace(mm.y_min, mm.y_max, mm.l_y),
-        np.ones(mm.l_y) * mm.z_min, 'k')
-ax.plot(np.ones(mm.l_y) * mm.x_min, np.linspace(mm.y_min, mm.y_max, mm.l_y),
-        np.ones(mm.l_y) * mm.z_max, 'k')
-ax.plot(np.ones(mm.l_y) * mm.x_max, np.linspace(mm.y_min, mm.y_max, mm.l_y),
-        np.ones(mm.l_y) * mm.z_max, 'k')
+# ax.plot(np.ones(mm.l_y) * mm.x_max, np.linspace(mm.y_min, mm.y_max, mm.l_y),
+#         np.ones(mm.l_y) * mm.z_min, 'k')
+# ax.plot(np.ones(mm.l_y) * mm.x_min, np.linspace(mm.y_min, mm.y_max, mm.l_y),
+#         np.ones(mm.l_y) * mm.z_max, 'k')
+# ax.plot(np.ones(mm.l_y) * mm.x_max, np.linspace(mm.y_min, mm.y_max, mm.l_y),
+#         np.ones(mm.l_y) * mm.z_max, 'k')
 
-ax.plot(np.ones(mm.l_z) * mm.x_min, np.ones(mm.l_z) * mm.y_min,
-        np.linspace(mm.z_min, mm.z_max, mm.l_z), 'k')
-ax.plot(np.ones(mm.l_z) * mm.x_max, np.ones(mm.l_z) * mm.y_min,
-        np.linspace(mm.z_min, mm.z_max, mm.l_z), 'k')
+# ax.plot(np.ones(mm.l_z) * mm.x_min, np.ones(mm.l_z) * mm.y_min,
+#         np.linspace(mm.z_min, mm.z_max, mm.l_z), 'k')
+# ax.plot(np.ones(mm.l_z) * mm.x_max, np.ones(mm.l_z) * mm.y_min,
+#         np.linspace(mm.z_min, mm.z_max, mm.l_z), 'k')
 # ax.plot(np.ones(mm.l_z) * mm.x_min, np.ones(mm.l_z) * mm.y_max,
 #         np.linspace(mm.z_min, mm.z_max, mm.l_z), 'k')
-ax.plot(np.ones(mm.l_z) * mm.x_max, np.ones(mm.l_z) * mm.y_max,
-        np.linspace(mm.z_min, mm.z_max, mm.l_z), 'k')
+# ax.plot(np.ones(mm.l_z) * mm.x_max, np.ones(mm.l_z) * mm.y_max,
+#         np.linspace(mm.z_min, mm.z_max, mm.l_z), 'k')
 
-plt.xlim(mm.x_min, mm.x_max)
-plt.ylim(mm.y_min, mm.y_max)
+# plt.xlim(mm.x_min, mm.x_max)
+# plt.ylim(mm.y_min, mm.y_max)
 # plt.title('Polymer chain simulation')
 
 # ax.set_xlabel('$x$, nm', fontsize=font_size)
@@ -95,5 +92,10 @@ plt.ylim(mm.y_min, mm.y_max)
 # for tick in ax.zaxis.get_major_ticks():
 #     tick.label.set_fontsize(font_size)
 
-# plt.savefig('figures/Harris_chains.jpg', dpi=600, bbox_inches='tight')
+plt.xlim(-50, 50)
+plt.ylim(0, 100)
+plt.gca().set_aspect('equal', adjustable='box')
+plt.savefig('figures/Harris_chains_1step.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('figures/Harris_chains_2step.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('figures/Harris_chains_3step.jpg', dpi=600, bbox_inches='tight')
 plt.show()

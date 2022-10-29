@@ -7,20 +7,21 @@ from tqdm import tqdm
 from functions import MC_functions as mcf
 import grid
 import constants as const
-from mapping import mapping_3um_500nm as mm
-# from mapping import mapping_5um_900nm as mm
+# from mapping import mapping_3um_500nm as mm
+from mapping import mapping_5um_900nm as mm
+from functions import SE_functions as ef
 from functions import array_functions as af
 from functions import e_matrix_functions as emf
 import indexes as ind
 
 af = importlib.reload(af)
 const = importlib.reload(const)
+ef = importlib.reload(ef)
 emf = importlib.reload(emf)
 grid = importlib.reload(grid)
 ind = importlib.reload(ind)
 mcf = importlib.reload(mcf)
 mm = importlib.reload(mm)
-
 
 # %% constants
 arr_size = 1000
@@ -419,7 +420,7 @@ def track_electron(xx_vac, zz_vac, e_id, par_id, E_0, coords_0, flight_ort_0, d_
     return e_DATA, e_2nd_deque
 
 
-def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, z0, beam_sigma, d_PMMA, z_cut, Pn):
+def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, beam_sigma, d_PMMA, z_cut, Pn):
     e_deque = deque()
     e_DATA_deque = deque()
 
@@ -428,8 +429,7 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, z0, beam_sigma, d_PMMA,
     for _ in range(n_electrons):
 
         x_beg = np.random.normal(loc=0, scale=beam_sigma)
-        # z_beg = get_now_z_vac(xx_vac, zz_vac, x_beg) + 1e-2
-        z_beg = z0 + 1e-2
+        z_beg = get_now_z_vac(xx_vac, zz_vac, x_beg) + 1e-2
 
         e_deque.append([
             next_e_id,
@@ -465,7 +465,14 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, z0, beam_sigma, d_PMMA,
 
         next_e_id += len(now_e_2nd_deque)
 
+        # total_e_DATA_deque = total_e_DATA_deque + now_e_DATA_deque
+
+        # for ed in now_e_DATA_deque:
+        #     total_e_DATA_deque.append(ed)
+
         e_DATA_deque.append(now_e_DATA)
+
+        # e_deque = now_e_2nd_deque + e_deque
 
         for e2d in now_e_2nd_deque:
             e_deque.appendleft(e2d)
@@ -474,112 +481,91 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, z0, beam_sigma, d_PMMA,
 
 
 # %% experiment constants
-# xx_366 = np.load('notebooks/DEBER_simulation/exp_profiles/xx_366.npy')
-# zz_366 = np.load('notebooks/DEBER_simulation/exp_profiles/zz_366.npy')
+xx_366 = np.load('notebooks/DEBER_simulation/exp_profile_366/xx.npy')
+zz_366 = np.load('notebooks/DEBER_simulation/exp_profile_366/zz.npy')
 
-# dose_factor = 3.8
+dose_factor = 3.8
 
-# exposure_time = 100
-# I = 1.2e-9
-# It = I * exposure_time  # C
-# n_lines = 625
+exposure_time = 100
+It = 1.2e-9 * exposure_time  # C
+n_lines = 625
 
-# pitch = 3e-4  # cm
-# ratio = 1.3 / 1
-# L_line = pitch * n_lines * ratio
+pitch = 3e-4  # cm
+ratio = 1.3 / 1
+L_line = pitch * n_lines * ratio
 
-# It_line = It / n_lines  # C
-# It_line_l = It_line / L_line
+It_line = It / n_lines  # C
+It_line_l = It_line / L_line
 
-# y_depth = mm.ly * 1e-7  # cm
+y_depth = mm.ly * 1e-7  # cm
 
-# sim_dose = It_line_l * y_depth * dose_factor
-# n_electrons_required = sim_dose / 1.6e-19
-# n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870.77
+sim_dose = It_line_l * y_depth * dose_factor
+n_electrons_required = sim_dose / 1.6e-19
+n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870.77
 
-# n_electrons_in_file = 93
-n_electrons_in_file = 31
+n_electrons_in_file = 93
+# n_electrons_in_file =
 
-d_PMMA = 500
+E0 = 20e+3
+
+# d_PMMA = 500
+d_PMMA = 900
 E_beam = 20e+3
 
-# time_step = 1
+# beam_sigma = 500
+beam_sigma = 0
+
+time_step = 1
 
 # %% SIMULATION
 # vacuum
 xx_vacuum = mm.x_centers_50nm
-zz_vacuum = np.zeros(len(xx_vacuum))
+# zz_vacuum = np.zeros(len(xx_vacuum))
+zz_vacuum = np.ones(len(xx_vacuum)) * -900
 
-# z0 = 0
-# z0 = 200
-
-# z0_arr = [50, 100, 150, 200, 250, 300, 350, 400]
-z0_arr = [0]
-
-beam_sigma = 0
-
-n = 0
-# n = 583
+i = 0
 
 while True:
 
-    print(n)
+    # print('Now time =', now_time)
 
-    for z0 in z0_arr:
+    # now_val_matrix = np.zeros((len(mm.x_centers_50nm), len(mm.z_centers_50nm)))
+    # print('get e_DATA')
 
-        now_e_DATA = track_all_electrons(
-            xx_vac=xx_vacuum,
-            zz_vac=zz_vacuum,
-            n_electrons=n_electrons_in_file,
-            E0=E_beam,
-            z0=z0,
-            beam_sigma=beam_sigma,
-            d_PMMA=d_PMMA,
-            z_cut=np.inf,
-            Pn=True
-        )
+    # for n in range(10):
 
-        # now_e_DATA_Pv = now_e_DATA[np.where(
-        #     np.logical_and(
-        #         now_e_DATA[:, ind.e_DATA_layer_id_ind] == ind.PMMA_ind,
-        #         now_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))
-        # ]
+    # print(n)
 
-        now_e_DATA_Pn = now_e_DATA[np.where(
-            np.logical_and(
-                now_e_DATA[:, ind.e_DATA_z_ind] <= d_PMMA,
-                now_e_DATA[:, ind.e_DATA_process_id_ind] > ind.sim_elastic_ind)
-            )
-        ]
+    now_e_DATA = track_all_electrons(
+        xx_vac=xx_vacuum,
+        zz_vac=zz_vacuum,
+        n_electrons=n_electrons_in_file,
+        E0=E_beam,
+        beam_sigma=beam_sigma,
+        d_PMMA=d_PMMA,
+        z_cut=np.inf,
+        Pn=True
+    )
 
-        # af.snake_array(
-        #     array=now_e_DATA_Pv,
-        #     x_ind=ind.e_DATA_x_ind,
-        #     y_ind=ind.e_DATA_y_ind,
-        #     z_ind=ind.e_DATA_z_ind,
-        #     xyz_min=[mm.x_min, mm.y_min, -np.inf],
-        #     xyz_max=[mm.x_max, mm.y_max, np.inf]
-        # )
+    now_e_DATA_Pv = now_e_DATA[np.where(
+        np.logical_and(
+            now_e_DATA[:, ind.e_DATA_layer_id_ind] == ind.PMMA_ind,
+            now_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))
+    ]
 
-        np.save(
-            '/Volumes/Transcend/e_DATA_500nm_point_NEW/e_DATA_Pn_' + str(n) + '.npy',
-            now_e_DATA_Pn
-        )
+    af.snake_array(
+        array=now_e_DATA_Pv,
+        x_ind=ind.e_DATA_x_ind,
+        y_ind=ind.e_DATA_y_ind,
+        z_ind=ind.e_DATA_z_ind,
+        xyz_min=[mm.x_min, mm.y_min, -np.inf],
+        xyz_max=[mm.x_max, mm.y_max, np.inf]
+    )
 
-    n += 1
+    np.save('notebooks/DEBER_simulation/e_DATA_Pv_900nm_snaked_point_-900/e_DATA_Pv_' + str(i) + '.npy', now_e_DATA_Pv)
 
+    i += 1
 
 # %%
-ans = np.load('/Volumes/Transcend/e_DATA_500nm_point/0/e_DATA_Pv_3.npy')
-
-len(np.where(ans[:, 6] > d_PMMA)[0])
-
-# plt.figure(dpi=300)
-# plt.plot(ans[:, 4], ans[:, 6], '.')
-
-# plt.ylim(0, 300)
-
-# plt.grid()
-# plt.show()
 
 

@@ -29,10 +29,13 @@ dose_uC_cm2 = 100
 n_electrons_required = emf.get_n_electrons_2D(dose_uC_cm2, mapping.l_x, mapping.l_y)
 n_electrons = 0
 
-source = '/Users/fedor/PycharmProjects/MC_simulation/data/4Harris/'
+# source = '/Users/fedor/PycharmProjects/MC_simulation/data/4Harris/'
+# source = '/Volumes/TOSHIBA EXT/e_DATA/harris/'
+source = '/Volumes/Transcend/e_DATA_500nm_point/0/'
 
-primary_electrons_in_file = 100
-# n_files = 700
+# primary_electrons_in_file = 100
+primary_electrons_in_file = 31
+n_files = 600
 file_cnt = 0
 
 progress_bar = tqdm(total=n_electrons_required, position=0)
@@ -40,7 +43,7 @@ progress_bar = tqdm(total=n_electrons_required, position=0)
 while n_electrons < n_electrons_required:
 
     # print(file_cnt)
-    now_e_DATA = np.load(source + 'e_DATA_Pn_' + str(file_cnt) + '.npy')
+    now_e_DATA = np.load(source + 'e_DATA_Pv_' + str(file_cnt % n_files) + '.npy')
     file_cnt += 1
 
     # check PMMA and inelastic events
@@ -97,10 +100,10 @@ while n_electrons < n_electrons_required:
             break
 
 # %%
-print(np.sum(e_matrix_val) / np.sum(e_matrix_E_dep) * 100)
+# print(np.sum(e_matrix_val) / np.sum(e_matrix_E_dep) * 100)
 
-np.save('data/e_matrix_val_TRUE.npy', e_matrix_val)
-# np.save('data/e_matrix_E_dep.npy', e_matrix_E_dep)
+np.save('data/e_matrix_val_TRUE_2.npy', e_matrix_val)
+np.save('data/e_matrix_E_dep_2.npy', e_matrix_E_dep)
 
 # %%
 plt.figure(dpi=300)

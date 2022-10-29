@@ -793,7 +793,7 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
 
     new_zz_vac_bins = d_PMMA - new_zz_surface_final
     new_zz_inner_centers = d_PMMA - new_zz_inner_final
-
+ 
     return new_xx_total, new_zz_total, new_zz_vac_bins, new_zz_inner_centers
 
 
