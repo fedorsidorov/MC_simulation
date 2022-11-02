@@ -150,3 +150,4 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.ylim(0, 2.5)
     # fig.savefig('fig16.jpg', dpi=300)
     plt.show()
+

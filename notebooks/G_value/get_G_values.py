@@ -33,17 +33,18 @@ plt.show()
 #     0.021, 0.022, 0.023, 0.024, 0.025, 0.026, 0.027, 0.028, 0.029, 0.030
 # ]
 
-weights = [
-    0.030, 0.035, 0.040, 0.045, 0.050, 0.055, 0.060, 0.065, 0.070, 0.075, 0.080,
-    0.085, 0.090, 0.095, 0.100, 0.105, 0.110, 0.115, 0.120, 0.125, 0.130, 0.135
-]
+# weights = [
+#     0.030, 0.035, 0.040, 0.045, 0.050, 0.055, 0.060, 0.065, 0.070, 0.075, 0.080,
+#     0.085, 0.090, 0.095, 0.100, 0.105, 0.110, 0.115, 0.120, 0.125, 0.130, 0.135
+# ]
 
-# weights = [0.082]
+weights = [0.03]
 
 GG_sim = np.zeros(len(weights))
 GG_theor = np.zeros(len(weights))
 
-sample = '3'
+# sample = '3'
+sample = '1'
 
 # plt.figure(dpi=300)
 
@@ -57,12 +58,16 @@ fig.set_size_inches(6, 4.5)
 markers = 'v-', '^-', '*-'
 
 # for n, sample in enumerate(['1', '2', '3']):
-for n, sample in enumerate(['3']):
+# for n, sample in enumerate(['3']):
+for n, sample in enumerate(['1']):
 
     for i, weight in enumerate(weights):
 
         # scission_matrix = np.load('/Volumes/Transcend/G_calibration/' + sample +
         #                           '/scission_matrix_' + str(weight) + '.npy')
+
+        scission_matrix = np.load('/Volumes/TOSHIBA EXT/G_calibration/' + sample +
+                                  '/scission_matrix_' + str(weight) + '.npy')
 
         e_matrix_E_dep = np.load('data/e_matrix_E_dep.npy')
 
@@ -74,13 +79,13 @@ for n, sample in enumerate(['3']):
         Mn = np.average(chain_lens_initial) * const.u_MMA
         Mf = np.average(chain_lens_final) * const.u_MMA
 
-        # total_E_loss = np.sum(e_matrix_E_dep)
+        total_E_loss = np.sum(e_matrix_E_dep)
 
         GG_sim[i] = (Mn / Mf - 1) * const.rho_PMMA * const.Na / (total_E_loss / mapping.volume_cm3 * Mn) * 100
-        # GG_theor[i] = np.sum(scission_matrix) / np.sum(e_matrix_E_dep) * 100
+        GG_theor[i] = np.sum(scission_matrix) / np.sum(e_matrix_E_dep) * 100
 
     TT_sim = Gf.get_T(GG_sim)
-    # TT_theor = Gf.get_T(GG_theor)
+    TT_theor = Gf.get_T(GG_theor)
 
     # plt.plot(TT_sim, weights, markers[n], markersize=10, label='simulation ' + str(n))
     # plt.plot(TT_theor, weights, markers[n], markersize=10, label='theory ' + str(n))
@@ -89,7 +94,7 @@ for n, sample in enumerate(['3']):
     # plt.plot(TT_theor, weights, markers[n], markersize=10, label='theory')
 
     plt.plot(TT_sim, weights, 'r-o', linewidth=3, label='моделирование G$_S$ на основе M$_n$')
-    # plt.plot(TT_theor, weights, '--o', color='C0', linewidth=3, label='моделирование G$_S$ на основе E$_{dep}$')
+    plt.plot(TT_theor, weights, '--o', color='C0', linewidth=3, label='моделирование G$_S$ на основе E$_{dep}$')
 
 for tick in ax.xaxis.get_major_ticks():
     tick.label.set_fontsize(fontsize)

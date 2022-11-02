@@ -26,34 +26,24 @@ e_matrix_E_dep = np.zeros(mapping.hist_5nm_shape)
 
 # dose_uC_cm2 = 50
 dose_uC_cm2 = 100
-n_electrons_required = emf.get_n_electrons_2D(dose_uC_cm2, mapping.l_x, mapping.l_y)  # 62 415
+n_electrons_required = emf.get_n_electrons_2D(dose_uC_cm2, mapping.l_x, mapping.l_y)
+n_electrons = 0
 
 source = '/Volumes/TOSHIBA EXT/4Harris/'
-# source = '/Volumes/TOSHIBA EXT/e_DATA/harris/'
-# source = '/Volumes/TOSHIBA EXT/e_DATA_Pn_Harris/'
-# source = '/Volumes/Transcend/e_DATA_500nm_point_NEW/'
 
 primary_electrons_in_file = 100
-# primary_electrons_in_file = 31
-n_files = 700
-# n_files = 1700
-# n_files = 600
-# n_files = 415
-
-# %%
-progress_bar = tqdm(total=n_electrons_required, position=0)
-
+# n_files = 700
 file_cnt = 0
-n_electrons = 0
+
+progress_bar = tqdm(total=n_electrons_required, position=0)
 
 while n_electrons < n_electrons_required:
 
     # print(file_cnt)
-    now_e_DATA = np.load(source + 'e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
-    # now_e_DATA = np.load(source + 'e_DATA_' + str(file_cnt % n_files) + '.npy')
+    now_e_DATA = np.load(source + 'e_DATA_Pn_' + str(file_cnt) + '.npy')
     file_cnt += 1
 
-    # it was so before
+    # check PMMA and inelastic events
     # now_e_DATA = now_e_DATA[
     #     np.where(
     #         np.logical_and(now_e_DATA[:, 2] == 0, now_e_DATA[:, 3] == 1)
@@ -89,12 +79,14 @@ while n_electrons < n_electrons_required:
             xyz_max=[mapping.x_max, mapping.y_max, np.inf]
         )
 
-        now_val_inds = np.where(now_prim_e_DATA[:, 3] == 1)[0]
+        val_inds = np.where(now_prim_e_DATA[:, 3] == 1)[0]
 
         e_matrix_val += np.histogramdd(
-            sample=now_prim_e_DATA[now_val_inds, 4:7],
+            sample=now_prim_e_DATA[val_inds, 4:7],
             bins=mapping.bins_5nm
         )[0]
+
+        # dE_inds = np.where(now_prim_e_DATA[:, 7] > 0)[0]
 
         e_matrix_E_dep += np.histogramdd(
             sample=now_prim_e_DATA[:, 4:7],
@@ -109,10 +101,10 @@ while n_electrons < n_electrons_required:
             break
 
 # %%
-# print(np.sum(e_matrix_val) / np.sum(e_matrix_E_dep) * 100)
+print(np.sum(e_matrix_val) / np.sum(e_matrix_E_dep) * 100)
 
-# np.save('data/e_matrix_val_TRUE_NEW.npy', e_matrix_val)
-# np.save('data/e_matrix_E_dep_NEW.npy', e_matrix_E_dep)
+# np.save('data/e_matrix_val_TRUE.npy', e_matrix_val)
+# np.save('data/e_matrix_E_dep.npy', e_matrix_E_dep)
 
 # %%
 plt.figure(dpi=300)
@@ -122,10 +114,3 @@ plt.show()
 # %%
 ans = np.load('data/e_matrix_val_TRUE.npy')
 bns = np.load('data/e_matrix_E_dep.npy')
-
-# %%
-ans = np.load('/Volumes/TOSHIBA EXT/4Harris/e_DATA_Pn_1.npy')
-bns = np.load('/Volumes/Transcend/e_DATA_500nm_point_NEW/e_DATA_Pn_0.npy')
-
-
-

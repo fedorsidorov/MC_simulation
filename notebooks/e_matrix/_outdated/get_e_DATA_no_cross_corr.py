@@ -276,17 +276,19 @@ def track_electron(xx_vac, zz_vac, e_id, par_id, E_0, coords_0, flight_ort_0, d_
         elif 0 < coords[-1] < d_PMMA < coords[-1] + delta_r[-1] or \
                 coords[-1] > d_PMMA > coords[-1] + delta_r[-1] > 0:
 
-            d = np.linalg.norm(delta_r) * np.abs(coords[-1] - d_PMMA) / np.abs(delta_r[-1])
-            W1 = structure_u_total[layer_ind][E_ind]
-            W2 = structure_u_total[1 - layer_ind][E_ind]
+            # d = np.linalg.norm(delta_r) * np.abs(coords[-1] - d_PMMA) / np.abs(delta_r[-1])
+            # W1 = structure_u_total[layer_ind][E_ind]
+            # W2 = structure_u_total[1 - layer_ind][E_ind]
 
-            free_path_corr = d + 1 / W2 * (-np.log(1 - u1) - W1 * d)
+            # free_path_corr = d + 1 / W2 * (-np.log(1 - u1) - W1 * d)
 
-            if free_path_corr < 0:
-                print('free path corr < 0 !!!')
+            # if free_path_corr < 0:
+            #     print('free path corr < 0 !!!')
 
-            delta_r_corr = flight_ort * free_path_corr
-            coords = coords + delta_r_corr
+            # delta_r_corr = flight_ort * free_path_corr
+            # coords = coords + delta_r_corr
+
+            coords = coords + delta_r
 
         # electron is going to emerge from the structure
         elif coords[-1] + delta_r[-1] <= get_now_z_vac(xx_vac, zz_vac, coords[0] + delta_r[0], layer_ind):
@@ -497,8 +499,8 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, z0, beam_sigma, d_PMMA,
 # n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870.77
 
 # n_electrons_in_file = 93
-n_electrons_in_file = 31
-# n_electrons_in_file = 1
+# n_electrons_in_file = 31
+n_electrons_in_file = 1
 
 d_PMMA = 500
 E_beam = 20e+3
@@ -515,11 +517,11 @@ z0 = 0
 
 beam_sigma = 0
 
-# n = 0
-n = 1699
+n = 0
+# n = 583
 
 # while True:
-while n == 1699:
+while n == 0:
 
     now_e_DATA = track_all_electrons(
         xx_vac=xx_vacuum,
@@ -530,7 +532,8 @@ while n == 1699:
         beam_sigma=beam_sigma,
         d_PMMA=d_PMMA,
         z_cut=np.inf,
-        Pn=True
+        # Pn=True
+        Pn=False
     )
 
     # now_e_DATA_Pv = now_e_DATA[np.where(
@@ -539,12 +542,12 @@ while n == 1699:
     #         now_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))
     # ]
 
-    now_e_DATA_Pn = now_e_DATA[np.where(
-        np.logical_and(
-            now_e_DATA[:, ind.e_DATA_z_ind] <= d_PMMA,
-            now_e_DATA[:, ind.e_DATA_process_id_ind] > ind.sim_elastic_ind)
-        )
-    ]
+    # now_e_DATA_Pn = now_e_DATA[np.where(
+    #     np.logical_and(
+    #         now_e_DATA[:, ind.e_DATA_z_ind] <= d_PMMA,
+    #         now_e_DATA[:, ind.e_DATA_process_id_ind] > ind.sim_elastic_ind)
+    #     )
+    # ]
 
     # af.snake_array(
     #     array=now_e_DATA_Pv,
@@ -555,10 +558,10 @@ while n == 1699:
     #     xyz_max=[mm.x_max, mm.y_max, np.inf]
     # )
 
-    np.save(
-        '/Volumes/Transcend/e_DATA_500nm_point_NEW/e_DATA_Pn_' + str(n) + '.npy',
-        now_e_DATA_Pn
-    )
+    # np.save(
+    #     '/Volumes/Transcend/e_DATA_500nm_point_NEW/e_DATA_Pn_' + str(n) + '.npy',
+    #     now_e_DATA_Pn
+    # )
 
     n += 1
 
