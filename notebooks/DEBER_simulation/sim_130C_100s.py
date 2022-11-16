@@ -659,8 +659,10 @@ power_high = 3.4
 
 # PARAMETERS #
 beam_sigma = 400
-zip_length = 120
-power_low = 3.4
+# zip_length = 120
+zip_length = 100
+# power_low = 3.4
+power_low = 1.4
 # PARAMETERS #
 
 x_step, z_step = 100, 5
@@ -670,6 +672,7 @@ xx_centers, zz_centers = mm.x_centers_100nm, mm.z_centers_5nm
 bin_volume = x_step * mm.ly * z_step
 bin_n_monomers = bin_volume / const.V_mon_nm3
 
+# %%
 zz_vac_bins = np.zeros(len(xx_bins))
 zz_vac_centers = np.zeros(len(xx_centers))
 surface_inds = np.zeros(len(xx_centers)).astype(int)
@@ -683,7 +686,7 @@ mob_matrix = np.zeros((len(xx_centers), len(zz_centers)))
 mobs_array = np.zeros(len(xx_centers))
 
 path = '/Volumes/Transcend/SIM_DEBER/130C_100s/new_s' + str(beam_sigma) + '_z' +\
-       str(zip_length) + '_pl' + str(power_low) + '/'
+       str(zip_length) + '_pl' + str(power_low) + '/try_5/'
 
 if not os.path.exists(path):
     os.makedirs(path)
@@ -849,3 +852,12 @@ for n_cooling_step, time_cooling_step in enumerate(tt):
 
     if now_time > 220:
         break
+
+np.save(path + 'xx_total.npy', xx_total)
+np.save(path + 'zz_total.npy', zz_total)
+
+np.save(path + 'xx_bins.npy', xx_bins)
+np.save(path + 'zz_vac_bins.npy', d_PMMA - zz_vac_bins)
+
+np.save(path + 'xx_centers.npy', xx_centers)
+np.save(path + 'zz_inner_centers.npy', d_PMMA - zz_inner_centers)

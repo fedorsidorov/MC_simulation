@@ -29,18 +29,14 @@ dose_uC_cm2 = 100
 n_electrons_required = emf.get_n_electrons_2D(dose_uC_cm2, mapping.l_x, mapping.l_y)  # 62 415
 
 source = '/Volumes/TOSHIBA EXT/4Harris/'
-# source = '/Volumes/TOSHIBA EXT/e_DATA/harris/'
-# source = '/Volumes/TOSHIBA EXT/e_DATA_Pn_Harris/'
 # source = '/Volumes/Transcend/e_DATA_500nm_point_NEW/'
 
 primary_electrons_in_file = 100
 # primary_electrons_in_file = 31
 n_files = 700
 # n_files = 1700
-# n_files = 600
-# n_files = 415
 
-# %%
+
 progress_bar = tqdm(total=n_electrons_required, position=0)
 
 file_cnt = 0
@@ -50,35 +46,21 @@ while n_electrons < n_electrons_required:
 
     # print(file_cnt)
     now_e_DATA = np.load(source + 'e_DATA_Pn_' + str(file_cnt % n_files) + '.npy')
-    # now_e_DATA = np.load(source + 'e_DATA_' + str(file_cnt % n_files) + '.npy')
     file_cnt += 1
 
-    # it was so before
-    # now_e_DATA = now_e_DATA[
-    #     np.where(
-    #         np.logical_and(now_e_DATA[:, 2] == 0, now_e_DATA[:, 3] == 1)
-    #     )
-    # ]
-
-    # if file_cnt > n_files:
-    #     emf.rotate_DATA(now_e_DATA, x_ind=4, y_ind=5)
+    if file_cnt > n_files:
+        emf.rotate_DATA(now_e_DATA, x_ind=4, y_ind=5)
 
     for primary_e_id in range(primary_electrons_in_file):
 
         now_prim_e_DATA = emf.get_e_id_e_DATA_simple(now_e_DATA, primary_electrons_in_file, primary_e_id)
-
-        # now_prim_e_DATA = now_prim_e_DATA[
-        #     np.where(
-        #         np.logical_and(now_prim_e_DATA[:, 2] == 0, now_prim_e_DATA[:, 3] == 1)
-        #     )
-        # ]
 
         if now_prim_e_DATA is None:
             print('file', file_cnt, 'e_id', primary_e_id, 'data is None')
             continue
 
         emf.add_uniform_xy_shift_to_e_DATA(now_prim_e_DATA,
-                                           [mapping.x_min, mapping.x_max], [mapping.y_min, mapping.y_max])
+          [mapping.x_min, mapping.x_max], [mapping.y_min, mapping.y_max])
 
         af.snake_array(
             array=now_prim_e_DATA,
@@ -108,24 +90,26 @@ while n_electrons < n_electrons_required:
         if n_electrons >= n_electrons_required:
             break
 
-# %%
-# print(np.sum(e_matrix_val) / np.sum(e_matrix_E_dep) * 100)
+# %
+print(np.sum(e_matrix_val) / np.sum(e_matrix_E_dep) * 100)
 
-# np.save('data/e_matrix_val_TRUE_NEW.npy', e_matrix_val)
-# np.save('data/e_matrix_E_dep_NEW.npy', e_matrix_E_dep)
+sample = '6'
+
+np.save('data/e_matrix_val_sample_' + sample + '.npy', e_matrix_val)
+np.save('data/e_matrix_E_dep_sample_' + sample + '.npy', e_matrix_E_dep)
 
 # %%
+# e_matrix_val = np.load('data/e_matrix_val_TRUE.npy')
+e_matrix_val = np.load('data/e_matrix_val_sample_6.npy')
+
 plt.figure(dpi=300)
 plt.imshow(np.sum(e_matrix_val, axis=1).transpose())
 plt.show()
-
-# %%
-ans = np.load('data/e_matrix_val_TRUE.npy')
-bns = np.load('data/e_matrix_E_dep.npy')
-
-# %%
-ans = np.load('/Volumes/TOSHIBA EXT/4Harris/e_DATA_Pn_1.npy')
-bns = np.load('/Volumes/Transcend/e_DATA_500nm_point_NEW/e_DATA_Pn_0.npy')
-
-
-
+#
+# # %%
+# ans = np.load('data/e_matrix_val_TRUE.npy')
+# bns = np.load('data/e_matrix_E_dep.npy')
+#
+# # %%
+# ans = np.load('/Volumes/TOSHIBA EXT/4Harris/e_DATA_Pn_1.npy')
+# bns = np.load('/Volumes/Transcend/e_DATA_500nm_point_NEW/e_DATA_Pn_0.npy')

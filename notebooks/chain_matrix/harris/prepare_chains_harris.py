@@ -16,7 +16,7 @@ af = importlib.reload(af)
 cp = importlib.reload(cp)
 
 # %%
-source_dir = '/Volumes/ELEMENTS/Spyder/Chains/'
+source_dir = '/Volumes/TOSHIBA EXT/Chains/'
 chains = []
 
 for folder in os.listdir(source_dir):
@@ -42,40 +42,45 @@ mw_probs_n = np.load('data/mw_distributions/mw_probs_n_harris.npy')
 # plt.show()
 
 # %%
-chain_list = []
-chain_lens_list = []
-n_monomers_now = 0
-progress_bar = tqdm(total=n_monomers_required, position=0)
+# for sample in ['4', '5', '6']:
+for sample in ['5', '6']:
 
-while True:
+    chain_list = []
+    chain_lens_list = []
+    n_monomers_now = 0
+    progress_bar = tqdm(total=n_monomers_required, position=0)
 
-    if n_monomers_now > n_monomers_required:
-        print('Needed density is achieved')
-        break
+    while True:
 
-    chain_base_ind = np.random.choice(len(chains))
-    now_chain_base = chains[chain_base_ind]
+        if n_monomers_now > n_monomers_required:
+            print('Needed density is achieved')
+            break
 
-    now_chain_len = int(np.random.choice(mw, p=mw_probs_n) / 100)
-    chain_lens_list.append(now_chain_len)
+        chain_base_ind = np.random.choice(len(chains))
+        now_chain_base = chains[chain_base_ind]
 
-    beg_ind = np.random.choice(len(now_chain_base) - now_chain_len)
-    now_chain = now_chain_base[beg_ind:beg_ind + now_chain_len, :]
-    chain_list.append(now_chain)
+        now_chain_len = int(np.random.choice(mw, p=mw_probs_n) / 100)
+        chain_lens_list.append(now_chain_len)
 
-    n_monomers_now += now_chain_len
-    progress_bar.update(now_chain_len)
+        beg_ind = np.random.choice(len(now_chain_base) - now_chain_len)
+        now_chain = now_chain_base[beg_ind:beg_ind + now_chain_len, :]
+        chain_list.append(now_chain)
 
-chain_lens_array = np.array(chain_lens_list)
+        n_monomers_now += now_chain_len
+        progress_bar.update(now_chain_len)
 
-# %% save chains to files
-progress_bar = tqdm(total=len(chain_list), position=0)
+    chain_lens_array = np.array(chain_lens_list)
 
-for n, chain in enumerate(chain_list):
-    np.save('/Volumes/ELEMENTS/chains_harris/prepared_chains_3/chain_' + str(n) + '.npy', chain)
-    progress_bar.update()
+    # % save chains to files
+    progress_bar = tqdm(total=len(chain_list), position=0)
 
-np.save('/Volumes/ELEMENTS/chains_harris/prepared_chains_3/chain_lens.npy', chain_lens_array)
+    # sample = '4'
+
+    for n, chain in enumerate(chain_list):
+        np.save('/Volumes/TOSHIBA EXT/chains_harris/prepared_chains_' + sample + '/chain_' + str(n) + '.npy', chain)
+        progress_bar.update()
+
+    np.save('/Volumes/TOSHIBA EXT/chains_harris/prepared_chains_' + sample + '/chain_lens.npy', chain_lens_array)
 
 # %%
 print('Mn =', np.average(chain_lens_array) * 100)

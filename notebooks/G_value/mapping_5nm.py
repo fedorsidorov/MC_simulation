@@ -26,15 +26,20 @@ weights = [
     0.085, 0.090, 0.095, 0.100, 0.105, 0.110, 0.115, 0.120, 0.125, 0.130, 0.135
 ]
 
+# weights = [
+#     0.030, 0.080, 0.135
+# ]
+
+sample = '6'
+
+
 for weight in weights:
 
     print(weight)
 
-    e_matrix_val = np.load('/Users/fedor/PycharmProjects/MC_simulation/data/e_matrix_val_TRUE.npy')
-    e_matrix_dE = np.load('data/e_matrix_E_dep.npy')
-
-    # e_matrix_val = np.load('/Users/fedor/PycharmProjects/MC_simulation/data/e_matrix_val_TRUE_NEW.npy')
-    # e_matrix_dE = np.load('data/e_matrix_E_dep_NEW.npy')
+    e_matrix_val = np.load('/Users/fedor/PycharmProjects/MC_simulation/data/e_matrix_val_sample_' +
+                           sample + '.npy')
+    e_matrix_dE = np.load('data/e_matrix_E_dep_sample_' + sample + '.npy')
 
     resist_shape = np.shape(e_matrix_val)
     e_matrix_sci = np.zeros(resist_shape)
@@ -54,10 +59,9 @@ for weight in weights:
         progress_bar.update()
     print('scission matrix is formed')
 
-    sample = '1'
-
     resist_matrix = np.load('/Volumes/TOSHIBA EXT/chains_harris/resist_matrix_' + sample + '.npy')
-    chain_lens = np.load('/Volumes/TOSHIBA EXT/chains_harris/prepared_chains_' + sample + '/chain_lens.npy')
+    chain_lens = np.load('/Volumes/TOSHIBA EXT/chains_harris/prepared_chains_' + sample +
+                         '/chain_lens.npy')
     n_chains = len(chain_lens)
 
     chain_tables = deque()

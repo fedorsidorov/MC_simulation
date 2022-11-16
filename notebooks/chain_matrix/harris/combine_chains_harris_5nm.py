@@ -51,7 +51,7 @@ def get_zero_shift(array):
 
 
 # %%
-source_folder = '/Volumes/TOSHIBA EXT/chains_harris/prepared_chains_3/'
+source_folder = '/Volumes/TOSHIBA EXT/chains_harris/prepared_chains_5/'
 
 chain_lens = np.load(source_folder + 'chain_lens.npy')
 chain_list = []
@@ -125,10 +125,10 @@ print(np.sqrt(np.var(hist_5nm)))
 print(part_empty)
 
 # %%
-np.save('data/harris_monomer_hist_5nm.npy', hist_5nm)
+# np.save('data/harris_monomer_hist_5nm.npy', hist_5nm)
 
 # %% save chains to files
-dest_folder = '/Volumes/ELEMENTS/chains_harris/rot_sh_sn_chains_3/'
+dest_folder = '/Volumes/TOSHIBA EXT/chains_harris/rot_sh_sn_chains_5/'
 progress_bar = tqdm(total=len(chain_list), position=0)
 
 for n, chain in enumerate(final_chain_list):

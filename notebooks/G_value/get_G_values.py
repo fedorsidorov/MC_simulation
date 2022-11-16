@@ -33,33 +33,32 @@ plt.show()
 #     0.021, 0.022, 0.023, 0.024, 0.025, 0.026, 0.027, 0.028, 0.029, 0.030
 # ]
 
-# weights = [
-#     0.030, 0.035, 0.040, 0.045, 0.050, 0.055, 0.060, 0.065, 0.070, 0.075, 0.080,
-#     0.085, 0.090, 0.095, 0.100, 0.105, 0.110, 0.115, 0.120, 0.125, 0.130, 0.135
-# ]
+weights = [
+    0.030, 0.035, 0.040, 0.045, 0.050, 0.055, 0.060, 0.065, 0.070, 0.075, 0.080,
+    0.085, 0.090, 0.095, 0.100, 0.105, 0.110, 0.115, 0.120, 0.125, 0.130, 0.135
+]
 
-weights = [0.03]
+# weights = [
+#     0.030, 0.080, 0.135
+# ]
 
 GG_sim = np.zeros(len(weights))
 GG_theor = np.zeros(len(weights))
 
-# sample = '3'
-sample = '1'
+sample = '5'
 
 # plt.figure(dpi=300)
 
-fontsize = 14
+# fontsize = 14
 
 _, ax = plt.subplots(dpi=300)
 fig = plt.gcf()
 # fig.set_size_inches(4, 3)
-fig.set_size_inches(6, 4.5)
+# fig.set_size_inches(6, 4.5)
 
 markers = 'v-', '^-', '*-'
 
-# for n, sample in enumerate(['1', '2', '3']):
-# for n, sample in enumerate(['3']):
-for n, sample in enumerate(['1']):
+for n, sample in enumerate([sample]):
 
     for i, weight in enumerate(weights):
 
@@ -96,32 +95,29 @@ for n, sample in enumerate(['1']):
     plt.plot(TT_sim, weights, 'r-o', linewidth=3, label='моделирование G$_S$ на основе M$_n$')
     plt.plot(TT_theor, weights, '--o', color='C0', linewidth=3, label='моделирование G$_S$ на основе E$_{dep}$')
 
-for tick in ax.xaxis.get_major_ticks():
-    tick.label.set_fontsize(fontsize)
-for tick in ax.yaxis.get_major_ticks():
-    tick.label.set_fontsize(fontsize)
+# for tick in ax.xaxis.get_major_ticks():
+#     tick.label.set_fontsize(fontsize)
+# for tick in ax.yaxis.get_major_ticks():
+#     tick.label.set_fontsize(fontsize)
 
 plt.xlim(0, 200)
-plt.ylim(0.02, 0.12)
-plt.xlabel('T, °C', fontsize=fontsize)
-plt.ylabel('вероятность разрыва (P$_S$)', fontsize=fontsize)
-plt.legend(fontsize=fontsize)
+# plt.ylim(0.02, 0.12)
+# plt.xlabel('T, °C', fontsize=fontsize)
+plt.title('sample ' + sample)
+plt.xlabel('T, °C')
+plt.ylabel('вероятность разрыва (P$_S$)')
+plt.legend()
 
 plt.grid()
-plt.show()
 
-# plt.savefig('G.jpg', bbox_inches='tight')
+plt.savefig('notebooks/G_value/samples/G_value_' + sample + '.jpg', bbox_inches='tight')
+np.save('notebooks/G_value/samples/TT_sim_' + sample + '.npy', TT_sim)
+np.save('notebooks/G_value/samples/TT_theor_' + sample + '.npy', TT_theor)
 
-#
-# mcf.lin_lin_interp(TT_sim, weights)(130)
+# plt.show()
 
 # %%
-ans = np.load('data/e_matrix_val_TRUE.npy')
-cns = np.load('data/e_matrix_val_TRUE_1.npy')
-bns = np.load('data/e_matrix_val_TRUE_2.npy')
-
-
-
-
+# mcf.lin_lin_interp(TT_sim, weights)(130)
+# np.save('notebooks/G_value/samples/weights.npy', weights)
 
 

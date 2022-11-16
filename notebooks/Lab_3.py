@@ -1,73 +1,110 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from scipy.optimize import curve_fit
+
+
 # %%
-mu_0 = 4 * np.pi * 1e-7
-
-R = 20e-3
-I_m = 70e-3
-# I_eff = I_m / np.sqrt(2)
-N = 2400
-N_k = 500
-l = 180e-3
-R = 20e-3
-d = 7e-3
-nu = 1000
-
-n = N / l
+def func(x, k, b):
+    return k*x + b
 
 
-def get_B_theor(x):
-    B_theor = mu_0 * n * I_m / 2 * (
-        (l + x) / np.sqrt((l + x)**2 + R**2) - x / np.sqrt(x**2 + R**2)
-    )
-    return B_theor
+U0 = np.array([6, 7, 8])
+d1 = np.array([23.8, 22.7, 19.3]) * 1e-3
+d2 = np.array([42.6, 36.7, 35.2]) * 1e-3
+
+r1_2_inv = 1 / (d1/2)**2
+r2_2_inv = 1 / (d2/2)**2
+
+popt_1, _ = curve_fit(func, U0, r1_2_inv)
+popt_2, _ = curve_fit(func, U0, r2_2_inv)
+
+xx = np.linspace(0, 10, 100)
+yy_1 = func(xx, *popt_1)
+yy_2 = func(xx, *popt_2)
 
 
-def get_B_exp(u_eff):
-    B_exp = u_eff / (((np.pi * d)**2 * N_k * nu)/(2 * np.sqrt(2)))
-    return B_exp
+plt.figure(figsize=[4*1.2, 3*1.2], dpi=300)
 
+plt.plot(U0, r1_2_inv, '.', label='1 max')
+plt.plot(U0, r2_2_inv, '.', label='2 max')
 
-xx = np.array([
-    -90, -80, -70, -60, -50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50, 60
-]) * 1e-3
+plt.plot(xx, yy_1)
+plt.plot(xx, yy_2)
 
-U_eff = np.array([
-    97.49, 98.39, 98.72, 97.99, 97.68, 95.99, 92.33, 86.83, 73.08, 50.02, 27.68, 14.13, 8.31, 4.98, 3.44, 2.58
-]) * 1e-3
-
-B_theor = get_B_theor(xx) * 1000
-B_exp = get_B_exp(U_eff) * 1000
-
-dB_exp = 0.03857
-delta_B_exp = B_exp * dB_exp
-
-plt.figure(dpi=300)
-plt.errorbar(xx, B_exp, yerr=delta_B_exp, label='эксп')
-plt.errorbar(xx, B_theor, label='теор')
-
-
-plt.xlabel('x, мм')
-plt.ylabel('B, мТл')
 plt.legend()
-
-plt.xlim(-0.1, 0.08)
-plt.ylim(0, 1.4)
+plt.xlabel('U$_0$, В')
+plt.ylabel(r'$\frac{1}{r^2}$, м$^{-2}$')
+plt.xlim(0, 10)
+plt.ylim(0, 12e+3)
 plt.grid()
-
 plt.show()
-# plt.savefig('lab_3_2.jpg', dpi=300)
 
 # %%
-R_T = 8.9
+D = 127e-3
+h = 6.6262e-34
+e = 1.6022e-19
+m = 9.1095e-31
 
-xx = np.array([40, 50, 60]) * 1e-3
-U_T = np.array([0.230, 0.345, 0.488])
+gamma_1 = 1838.45
+gamma_2 = 512.08
 
-I_l = U_T / R_T
+d_1 = D * h * np.sqrt(gamma_1 / (2 * m * e))
+d_2 = D * h * np.sqrt(gamma_2 / (2 * m * e))
 
-B_exp = np.array([0.058, 0.040, 0.030])
+# %%
+U0 = np.array([6, 7, 8]) * 1e+3
+d1 = np.array([23.8, 22.7, 19.3]) * 1e-3
+d2 = np.array([42.6, 36.7, 35.2]) * 1e-3
 
-B_z = B_exp * I_l / I_m
+r1_2_inv = 1 / (d1/2)**2
+r2_2_inv = 1 / (d2/2)**2
+
+popt_1, _ = curve_fit(func, U0, r1_2_inv)
+popt_2, _ = curve_fit(func, U0, r2_2_inv)
+
+xx = np.linspace(0, 1e+4, 1000)
+yy_1 = func(xx, *popt_1)
+yy_2 = func(xx, *popt_2)
+
+
+plt.figure(figsize=[4*1.2, 3*1.2], dpi=300)
+
+plt.plot(U0, r1_2_inv, '.', label='1 max')
+plt.plot(U0, r2_2_inv, '.', label='2 max')
+
+plt.plot(xx, yy_1)
+plt.plot(xx, yy_2)
+
+plt.legend()
+plt.xlabel('U$_0$, В')
+plt.ylabel(r'$\frac{1}{r^2}$, м$^{-2}$')
+plt.xlim(0, 1e+4)
+plt.ylim(0, 12e+3)
+plt.grid()
+plt.show()
+
+# %%
+D = 127e-3
+h = 6.6262e-34
+e = 1.6022e-19
+m = 9.1095e-31
+
+gamma_1 = 1.838
+gamma_2 = 0.512
+
+d_1 = D * h * np.sqrt(gamma_1 / (2 * m * e))
+d_2 = D * h * np.sqrt(gamma_2 / (2 * m * e))
+
+
+
+
+
+
+
+
+
+
+
+
 
