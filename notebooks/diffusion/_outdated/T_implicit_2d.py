@@ -75,7 +75,6 @@ while t < t_end:
             TT[i, j] = alpha[j] * TT[i, j + 1] + beta[j]
 
 
-# %%
 plt.figure(dpi=300)
 plt.imshow(TT.transpose())
 plt.colorbar()
