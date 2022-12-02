@@ -2,11 +2,11 @@ import importlib
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from mapping import mapping_3um_500nm as mm
+# from mapping import mapping_3um_500nm as mm
 from functions import MC_functions as mcf
 from scipy.optimize import curve_fit
 
-mm = importlib.reload(mm)
+# mm = importlib.reload(mm)
 mcf = importlib.reload(mcf)
 
 
@@ -245,46 +245,47 @@ def run_evolver(file_full_path, commands_full_path):
     #           '/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/DEBER_datafile.fe')
 
 
-def get_evolver_times_profiles():
-    SE = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/vlist_SIM.txt')
+# def get_evolver_times_profiles():
+#     SE = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/SIM/vlist_SIM.txt')
+#
+#     times = []
+#     profiles = []
+#     beg = -1
+#
+#     for i, line in enumerate(SE[1:]):
+#         if line[1] == line[2] == -100:
+#             print('read')
+#             now_time = line[0]
+#             times.append(now_time)
+#             profile = SE[beg + 1:i, 1:]
+#
+#             profile = profile[np.where(np.abs(profile[:, 0]) < mm.x_max * 1e-3)]
+#             profile = profile[np.where(profile[:, 1] > 0.03)]
+#
+#             sort_inds = np.argsort(profile[:, 0])
+#             profile[:, 0] = profile[sort_inds, 0]
+#             profile[:, 1] = profile[sort_inds, 1]
+#
+#             profiles.append(profile)
+#             beg = i
+#
+#     pr_beg = profiles[0]
+#     pr_end = profiles[1]
+#
+#     shift = ((pr_end[0, 1] - pr_beg[0, 1]) + (pr_end[-1, 1] - pr_beg[-1, 1])) / 2
+#     profiles[1][:, 1] -= shift
+#
+#     return times, profiles
 
-    times = []
-    profiles = []
-    beg = -1
 
-    for i, line in enumerate(SE[1:]):
-        if line[1] == line[2] == -100:
-            print('read')
-            now_time = line[0]
-            times.append(now_time)
-            profile = SE[beg + 1:i, 1:]
-
-            profile = profile[np.where(np.abs(profile[:, 0]) < mm.x_max * 1e-3)]
-            profile = profile[np.where(profile[:, 1] > 0.03)]
-
-            sort_inds = np.argsort(profile[:, 0])
-            profile[:, 0] = profile[sort_inds, 0]
-            profile[:, 1] = profile[sort_inds, 1]
-
-            profiles.append(profile)
-            beg = i
-
-    pr_beg = profiles[0]
-    pr_end = profiles[1]
-
-    shift = ((pr_end[0, 1] - pr_beg[0, 1]) + (pr_end[-1, 1] - pr_beg[-1, 1])) / 2
-    profiles[1][:, 1] -= shift
-
-    return times, profiles
-
-
-def get_evolver_profile(path):
+def get_evolver_profile(path, y_max):
 
     SE = np.loadtxt(path)
 
     raw_profile = SE[1:, :]
 
-    raw_profile = raw_profile[np.where(raw_profile[:, 0] > mm.y_max * 1e-3 / 2)]
+    # raw_profile = raw_profile[np.where(raw_profile[:, 0] > mm.y_max * 1e-3 / 2)]
+    raw_profile = raw_profile[np.where(raw_profile[:, 0] > y_max * 1e-3 / 2)]
     raw_profile = raw_profile[np.where(raw_profile[:, 2] > 0)]
     # raw_profile = raw_profile[np.where(raw_profile[:, 2] > mm.d_PMMA / 1000)]
 

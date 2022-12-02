@@ -116,8 +116,29 @@ np.save('notebooks/G_value/samples/TT_theor_' + sample + '.npy', TT_theor)
 
 # plt.show()
 
-# %%
-# mcf.lin_lin_interp(TT_sim, weights)(130)
-# np.save('notebooks/G_value/samples/weights.npy', weights)
+# %% Treat G-values
+weights = np.load('notebooks/G_value/samples/weights.npy')
+
+TT_1 = np.load('notebooks/G_value/samples/TT_sim_1.npy')
+TT_2 = np.load('notebooks/G_value/samples/TT_sim_2.npy')
+TT_3 = np.load('notebooks/G_value/samples/TT_sim_3.npy')
+TT_4 = np.load('notebooks/G_value/samples/TT_sim_4.npy')
+TT_5 = np.load('notebooks/G_value/samples/TT_sim_5.npy')
+
+TT = (TT_1 + TT_2 + TT_3 + TT_4 + TT_5) / 5
+
+# plt.figure(dpi=300)
+# plt.plot(TT, weights)
+# plt.show()
+
+mcf.lin_lin_interp(TT, weights)(140)  # 0.08581784
+mcf.lin_lin_interp(TT, weights)(145)  # 0.08725558
+mcf.lin_lin_interp(TT, weights)(150)  # 0.08869333
+mcf.lin_lin_interp(TT, weights)(155)  # 0.09013067
+mcf.lin_lin_interp(TT, weights)(160)  # 0.09156405
+
+
+
+
 
 

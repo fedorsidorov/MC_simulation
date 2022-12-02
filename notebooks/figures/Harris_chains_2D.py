@@ -22,7 +22,9 @@ for n in range(1447):
 # font_size = 8
 # font_size = 16
 
-fig = plt.figure(dpi=600)
+# fig = plt.figure(dpi=600)
+fig, ax = plt.subplots(dpi=300, figsize=[4, 3])
+
 # fig = plt.figure(dpi=600, figsize=[6.4 / 1.9, 4.8 / 1.9])
 # fig = plt.figure(dpi=600, figsize=[4.8 / 1.9, 4.8 / 1.9])
 # ax = fig.gca(projection='3d')
@@ -34,9 +36,9 @@ fig = plt.figure(dpi=600)
 
 step = 1
 
-for chain in chain_list[4::45]:
+# for chain in chain_list[4::45]:
 # for chain in chain_list[4::15]:
-# for chain in chain_list[4::1]:
+for chain in chain_list[4::1]:
 
     plt.plot(chain[::step, 0], chain[::step, 2], '.', markersize=0.5)
 
@@ -44,8 +46,10 @@ for chain in chain_list[4::45]:
 # ax.set_ylabel(r'y, nm', fontsize=font_size)
 # ax.set_zlabel(r'z, nm', fontsize=font_size)
 
-plt.xlabel(r'x, нм', fontsize=18)
-plt.ylabel(r'z, нм', fontsize=18)
+# plt.xlabel(r'x, нм', fontsize=18)
+# plt.ylabel(r'z, нм', fontsize=18)
+plt.xlabel(r'$x$, нм')
+plt.ylabel(r'$z$, нм')
 
 # plt.plot(np.linspace(mm.x_min, mm.x_max, mm.l_x), np.ones(mm.l_x) * mm.y_min,
 #         np.ones(mm.l_x) * mm.z_min, 'k')
@@ -95,7 +99,7 @@ plt.ylabel(r'z, нм', fontsize=18)
 plt.xlim(-50, 50)
 plt.ylim(0, 100)
 plt.gca().set_aspect('equal', adjustable='box')
-plt.savefig('figures/Harris_chains_1step.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('figures/Harris_chains_2step.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('figures/Harris_chains_3step.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('Harris_chains_1step.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('Harris_chains_2step.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('Harris_chains_3step.jpg', dpi=600, bbox_inches='tight')
 plt.show()

@@ -28,12 +28,8 @@ xx_366 = np.load('notebooks/DEBER_simulation/exp_profiles/366/xx_366_zero.npy')
 zz_366 = np.load('notebooks/DEBER_simulation/exp_profiles/366/zz_366_zero.npy')
 
 d_PMMA = 500
-E_beam = 20e+3
 
 time_step = 1
-
-tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
-Mn_150 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mn_150.npy') * 100
 
 # PMMA 950K
 PD = 2.47
@@ -43,156 +39,6 @@ y_0 = x_0 / (z_0 + 1)
 
 
 # %% other functions
-def save_eta():
-    plt.figure(dpi=300)
-    plt.loglog(MM, ETA)
-    plt.title('viscosity graph')
-    plt.xlabel('M')
-    plt.ylabel(r'$\eta$')
-    plt.grid()
-    plt.savefig(path + 'ETA.jpg', dpi=300)
-    plt.close('all')
-
-
-def save_ratio():
-    plt.figure(dpi=300)
-    plt.plot(xx_centers, ratio_array)
-    plt.title('ratio')
-    plt.xlabel('x, nm')
-    plt.ylabel('ratio')
-    plt.grid()
-    plt.ylim(0, 1.2)
-
-    if not os.path.exists(path + 'ratios/'):
-        os.makedirs(path + 'ratios/')
-
-    plt.savefig(path + 'ratios/' + 'ratio_' + str(now_time) + '_s.jpg', dpi=300)
-    plt.close('all')
-
-
-def save_surface_inds():
-    plt.figure(dpi=300)
-    plt.plot(xx_centers, surface_inds)
-    plt.title('surface inds')
-    plt.xlabel('x, nm')
-    plt.ylabel('surface inds')
-    plt.grid()
-
-    if not os.path.exists(path + 's_inds/'):
-        os.makedirs(path + 's_inds/')
-
-    plt.savefig(path + 's_inds/' + 's_inds_' + str(now_time) + '_s.jpg', dpi=300)
-    plt.close('all')
-
-
-def save_tau_matrix():
-    plt.figure(dpi=300)
-    plt.imshow(tau_matrix.transpose())
-    plt.colorbar()
-
-    if not os.path.exists(path + 'tau/'):
-        os.makedirs(path + 'tau/')
-
-    plt.savefig(path + 'tau/' + 'tau_' + str(now_time) + '_s.jpg', dpi=300)
-    plt.close('all')
-
-
-def save_Mn_matrix():
-    plt.figure(dpi=300)
-    plt.imshow(Mn_matrix.transpose())
-    plt.colorbar()
-
-    if not os.path.exists(path + 'Mn_matrix/'):
-        os.makedirs(path + 'Mn_matrix/')
-
-    plt.savefig(path + 'Mn_matrix/' + 'Mn_matrix_' + str(now_time) + '_s.jpg', dpi=300)
-    plt.close('all')
-
-
-def save_zz_vac_centers():
-    plt.figure(dpi=300)
-    plt.plot(xx_centers, zz_vac_centers, label='zz_vac_centers')
-    plt.title('zz_vac_centers, time = ' + str(now_time))
-    plt.xlabel('x, nm')
-    plt.ylabel('zz_vac_centers')
-    plt.xlim(-1500, 1500)
-    plt.legend()
-    plt.grid()
-
-    if not os.path.exists(path + 'zz_vac_centers/'):
-        os.makedirs(path + 'zz_vac_centers/')
-
-    plt.savefig(path + 'zz_vac_centers/' + 'zz_vac_centers_' + str(now_time) + '_s.jpg', dpi=300)
-    plt.close('all')
-
-
-def save_zz_vac_bins():
-    plt.figure(dpi=300)
-    plt.plot(xx_bins, zz_vac_bins)
-    plt.title('zz_vac_bins, time = ' + str(now_time))
-    plt.xlabel('x, nm')
-    plt.ylabel('zz_vac_bins')
-    plt.xlim(-1500, 1500)
-    plt.grid()
-
-    if not os.path.exists(path + 'zz_vac_bins/'):
-        os.makedirs(path + 'zz_vac_bins/')
-
-    plt.savefig(path + 'zz_vac_bins/' + 'zz_vac_bins_' + str(now_time) + '_s.jpg', dpi=300)
-    plt.close('all')
-
-
-def save_mobilities():
-    plt.figure(dpi=300)
-    plt.semilogy(xx_centers, mobs_array, label='Mn mobility')
-    plt.semilogy(xx_centers, mobs_centers, '--', label='Mn mobility filt')
-    plt.title('mobilities, time = ' + str(now_time))
-    plt.xlabel('x, nm')
-    plt.ylabel('SE mobility')
-    plt.xlim(-1500, 1500)
-    plt.legend()
-    plt.grid()
-
-    if not os.path.exists(path + 'mobs/'):
-        os.makedirs(path + 'mobs/')
-
-    plt.savefig(path + 'mobs/' + 'mobilities_' + str(now_time) + '_s.jpg', dpi=300)
-    plt.close('all')
-
-
-def save_monomers():
-    plt.figure(dpi=300)
-    plt.plot(xx_centers, monomer_array)
-    plt.title('monomer array, time = ' + str(now_time))
-    plt.xlabel('x, nm')
-    plt.ylabel('n_monomers')
-    plt.grid()
-
-    if not os.path.exists(path + 'monomers/'):
-        os.makedirs(path + 'monomers/')
-
-    plt.savefig(path + '/monomers/monomer_array_' + str(now_time) + '_s.jpg', dpi=300)
-    plt.close('all')
-
-
-def save_scissions():
-    plt.figure(dpi=300)
-
-    scission_matrix_plot = deepcopy(now_scission_matrix)
-
-    for i, _ in enumerate(xx_centers):
-        scission_matrix_plot[i, surface_inds[i]] = np.max(scission_matrix_plot)
-
-    plt.imshow(scission_matrix_plot.transpose())
-    # plt.plot(xx_centers, np.sum(now_scission_matrix, axis=1))
-
-    if not os.path.exists(path + 'scissions/'):
-        os.makedirs(path + 'scissions/')
-
-    plt.savefig(path + '/scissions/scissios_' + str(now_time) + '_s.jpg', dpi=300)
-    plt.close('all')
-
-
 def save_profiles(time, is_exposure=True):
     plt.figure(dpi=300)
     plt.plot(xx_total, zz_total, '.-', color='C0', ms=2, label='SE profile')
@@ -204,6 +50,7 @@ def save_profiles(time, is_exposure=True):
 
     if is_exposure:
         plt.plot(now_x0_array, d_PMMA - now_z0_array, 'm.')
+        plt.plot(-now_x0_array, d_PMMA - now_z0_array, 'm.')
 
     plt.plot(xx_bins, np.zeros(len(xx_bins)), 'k')
 
@@ -228,7 +75,17 @@ def get_pos_enter(now_x0):
         if ne - 50 <= now_z0 < ne:
             position_enter = ne - 50
 
+    if now_z0 >= 500:
+        position_enter = 500
+
     return int(position_enter)
+
+
+def get_zip_len(T_C):
+    zl_130 = 100
+    zl_150 = 150
+
+    return zl_130 + 50 / 20 * (T_C - 130)
 
 
 def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
@@ -255,8 +112,7 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
     zz_PMMA_SE_final = np.concatenate((zz_PMMA_SE, zz_PMMA_SE, zz_PMMA_SE))
     mobs_SE_final = np.concatenate((mobs_SE, mobs_SE, mobs_SE))
 
-    path_name = 'notebooks/SE/datafiles/datafile_' + str(beam_sigma) + '_' +\
-                str(zip_length) + '_' + str(power_low) + '_' + '.fe'
+    path_name = 'notebooks/SE/datafiles/datafile_T.fe'
 
     ef.create_datafile_latest_um(
         yy=xx_SE_final * 1e-3,
@@ -273,7 +129,8 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
     )
 
     profile_surface = ef.get_evolver_profile(
-        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_surface.txt'
+        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_surface.txt',
+        y_max=mm.y_max
     ) * 1000
 
     new_xx_surface, new_zz_surface = profile_surface[:, 0], profile_surface[:, 1]
@@ -281,7 +138,8 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
     new_zz_surface_final = mcf.lin_lin_interp(new_xx_surface, new_zz_surface)(xx_bins)
 
     profile_inner = ef.get_evolver_profile(  # inner
-        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt'
+        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt',
+        y_max=mm.y_max
     ) * 1000
 
     new_xx_inner, new_zz_inner = profile_inner[:, 0], profile_inner[:, 1]
@@ -289,7 +147,8 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
     new_zz_inner_final = mcf.lin_lin_interp(new_xx_inner, new_zz_inner)(xx_centers)
 
     profile_total = ef.get_evolver_profile(  # total
-        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt'
+        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt',
+        y_max=mm.y_max
     ) * 1000
 
     new_xx_total, new_zz_total = profile_total[::2, 0], profile_total[::2, 1]
@@ -305,7 +164,9 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
 dose_factor = 3.8
 
 exposure_time = 100
-It = 1.2e-9 * exposure_time  # C
+# It = 1.2e-9 * exposure_time  # C
+I_exposure = 1e-9
+It = I_exposure * exposure_time  # C
 n_lines = 625
 
 pitch = 3e-4  # cm
@@ -319,25 +180,37 @@ y_depth = mm.ly * 1e-7  # cm
 
 sim_dose = It_line_l * y_depth * dose_factor
 n_electrons_required = sim_dose / 1.6e-19
-n_electrons_required_s = int(n_electrons_required / exposure_time)  # 1870
+n_electrons_required_s = int(n_electrons_required / exposure_time)
 
 n_electrons_in_file = 31
 
-n_files_required_s = int(n_electrons_required_s / n_electrons_in_file)  # 60
+n_files_required_s = int(n_electrons_required_s / n_electrons_in_file / 2)
 
 kernel_size = 3
 Mn_edge = 42000
 power_high = 3.4
 
 # PARAMETERS #
-# beam_sigma = 300
+T_C = 140
+# T_C = 145
+# T_C = 155
+# T_C = 160
+
+tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
+Mn_T = np.load('notebooks/Boyd_kinetic_curves/arrays/Mn_' + str(T_C) + '.npy') * 100
+
+E_beam = 20e+3
 beam_sigma = 250
-zip_length = 150
+zip_length = get_zip_len(T_C)
 power_low = 1.4
 
 n_e_DATA_files = 600
-T_C = 150
-scission_weight = 0.09  # 150 C - 0.088568
+
+scission_weight = 0.08581784  # 140 C
+# scission_weight = 0.08725558  # 145 C
+# scission_weight = 0.08869333  # 150 C
+# scission_weight = 0.09013067  # 155 C
+# scission_weight = 0.09156405  # 160 C
 # PARAMETERS #
 
 x_step, z_step = 100, 5
@@ -348,7 +221,7 @@ bin_volume = x_step * mm.ly * z_step
 bin_n_monomers = bin_volume / const.V_mon_nm3
 
 # %%
-for n_try in range(99, 100, 1):
+for n_try in range(2, 10):
 
     zz_vac_bins = np.zeros(len(xx_bins))
     zz_vac_centers = np.zeros(len(xx_centers))
@@ -357,13 +230,12 @@ for n_try in range(99, 100, 1):
     zz_inner_centers = np.zeros(len(xx_centers))
 
     tau_matrix = np.zeros((len(xx_centers), len(zz_centers)))
-    Mn_matrix = np.ones((len(xx_centers), len(zz_centers))) * Mn_150[0]
+    Mn_matrix = np.ones((len(xx_centers), len(zz_centers))) * Mn_T[0]
     Mn_centers = np.zeros(len(xx_centers))
     mob_matrix = np.zeros((len(xx_centers), len(zz_centers)))
     mobs_array = np.zeros(len(xx_centers))
 
-    path = '/Volumes/Transcend/SIM_DEBER/150C_100s_final/sigma' + str(beam_sigma) +\
-        '_zip' + str(zip_length) + '/try_' + str(n_try) + '/'
+    path = '/Volumes/Transcend/SIM_DEBER/366_vary_params/T_' + str(T_C) + '/try_' + str(n_try) + '/'
 
     if not os.path.exists(path):
         os.makedirs(path)
@@ -373,8 +245,6 @@ for n_try in range(99, 100, 1):
 
     for i in range(len(ETA)):
         ETA[i] = rf.get_viscosity_experiment_Mn(T_C, MM[i], power_high, power_low, Mn_edge=Mn_edge)
-
-    save_eta()
 
     exposure_time = 100
     now_time = 0
@@ -436,11 +306,14 @@ for n_try in range(99, 100, 1):
         for i in range(len(xx_centers)):
             now_scission_matrix[i, :surface_inds[i]] = 0
 
+        # X2 HACK !!!
+        now_scission_matrix += now_scission_matrix[::-1, :]
+
         for i in range(len(xx_centers)):
             for j in range(len(zz_centers)):
                 now_k_s = now_scission_matrix[i, j] / time_step / bin_n_monomers
                 tau_matrix[i, j] += y_0 * now_k_s * time_step
-                Mn_matrix[i, j] = mcf.lin_log_interp(tau, Mn_150)(tau_matrix[i, j])
+                Mn_matrix[i, j] = mcf.lin_log_interp(tau, Mn_T)(tau_matrix[i, j])
                 mob_matrix[i, j] = rf.move_Mn_to_mobs(
                     Mn=Mn_matrix[i, j],
                     T_C=T_C,
@@ -454,19 +327,11 @@ for n_try in range(99, 100, 1):
 
         ratio_array = (zz_PMMA_inner + (zz_PMMA_centers - zz_PMMA_inner) / 2) / zz_PMMA_centers
 
-        # save_ratio()
-        # save_scissions()
-        # save_tau_matrix()
-        # save_surface_inds()
-        save_Mn_matrix()
-
         zip_length_matrix = np.ones(np.shape(now_scission_matrix)) * zip_length
-        # zip_length_matrix = Mn_matrix / 100 * Mn_factor
 
         monomer_matrix = now_scission_matrix * zip_length_matrix
         monomer_array = np.sum(monomer_matrix, axis=1)
         monomer_array *= ratio_array
-        # save_monomers()
 
         delta_h_array = monomer_array * const.V_mon_nm3 / x_step / mm.ly * 2  # triangle!
         new_zz_inner_centers = zz_inner_centers + delta_h_array
@@ -485,7 +350,6 @@ for n_try in range(99, 100, 1):
         )
 
         if now_time % 5 == 0:
-            save_mobilities()
             save_profiles(now_time, is_exposure=True)
 
         now_time += time_step
@@ -511,11 +375,6 @@ for n_try in range(99, 100, 1):
                    7, 6, 7, 6, 8, 7, 7, 6, 9, 9
                    ])
 
-    # Mn_centers = np.load('notebooks/DEBER_simulation/Mn_centers_test.npy')
-    # zz_vac_bins = np.load('notebooks/DEBER_simulation/zz_vac_bins_test.npy')
-    # zz_inner_centers = np.load('notebooks/DEBER_simulation/zz_inner_centers_test.npy')
-
-    # %
     for n_cooling_step, time_cooling_step in enumerate(tt):
 
         print(now_time)
@@ -537,7 +396,6 @@ for n_try in range(99, 100, 1):
             time_step=time_cooling_step
         )
 
-        save_mobilities()
         save_profiles(now_time, is_exposure=False)
 
         now_time += time_cooling_step
@@ -553,3 +411,17 @@ for n_try in range(99, 100, 1):
 
     np.save(path + 'xx_centers.npy', xx_centers)
     np.save(path + 'zz_inner_centers.npy', d_PMMA - zz_inner_centers)
+
+
+# %%
+tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
+Mn_140 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mn_140.npy')
+Mn_150 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mn_150.npy')
+
+plt.figure(dpi=300)
+plt.plot(tau, Mn_140)
+plt.plot(tau, Mn_150)
+plt.show()
+
+
+

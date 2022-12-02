@@ -66,8 +66,8 @@ coefs[2, :] = 159.0, 170.0, 0.3664, 0
 coefs[3, :] = -13.7, 0.5, 0, 0
 
 # w_pol = np.linspace(0, 1, 100)
-delta_T = np.linspace(0, 50, 100)
-# delta_T = -34
+# delta_T = np.linspace(0, 50, 100)
+delta_T = 30
 # delta_T = 0
 w_pol = 1
 # w_pol = 0.95

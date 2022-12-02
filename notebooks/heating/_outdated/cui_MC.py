@@ -20,7 +20,8 @@ E0 = 20e+3
 Q_C_cm2 = 0.87e-6
 Q_C_m2 = Q_C_cm2 * 1e+4  # C / m^2
 
-d = 0.9e-6  # m
+# d = 0.9e-6  # m
+d = 0.5e-6  # m
 
 # 1 - PMMA
 D_1 = 0.2  # W / m / K
@@ -213,13 +214,14 @@ plt.plot(tt, results, 'o-')
 plt.plot(tt, results + errors, '^--')
 plt.plot(tt, results - errors, 'v--')
 
-plt.title('900 nm PMMA layer, 0.85 nA/cm$^2$, t$_{exp}$=1000 s')
+# plt.title('900 nm PMMA layer, 0.85 nA/cm$^2$, t$_{exp}$=1000 s')
+plt.title('900 nm PMMA layer, 0.85 nA/cm$^2$')
 plt.xlabel('t, s')
 plt.ylabel(r'$\Delta$T, °C')
 
 plt.grid()
-plt.show()
 # plt.savefig('DEBER_heating.jpg')
+plt.show()
 
 # %%
 xx = x_centers_m

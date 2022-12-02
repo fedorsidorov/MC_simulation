@@ -501,7 +501,10 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, z0, beam_sigma, d_PMMA,
 n_electrons_in_file = 31
 
 d_PMMA = 500
-E_beam = 20e+3
+# E_beam = 20e+3
+# E_beam = 15e+3
+# E_beam = 25e+3
+E_beam = 5e+3
 
 # time_step = 1
 
@@ -513,8 +516,8 @@ zz_vacuum = np.zeros(len(xx_vacuum))
 # z0 = 0
 # z0 = 200
 
-# z0_arr = [50, 100, 150, 200, 250, 300, 350, 400]
-z0_arr = [0]
+# z0_arr = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450]
+z0_arr = [500]
 
 beam_sigma = 0
 
@@ -552,17 +555,8 @@ while True:
         #     stop = True
         #     break
 
-        # af.snake_array(
-        #     array=now_e_DATA_Pv,
-        #     x_ind=ind.e_DATA_x_ind,
-        #     y_ind=ind.e_DATA_y_ind,
-        #     z_ind=ind.e_DATA_z_ind,
-        #     xyz_min=[mm.x_min, mm.y_min, -np.inf],
-        #     xyz_max=[mm.x_max, mm.y_max, np.inf]
-        # )
-
         np.save(
-            '/Volumes/Transcend/e_DATA_500nm_point_NEW/0/e_DATA_Pv_' + str(n) + '.npy',
+            '/Volumes/Transcend/e_DATA_500nm_point_5keV/' + str(z0) + '/e_DATA_Pv_' + str(n) + '.npy',
             now_e_DATA_Pv
         )
 
@@ -573,16 +567,14 @@ while True:
 
 
 # %%
-ans = np.load('/Volumes/Transcend/e_DATA_500nm_point/0/e_DATA_Pv_3.npy')
+ans = np.load('/Volumes/Transcend/e_DATA_500nm_point_25keV/350/e_DATA_Pv_0.npy')
 
-len(np.where(ans[:, 6] > d_PMMA)[0])
+# len(np.where(ans[:, 6] > d_PMMA)[0])
 
-# plt.figure(dpi=300)
-# plt.plot(ans[:, 4], ans[:, 6], '.')
-
-# plt.ylim(0, 300)
-
-# plt.grid()
-# plt.show()
+plt.figure(dpi=300)
+plt.plot(ans[:, 4], ans[:, 6], '.')
+plt.ylim(0, 500)
+plt.grid()
+plt.show()
 
 
