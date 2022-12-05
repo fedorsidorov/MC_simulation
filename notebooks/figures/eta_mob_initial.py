@@ -8,8 +8,12 @@ mf = importlib.reload(mf)
 ff = importlib.reload(ff)
 
 # %% original profile in 2011' paper
-xx_um = np.array((0, 0.464, 0.513, 1.5, 1.55, 2)) - 1
-zz_nm = np.array((27.5, 27.5, 55.2, 55.2, 27.5, 27.5))
+xx_um_0 = np.array((0, 0.464, 0.513, 1.5, 1.55, 2)) - 1
+xx_um = np.concatenate([xx_um_0 - 4, xx_um_0 - 2, xx_um_0, xx_um_0 + 2, xx_um_0 + 4])
+
+zz_nm_0 = np.array((27.5, 27.5, 55.2, 55.2, 27.5, 27.5))
+zz_nm = np.concatenate([zz_nm_0, zz_nm_0, zz_nm_0, zz_nm_0, zz_nm_0])
+
 zz_um = zz_nm * 1e-3
 
 plt.figure(dpi=300)
@@ -38,8 +42,8 @@ zz_0_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=0)
 zz_100_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=100)
 
 plt.figure(dpi=300)
-plt.plot(xx_um, zz_um, 'o-', label='original')
 plt.plot(xx_prec_m * 1e+6, zz_0_um * 1e+6, label='analytic 0 s')
+plt.plot(xx_um, zz_um, 'o-', label='original')
 # plt.plot(yy_prec_um, zz_100_um, '.-', label='analytic 100 s')
 
 plt.xlim(-2, 2)
@@ -48,8 +52,8 @@ plt.ylabel(r'z, $\mu$m')
 plt.grid()
 plt.legend()
 
-plt.show()
 # plt.savefig('SE_fourier_beg.png', dpi=300)
+plt.show()
 
 # %%
 SE = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/REF_Leveder/vlist_REF_scale_1e-3.txt')

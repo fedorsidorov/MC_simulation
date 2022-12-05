@@ -17,11 +17,6 @@ mcf = importlib.reload(mcf)
 ind = importlib.reload(ind)
 const = importlib.reload(const)
 
-# font = {'family': 'Times New Roman',
-#         'size': 14}
-#
-# matplotlib.rc('font', **font)
-
 font = {'size': 14}
 matplotlib.rc('font', **font)
 
@@ -79,8 +74,8 @@ def get_D_Mn_150(Mn):
 MN = np.logspace(3, 6, 100)
 DD = get_D_Mn_135(MN)
 
-# plt.figure(dpi=600, figsize=[4, 3])
-plt.figure(dpi=600, figsize=[3.4, 2.55])
+plt.figure(dpi=600, figsize=[4, 3])
+# plt.figure(dpi=600, figsize=[3.4, 2.55])
 plt.loglog(MN, DD)
 
 plt.xlim(1e+3, 1e+6)
@@ -90,8 +85,8 @@ plt.xlabel(r'$M_n$, г/моль')
 plt.ylabel(r'$D$, см$^2$/c')
 plt.grid()
 
-# plt.savefig('DD_old.jpg', dpi=600, bbox_inches='tight')
-plt.savefig('DD_new.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('DD.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('DD_new.jpg', dpi=600, bbox_inches='tight')
 plt.show()
 
 # %%
@@ -175,27 +170,24 @@ for i in range(len(xx_centers)):
 
 # %%
 # scission_matrix = np.load('notebooks/diffusion/scission_matrix_5s.npy')
-scission_matrix = np.load('notebooks/diffusion/scission_matrix_50s.npy')
+# scission_matrix = np.load('notebooks/diffusion/scission_matrix_50s.npy')
 
 # Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_5s.npy')
-# Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_50s.npy')
+Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_50s.npy')
 
 plt.figure(dpi=600)
-fig, ax = plt.subplots(dpi=600, figsize=[4, 6])
 # fig, ax = plt.subplots(dpi=600, figsize=[4, 8])
-# plt.figure(dpi=600, figsize=[3.4, 2.55])
-# plt.figure(dpi=600, figsize=[3.4, 5])
+fig, ax = plt.subplots(dpi=600, figsize=[8, 6])
 
-plt.imshow(scission_matrix.transpose() / (0.05**2 * 0.1), extent=[-1500, 1500, 0, 500])
-# plt.imshow(Mn_matrix.transpose(), extent=[-1500, 1500, 0, 500])
+# plt.imshow(scission_matrix.transpose() / (0.05**2 * 0.1), extent=[-1500, 1500, 0, 500])
+plt.imshow(Mn_matrix.transpose(), extent=[-1500, 1500, 0, 500])
 
-# plt.title(r'$n_{sci}$ при $t$ = 5 c, 1/мкм$^3$')
-# plt.title(r'$n_{sci}$ при $t$ = 10 c, 1/мкм$^3$')
-plt.title(r'$n_{sci}$ при $t$ = 50 c, 1/мкм$^3$')
+# plt.title(r'$n_{sci}$ при $t$ = 5 c, 1/мкм$^3$', fontsize=14)
+# plt.title(r'$n_{sci}$ при $t$ = 10 c, 1/мкм$^3$', fontsize=14)
+# plt.title(r'$n_{sci}$ при $t$ = 50 c, 1/мкм$^3$', fontsize=14)
 
-# plt.title(r'$M_n$ при $t$ = 5 c, г/моль')
-# plt.title(r'$M_n$ при $t$ = 10 c, г/моль')
-# plt.title(r'$M_n$ при $t$ = 50 c, г/моль')
+# plt.title(r'$M_n$ при $t$ = 5 c, г/моль', fontsize=14)
+plt.title(r'$M_n$ при $t$ = 50 c, г/моль', fontsize=14)
 
 plt.xlabel(r'$x$, нм')
 plt.ylabel(r'$z$, нм')
@@ -204,16 +196,16 @@ cbar = plt.colorbar(orientation='horizontal')
 cbar.formatter.set_powerlimits((0, 0))
 cbar.formatter.set_useMathText(True)
 
-# plt.savefig('sci_conc_5s_old_2.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('sci_conc_5s_20_10.jpg', dpi=600, bbox_inches='tight')
 # plt.savefig('sci_conc_5s_new.jpg', dpi=600, bbox_inches='tight')
 # plt.savefig('sci_conc_10s.jpg', dpi=600, bbox_inches='tight')
-plt.savefig('sci_conc_50s_old.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('sci_conc_50s_old_2.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('sci_conc_50s_10_20.jpg', dpi=600, bbox_inches='tight')
 # plt.savefig('sci_conc_50s.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('Mn_hist_5s.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('Mn_hist_10s.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('Mn_hist_50s.jpg', dpi=600, bbox_inches='tight')
-# plt.close('all')
+
+# plt.savefig('Mn_hist_5s_8_6.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('Mn_hist_10s_8_6.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('Mn_hist_50s_8_6.jpg', dpi=600, bbox_inches='tight')
+
 plt.show()
 
 # %%

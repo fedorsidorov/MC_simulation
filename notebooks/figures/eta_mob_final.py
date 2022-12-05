@@ -35,9 +35,9 @@ plt.xlim(3e+1, 3e+6)
 plt.ylim(1e+0, 1e+6)
 plt.grid()
 
-# plt.show()
 # plt.savefig('figures/С_gamma_600_1.jpg', dpi=600, bbox_inches='tight')
-plt.savefig('figures/С_gamma_600_1p9.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('figures/С_gamma_600_1p9.jpg', dpi=600, bbox_inches='tight')
+plt.show()
 
 # %
 # with plt.style.context(['science', 'grid', 'russian-font']):

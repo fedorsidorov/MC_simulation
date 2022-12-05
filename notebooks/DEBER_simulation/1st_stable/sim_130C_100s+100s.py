@@ -32,7 +32,7 @@ rf = importlib.reload(rf)
 # %% constants
 arr_size = 1000
 
-Wf_PMMA = 4.68
+Wf_PMMA = 4.68 
 PMMA_E_cut = 3.3  # Aktary 2006
 PMMA_electron_E_bind = [0]
 
@@ -85,15 +85,15 @@ zz_11 = np.load('notebooks/DEBER_simulation/exp_profiles/357/zz_357_y_slice_D3_4
 plt.figure(dpi=300)
 plt.plot(xx_1, zz_1)
 plt.plot(xx_2, zz_2)
-# plt.plot(xx_3, zz_3)
-# plt.plot(xx_4, zz_4)
-# plt.plot(xx_5, zz_5)
-# plt.plot(xx_6, zz_6)
-# plt.plot(xx_7, zz_7)
-# plt.plot(xx_8, zz_8)
-# plt.plot(xx_9, zz_9)
-# plt.plot(xx_10, zz_10)
-# plt.plot(xx_11, zz_11)
+plt.plot(xx_3, zz_3)
+plt.plot(xx_4, zz_4)
+plt.plot(xx_5, zz_5)
+plt.plot(xx_6, zz_6)
+plt.plot(xx_7, zz_7)
+plt.plot(xx_8, zz_8)
+plt.plot(xx_9, zz_9)
+plt.plot(xx_10, zz_10)
+plt.plot(xx_11, zz_11)
 
 plt.grid()
 plt.xlim(-1500, 1500)
@@ -682,7 +682,8 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
     )
 
     profile_surface = ef.get_evolver_profile(
-        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_surface.txt'
+        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_surface.txt',
+        y_max=mm.y_max
     ) * 1000
 
     new_xx_surface, new_zz_surface = profile_surface[:, 0], profile_surface[:, 1]
@@ -690,7 +691,8 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
     new_zz_surface_final = mcf.lin_lin_interp(new_xx_surface, new_zz_surface)(xx_bins)
 
     profile_inner = ef.get_evolver_profile(  # inner
-        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt'
+        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_inner.txt',
+        y_max=mm.y_max
     ) * 1000
 
     new_xx_inner, new_zz_inner = profile_inner[:, 0], profile_inner[:, 1]
@@ -698,7 +700,8 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
     new_zz_inner_final = mcf.lin_lin_interp(new_xx_inner, new_zz_inner)(xx_centers)
 
     profile_total = ef.get_evolver_profile(  # total
-        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt'
+        path='/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/vlist_total.txt',
+        y_max=mm.y_max
     ) * 1000
 
     new_xx_total, new_zz_total = profile_total[::2, 0], profile_total[::2, 1]
@@ -717,9 +720,12 @@ power_high = 3.4
 
 # PARAMETERS #
 beam_sigma = 500
-zip_length = 70
-power_low = 1.4
+zip_length = 30
+# power_low = 1.4
+power_low = 0.5
 # PARAMETERS #
+
+path = '/Volumes/Transcend/SIM_DEBER/130C_200s_final/'
 
 x_step, z_step = 100, 5
 xx_bins, zz_bins = mm.x_bins_100nm, mm.z_bins_5nm
@@ -734,21 +740,28 @@ surface_inds = np.zeros(len(xx_centers)).astype(int)
 
 zz_inner_centers = np.zeros(len(xx_centers))
 
-tau_matrix = np.zeros((len(xx_centers), len(zz_centers)))
-Mn_matrix = np.ones((len(xx_centers), len(zz_centers))) * Mn_130[0]
-Mn_centers = np.zeros(len(xx_centers))
+# tau_matrix = np.zeros((len(xx_centers), len(zz_centers)))
+# Mn_matrix = np.ones((len(xx_centers), len(zz_centers))) * Mn_130[0]
+# Mn_centers = np.zeros(len(xx_centers))
 mob_matrix = np.zeros((len(xx_centers), len(zz_centers)))
 mobs_array = np.zeros(len(xx_centers))
 
-path = '/Volumes/Transcend/SIM_DEBER/130C_200s/s' + str(beam_sigma) + '_z' +\
-       str(zip_length) + '_pl' + str(power_low) + '/'
+path_load = '/Volumes/Transcend/SIM_DEBER/130C_200s_A/new_s400_z100_pl1.4/'
+zz_vac_bins = np.load(path_load + 'zz_vac_bins_100s.npy')
+zz_inner_centers = np.load(path_load + 'zz_inner_centers_100s.npy')
+Mn_centers = np.load(path_load + 'Mn_centers_100s.npy')
+Mn_matrix = np.load(path_load + 'Mn_matrix_100s.npy')
+mobs_centers = np.load(path_load + 'mobs_centers_100s.npy')
+tau_matrix = np.load(path_load + 'tau_matrix_100s.npy')
 
 if not os.path.exists(path):
     os.makedirs(path)
 
-now_time = 0
+# now_time = 0
+now_time = 100
 
 while now_time < exposure_time:
+# while now_time < 100:
 
     print('Now time =', now_time)
 
@@ -858,7 +871,11 @@ while now_time < exposure_time:
         save_mobilities()
         save_profiles(now_time, is_exposure=True)
 
+# np.save(path + 'zz_vac_bins_100s.npy', zz_vac_bins)
+# np.save(path + 'zz_inner_centers_100s.npy', zz_inner_centers)
+# np.save(path + 'mobs_centers_100s.npy', mobs_centers)
 
+# %
 # % cooling reflow
 TT = np.array([130,
                129, 128, 127, 126, 125, 124, 123, 122, 121, 120,

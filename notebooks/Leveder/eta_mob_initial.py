@@ -3,14 +3,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 from functions import fourier_functions as ff
 from functions import MC_functions as mf
-# from functions import SE_functions as sf
 
 mf = importlib.reload(mf)
 ff = importlib.reload(ff)
 
 # %% original profile in 2011' paper
-xx_um = np.array((0, 0.464, 0.513, 1.5, 1.55, 2)) - 1
-zz_nm = np.array((27.5, 27.5, 55.2, 55.2, 27.5, 27.5))
+xx_um_0 = np.array((0, 0.464, 0.513, 1.5, 1.55, 2)) - 1
+xx_um = np.concatenate([xx_um_0 - 4, xx_um_0 - 2, xx_um_0, xx_um_0 + 2, xx_um_0 + 4])
+
+zz_nm_0 = np.array((27.5, 27.5, 55.2, 55.2, 27.5, 27.5))
+zz_nm = np.concatenate([zz_nm_0, zz_nm_0, zz_nm_0, zz_nm_0, zz_nm_0])
+
 zz_um = zz_nm * 1e-3
 
 plt.figure(dpi=300)
@@ -38,19 +41,19 @@ xx_prec_m = xx_prec_um * 1e-6
 zz_0_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=0)
 zz_100_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=100)
 
-plt.figure(dpi=300)
-plt.plot(xx_um, zz_um, 'o-', label='original')
-plt.plot(xx_prec_m * 1e+6, zz_0_um * 1e+6, label='analytic 0 s')
-# plt.plot(yy_prec_um, zz_100_um, '.-', label='analytic 100 s')
+# plt.figure(dpi=600, figsize=[4, 3])
+#
+# plt.plot(xx_um, zz_um * 1e+3, '-', linewidth='3', label='исходный профиль')
+# plt.plot(xx_prec_m * 1e+6, zz_0_um * 1e+9, label='Фурье-профиль')
+#
+# plt.xlim(-1, 4)
+# plt.xlabel(r'$x$, мкм')
+# plt.ylabel(r'$z$, нм')
+# plt.grid()
+# plt.legend()
 
-plt.xlim(-2, 2)
-plt.xlabel(r'x, $\mu$m')
-plt.ylabel(r'z, $\mu$m')
-plt.grid()
-plt.legend()
-
-plt.show()
-# plt.savefig('SE_fourier_beg.png', dpi=300)
+# plt.savefig('SE_fourier_beg.jpg', dpi=600, bbox_inches='tight')
+# plt.show()
 
 # %%
 SE = np.loadtxt('/Users/fedor/PycharmProjects/MC_simulation/notebooks/SE/REF_Leveder/vlist_REF_scale_1e-3.txt')
@@ -115,22 +118,33 @@ inds = [8, 22, 37, 56, 110]
 
 tau_n_array = ff.get_tau_n_easy_array(eta=now_eta, gamma=gamma_SI, h0=An_array[0], l0=l0_m, N=N)
 
-plt.figure(dpi=300)
 
-ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=0)
+plt.figure(dpi=600, figsize=[4, 3])
 
-for i in range(len(tt[:5])):
+xx_0 = xx_prec_um
+zz_0 = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=0) * 1e+6
+
+plt.plot(xx_0, zz_0 * 1e+3, 'k', linewidth=1.5, label='$t$ = 0 с')
+
+for i in range(len(tt)):
     zz_t_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=tt[i]) * 1e+6
-    plt.plot(xx_prec_um, zz_t_um, label=str(tt[i]) + ' s')
-    plt.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1], '--', label='scale = ' + str(scales[inds[i]]))
+    plt.plot(xx_prec_um, zz_t_um * 1e+3, label='$t$ = ' + str(tt[i]) + ' c')
+    # plt.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1] * 1e+3, '--', label='s = ' + str(scales[inds[i]]))
 
-plt.xlim(-1, 1)
-# plt.ylim(0.03, 0.08)
-plt.title(r'$\eta$ = ' + str(int(now_eta)) + ' Pa$\cdot$s')
-plt.xlabel(r'x, $\mu$m')
-plt.ylabel(r'z, $\mu$m')
-plt.legend()
+for i in range(len(tt)):
+    zz_t_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=tt[i]) * 1e+6
+    # plt.plot(xx_prec_um, zz_t_um * 1e+3, label='t = ' + str(tt[i]) + ' c')
+    plt.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1] * 1e+3, '--', label='$s$ = ' + str(scales[inds[i]]))
+
+plt.legend(fontsize=10, loc='center right')
+# plt.title(r'$\eta$ = ' + str(format(now_eta, '.1e')) + r' Па$\cdot$с')
+plt.title(r'$\eta = 10^5$ Па$\cdot$с')
+plt.xlabel(r'$x$, мкм')
+plt.ylabel(r'$z$, нм')
+
 plt.grid()
+plt.xlim(-1, 4)
+plt.ylim(20, 60)
 
+plt.savefig('grating_eta_' + str(int(now_eta)) + '.jpg', dpi=600, bbox_inches='tight')
 plt.show()
-# plt.savefig('SE_fourier_' + str(int(now_eta)) + '.png')

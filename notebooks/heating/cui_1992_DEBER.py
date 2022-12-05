@@ -173,9 +173,26 @@ for i, now_t in enumerate(tt):
 # %% 3a
 plt.figure(dpi=600)
 plt.plot(tt, T_total)
+plt.plot(tt, T_total + err_total)
+plt.plot(tt, T_total - err_total)
 plt.show()
+
+np.save('notebooks/heating/tt.npy', tt)
+np.save('notebooks/heating/T_total.npy', T_total)
+np.save('notebooks/heating/err_total.npy', err_total)
 
 # plt.semilogy(tt * 1e+6, T_total, 'o-', label='MC integral')
 # plt.semilogy(tt * 1e+6, T_total + err_total, 'v-', label='upper limit')
 # plt.semilogy(tt * 1e+6, T_total - err_total, '^-', label='lower limit')
+
+# %%
+tt_test = np.load('notebooks/heating/tt.npy')
+TT_test = np.load('notebooks/heating/T_total.npy')
+err_test = np.load('notebooks/heating/err_total.npy')
+
+plt.figure(dpi=600)
+plt.plot(tt, T_total)
+plt.plot(tt, T_total + err_total)
+plt.plot(tt, T_total - err_total)
+plt.show()
 

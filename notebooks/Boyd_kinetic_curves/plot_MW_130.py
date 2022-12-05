@@ -1,6 +1,9 @@
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
-import importlib
+
+font = {'size': 14}
+matplotlib.rc('font', **font)
 
 
 # %%
@@ -18,20 +21,17 @@ plt.xlabel(r'$\tau$')
 plt.legend()
 plt.grid()
 
-# plt.show()
-plt.savefig('M1_y.jpg', bbox_inches='tight')
+# plt.savefig('M1_y.jpg', bbox_inches='tight')
+plt.show()
 
 # %%
 plt.figure(dpi=600, figsize=[4, 3])
-plt.plot(tau, z)
+plt.plot(tau, z, label='$z$')
 plt.ylim(-0.3, 0)
 plt.xlabel(r'$\tau$')
-plt.ylabel(r'$z$')
-# plt.legend()
+# plt.ylabel(r'$z$')
+plt.legend()
 plt.grid()
 
-# plt.show()
-plt.savefig('z.jpg', bbox_inches='tight')
-
-
-
+plt.savefig('z_legend.jpg', bbox_inches='tight')
+plt.show()
