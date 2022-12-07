@@ -17,8 +17,8 @@ mcf = importlib.reload(mcf)
 ind = importlib.reload(ind)
 const = importlib.reload(const)
 
-font = {'size': 14}
-matplotlib.rc('font', **font)
+# font = {'size': 14}
+# matplotlib.rc('font', **font)
 
 
 # %% get Karlsson D
@@ -74,6 +74,9 @@ def get_D_Mn_150(Mn):
 MN = np.logspace(3, 6, 100)
 DD = get_D_Mn_135(MN)
 
+# font = {'size': 14}
+# matplotlib.rc('font', **font)
+
 plt.figure(dpi=600, figsize=[4, 3])
 # plt.figure(dpi=600, figsize=[3.4, 2.55])
 plt.loglog(MN, DD)
@@ -86,7 +89,7 @@ plt.ylabel(r'$D$, см$^2$/c')
 plt.grid()
 
 plt.savefig('DD.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('DD_new.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('DD_14.jpg', dpi=600, bbox_inches='tight')
 plt.show()
 
 # %%
@@ -116,7 +119,7 @@ scission_matrix = np.zeros((len(xx_centers), len(zz_centers)))
 tau_matrix = np.zeros((len(xx_centers), len(zz_centers)))
 Mn_matrix = np.ones((len(xx_centers), len(zz_centers))) * Mn_130[0]
 
-
+# %%
 # for time_cnt in range(1):
 # for time_cnt in range(5):
 for time_cnt in range(10):
@@ -169,24 +172,22 @@ for i in range(len(xx_centers)):
             Mn_matrix[i, j] = mcf.lin_log_interp(tau, Mn_130)(tau_matrix[i, j])
 
 # %%
-# scission_matrix = np.load('notebooks/diffusion/scission_matrix_5s.npy')
+# scission_matrix = np.load('notebooks/diffusion/scission_matrix_10s.npy')
 # scission_matrix = np.load('notebooks/diffusion/scission_matrix_50s.npy')
 
 # Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_5s.npy')
 Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_50s.npy')
 
 plt.figure(dpi=600)
-# fig, ax = plt.subplots(dpi=600, figsize=[4, 8])
 fig, ax = plt.subplots(dpi=600, figsize=[8, 6])
 
 # plt.imshow(scission_matrix.transpose() / (0.05**2 * 0.1), extent=[-1500, 1500, 0, 500])
 plt.imshow(Mn_matrix.transpose(), extent=[-1500, 1500, 0, 500])
 
-# plt.title(r'$n_{sci}$ при $t$ = 5 c, 1/мкм$^3$', fontsize=14)
 # plt.title(r'$n_{sci}$ при $t$ = 10 c, 1/мкм$^3$', fontsize=14)
 # plt.title(r'$n_{sci}$ при $t$ = 50 c, 1/мкм$^3$', fontsize=14)
 
-# plt.title(r'$M_n$ при $t$ = 5 c, г/моль', fontsize=14)
+# plt.title(r'$M_n$ при $t$ = 10 c, г/моль', fontsize=14)
 plt.title(r'$M_n$ при $t$ = 50 c, г/моль', fontsize=14)
 
 plt.xlabel(r'$x$, нм')
@@ -196,35 +197,31 @@ cbar = plt.colorbar(orientation='horizontal')
 cbar.formatter.set_powerlimits((0, 0))
 cbar.formatter.set_useMathText(True)
 
-# plt.savefig('sci_conc_5s_20_10.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('sci_conc_5s_new.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('sci_conc_10s.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('sci_conc_50s_10_20.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('sci_conc_50s.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('sci_conc_10s_14.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('sci_conc_50s_14.jpg', dpi=600, bbox_inches='tight')
 
-# plt.savefig('Mn_hist_5s_8_6.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('Mn_hist_10s_8_6.jpg', dpi=600, bbox_inches='tight')
-plt.savefig('Mn_hist_50s_8_6.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('Mn_hist_10s_14.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('Mn_hist_50s_14.jpg', dpi=600, bbox_inches='tight')
 
-plt.show()
+# plt.show()
 
 # %%
-Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_5s.npy')
-
-# D_matrix = np.zeros(np.shape(Mn_matrix))
-D_matrix = get_D_Mn_135(Mn_matrix)
-
-plt.figure(dpi=600, figsize=[4, 3])
-
-plt.imshow(D_matrix.transpose(), extent=[-1500, 1500, 0, 500])
-
-plt.title(r'M$_n$ при t = 5 c, г/моль')
-plt.xlabel(r'x, нм')
-plt.ylabel(r'z, нм')
-plt.colorbar(format='%.0e')
-
-plt.show()
-# plt.savefig('Mn_hist_5s.jpg', dpi=600, bbox_inches='tight')
+# Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_5s.npy')
+#
+# # D_matrix = np.zeros(np.shape(Mn_matrix))
+# D_matrix = get_D_Mn_135(Mn_matrix)
+#
+# plt.figure(dpi=600, figsize=[4, 3])
+#
+# plt.imshow(D_matrix.transpose(), extent=[-1500, 1500, 0, 500])
+#
+# plt.title(r'M$_n$ при t = 5 c, г/моль')
+# plt.xlabel(r'x, нм')
+# plt.ylabel(r'z, нм')
+# plt.colorbar(format='%.0e')
+#
+# plt.show()
+# # plt.savefig('Mn_hist_5s.jpg', dpi=600, bbox_inches='tight')
 
 
 # %%
@@ -235,25 +232,24 @@ monomer_matrix = scission_matrix * zip_length
 
 CC_0 = monomer_matrix / (mm.step_50nm * mm.ly * mm.step_50nm * 1e-21)
 
-plt.figure(dpi=600, figsize=[4, 3])
+plt.figure(dpi=600, figsize=[8, 6])
+
 plt.imshow(CC_0.transpose(), extent=[-1500, 1500, 0, 500])
 
-plt.title('$n_{mon}$ при $t$ = 0 с, 1/см$^3$')
+plt.title('$n_{mon}$, 1/см$^3$ при $t$ = 0 с, 1/см$^3$', fontsize=14)
 plt.xlabel(r'$x$, нм')
 plt.ylabel(r'$z$, нм')
 
-cbar = plt.colorbar()
+cbar = plt.colorbar(orientation='horizontal')
 cbar.formatter.set_powerlimits((0, 0))
 cbar.formatter.set_useMathText(True)
-plt.clim(0, 3e+22)
 
-plt.show()
-# plt.savefig('n_mon_hist_initial.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('n_mon_hist_initial.jpg', dpi=600, bbox_inches='tight')
+# plt.show()
 
 # %%
-# D = df.get_D(130, 1)  # 2.4e-9
-# D = 9.7e-11
-D = 1e-9
+D = 9.7e-11
+# D = 1e-9
 
 xx = xx_centers * 1e-7
 yy = zz_centers * 1e-7
@@ -264,10 +260,10 @@ CC = deepcopy(CC_0)
 Nx = len(xx)
 Ny = len(yy)
 
+# t_end = 1
+# t_end = 5
 t_end = 20
-# t_end = 20
-# t_end = 2
-tau = t_end / 50
+tau = t_end / 100
 
 alphas_x = np.zeros(Nx)
 betas_x = np.zeros(Nx)
@@ -325,24 +321,21 @@ while t < t_end:
             CC[i, j] = alphas_y[j] * CC[i, j + 1] + betas_y[j]
 
 
-plt.figure(dpi=600, figsize=[4, 3])
+plt.figure(dpi=600, figsize=[8, 6])
 plt.imshow(CC.transpose(), extent=[-1500, 1500, 0, 500])
 
-# plt.title('$n_{mon}^{' + str(t_end) + 'c}$,1/см$^3$ ($D$=9.7$\cdot$10$^{-11}$см$^2$/c)')
-plt.title('$n_{mon}^{' + str(t_end) + 'c}$,1/см$^3$ ($D$=1$\cdot$10$^{-9}$см$^2$/c)')
-# plt.title('$n_{mon}$ при $t$ = 2 с, 1/см$^3$')
+plt.title(r'$n_{mon}$, 1/см$^3$ при $t$ = ' + str(t_end) + r' c, $D = 9.7 \cdot 10^{-11}$ см$^2$/c', fontsize=14)
+# plt.title(r'$n_{mon}$, 1/см$^3$ при $t$ = ' + str(t_end) + r' c, $D = 1 \cdot 10^{-9}$ см$^2$/c', fontsize=14)
 plt.xlabel(r'$x$, нм')
 plt.ylabel(r'$z$, нм')
 
-cbar = plt.colorbar()
+cbar = plt.colorbar(orientation='horizontal')
 cbar.formatter.set_powerlimits((0, 0))
 cbar.formatter.set_useMathText(True)
-# plt.clim(0, 1.2e+21)
-# plt.clim(0, 4.5e+21)
 
+plt.savefig('n_mon_hist_9p7e-11_' + str(t_end) + 's.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('n_mon_hist_1e-9_' + str(t_end) + 's.jpg', dpi=600, bbox_inches='tight')
 # plt.show()
-# plt.savefig('n_mon_hist_9p7e-11_' + str(t_end) + 's.jpg', dpi=600, bbox_inches='tight')
-plt.savefig('n_mon_hist_1e-9_' + str(t_end) + 's.jpg', dpi=600, bbox_inches='tight')
 
-
+plt.close('all')
 

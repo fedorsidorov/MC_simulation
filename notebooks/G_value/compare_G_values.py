@@ -1,5 +1,5 @@
 import importlib
-
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import curve_fit
@@ -13,6 +13,10 @@ mapping = importlib.reload(mapping)
 const = importlib.reload(const)
 mcf = importlib.reload(mcf)
 Gf = importlib.reload(Gf)
+
+# font = {'size': 14}
+# matplotlib.rc('font', **font)
+
 
 # %%
 weights = np.load('notebooks/G_value/samples/weights.npy')
@@ -62,10 +66,10 @@ plt.ylabel(r'$p_s$')
 plt.xlim(0, 200)
 plt.ylim(0.02, 0.12)
 
-plt.legend()
+plt.legend(fontsize=10)
 plt.grid()
 
-# plt.savefig('G_s.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('G_s.jpg', dpi=600, bbox_inches='tight')
 plt.show()
 
 

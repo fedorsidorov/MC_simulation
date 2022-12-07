@@ -1,8 +1,13 @@
 import importlib
+import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
 
 from scipy.optimize import curve_fit
+
+fontsize = 12
+font = {'size': fontsize}
+matplotlib.rc('font', **font)
 
 
 # %%
@@ -28,7 +33,6 @@ plt.loglog([1], [1], 'w', label=r'$C = 26.1416$')
 # plt.loglog([1], [1], 'w', label=r'$\beta$=' + str(format(popt[1], '.3')))
 plt.loglog([1], [1], 'w', label=r'$\beta = 0.9889$')
 
-# ax.set(title=r'$\eta$ = ' + str(format(now_eta, '.1e')) + ' Pa$\cdot$s')
 plt.xlabel(r'$\eta$, Па$\cdot$с')
 plt.ylabel(r'$\mu = s/t$')
 plt.legend(fontsize=10, loc='upper right')
@@ -37,8 +41,8 @@ plt.grid()
 plt.xlim(1e+1, 1e+7)
 plt.ylim(1e-5, 1e+1)
 
-# plt.savefig('С_gamma.jpg', dpi=600, bbox_inches='tight')
-plt.show()
+plt.savefig('С_gamma_' + str(fontsize) + '.jpg', dpi=600, bbox_inches='tight')
+# plt.show()
 
 
 

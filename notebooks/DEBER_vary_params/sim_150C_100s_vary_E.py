@@ -160,9 +160,7 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
 dose_factor = 3.8
 
 exposure_time = 100
-# It = 1.2e-9 * exposure_time  # C
-I_exposure = 1e-9
-It = I_exposure * exposure_time  # C
+It = 1.2e-9 * exposure_time  # C
 n_lines = 625
 
 pitch = 3e-4  # cm
@@ -187,17 +185,20 @@ Mn_edge = 42000
 power_high = 3.4
 
 # PARAMETERS #
+# E_beam = 21e+3
 # E_beam = 20e+3
+E_beam = 19e+3
 # E_beam = 15e+3
 # E_beam = 25e+3
-E_beam = 5e+3
+# E_beam = 5e+3
 beam_sigma = 250
 zip_length = 150
 power_low = 1.4
 
 # n_e_DATA_files = 600
 # n_e_DATA_files = 200
-n_e_DATA_files = 100
+# n_e_DATA_files = 100
+n_e_DATA_files = 125
 T_C = 150
 scission_weight = 0.09  # 150 C - 0.088568
 # PARAMETERS #
@@ -224,8 +225,8 @@ for n_try in range(10):
     mob_matrix = np.zeros((len(xx_centers), len(zz_centers)))
     mobs_array = np.zeros(len(xx_centers))
 
-    path = '/Volumes/Transcend/SIM_DEBER/150C_100s_final/E_' +\
-           str(int(E_beam / 1e+3)) + '_I_' + str(int(I_exposure * 1e+9)) + '/try_' + str(n_try) + '/'
+    path = '/Volumes/Transcend/SIM_DEBER/366_vary_params/E_' +\
+           str(int(E_beam / 1e+3)) + '/try_' + str(n_try) + '/'
 
     if not os.path.exists(path):
         os.makedirs(path)
@@ -270,10 +271,7 @@ for n_try in range(10):
             now_z0_array[n] = pos_enter
 
             now_e_DATA_Pv = np.load(
-                # '/Volumes/Transcend/e_DATA_500nm_point/' + str(pos_enter) + '/e_DATA_Pv_' +
-                # '/Volumes/Transcend/e_DATA_500nm_point_15keV/' + str(pos_enter) + '/e_DATA_Pv_' +
-                # '/Volumes/Transcend/e_DATA_500nm_point_25keV/' + str(pos_enter) + '/e_DATA_Pv_' +
-                '/Volumes/Transcend/e_DATA_500nm_point_5keV/' + str(pos_enter) + '/e_DATA_Pv_' +
+                '/Volumes/Transcend/e_DATA_500nm_point_' + str(int(E_beam / 1e+3)) + 'keV/' + str(pos_enter) + '/e_DATA_Pv_' +
                 str(n_file) + '.npy'
             )
 

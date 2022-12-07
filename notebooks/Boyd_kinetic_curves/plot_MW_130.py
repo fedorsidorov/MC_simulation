@@ -18,11 +18,15 @@ plt.semilogy(tau, M1w, label=r'$\widetilde{M}_1$')
 plt.semilogy(tau, yw, label=r'$\widetilde{y}$')
 plt.ylim(1e-4, 1)
 plt.xlabel(r'$\tau$')
-plt.legend()
+# plt.ylabel(r'$\widetilde{M}_1$, $\widetilde{y}$')
+plt.legend(fontsize=10)
 plt.grid()
 
-# plt.savefig('M1_y.jpg', bbox_inches='tight')
-plt.show()
+plt.xlim(0, 400)
+
+# plt.savefig('M1_y_14.jpg', bbox_inches='tight')
+plt.savefig('SZ_M1_y_14_noY.jpg', bbox_inches='tight')
+# plt.show()
 
 # %%
 plt.figure(dpi=600, figsize=[4, 3])
@@ -30,8 +34,11 @@ plt.plot(tau, z, label='$z$')
 plt.ylim(-0.3, 0)
 plt.xlabel(r'$\tau$')
 # plt.ylabel(r'$z$')
-plt.legend()
+plt.legend(fontsize=10, loc='lower right')
 plt.grid()
 
-plt.savefig('z_legend.jpg', bbox_inches='tight')
+plt.xlim(0, 400)
+
+# plt.savefig('z_14.jpg', bbox_inches='tight')
+plt.savefig('SZ_z_14_noY.jpg', bbox_inches='tight')
 plt.show()

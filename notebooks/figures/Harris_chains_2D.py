@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib
 import numpy as np
 from functions import plot_functions as pf
 from mapping import mapping_harris as mm
@@ -8,6 +9,8 @@ from matplotlib import rc
 pf = importlib.reload(pf)
 mm = importlib.reload(mm)
 
+font = {'size': 14}
+matplotlib.rc('font', **font)
 
 chain_list = []
 

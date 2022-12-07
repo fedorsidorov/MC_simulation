@@ -1,8 +1,12 @@
 import importlib
+import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
 
 from scipy.optimize import curve_fit
+
+font = {'size': 14}
+matplotlib.rc('font', **font)
 
 
 # %%
@@ -83,14 +87,14 @@ plt.plot(xx, yy, 'r', label=r'$s = \alpha \cdot t$')
 plt.plot([-1], [-1], 'w', label=r'$\alpha$ = 2.87$\cdot$10$^{-4}$')
 
 # plt.title(r'$\eta$ = ' + str(format(now_eta, '.1e')) + r' Pa$\cdot$s')
-plt.title(r'$\eta = 10^5$ Па$\cdot$с')
+plt.title(r'$\eta = 10^5$ Па$\cdot$с', fontsize=14)
 plt.xlabel(r'$t$, с')
 plt.ylabel(r'$s$')
 plt.legend(fontsize=10, loc='lower right')
 
 plt.grid()
 plt.xlim(0, 4000)
-plt.ylim(0, 1.2)
+plt.ylim(0, 1.25)
 
-plt.savefig('alpha_' + str(int(now_eta)) + '.jpg', dpi=600, bbox_inches='tight')
-# plt.show()
+plt.savefig('alpha_' + str(int(now_eta)) + '_14.jpg', dpi=600, bbox_inches='tight')
+plt.show()

@@ -501,10 +501,12 @@ def track_all_electrons(xx_vac, zz_vac, n_electrons, E0, z0, beam_sigma, d_PMMA,
 n_electrons_in_file = 31
 
 d_PMMA = 500
+E_beam = 21e+3
 # E_beam = 20e+3
+# E_beam = 19e+3
 # E_beam = 15e+3
 # E_beam = 25e+3
-E_beam = 5e+3
+# E_beam = 5e+3
 
 # time_step = 1
 
@@ -516,8 +518,8 @@ zz_vacuum = np.zeros(len(xx_vacuum))
 # z0 = 0
 # z0 = 200
 
-# z0_arr = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450]
-z0_arr = [500]
+z0_arr = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450]
+# z0_arr = [500]
 
 beam_sigma = 0
 
@@ -550,13 +552,8 @@ while True:
                 now_e_DATA[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind))
         ]
 
-        # if len(np.where(now_e_DATA_Pv[:, 6] > d_PMMA)[0]) > 0:
-        #     print('here!')
-        #     stop = True
-        #     break
-
         np.save(
-            '/Volumes/Transcend/e_DATA_500nm_point_5keV/' + str(z0) + '/e_DATA_Pv_' + str(n) + '.npy',
+            '/Volumes/Transcend/e_DATA_500nm_point_21keV/' + str(z0) + '/e_DATA_Pv_' + str(n) + '.npy',
             now_e_DATA_Pv
         )
 

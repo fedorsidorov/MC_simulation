@@ -1,3 +1,4 @@
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 from functions import plot_functions as pf
@@ -8,6 +9,8 @@ from matplotlib import rc
 pf = importlib.reload(pf)
 mm = importlib.reload(mm)
 
+# font = {'size': 14}
+# matplotlib.rc('font', **font)
 
 chain_list = []
 
@@ -23,7 +26,7 @@ for n in range(1447):
 # font_size = 16
 
 fig = plt.figure(dpi=600)
-# fig = plt.figure(dpi=300, figsize=[4, 3])
+fig = plt.figure(dpi=300, figsize=[6, 6])
 # fig = plt.figure(dpi=600, figsize=[6.4 / 1.9, 4.8 / 1.9])
 # fig = plt.figure(dpi=600, figsize=[4.8 / 1.9, 4.8 / 1.9])
 ax = fig.gca(projection='3d')
@@ -31,14 +34,14 @@ ax = fig.gca(projection='3d')
 fig = plt.gcf()
 # fig.set_size_inches(4, 4)
 # fig.set_size_inches(5, 5)
-fig.set_size_inches(5.5, 5.5)
+# fig.set_size_inches(5.5, 5.5)
 
 step = 5
 cnt = 0
 
 # for chain in chain_list[4::45]:
 for chain in chain_list[4::1]:
-    print(cnt)
+    # print(cnt)
     cnt += 1
 
     # ax.plot(chain[::step, 0], chain[::step, 1], chain[::step, 2], '.', markersize=1)

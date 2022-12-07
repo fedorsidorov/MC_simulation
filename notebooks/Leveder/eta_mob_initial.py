@@ -1,4 +1,5 @@
 import importlib
+import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
 from functions import fourier_functions as ff
@@ -6,6 +7,10 @@ from functions import MC_functions as mf
 
 mf = importlib.reload(mf)
 ff = importlib.reload(ff)
+
+font = {'size': 14}
+matplotlib.rc('font', **font)
+
 
 # %% original profile in 2011' paper
 xx_um_0 = np.array((0, 0.464, 0.513, 1.5, 1.55, 2)) - 1
@@ -16,9 +21,9 @@ zz_nm = np.concatenate([zz_nm_0, zz_nm_0, zz_nm_0, zz_nm_0, zz_nm_0])
 
 zz_um = zz_nm * 1e-3
 
-plt.figure(dpi=300)
-plt.plot(xx_um, zz_um)
-plt.show()
+# plt.figure(dpi=300)
+# plt.plot(xx_um, zz_um)
+# plt.show()
 
 # %%
 etas_SI = np.array((1e+2, 3.1e+2, 1e+3, 3.1e+3, 1e+4, 3.1e+4, 1e+5, 3.1e+5,
@@ -50,8 +55,8 @@ zz_100_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=10
 # plt.xlabel(r'$x$, мкм')
 # plt.ylabel(r'$z$, нм')
 # plt.grid()
-# plt.legend()
-
+# plt.legend(fontsize=10, loc='lower right')
+#
 # plt.savefig('SE_fourier_beg.jpg', dpi=600, bbox_inches='tight')
 # plt.show()
 
@@ -72,12 +77,12 @@ for ind in inds[1:]:
     now_pos = ind
 
 # %%
-ind = 10
-
-plt.figure(dpi=300)
-plt.plot(profiles[0][:, 0], profiles[0][:, 1], '.-')
-plt.plot(profiles[ind][:, 0], profiles[ind][:, 1], '.')
-plt.show()
+# ind = 10
+#
+# plt.figure(dpi=300)
+# plt.plot(profiles[0][:, 0], profiles[0][:, 1], '.-')
+# plt.plot(profiles[ind][:, 0], profiles[ind][:, 1], '.')
+# plt.show()
 
 # %%
 # now_eta = etas_SI[0]
@@ -128,17 +133,17 @@ plt.plot(xx_0, zz_0 * 1e+3, 'k', linewidth=1.5, label='$t$ = 0 с')
 
 for i in range(len(tt)):
     zz_t_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=tt[i]) * 1e+6
-    plt.plot(xx_prec_um, zz_t_um * 1e+3, label='$t$ = ' + str(tt[i]) + ' c')
+    plt.plot(xx_prec_um, zz_t_um * 1e+3, label='$t = ' + str(tt[i]) + '$ c')
     # plt.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1] * 1e+3, '--', label='s = ' + str(scales[inds[i]]))
 
 for i in range(len(tt)):
     zz_t_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=tt[i]) * 1e+6
     # plt.plot(xx_prec_um, zz_t_um * 1e+3, label='t = ' + str(tt[i]) + ' c')
-    plt.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1] * 1e+3, '--', label='$s$ = ' + str(scales[inds[i]]))
+    plt.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1] * 1e+3, '--', label='$s = ' + str(scales[inds[i]]) + '$')
 
 plt.legend(fontsize=10, loc='center right')
 # plt.title(r'$\eta$ = ' + str(format(now_eta, '.1e')) + r' Па$\cdot$с')
-plt.title(r'$\eta = 10^5$ Па$\cdot$с')
+plt.title(r'$\eta = 10^5$ Па$\cdot$с', fontsize=14)
 plt.xlabel(r'$x$, мкм')
 plt.ylabel(r'$z$, нм')
 
@@ -146,5 +151,5 @@ plt.grid()
 plt.xlim(-1, 4)
 plt.ylim(20, 60)
 
-plt.savefig('grating_eta_' + str(int(now_eta)) + '.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('grating_eta_' + str(int(now_eta)) + '_14.jpg', dpi=600, bbox_inches='tight')
 plt.show()

@@ -235,20 +235,19 @@ xx_centers, zz_centers = mm.x_centers_100nm, mm.z_centers_5nm
 bin_volume = x_step * mm.ly * z_step
 bin_n_monomers = bin_volume / const.V_mon_nm3
 
-zz_vac_bins = np.zeros(len(xx_bins))
-zz_vac_centers = np.zeros(len(xx_centers))
-surface_inds = np.zeros(len(xx_centers)).astype(int)
-
-zz_inner_centers = np.zeros(len(xx_centers))
-
-tau_matrix = np.zeros((len(xx_centers), len(zz_centers)))
-Mn_matrix = np.ones((len(xx_centers), len(zz_centers))) * Mn_130[0]
-Mn_centers = np.zeros(len(xx_centers))
-mob_matrix = np.zeros((len(xx_centers), len(zz_centers)))
-mobs_array = np.zeros(len(xx_centers))
-
-
 for n_try in range(0, 100):
+
+    zz_vac_bins = np.zeros(len(xx_bins))
+    zz_vac_centers = np.zeros(len(xx_centers))
+    surface_inds = np.zeros(len(xx_centers)).astype(int)
+
+    zz_inner_centers = np.zeros(len(xx_centers))
+
+    tau_matrix = np.zeros((len(xx_centers), len(zz_centers)))
+    Mn_matrix = np.ones((len(xx_centers), len(zz_centers))) * Mn_130[0]
+    Mn_centers = np.zeros(len(xx_centers))
+    mob_matrix = np.zeros((len(xx_centers), len(zz_centers)))
+    mobs_array = np.zeros(len(xx_centers))
 
     path = '/Volumes/Transcend/SIM_DEBER/130C_200s_final/try_' + str(n_try) + '/'
 

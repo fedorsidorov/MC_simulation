@@ -158,10 +158,7 @@ dose_factor = 3.8
 
 exposure_time = 100
 # It = 1.2e-9 * exposure_time  # C
-# I_exposure = 1e-9
-I_exposure = 1.5e-9
-# I_exposure = 2e-9
-It = I_exposure * exposure_time  # C
+It = 1.1e-9 * exposure_time  # C
 n_lines = 625
 
 pitch = 3e-4  # cm
@@ -204,7 +201,7 @@ bin_volume = x_step * mm.ly * z_step
 bin_n_monomers = bin_volume / const.V_mon_nm3
 
 # %%
-for n_try in range(1):
+for n_try in range(10):
 
     zz_vac_bins = np.zeros(len(xx_bins))
     zz_vac_centers = np.zeros(len(xx_centers))
@@ -218,8 +215,7 @@ for n_try in range(1):
     mob_matrix = np.zeros((len(xx_centers), len(zz_centers)))
     mobs_array = np.zeros(len(xx_centers))
 
-    # path = '/Volumes/Transcend/SIM_DEBER/366_vary_params/I_' + str(int(I_exposure * 1e+9)) + '/try_' + str(n_try) + '/'
-    path = '/Volumes/Transcend/SIM_DEBER/366_vary_params/I_1.5/try_' + str(n_try) + '/'
+    path = '/Volumes/Transcend/SIM_DEBER/366_vary_params/I_1p1_factor/try_' + str(n_try) + '/'
 
     if not os.path.exists(path):
         os.makedirs(path)

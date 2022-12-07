@@ -1,5 +1,10 @@
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
+
+font = {'size': 14}
+matplotlib.rc('font', **font)
+
 
 # %%
 tt = np.load('notebooks/heating/tt.npy')
@@ -24,6 +29,7 @@ plt.ylabel(r'$\Delta T$, $^\circ$C')
 plt.legend()
 plt.grid()
 
-plt.savefig('heating.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('heating.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('heating_14.jpg', dpi=600, bbox_inches='tight')
 # plt.show()
 
