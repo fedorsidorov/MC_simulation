@@ -157,8 +157,12 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
 dose_factor = 3.8
 
 exposure_time = 100
+# It = 1.3e-9 * exposure_time  # C
+# It = 1.25e-9 * exposure_time  # C
 # It = 1.2e-9 * exposure_time  # C
-It = 1.1e-9 * exposure_time  # C
+It = 1.18e-9 * exposure_time  # C
+# It = 1.15e-9 * exposure_time  # C
+# It = 1.1e-9 * exposure_time  # C
 n_lines = 625
 
 pitch = 3e-4  # cm
@@ -215,7 +219,10 @@ for n_try in range(10):
     mob_matrix = np.zeros((len(xx_centers), len(zz_centers)))
     mobs_array = np.zeros(len(xx_centers))
 
-    path = '/Volumes/Transcend/SIM_DEBER/366_vary_params/I_1p1_factor/try_' + str(n_try) + '/'
+    # path = '/Volumes/Transcend/SIM_DEBER/366_vary_params/I_1p15/try_' + str(n_try) + '/'
+    path = '/Volumes/Transcend/SIM_DEBER/366_vary_params/I_1p18/try_' + str(n_try) + '/'
+    # path = '/Volumes/Transcend/SIM_DEBER/366_vary_params/I_1p2_factor/try_' + str(n_try) + '/'
+    # path = '/Volumes/Transcend/SIM_DEBER/366_vary_params/I_1p25/try_' + str(n_try) + '/'
 
     if not os.path.exists(path):
         os.makedirs(path)
@@ -260,7 +267,7 @@ for n_try in range(10):
             now_z0_array[n] = pos_enter
 
             now_e_DATA_Pv = np.load(
-                '/Volumes/Transcend/e_DATA_500nm_point/' + str(pos_enter) + '/e_DATA_Pv_' +
+                'data/e_DATA_500nm_point/' + str(pos_enter) + '/e_DATA_Pv_' +
                 str(n_file) + '.npy'
             )
 

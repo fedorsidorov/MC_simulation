@@ -25,7 +25,7 @@ plt.xlabel(r'$x$, нм')
 plt.ylabel(r'$z$, нм')
 
 plt.xlim(-1500, 1500)
-plt.ylim(0, 600)
+plt.ylim(0, 700)
 
 # plt.legend(loc='lower right', fontsize=10)
 plt.legend(loc='upper right', fontsize=10)

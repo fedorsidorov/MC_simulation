@@ -17,9 +17,12 @@ n_tries = 100
 
 zz_bins_sum = np.zeros(len(xx_bins))
 
+plt.figure(dpi=600)
 
 for n_try in range(n_tries):
-    zz_bins_sum += np.load(path + 'try_' + str(n_try) + '/zz_vac_bins.npy')
+    now_zz_bins = np.load(path + 'try_' + str(n_try) + '/zz_vac_bins.npy')
+    zz_bins_sum += now_zz_bins
+    # plt.plot(xx_bins, now_zz_bins)
 
 
 zz_bins_avg = zz_bins_sum / n_tries
@@ -34,12 +37,11 @@ zz_bins_avg = zz_bins_sum / n_tries
 # plt.show()
 
 
-# %
+# %%
 quad_error_arr = np.zeros(len(xx_bins))
 
 for n_try in range(n_tries):
     now_zz_bins = np.load(path + 'try_' + str(n_try) + '/zz_vac_bins.npy')
-
     quad_error_arr += (now_zz_bins - zz_bins_avg)**2
 
 mean_quad_error_arr = np.sqrt(quad_error_arr / n_tries)

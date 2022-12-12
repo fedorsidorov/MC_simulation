@@ -96,9 +96,39 @@ gamma_2 = 0.512
 d_1 = D * h * np.sqrt(gamma_1 / (2 * m * e))
 d_2 = D * h * np.sqrt(gamma_2 / (2 * m * e))
 
+# %%
+dd = np.array([10, 8, 6, 4]) * 1e-2
+II = np.array([1.32, 1.64, 2.24, 3.72])
+
+Bx_arr = 0.715 * 4 * np.pi * 10**(-7) * 154 * II / 0.2
+
+e_m = 1.7588e+11
+
+# UU = e_m * dd**2 * Bx_arr**2 / 8
+
+U = 240
+
+e_m_arr = 8 * U / (dd**2 * Bx_arr**2)
+
+dd_2_inv = 1 / dd**2
+BB_2 = Bx_arr ** 2
 
 
+def func(x, k):
+    return k*x
 
+
+popt, _ = curve_fit(func, BB_2, dd_2_inv)
+
+xx = np.linspace(0, BB_2[-1], 1000)
+yy = func(xx, *popt)
+
+plt.figure(dpi=600)
+plt.plot(BB_2, dd_2_inv, 'o')
+plt.plot(xx, yy)
+
+plt.grid()
+plt.show()
 
 
 

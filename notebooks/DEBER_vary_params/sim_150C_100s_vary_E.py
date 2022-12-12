@@ -186,8 +186,10 @@ power_high = 3.4
 
 # PARAMETERS #
 # E_beam = 21e+3
+E_beam = 20.5e+3
 # E_beam = 20e+3
-E_beam = 19e+3
+# E_beam = 19.5e+3
+# E_beam = 19e+3
 # E_beam = 15e+3
 # E_beam = 25e+3
 # E_beam = 5e+3
@@ -197,8 +199,8 @@ power_low = 1.4
 
 # n_e_DATA_files = 600
 # n_e_DATA_files = 200
-# n_e_DATA_files = 100
-n_e_DATA_files = 125
+# n_e_DATA_files = 125
+n_e_DATA_files = 100
 T_C = 150
 scission_weight = 0.09  # 150 C - 0.088568
 # PARAMETERS #
@@ -226,7 +228,7 @@ for n_try in range(10):
     mobs_array = np.zeros(len(xx_centers))
 
     path = '/Volumes/Transcend/SIM_DEBER/366_vary_params/E_' +\
-           str(int(E_beam / 1e+3)) + '/try_' + str(n_try) + '/'
+           str(E_beam / 1e+3) + '/try_' + str(n_try) + '/'
 
     if not os.path.exists(path):
         os.makedirs(path)
@@ -271,8 +273,9 @@ for n_try in range(10):
             now_z0_array[n] = pos_enter
 
             now_e_DATA_Pv = np.load(
-                '/Volumes/Transcend/e_DATA_500nm_point_' + str(int(E_beam / 1e+3)) + 'keV/' + str(pos_enter) + '/e_DATA_Pv_' +
-                str(n_file) + '.npy'
+                # '/Volumes/Transcend/e_DATA_500nm_point_' + str(int(E_beam / 1e+3)) + 'keV/' + str(pos_enter) + '/e_DATA_Pv_' +
+                # 'data/e_DATA_500nm_point_19p5keV/' + str(pos_enter) + '/e_DATA_Pv_' + str(n_file) + '.npy'
+                'data/e_DATA_500nm_point_20p5keV/' + str(pos_enter) + '/e_DATA_Pv_' + str(n_file) + '.npy'
             )
 
             scission_inds = np.where(np.random.random(len(now_e_DATA_Pv)) < scission_weight)[0]
