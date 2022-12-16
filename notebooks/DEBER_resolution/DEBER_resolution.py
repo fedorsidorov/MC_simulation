@@ -9,7 +9,8 @@ import os
 from tqdm import tqdm
 from functions import MC_functions as mcf
 import constants as const
-from mapping import mapping_2um_500nm as mm
+# from mapping import mapping_2um_500nm as mm
+from mapping import mapping_3um_500nm as mm
 from functions import SE_functions_new as ef
 from functions import array_functions as af
 from functions import reflow_functions as rf
@@ -36,9 +37,10 @@ d_PMMA = mm.d_PMMA
 xx = mm.x_bins_100nm
 zz = mm.d_PMMA * (1 - np.cos(2 * np.pi / pitch_nm * xx)) / 2
 
+# E_beam = 25e+3
 # E_beam = 20e+3
-# E_beam = 5e+3
-E_beam = 1e+3
+E_beam = 5e+3
+# E_beam = 1e+3
 
 time_step = 1
 
@@ -178,13 +180,14 @@ power_high = 3.4
 
 # PARAMETERS #
 # beam_sigma = 300
-beam_sigma = 10
+beam_sigma = 5
 
 zip_length = 150
 power_low = 1.4
 
 # n_e_DATA_files = 600
 n_e_DATA_files = 100
+# n_e_DATA_files = 200
 T_C = 150
 scission_weight = 0.09  # 150 C - 0.088568
 # PARAMETERS #
@@ -198,11 +201,12 @@ bin_n_monomers = bin_volume / const.V_mon_nm3
 
 
 # %%
-for T_step in [10, 5, 2, 1]:
-# for T_step in [2]:
+# for T_step in [10, 5, 2, 1]:
+# for T_step in [10, 5]:
+for T_step in [10]:
 
-    for exposure_time in range(20, 80, 10):
-    # for exposure_time in range(40, 80, 10):
+    # for exposure_time in range(20, 101, 10):
+    for exposure_time in [25, 30, 35, 40]:
 
         zz_vac_bins = np.zeros(len(xx_bins))
         zz_vac_centers = np.zeros(len(xx_centers))
@@ -218,14 +222,15 @@ for T_step in [10, 5, 2, 1]:
 
         now_time = 0
 
-        path = '/Volumes/Transcend/SIM_DEBER/150C_resolution/1_keV_5I/' + str(T_step) + 'C_sec/'\
+        path = '/Volumes/Transcend/SIM_DEBER/150C_resolution/sigma_5nm/5_keV/' + str(T_step) + 'C_sec/' \
                + str(exposure_time) + '/'
+        # path = '/Volumes/Transcend/SIM_DEBER/150C_resolution/sigma_25nm/5_keV/' + str(T_step) + 'C_sec/'\
+        #        + str(exposure_time) + '/'
 
         if not os.path.exists(path):
             os.makedirs(path)
 
-        # It = 1.2e-9 * exposure_time  # C
-        It = 1.2e-9 * 5 * exposure_time  # C
+        It = 1.2e-9 * exposure_time  # C
         n_lines = 625
 
         pitch = pitch_nm * 1e-7  # cm
@@ -275,7 +280,8 @@ for T_step in [10, 5, 2, 1]:
                 now_z0_array[n] = pos_enter
 
                 now_e_DATA_Pv = np.load(
-                    '/Volumes/Transcend/e_DATA_500nm_point_1keV/' + str(pos_enter) + '/e_DATA_Pv_' +
+                    '/Volumes/Transcend/e_DATA_500nm_point_5keV/' + str(pos_enter) + '/e_DATA_Pv_' +
+                    # '/Volumes/Transcend/e_DATA_500nm_point_25keV/' + str(pos_enter) + '/e_DATA_Pv_' +
                     str(n_file) + '.npy'
                 )
 
@@ -359,9 +365,6 @@ for T_step in [10, 5, 2, 1]:
             now_time += time_step
 
         # % cooling reflow
-        # T_step = 10
-        # T_step = 5
-
         TT_cooling = np.arange(80, 151, T_step)[::-1]
         tt = np.ones(len(TT_cooling))
 
@@ -391,9 +394,6 @@ for T_step in [10, 5, 2, 1]:
             save_profiles(now_time, is_exposure=False)
 
             now_time += time_cooling_step
-
-            # if now_time > 300:
-            #     break
 
         np.save(path + 'xx_total.npy', xx_total)
         np.save(path + 'zz_total.npy', zz_total)

@@ -2,56 +2,35 @@
 import importlib
 import numpy as np
 import matplotlib.pyplot as plt
-from collections import deque
 from scipy.signal import medfilt
 from copy import deepcopy
 import os
 from tqdm import tqdm
-from scipy.optimize import curve_fit
 from functions import MC_functions as mcf
-import grid
 import constants as const
 from mapping import mapping_3um_500nm as mm
 from functions import SE_functions_new as ef
 from functions import array_functions as af
-from functions import e_matrix_functions as emf
 from functions import reflow_functions as rf
 import indexes as ind
 
 af = importlib.reload(af)
 const = importlib.reload(const)
 ef = importlib.reload(ef)
-emf = importlib.reload(emf)
-grid = importlib.reload(grid)
 ind = importlib.reload(ind)
 mcf = importlib.reload(mcf)
 mm = importlib.reload(mm)
 rf = importlib.reload(rf)
 
-
 # %% constants
 # simulation constants
-xx_1 = np.load('notebooks/DEBER_simulation/exp_profiles/357/xx_357_lower_slice_3.npy')
-zz_1 = np.load('notebooks/DEBER_simulation/exp_profiles/357/zz_357_lower_slice_3.npy')
+xx_360 = np.load('notebooks/DEBER_simulation/exp_profiles/360/xx_360.npy')
+zz_360 = np.load('notebooks/DEBER_simulation/exp_profiles/360/zz_360.npy')
 
-xx_2 = np.load('notebooks/DEBER_simulation/exp_profiles/357/xx_357_lower_slice_4.npy')
-zz_2 = np.load('notebooks/DEBER_simulation/exp_profiles/357/zz_357_lower_slice_4.npy')
-
-
-plt.figure(dpi=300)
-plt.plot(xx_1, zz_1)
-plt.plot(xx_2, zz_2)
-
-plt.grid()
-plt.xlim(-1500, 1500)
-plt.show()
-
-# %%
 dose_factor = 3.8
 
-exposure_time = 200
+exposure_time = 100
 It = 1.2e-9 * exposure_time  # C
-# It = 1.48e-9 * exposure_time  # C
 n_lines = 625
 
 pitch = 3e-4  # cm
@@ -112,8 +91,7 @@ def save_profiles(time, is_exposure):
     plt.plot(xx_centers, d_PMMA - zz_inner_centers, '.-', color='C4', ms=2, label='inner interp')
     plt.plot(xx_bins, d_PMMA - zz_vac_bins, 'r.-', color='C3', ms=2, label='PMMA interp')
 
-    plt.plot(xx_1, zz_1, '--', color='black', label='experiment')
-    plt.plot(xx_2, zz_2, '--', color='black')
+    plt.plot(xx_360, zz_360, '--', color='black', label='experiment')
 
     if is_exposure:
         plt.plot(now_x0_array, d_PMMA - now_z0_array, 'm.')
@@ -121,14 +99,14 @@ def save_profiles(time, is_exposure):
 
     plt.plot(xx_bins, np.zeros(len(xx_bins)), 'k')
 
-    plt.title('profiles, time = ' + str(time))
+    plt.title('profiles, time = ' + str(int(time)))
     plt.xlabel('x, nm')
     plt.ylabel('z, nm')
     plt.legend()
     plt.grid()
     plt.xlim(-1500, 1500)
     plt.ylim(-300, 600)
-    plt.savefig(path + 'profiles_' + str(time) + '_s.jpg', dpi=300)
+    plt.savefig(path + 'profiles_' + str(int(time)) + '_s.jpg', dpi=300)
     plt.close('all')
 
 
@@ -169,7 +147,8 @@ def make_SE_iteration(zz_vac_bins, zz_inner_centers, mobs_centers, time_step):
     zz_PMMA_SE_final = np.concatenate((zz_PMMA_SE, zz_PMMA_SE, zz_PMMA_SE))
     mobs_SE_final = np.concatenate((mobs_SE, mobs_SE, mobs_SE))
 
-    path_name = 'notebooks/SE/datafiles/datafile.fe'
+    path_name = 'notebooks/SE/datafiles/datafile_' + str(beam_sigma) + '_' +\
+                str(zip_length) + '_' + str(power_low) + '_' + '.fe'
 
     ef.create_datafile_latest_um(
         yy=xx_SE_final * 1e-3,
@@ -224,8 +203,9 @@ power_high = 3.4
 
 # PARAMETERS #
 beam_sigma = 400
-zip_length_1 = 100
-zip_length_2 = 30
+# zip_length = 120
+zip_length = 100
+# power_low = 3.4
 power_low = 1.4
 # PARAMETERS #
 
@@ -236,7 +216,9 @@ xx_centers, zz_centers = mm.x_centers_100nm, mm.z_centers_5nm
 bin_volume = x_step * mm.ly * z_step
 bin_n_monomers = bin_volume / const.V_mon_nm3
 
-for n_try in range(0, 100):
+# %%
+# T_step = 1
+for T_step in [0.1, 0.2, 0.5, 1, 2, 5, 10]:
 
     zz_vac_bins = np.zeros(len(xx_bins))
     zz_vac_centers = np.zeros(len(xx_centers))
@@ -250,7 +232,8 @@ for n_try in range(0, 100):
     mob_matrix = np.zeros((len(xx_centers), len(zz_centers)))
     mobs_array = np.zeros(len(xx_centers))
 
-    path = '/Volumes/Transcend/SIM_DEBER/130C_200s_final/try_' + str(n_try) + '/'
+    # path = '/Volumes/Transcend/SIM_DEBER/130C_100s_cooling/our_cooling/'
+    path = '/Volumes/Transcend/SIM_DEBER/130C_100s_cooling/' + str(T_step) + 'C_sec/'
 
     if not os.path.exists(path):
         os.makedirs(path)
@@ -316,8 +299,8 @@ for n_try in range(0, 100):
 
         # x2 HACK
         now_scission_matrix += now_scission_matrix[::-1, :]
-        # 1.48 nA instead of 1.2 nA
-        now_scission_matrix *= 1.48 / 1.2
+        # 1.25 nA instead of 1.2 nA
+        now_scission_matrix *= 1.25 / 1.2
 
         for i in range(len(xx_centers)):
             for j in range(len(zz_centers)):
@@ -336,11 +319,6 @@ for n_try in range(0, 100):
         zz_PMMA_inner = d_PMMA - zz_inner_centers
 
         ratio_array = (zz_PMMA_inner + (zz_PMMA_centers - zz_PMMA_inner) / 2) / zz_PMMA_centers
-
-        if now_time <= 100:
-            zip_length = zip_length_1
-        else:
-            zip_length = zip_length_2
 
         zip_length_matrix = np.ones(np.shape(now_scission_matrix)) * zip_length
 
@@ -369,24 +347,10 @@ for n_try in range(0, 100):
         if now_time % 5 == 0:
             save_profiles(now_time, is_exposure=True)
 
-    # % cooling reflow
-    TT = np.array([130,
-                   129, 128, 127, 126, 125, 124, 123, 122, 121, 120,
-                   119, 118, 117, 116, 115, 114, 113, 112, 111, 110,
-                   109, 108, 107, 106, 105, 104, 103, 102, 101, 100,
-                   99, 98, 97, 96, 95, 94, 93, 92, 91, 90,
-                   89, 88, 87, 86, 85, 84, 83, 82, 81, 80
-                   ])
+    TT_cooling = np.arange(80, 151, T_step)[::-1]
+    tt_cooling = np.ones(len(TT_cooling))
 
-    tt = np.array([4,
-                   3, 3, 4, 4, 3, 3, 4, 4, 4, 4,
-                   3, 4, 4, 5, 4, 4, 4, 5, 4, 4,
-                   5, 5, 4, 6, 4, 5, 5, 5, 5, 5,
-                   6, 6, 5, 6, 6, 5, 6, 6, 6, 7,
-                   7, 6, 7, 6, 8, 7, 7, 6, 9, 9
-                   ])
-
-    for n_cooling_step, time_cooling_step in enumerate(tt):
+    for n_cooling_step, time_cooling_step in enumerate(tt_cooling):
 
         print(now_time)
 
@@ -395,7 +359,7 @@ for n_try in range(0, 100):
         for j in range(len(Mn_centers)):
             mobs_centers[j] = rf.move_Mn_to_mobs(
                 Mn=Mn_centers[j],
-                T_C=TT[n_cooling_step],
+                T_C=TT_cooling[n_cooling_step],
                 power_high=power_high,
                 power_low=power_low
             )
@@ -404,15 +368,12 @@ for n_try in range(0, 100):
             zz_vac_bins=zz_vac_bins,
             zz_inner_centers=zz_inner_centers,
             mobs_centers=mobs_centers,
-            time_step=time_cooling_step
+            time_step=int(time_cooling_step)
         )
-
-        now_time += time_cooling_step
 
         save_profiles(now_time, is_exposure=False)
 
-        if now_time > 320:
-            break
+        now_time += time_cooling_step
 
     np.save(path + 'xx_total.npy', xx_total)
     np.save(path + 'zz_total.npy', zz_total)
@@ -422,3 +383,58 @@ for n_try in range(0, 100):
 
     np.save(path + 'xx_centers.npy', xx_centers)
     np.save(path + 'zz_inner_centers.npy', d_PMMA - zz_inner_centers)
+
+
+# %% our cooling
+TT = np.array([130,
+               129, 128, 127, 126, 125, 124, 123, 122, 121, 120,
+               119, 118, 117, 116, 115, 114, 113, 112, 111, 110,
+               109, 108, 107, 106, 105, 104, 103, 102, 101, 100,
+               99, 98, 97, 96, 95, 94, 93, 92, 91, 90,
+               89, 88, 87, 86, 85, 84, 83, 82, 81, 80
+               ])
+
+tt = np.array([4,
+               3, 3, 4, 4, 3, 3, 4, 4, 4, 4,
+               3, 4, 4, 5, 4, 4, 4, 5, 4, 4,
+               5, 5, 4, 6, 4, 5, 5, 5, 5, 5,
+               6, 6, 5, 6, 6, 5, 6, 6, 6, 7,
+               7, 6, 7, 6, 8, 7, 7, 6, 9, 9
+               ])
+
+for n_cooling_step, time_cooling_step in enumerate(tt):
+
+    print(now_time)
+
+    mobs_centers = np.zeros(len(Mn_centers))
+
+    for j in range(len(Mn_centers)):
+        mobs_centers[j] = rf.move_Mn_to_mobs(
+            Mn=Mn_centers[j],
+            T_C=TT[n_cooling_step],
+            power_high=power_high,
+            power_low=power_low
+        )
+
+    xx_total, zz_total, zz_vac_bins, zz_inner_centers = make_SE_iteration(
+        zz_vac_bins=zz_vac_bins,
+        zz_inner_centers=zz_inner_centers,
+        mobs_centers=mobs_centers,
+        time_step=time_cooling_step
+    )
+
+    now_time += time_cooling_step
+
+    save_profiles(now_time, is_exposure=False)
+
+    if now_time > 220:
+        break
+
+np.save(path + 'xx_total.npy', xx_total)
+np.save(path + 'zz_total.npy', zz_total)
+
+np.save(path + 'xx_bins.npy', xx_bins)
+np.save(path + 'zz_vac_bins.npy', d_PMMA - zz_vac_bins)
+
+np.save(path + 'xx_centers.npy', xx_centers)
+np.save(path + 'zz_inner_centers.npy', d_PMMA - zz_inner_centers)

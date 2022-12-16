@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-# font = {'size': 14}
-# matplotlib.rc('font', **font)
+font = {'size': 14}
+matplotlib.rc('font', **font)
 
 
 # %% 150C 100s
@@ -201,22 +201,25 @@ sigma_2 = np.load('notebooks/DEBER_simulation/sigma_150C_200s.npy')
 sigma_3 = np.load('notebooks/DEBER_simulation/sigma_130C_100s.npy')
 sigma_4 = np.load('notebooks/DEBER_simulation/sigma_130C_200s.npy')
 
-plt.figure(dpi=600, figsize=[4, 3])
+# plt.figure(dpi=600, figsize=[4, 3])
+plt.figure(dpi=300, figsize=[4, 3])
 
-plt.plot(xx_bins, sigma_1, label=r'150$^\circ$C, 100 c')
-plt.plot(xx_bins, sigma_2, label=r'150$^\circ$C, 200 c')
-plt.plot(xx_bins, sigma_3, label=r'130$^\circ$C, 100 c')
-plt.plot(xx_bins, sigma_4, label=r'130$^\circ$C, 200 c')
+plt.plot(xx_bins / 1000, sigma_1, label=r'150$^\circ$C, 100 c')
+plt.plot(xx_bins / 1000, sigma_2, label=r'150$^\circ$C, 200 c')
+plt.plot(xx_bins / 1000, sigma_3, label=r'130$^\circ$C, 100 c')
+plt.plot(xx_bins / 1000, sigma_4, label=r'130$^\circ$C, 200 c')
 
-plt.xlabel(r'$x$, нм')
+# plt.xlabel(r'$x$, нм')
+plt.xlabel(r'$x$, мкм')
 plt.ylabel(r'$\sigma$, нм')
 plt.legend(fontsize=10)
 
-plt.xlim(-1500, 1500)
+# plt.xlim(-1500, 1500)
+plt.xlim(-1.5, 1.5)
 plt.ylim(0, 14)
 plt.grid()
 
-plt.savefig('DEBER_sigmas.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('DEBER_sigmas_um_300dpi.jpg', dpi=300, bbox_inches='tight')
 plt.show()
 
 

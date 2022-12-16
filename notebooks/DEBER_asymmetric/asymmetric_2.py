@@ -223,8 +223,11 @@ mobs_array = np.zeros(len(xx_centers))
 # path = '/Volumes/Transcend/SIM_DEBER/366_asymmetric/sigma_250nm/1_3_5_7_our_cooling/'
 # path = '/Volumes/Transcend/SIM_DEBER/366_asymmetric/sigma_200nm/1_3_5_7_our_cooling/'
 # path = '/Volumes/Transcend/SIM_DEBER/366_asymmetric/sigma_200nm/1_3_5_7_9_our_cooling/'
-path = '/Volumes/Transcend/SIM_DEBER/366_asymmetric/sigma_200nm/1_3_5_7_9_11_our_cooling/'
+# path = '/Volumes/Transcend/SIM_DEBER/366_asymmetric/sigma_200nm/1_3_5_7_9_11_our_cooling/'
 # path = '/Volumes/Transcend/SIM_DEBER/366_asymmetric/sigma_200nm/1_3_5_7_9_11_13_our_cooling/'
+# path = '/Volumes/Transcend/SIM_DEBER/366_asymmetric/sigma_200nm/pm_500/'
+# path = '/Volumes/Transcend/SIM_DEBER/366_asymmetric/sigma_200nm/pm_400/'
+path = '/Volumes/Transcend/SIM_DEBER/366_asymmetric/sigma_200nm/pm_600/'
 
 if not os.path.exists(path):
     os.makedirs(path)
@@ -262,34 +265,10 @@ while now_time < exposure_time:
 
         n_file = np.random.choice(n_e_DATA_files)
 
-        # loc_arr = np.array([0, 250, 500, 750, 1000]) - 250  # SET 1
-        # p_arr = [0.5, 0.25, 0.1, 0.1, 0.05]
+        now_loc = -600
 
-        # loc_arr = np.array([0, 250, 500, 750])  # SET 2
-        # p_arr = [0.5, 0.25, 0.15, 0.1]
-
-        # loc_arr = np.array([0, 250, 500, 750]) - 250  # SET 3
-        # p_arr = [0.4, 0.3, 0.2, 0.1]
-
-        # loc_arr = np.array([0, 250, 500, 750]) * 2  # SET 4
-        # p_arr = [0.4, 0.3, 0.2, 0.1]
-
-        # now_loc = np.random.choice(loc_arr, p=p_arr)
-
-        now_loc = 0
-
-        if n % 3 == 0:
-            now_loc = beam_sigma * 2
-        elif n % 5 == 0:
-            now_loc = beam_sigma * 4
-        elif n % 7 == 0:
-            now_loc = beam_sigma * 6
-        # elif n % 9 == 0:
-        #     now_loc = beam_sigma * 8
-        # elif n % 11 == 0:
-        #     now_loc = beam_sigma * 10
-        # elif n % 13 == 0:
-        #     now_loc = beam_sigma * 12
+        if n % 2 == 0:
+            now_loc = 600
 
         now_x0 = np.random.normal(loc=now_loc, scale=beam_sigma)
 
@@ -302,7 +281,7 @@ while now_time < exposure_time:
         now_z0_array[n] = pos_enter
 
         now_e_DATA_Pv = np.load(
-            'data/e_DATA_500nm_point/' + str(pos_enter) + '/e_DATA_Pv_' +
+            '/Volumes/Transcend/e_DATA_500nm_point/' + str(pos_enter) + '/e_DATA_Pv_' +
             str(n_file) + '.npy'
         )
 

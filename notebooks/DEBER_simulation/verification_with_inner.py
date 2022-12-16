@@ -107,27 +107,32 @@ for n_try in range(n_tries):
 zz_bins_avg = zz_bins_sum / n_tries
 zz_total_avg = zz_total_sum / n_tries
 
-plt.figure(dpi=600, figsize=[4, 3])
+# plt.figure(dpi=600, figsize=[4, 3])
+plt.figure(dpi=300, figsize=[4, 3])
 
-# plt.plot(xx_366, np.ones(len(xx_366)) * 500, 'C3--', label='начальная поверхность')
-plt.plot(xx_366, np.ones(len(xx_366)) * 500, 'C3--')
+# plt.plot(xx_366, np.ones(len(xx_366)) * 500, 'C3--')
+plt.plot(xx_366 / 1000, np.ones(len(xx_366)) * 500, 'C3--')
 plt.plot([-1], [-1], 'k--', label='эксперимент')
 plt.plot([-1], [-1], 'C3', label='моделирование')
-plt.plot(xx_total, zz_total_avg, 'C0', label='поверхность для растекания')
-plt.plot(xx_bins, zz_bins_avg, 'C3')
-plt.plot(xx_360, zz_360, 'k--')
+# plt.plot(xx_total, zz_total_avg, 'C0', label='поверхность для растекания')
+plt.plot(xx_total / 1000, zz_total_avg, 'C0', label='поверхность для растекания')
+# plt.plot(xx_bins, zz_bins_avg, 'C3')
+plt.plot(xx_bins / 1000, zz_bins_avg, 'C3')
+# plt.plot(xx_360, zz_360, 'k--')
+plt.plot(xx_360 / 1000, zz_360, 'k--')
 
 plt.title(r'130$^\circ$C, 100 c', fontsize=14)
-plt.xlabel(r'$x$, нм')
+# plt.xlabel(r'$x$, нм')
+plt.xlabel(r'$x$, мкм')
 plt.ylabel(r'$z$, нм')
 plt.legend(fontsize=10)
 
-plt.xlim(-1500, 1500)
 plt.ylim(0, 800)
-# plt.ylim(0, 700)
+# plt.xlim(-1500, 1500)
+plt.xlim(-1.5, 1.5)
 plt.grid()
 
-plt.savefig('130C_100s_14_inner_dPMMA.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('130C_100s_14_inner_dPMMA_um_300dpi.jpg', dpi=600, bbox_inches='tight')
 plt.show()
 
 
