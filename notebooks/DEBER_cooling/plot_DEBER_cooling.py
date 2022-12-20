@@ -71,34 +71,52 @@ path = '/Volumes/Transcend/SIM_DEBER/130C_100s_cooling/'
 xx_bins = np.load(path + '0.1C_sec/xx_bins.npy')
 xx_total = np.load(path + '0.1C_sec/xx_total.npy')
 
+zz_bins_0p05 = np.load(path + '0.05C_sec/zz_vac_bins.npy')
 zz_bins_0p1 = np.load(path + '0.1C_sec/zz_vac_bins.npy')
 zz_bins_0p2 = np.load(path + '0.2C_sec/zz_vac_bins.npy')
+zz_bins_0p3 = np.load(path + '0.3C_sec/zz_vac_bins.npy')
+zz_bins_0p4 = np.load(path + '0.4C_sec/zz_vac_bins.npy')
 zz_bins_0p5 = np.load(path + '0.5C_sec/zz_vac_bins.npy')
 zz_bins_1 = np.load(path + '1C_sec/zz_vac_bins.npy')
-zz_bins_2 = np.load(path + '2C_sec/zz_vac_bins.npy')
-zz_bins_5 = np.load(path + '5C_sec/zz_vac_bins.npy')
-zz_bins_10 = np.load(path + '10C_sec/zz_vac_bins.npy')
 
+zz_total_0p05 = np.load(path + '0.05C_sec/zz_total.npy')
 zz_total_0p1 = np.load(path + '0.1C_sec/zz_total.npy')
 zz_total_0p2 = np.load(path + '0.2C_sec/zz_total.npy')
+zz_total_0p3 = np.load(path + '0.3C_sec/zz_total.npy')
+zz_total_0p4 = np.load(path + '0.4C_sec/zz_total.npy')
 zz_total_0p5 = np.load(path + '0.5C_sec/zz_total.npy')
 zz_total_1 = np.load(path + '1C_sec/zz_total.npy')
-zz_total_2 = np.load(path + '2C_sec/zz_total.npy')
-zz_total_5 = np.load(path + '5C_sec/zz_total.npy')
-zz_total_10 = np.load(path + '10C_sec/zz_total.npy')
 
 # %%
 plt.figure(dpi=300, figsize=[4, 3])
 
 plt.plot(xx_total / 1000, np.ones(len(xx_total)) * 500, 'C3--', label=r'начальная поверхность')
 
+plt.plot(xx_REF / 1000, zz_REF, '--k', label=r'эксперимент')
+
+# plt.plot(xx_total / 1000, zz_total_0p05, 'C0', label=r'поверхность для растекания')
+# plt.plot(xx_bins / 1000, zz_bins_0p05, 'C3', label=r'поверхность ПММА')
+# plt.title(label=r'0.05$^\circ$C/c', fontsize=14)
+
 # plt.plot(xx_total / 1000, zz_total_0p1, 'C0', label=r'поверхность для растекания')
-plt.plot(xx_bins / 1000, zz_bins_0p1, 'C3', label=r'0.1$^\circ$C/c')
+# plt.plot(xx_bins / 1000, zz_bins_0p1, 'C3', label=r'поверхность ПММА')
+# plt.title(label=r'0.1$^\circ$C/c', fontsize=14)
 
 # plt.plot(xx_total / 1000, zz_total_0p2, 'C0', label=r'поверхность для растекания')
-plt.plot(xx_bins / 1000, zz_bins_0p2, 'C2', label=r'0.2$^\circ$C/c')
+# plt.plot(xx_bins / 1000, zz_bins_0p2, 'C3', label=r'поверхность ПММА')
+# plt.title(label=r'0.2$^\circ$C/c', fontsize=14)
 
-plt.title(label=r'0.1-0.2$^\circ$C/c', fontsize=14)
+# plt.plot(xx_total / 1000, zz_total_0p3, 'C0', label=r'поверхность для растекания')
+# plt.plot(xx_bins / 1000, zz_bins_0p3, 'C3', label=r'поверхность ПММА')
+# plt.title(label=r'0.3$^\circ$C/c', fontsize=14)
+
+plt.plot(xx_total / 1000, zz_total_0p4, 'C0', label=r'поверхность для растекания')
+plt.plot(xx_bins / 1000, zz_bins_0p4, 'C3', label=r'поверхность ПММА')
+plt.title(label=r'0.4$^\circ$C/c', fontsize=14)
+
+# plt.plot(xx_total / 1000, zz_total_0p5, 'C0', label=r'поверхность для растекания')
+# plt.plot(xx_bins / 1000, zz_bins_0p5, 'C3', label=r'поверхность ПММА')
+# plt.title(label=r'0.5$^\circ$C/c', fontsize=14)
 
 # plt.plot(xx_total / 1000, zz_total_1, 'C0', label=r'поверхность для растекания')
 # plt.plot(xx_bins / 1000, zz_bins_1, 'C3', label=r'поверхность ПММА')
@@ -125,5 +143,5 @@ plt.xlim(-1.5, 1.5)
 plt.ylim(0, 800)
 plt.grid()
 
-plt.savefig('cooling_0p1_0p2.jpg', dpi=300, bbox_inches='tight')
+plt.savefig('cooling_0p4.jpg', dpi=300, bbox_inches='tight')
 plt.show()

@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import importlib
@@ -6,6 +7,9 @@ import importlib
 import grid
 
 grid = importlib.reload(grid)
+
+font = {'size': 14}
+matplotlib.rc('font', **font)
 
 
 # %%
@@ -60,52 +64,54 @@ OLF_fit = get_OSC(grid.EE, E1, A1, w1) +\
           get_OSC_edge(grid.EE, E4, A4, w4) +\
           get_OSC_edge(grid.EE, E5, A5, w5)
 
-# plt.figure(dpi=300)
 
-# plt.loglog(EE, OLF, '.-', label='Palik + Photoabs')
-# plt.loglog(grid.EE, get_OLF(grid.EE, *popt), label='total fit')
-#
-# plt.loglog(grid.EE, get_OSC(grid.EE, E1, A1, w1), '--')
-# plt.loglog(grid.EE, get_OSC_edge(grid.EE, E2, A2, w2), '--', linewidth=1)
-# plt.loglog(grid.EE, get_OSC_edge(grid.EE, E3, A3, w3), '--', linewidth=1)
-# plt.loglog(grid.EE, get_OSC_edge(grid.EE, E4, A4, w4), '--', linewidth=1)
-# plt.loglog(grid.EE, get_OSC_edge(grid.EE, E5, A5, w5), '--', linewidth=1)
+plt.figure(dpi=300, figsize=[4, 3])
 
-# plt.xlabel('E, eV')
-# plt.ylabel(r'Im[-1/$\varepsilon$]')
-# plt.ylim(1e-6, 1e+1)
+plt.loglog(EE, OLF, '.-', label='Palik + Photoabs')
+plt.loglog(grid.EE, get_OLF(grid.EE, *popt), label='total fit')
 
-# plt.grid()
-# plt.legend()
-# plt.show()
+plt.loglog(grid.EE, get_OSC(grid.EE, E1, A1, w1), '--')
+plt.loglog(grid.EE, get_OSC_edge(grid.EE, E2, A2, w2), '--', linewidth=1)
+plt.loglog(grid.EE, get_OSC_edge(grid.EE, E3, A3, w3), '--', linewidth=1)
+plt.loglog(grid.EE, get_OSC_edge(grid.EE, E4, A4, w4), '--', linewidth=1)
+plt.loglog(grid.EE, get_OSC_edge(grid.EE, E5, A5, w5), '--', linewidth=1)
+
+plt.xlabel('E, eV')
+plt.ylabel(r'Im[-1/$\varepsilon$]')
+plt.ylim(1e-6, 1e+1)
+
+plt.grid()
+plt.legend()
+plt.show()
 # plt.savefig('OLF_5osc_fit.jpg')
 
 
-with plt.style.context(['science', 'grid', 'russian-font']):
-    fig, ax = plt.subplots(dpi=600)
-
-    # ax.plot(D_sim[:, 0], D_sim[:, 1], 'b.--', label='статья Дапора')
-    # ax.plot(D_exp[:, 0], D_exp[:, 1], 'g.--', label='эксперимент')
-    # ax.plot(energies_delta_nf_0p02[0], energies_delta_nf_0p02[1], 'r.--', label='моделирование')
-
-    # ax.loglog(EE, OLF, '.-', label='Palik + Photoabs')
-    # ax.loglog(grid.EE, get_OLF(grid.EE, *popt), label='total fit')
-
-    ax.loglog(grid.EE, get_OSC(grid.EE, E1, A1, w1), '--')
-    ax.loglog(grid.EE, get_OSC_edge(grid.EE, E2, A2, w2), '--', linewidth=1)
-    ax.loglog(grid.EE, get_OSC_edge(grid.EE, E3, A3, w3), '--', linewidth=1)
-    ax.loglog(grid.EE, get_OSC_edge(grid.EE, E4, A4, w4), '--', linewidth=1)
-    ax.loglog(grid.EE, get_OSC_edge(grid.EE, E5, A5, w5), '--', linewidth=1)
-
-    ax.loglog(EE, OLF, '.-', color='tab:blue', label='Palik + Photoabs')
-    ax.loglog(grid.EE, get_OLF(grid.EE, *popt), 'r-', label='total fit')
-
-    ax.legend(fontsize=7)
-    ax.set(xlabel=r'энергия электрона, эВ')
-    ax.set(ylabel=r'Im[-1/$\varepsilon$]')
-    ax.autoscale(tight=True)
-    plt.xlim(1e+0, 1e+4)
-    plt.ylim(1e-6, 1e+1)
-
-    plt.show()
-    # fig.savefig('Si_Im.jpg', dpi=600)
+# %%
+# with plt.style.context(['science', 'grid', 'russian-font']):
+#     fig, ax = plt.subplots(dpi=600)
+#
+#     # ax.plot(D_sim[:, 0], D_sim[:, 1], 'b.--', label='статья Дапора')
+#     # ax.plot(D_exp[:, 0], D_exp[:, 1], 'g.--', label='эксперимент')
+#     # ax.plot(energies_delta_nf_0p02[0], energies_delta_nf_0p02[1], 'r.--', label='моделирование')
+#
+#     # ax.loglog(EE, OLF, '.-', label='Palik + Photoabs')
+#     # ax.loglog(grid.EE, get_OLF(grid.EE, *popt), label='total fit')
+#
+#     ax.loglog(grid.EE, get_OSC(grid.EE, E1, A1, w1), '--')
+#     ax.loglog(grid.EE, get_OSC_edge(grid.EE, E2, A2, w2), '--', linewidth=1)
+#     ax.loglog(grid.EE, get_OSC_edge(grid.EE, E3, A3, w3), '--', linewidth=1)
+#     ax.loglog(grid.EE, get_OSC_edge(grid.EE, E4, A4, w4), '--', linewidth=1)
+#     ax.loglog(grid.EE, get_OSC_edge(grid.EE, E5, A5, w5), '--', linewidth=1)
+#
+#     ax.loglog(EE, OLF, '.-', color='tab:blue', label='Palik + Photoabs')
+#     ax.loglog(grid.EE, get_OLF(grid.EE, *popt), 'r-', label='total fit')
+#
+#     ax.legend(fontsize=7)
+#     ax.set(xlabel=r'энергия электрона, эВ')
+#     ax.set(ylabel=r'Im[-1/$\varepsilon$]')
+#     ax.autoscale(tight=True)
+#     plt.xlim(1e+0, 1e+4)
+#     plt.ylim(1e-6, 1e+1)
+#
+#     plt.show()
+#     # fig.savefig('Si_Im.jpg', dpi=600)

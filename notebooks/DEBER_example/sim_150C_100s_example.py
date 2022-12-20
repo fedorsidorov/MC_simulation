@@ -377,7 +377,7 @@ while now_time < exposure_time:
 
     now_time += time_step
 
-TT_cooling = np.arange(80, 151, T_step)[::-1]
+TT_cooling = np.arange(80, 135, T_step)[::-1]
 tt_cooling = np.ones(len(TT_cooling))
 
 for n_cooling_step, time_cooling_step in enumerate(tt_cooling):
@@ -413,3 +413,40 @@ np.save(path + 'zz_vac_bins.npy', d_PMMA - zz_vac_bins)
 
 np.save(path + 'xx_centers.npy', xx_centers)
 np.save(path + 'zz_inner_centers.npy', d_PMMA - zz_inner_centers)
+
+
+# %%
+# T_step = 0.2
+#
+# TT_cooling = np.arange(80, 151, T_step)[::-1]
+# tt_cooling = np.ones(len(TT_cooling))
+#
+# for n_cooling_step, time_cooling_step in enumerate(tt_cooling):
+#
+#     print(now_time)
+#
+#     mobs_centers = np.zeros(len(Mn_centers))
+#
+#     for j in range(len(Mn_centers)):
+#         mobs_centers[j] = rf.move_Mn_to_mobs(
+#             Mn=Mn_centers[j],
+#             T_C=TT_cooling[n_cooling_step],
+#             power_high=power_high,
+#             power_low=power_low
+#         )
+#
+#     xx_total, zz_total, zz_vac_bins, zz_inner_centers = make_SE_iteration(
+#         zz_vac_bins=zz_vac_bins,
+#         zz_inner_centers=zz_inner_centers,
+#         mobs_centers=mobs_centers,
+#         time_step=int(time_cooling_step)
+#     )
+#
+#     save_profiles(now_time, is_exposure=False)
+#
+#     now_time += time_cooling_step
+
+
+
+
+

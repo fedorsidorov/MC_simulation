@@ -218,7 +218,8 @@ bin_n_monomers = bin_volume / const.V_mon_nm3
 
 # %%
 # T_step = 1
-for T_step in [0.1, 0.2, 0.5, 1, 2, 5, 10]:
+# for T_step in [0.1, 0.2, 0.5, 1, 2, 5, 10]:
+for T_step in [0.4]:
 
     zz_vac_bins = np.zeros(len(xx_bins))
     zz_vac_centers = np.zeros(len(xx_centers))
@@ -347,7 +348,7 @@ for T_step in [0.1, 0.2, 0.5, 1, 2, 5, 10]:
         if now_time % 5 == 0:
             save_profiles(now_time, is_exposure=True)
 
-    TT_cooling = np.arange(80, 151, T_step)[::-1]
+    TT_cooling = np.arange(80, 131, T_step)[::-1]
     tt_cooling = np.ones(len(TT_cooling))
 
     for n_cooling_step, time_cooling_step in enumerate(tt_cooling):

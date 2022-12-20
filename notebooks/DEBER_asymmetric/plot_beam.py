@@ -31,11 +31,11 @@ gauss_2_final = np.concatenate([gauss_2, gauss_2, gauss_2])
 gauss_3_final = np.concatenate([gauss_3, gauss_3, gauss_3])
 gauss_4_final = np.concatenate([gauss_4, gauss_4, gauss_4])
 
-plt.figure(dpi=600, figsize=[4, 3])
-plt.plot(xx_final, gauss_1_final, label=r'$I$')
-plt.plot(xx_final, gauss_2_final, label=r'$I/3$')
-plt.plot(xx_final, gauss_3_final, label=r'$I/5$')
-plt.plot(xx_final, gauss_4_final, label=r'$I/7$')
+plt.figure(dpi=300, figsize=[4, 3])
+plt.plot(xx_final / 1000, gauss_1_final, label=r'$j_0$')
+plt.plot(xx_final / 1000, gauss_2_final, label=r'$j_0/3$')
+plt.plot(xx_final / 1000, gauss_3_final, label=r'$j_0/5$')
+plt.plot(xx_final / 1000, gauss_4_final, label=r'$j_0/7$')
 
 # plt.plot(xx, gauss(xx, 0.5, 0, beam_sigma), label=r'$x_0 = 0$ нм')
 # plt.plot(xx, gauss(xx, 0.25, 250, beam_sigma), label=r'$x_0 = 250$ нм')
@@ -51,15 +51,15 @@ plt.plot(xx_final, gauss_4_final, label=r'$I/7$')
 
 plt.legend(fontsize=10, loc='upper right')
 
-plt.xlabel(r'$x$, нм')
-plt.ylabel(r'интенсивность')
+plt.xlabel(r'$x$, мкм')
+plt.ylabel(r'$j_{beam}$')
 
-plt.xlim(-5000, 5000)
+plt.xlim(-5, 5)
 plt.ylim(0, 1.2)
 
 plt.grid()
 
-plt.savefig('asymmetric.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('asymmetric.jpg', dpi=300, bbox_inches='tight')
 plt.show()
 
 
@@ -76,9 +76,9 @@ xx_final = np.concatenate([xx - 3000, xx, xx + 3000])
 gauss_1_final = np.concatenate([gauss_1, gauss_1, gauss_1])
 gauss_2_final = np.concatenate([gauss_2, gauss_2, gauss_2])
 
-plt.figure(dpi=600, figsize=[4, 3])
-plt.plot(xx_final, gauss_1_final, label=r'$I$')
-plt.plot(xx_final, gauss_2_final, label=r'$I$')
+plt.figure(dpi=300, figsize=[4, 3])
+plt.plot(xx_final / 1000, gauss_1_final, label=r'$j_0$')
+plt.plot(xx_final / 1000, gauss_2_final, label=r'$j_0$')
 
 # plt.plot(xx, gauss(xx, 0.5, 0, beam_sigma), label=r'$x_0 = 0$ нм')
 # plt.plot(xx, gauss(xx, 0.25, 250, beam_sigma), label=r'$x_0 = 250$ нм')
@@ -94,13 +94,13 @@ plt.plot(xx_final, gauss_2_final, label=r'$I$')
 
 plt.legend(fontsize=10, loc='upper right')
 
-plt.xlabel(r'$x$, нм')
-plt.ylabel(r'интенсивность')
+plt.xlabel(r'$x$, мкм')
+plt.ylabel(r'$j_{beam}$')
 
-plt.xlim(-5000, 5000)
+plt.xlim(-5, 5)
 plt.ylim(0, 1.2)
 
 plt.grid()
 
-plt.savefig('pm_400_colors.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('pm_400_colors.jpg', dpi=300, bbox_inches='tight')
 plt.show()

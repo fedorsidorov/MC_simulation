@@ -196,12 +196,12 @@ bin_n_monomers = bin_volume / const.V_mon_nm3
 
 # %%
 # for T_step in [1, 2, 5, 10]:
-for T_step in [1, 5]:
+for T_step in [1]:
 
     # for beam_sigma in [5, 10, 25, 50]:
-    for beam_sigma in [250, 300]:
+    for beam_sigma in [250]:
 
-        for exposure_time in range(15, 36, 5):
+        for exposure_time in range(10, 20, 1):
 
             zz_vac_bins = np.zeros(len(xx_bins))
             zz_vac_centers = np.zeros(len(xx_centers))
@@ -356,8 +356,8 @@ for T_step in [1, 5]:
 
                 now_time += time_step
 
-            TT_cooling = np.arange(80, 151, T_step)[::-1]
-            tt_cooling = np.ones(len(TT_cooling))
+            TT_coolung = np.arange(80, 151, T_step)[::-1]
+            tt_cooling = np.ones(len(TT_coolung))
 
             for n_cooling_step, time_cooling_step in enumerate(tt_cooling):
 
@@ -368,7 +368,7 @@ for T_step in [1, 5]:
                 for j in range(len(Mn_centers)):
                     mobs_centers[j] = rf.move_Mn_to_mobs(
                         Mn=Mn_centers[j],
-                        T_C=TT_cooling[n_cooling_step],
+                        T_C=TT_coolung[n_cooling_step],
                         power_high=power_high,
                         power_low=power_low
                     )
