@@ -40,8 +40,11 @@ def get_OLF_log(hw_log, E1, A1, w1, E2, A2, w2, E3, A3, w3, E4, A4, w4, E5, A5, 
 
 
 # %%
-EE = np.load('notebooks/Akkerman_Si_5osc/OLF_Palik+Fano/EE_Palik+Fano.npy')[1179:4241]
-OLF = np.load('notebooks/Akkerman_Si_5osc/OLF_Palik+Fano/OLF_Palik+Fano.npy')[1179:4241]
+# EE = np.load('notebooks/Akkerman_Si_5osc/OLF_Palik+Fano/EE_Palik+Fano.npy')[1179:4241]
+# OLF = np.load('notebooks/Akkerman_Si_5osc/OLF_Palik+Fano/OLF_Palik+Fano.npy')[1179:4241]
+
+EE = np.load('notebooks/Akkerman_Si_5osc/OLF_Palik+Fano/EE_Palik+Fano.npy')
+OLF = np.load('notebooks/Akkerman_Si_5osc/OLF_Palik+Fano/OLF_Palik+Fano.npy')
 
 EE_log = np.log(EE)
 OLF_log = np.log(OLF)
@@ -78,10 +81,12 @@ plt.loglog(grid.EE, get_OSC_edge(grid.EE, E5, A5, w5), '--', linewidth=1)
 
 plt.xlabel('E, eV')
 plt.ylabel(r'Im[-1/$\varepsilon$]')
-plt.ylim(1e-6, 1e+1)
+
+plt.xlim(1e+0, 1e+5)
+plt.ylim(1e-9, 1e+2)
 
 plt.grid()
-plt.legend()
+# plt.legend()
 plt.show()
 # plt.savefig('OLF_5osc_fit.jpg')
 

@@ -52,14 +52,17 @@ plt.plot(xx_final / 1000, gauss_4_final, label=r'$j_0/7$')
 plt.legend(fontsize=10, loc='upper right')
 
 plt.xlabel(r'$x$, мкм')
-plt.ylabel(r'$j_{beam}$')
+# plt.ylabel(r'$\frac{j_{beam}}{j_0}$')
+plt.ylabel(r'$j_{beam} / j_0$')
 
+# plt.xlim(-4, 4)
 plt.xlim(-5, 5)
-plt.ylim(0, 1.2)
+# plt.ylim(0, 1.2)
+plt.ylim(0, 1.25)
 
 plt.grid()
 
-plt.savefig('asymmetric.jpg', dpi=300, bbox_inches='tight')
+plt.savefig('asymmetric_beam.jpg', dpi=300, bbox_inches='tight')
 plt.show()
 
 

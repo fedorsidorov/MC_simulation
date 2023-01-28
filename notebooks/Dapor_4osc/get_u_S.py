@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import matplotlib.pyplot as plt
+import matplotlib
 from matplotlib import cm
 from mpl_toolkits.mplot3d import Axes3D
 import importlib
@@ -8,6 +9,9 @@ from scipy import integrate
 import constants as const
 import grid as grid
 from tqdm import tqdm
+
+font = {'size': 14}
+matplotlib.rc('font', **font)
 
 const = importlib.reload(const)
 grid = importlib.reload(grid)
@@ -88,27 +92,38 @@ for i, e in enumerate(grid.EE):
 
 
 # %%
-with plt.style.context(['science', 'grid', 'russian-font']):
-    fig, ax = plt.subplots(dpi=600)
+OLF_PMMA = np.load('notebooks/_outdated/OLF_PMMA/Ritsko_Henke_Dapor_Im.npy')
+# OLF_PMMA = np.load('notebooks/_outdated/OLF_PMMA/Ritsko_Henke_Im.npy')
 
-    ax.loglog(grid.EE, OLF_PMMA, 'C0', label=r'OLF ПММА')
-    ax.loglog(grid.EE, OLF, 'C3', label=r'сумма осцилляторов')
-    ax.loglog(grid.EE, osc_0, '--', linewidth=0.7, color='C1', label=r'осц. 1')
-    ax.loglog(grid.EE, osc_1, '--', linewidth=0.7, color='C2', label=r'осц. 2')
-    ax.loglog(grid.EE, osc_2, '--', linewidth=0.7, color='C3', label=r'осц. 3')
-    ax.loglog(grid.EE, osc_3, '--', linewidth=0.7, color='C4', label=r'осц. 4')
+plt.figure(dpi=300, figsize=[4, 3])
 
-    ax.legend(loc=1, fontsize=6)
-    ax.set(xlabel=r'$E$, эВ')
-    ax.set(ylabel=r'Im $\left [ \frac{-1}{\varepsilon (0, \omega)} \right ]$')
-    ax.autoscale(tight=True)
-    ax.text(30, 2, r'б)')
+plt.loglog(grid.EE, OLF_PMMA, 'C0', label=r'OLF ПММА')
 
-    plt.xlim(1e+1, 1e+4)
-    plt.ylim(1e-7, 1e+1)
+plt.loglog([1e-15], [1e-15], 'k--', label=r'осцилляторы')
 
-    plt.show()
-    fig.savefig('review_figures/OLF_b_new.jpg', dpi=600)
+plt.loglog(grid.EE, OLF, 'C3', label=r'сумма осцилляторов')
+
+plt.loglog(grid.EE, osc_0, '--', linewidth=0.8, color='C1')
+plt.loglog(grid.EE, osc_1, '--', linewidth=0.8, color='C2')
+plt.loglog(grid.EE, osc_2, '--', linewidth=0.8, color='C3')
+plt.loglog(grid.EE, osc_3, '--', linewidth=0.8, color='C4')
+
+# plt.legend(loc='upper right', fontsize=10)
+plt.legend(loc='lower left', fontsize=10)
+plt.xlabel(r'$E$, эВ')
+plt.ylabel(r'Im $\left [ \frac{-1}{\varepsilon (0, \omega)} \right ]$')
+# plt.autoscale(tight=True)
+
+# plt.xlim(1e+1, 1e+4)
+# plt.ylim(1e-7, 1e+1)
+
+plt.xlim(1e+1, 1e+4)
+# plt.ylim(1e-9, 1e+3)
+plt.ylim(1e-11, 1e+1)
+
+plt.grid()
+plt.savefig('OLF_PMMA_fit.jpg', dpi=300, bbox_inches='tight')
+plt.show()
 
 
 # %% plot ELF

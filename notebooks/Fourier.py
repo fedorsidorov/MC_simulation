@@ -209,11 +209,19 @@ plt.grid()
 plt.savefig('S_' + str(n_max) + '_period.jpg', dpi=600, bbox_inches='tight')
 plt.show()
 
+# %%
+In_arr = np.array([1.6, 1.65, 1.7, 1.75, 1.8])
+Un_arr = np.array([3.7, 4, 4.3, 4.5, 4.7])
+Inas_arr = np.array([8, 11.9, 19, 27.9, 41])
+T_arr = np.array([1981.3, 2081.3, 2148, 2206, 2239.6])
 
+DUn, DIn = 0.1, 0.05
 
+DT_inv = 1 / T_arr * (DUn / Un_arr + DIn / In_arr)
 
+DIa = 1
 
-
+D_ln = DIa / Inas_arr + 2 * (DUn / Un_arr + DIn / In_arr)
 
 
 

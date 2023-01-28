@@ -1,6 +1,10 @@
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
+
+font = {'size': 14}
+matplotlib.rc('font', **font)
 
 
 # %%
@@ -18,20 +22,19 @@ popt, pcov = curve_fit(linear_func, TT_inv, GG_log)
 
 
 # %%
-with plt.style.context(['science', 'grid', 'russian-font']):
-    fig, ax = plt.subplots(dpi=600)
+plt.figure(dpi=300, figsize=[4, 3])
 
-    ax.plot(TT_inv * 1e+3, GG_log, 'o', label='experiment')
-    ax.plot(TT_test_inv * 1e+3, linear_func(TT_test_inv, *popt), 'r', label='linear fit')
+plt.plot(TT_inv * 1e+3, GG_log, 'o', label='experiment')
+plt.plot(TT_test_inv * 1e+3, linear_func(TT_test_inv, *popt), 'r', label='linear fit')
 
-    ax.legend(fontsize=7)
-    ax.set(xlabel=r'T$^{-1}$, K$^{-1}$')
-    ax.set(ylabel=r'ln(G)')
-    plt.xlim(2, 6)
-    plt.ylim(-1, 2)
+plt.legend(fontsize=7)
+plt.xlabel(r'T$^{-1}$, K$^{-1}$')
+plt.ylabel(r'ln(G)')
+plt.xlim(2, 6)
+plt.ylim(-1, 2)
 
-    plt.show()
-    # fig.savefig('figures/lnG_lineat_fit.jpg', dpi=600)
+plt.show()
+# fig.savefig('figures/lnG_lineat_fit.jpg', dpi=600)
 
 
 # %%
