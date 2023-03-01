@@ -21,20 +21,21 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     # ax.loglog(grid.EE[inds], 1 / u_mermin[inds], label=r'Мермин')
 
     ax.loglog(grid.EE[inds], u_easiest[inds], label=r'L(x)')
-    ax.loglog(grid.EE[inds], u_4osc[inds], label=r'4 осциллятора')
+    ax.loglog(grid.EE[inds], u_4osc[inds], label=r'Друде')
     ax.loglog(grid.EE[inds], u_mermin[inds], color='C3', label=r'Мермин')
 
     ax.legend(loc=1, fontsize=6)
     ax.set(xlabel=r'$E$, эВ')
     ax.set(ylabel=r'$\lambda^{-1}$, Å$^{-1}$')
     ax.autoscale(tight=True)
-    ax.text(13, 5e-1, r'a)')
+    # ax.text(13, 5e-1, r'a)')
+    ax.text(260, 0.6, r'(a)')
 
     plt.xlim(1e+1, 1e+4)
     plt.ylim(1e-3, 1e+0)
 
+    fig.savefig('review_figures/u-1_PMMA_FINAL.jpg', dpi=600)
     plt.show()
-    # fig.savefig('review_figures/u-1_PMMA_new.jpg', dpi=600)
 
 
 # %% S - Å
@@ -48,18 +49,19 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     fig, ax = plt.subplots(dpi=600)
 
     ax.semilogx(grid.EE[inds], S_easiest[inds], label=r'S(x)')
-    ax.semilogx(grid.EE[inds], S_4osc[inds], label=r'4 осциллятора')
+    ax.semilogx(grid.EE[inds], S_4osc[inds], label=r'Друде')
     ax.semilogx(grid.EE[inds], S_mermin[inds], color='C3', label=r'Мермин')
 
     ax.legend(loc=1, fontsize=6)
     ax.set(xlabel=r'$E$, эВ')
     ax.set(ylabel=r'$\frac{dE}{ds}$, эВ/Å')
     ax.autoscale(tight=True)
-    ax.text(13, 4.5, r'б)')
+    # ax.text(13, 4.5, r'б)')
+    ax.text(260, 4.6, r'(б)')
 
     plt.xlim(1e+1, 1e+4)
     plt.ylim(0, 5)
 
+    fig.savefig('review_figures/S_PMMA_FINAL.jpg', dpi=600)
     plt.show()
-    fig.savefig('review_figures/S_PMMA_new.jpg', dpi=600)
 

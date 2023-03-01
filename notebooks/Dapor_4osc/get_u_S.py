@@ -10,8 +10,8 @@ import constants as const
 import grid as grid
 from tqdm import tqdm
 
-font = {'size': 14}
-matplotlib.rc('font', **font)
+# font = {'size': 14}
+# matplotlib.rc('font', **font)
 
 const = importlib.reload(const)
 grid = importlib.reload(grid)
@@ -35,13 +35,14 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.set(xlabel=r'$E$, эВ')
     ax.set(ylabel=r'Im $\left [ \frac{-1}{\varepsilon (0, \omega)} \right ]$')
     ax.autoscale(tight=True)
-    ax.text(30, 2, r'a)')
+    # ax.text(30, 2, r'a)')
+    ax.text(260, 2.3, r'(a)')
 
     plt.xlim(1e+1, 1e+4)
     plt.ylim(1e-7, 1e+1)
 
+    fig.savefig('review_figures/OLF_a_FINAL.jpg', dpi=600)
     plt.show()
-    # fig.savefig('review_figures/OLF_a_new.jpg', dpi=600)
 
 
 # %%
@@ -95,35 +96,35 @@ for i, e in enumerate(grid.EE):
 OLF_PMMA = np.load('notebooks/_outdated/OLF_PMMA/Ritsko_Henke_Dapor_Im.npy')
 # OLF_PMMA = np.load('notebooks/_outdated/OLF_PMMA/Ritsko_Henke_Im.npy')
 
-plt.figure(dpi=300, figsize=[4, 3])
+# plt.figure(dpi=300, figsize=[4, 3])
 
-plt.loglog(grid.EE, OLF_PMMA, 'C0', label=r'OLF ПММА')
+with plt.style.context(['science', 'grid', 'russian-font']):
+    fig, ax = plt.subplots(dpi=600)
 
-plt.loglog([1e-15], [1e-15], 'k--', label=r'осцилляторы')
+    ax.loglog(grid.EE, OLF_PMMA, 'C0', label=r'OLF ПММА')
 
-plt.loglog(grid.EE, OLF, 'C3', label=r'сумма осцилляторов')
+    ax.loglog([1e-15], [1e-15], 'k--', label=r'осцилляторы')
 
-plt.loglog(grid.EE, osc_0, '--', linewidth=0.8, color='C1')
-plt.loglog(grid.EE, osc_1, '--', linewidth=0.8, color='C2')
-plt.loglog(grid.EE, osc_2, '--', linewidth=0.8, color='C3')
-plt.loglog(grid.EE, osc_3, '--', linewidth=0.8, color='C4')
+    ax.loglog(grid.EE, OLF, 'C3', label=r'сумма осцилляторов')
 
-# plt.legend(loc='upper right', fontsize=10)
-plt.legend(loc='lower left', fontsize=10)
-plt.xlabel(r'$E$, эВ')
-plt.ylabel(r'Im $\left [ \frac{-1}{\varepsilon (0, \omega)} \right ]$')
-# plt.autoscale(tight=True)
+    ax.loglog(grid.EE, osc_0, '--', linewidth=0.8, color='C1')
+    ax.loglog(grid.EE, osc_1, '--', linewidth=0.8, color='C2')
+    ax.loglog(grid.EE, osc_2, '--', linewidth=0.8, color='C3')
+    ax.loglog(grid.EE, osc_3, '--', linewidth=0.8, color='C4')
 
-# plt.xlim(1e+1, 1e+4)
-# plt.ylim(1e-7, 1e+1)
+    # ax.legend(loc='upper right', fontsize=6)
+    ax.legend(loc='lower left', fontsize=6)
+    ax.set(xlabel=r'$E$, эВ')
+    ax.set(ylabel=r'Im $\left [ \frac{-1}{\varepsilon (0, \omega)} \right ]$')
+    ax.autoscale(tight=True)
+    # ax.text(30, 2, r'a)')
+    ax.text(260, 2.3, r'(б)')
 
-plt.xlim(1e+1, 1e+4)
-# plt.ylim(1e-9, 1e+3)
-plt.ylim(1e-11, 1e+1)
+    plt.xlim(1e+1, 1e+4)
+    plt.ylim(1e-7, 1e+1)
 
-plt.grid()
-plt.savefig('OLF_PMMA_fit.jpg', dpi=300, bbox_inches='tight')
-plt.show()
+    fig.savefig('OLF_PMMA_fit.jpg', dpi=300, bbox_inches='tight')
+    plt.show()
 
 
 # %% plot ELF
@@ -157,8 +158,10 @@ with plt.style.context(['science', 'russian-font']):
     ax.zaxis.set_rotate_label(False)
     ax.set_zlabel(r'Im $\left [ \frac{-1}{\varepsilon (q, \omega)} \right ]$', fontsize=fontsize, rotation=90)
 
+    ax.text(260, 2.3, 0, r'(a)')
+
     plt.show()
-    fig.savefig('review_figures/ELF_Drude_15p8.jpg', bbox_inches='tight', pad_inches=0)
+    # fig.savefig('review_figures/ELF_Drude_15p8.jpg', bbox_inches='tight', pad_inches=0)
 
 
 # %%

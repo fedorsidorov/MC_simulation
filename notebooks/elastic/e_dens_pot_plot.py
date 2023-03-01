@@ -70,7 +70,8 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.semilogx(rr / a0, 4 * np.pi * rr ** 2 * rho_DF * a0, label=r'ДФ', color='C2')
 
     ax.legend(loc=1, fontsize=6)
-    ax.text(0.00015, 200 * 0.9, r'а)')
+    # ax.text(0.00015, 200 * 0.9, r'а)')
+    ax.text(0.023, 200 * 0.92, r'(а)')
     ax.set(xlabel=r'$r$, $a_0$')
     ax.set(ylabel=r'$4 \pi r^2 \rho_e (r)$, а.е.')
     ax.autoscale(tight=True)
@@ -78,8 +79,8 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.xlim(1e-4, 1e+1)
     plt.ylim(0, 200)
 
+    fig.savefig('review_figures/e_density_models_FINAL.jpg', dpi=600)
     plt.show()
-    # fig.savefig('review_figures/e_density_models_new.jpg', dpi=600)
 
 
 # %%
@@ -104,7 +105,8 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.semilogx(rr / a0, get_phi(rho_DF), label=r'ДФ', color='C2')
 
     ax.legend(loc=1, fontsize=6)
-    ax.text(0.00015, 100 * 0.9, r'б)')
+    # ax.text(0.00015, 100 * 0.9, r'б)')
+    ax.text(0.023, 100 * 0.92, r'(б)')
     ax.set(xlabel=r'$r$, $a_0$')
     ax.set(ylabel=r'$r \varphi (r)$, а.е.')
     ax.autoscale(tight=True)
@@ -112,5 +114,5 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.xlim(1e-4, 1e+1)
     plt.ylim(0, 100)
 
+    fig.savefig('review_figures/phi_models_FINAL.jpg', dpi=600)
     plt.show()
-    fig.savefig('review_figures/phi_models_new.jpg', dpi=600)

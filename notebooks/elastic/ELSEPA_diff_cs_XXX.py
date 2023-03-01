@@ -45,13 +45,14 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.set(xlabel=r'$\theta$, град')
     ax.set(ylabel=r'$\frac{d \sigma}{d \Omega}$, Å$^2$/ср')
     ax.autoscale(tight=True)
-    ax.text(10, 1e+2 * 0.4, r'a)')
+    # ax.text(10, 1e+2 * 0.4, r'a)')
+    ax.text(85, 1e+2 * 0.4, r'(a)')
 
     plt.xlim(0, 180)
     plt.ylim(1e-3, 1e+2)
 
     plt.show()
-    # fig.savefig('review_figures/dcs_models_X10_new.jpg', dpi=600)
+    fig.savefig('review_figures/dcs_models_X10_FINAL.jpg', dpi=600)
 
 
 # %% 4X0
@@ -78,13 +79,14 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.set(xlabel=r'$\theta$, град')
     ax.set(ylabel=r'$\frac{d \sigma}{d \Omega}$, Å$^2$/ср')
     ax.autoscale(tight=True)
-    ax.text(10, 1e+2 * 0.4, r'a)')
+    # ax.text(10, 1e+2 * 0.4, r'a)')
+    ax.text(85, 1e+2 * 0.4, r'(a)')
 
     plt.xlim(0, 180)
     plt.ylim(1e-3, 1e+2)
 
+    fig.savefig('review_figures/dcs_models_4X0_FINAL.jpg', dpi=600)
     plt.show()
-    fig.savefig('review_figures/dcs_models_4X0_new.jpg', dpi=600)
 
 
 # %% 41X
@@ -109,12 +111,13 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.set(xlabel=r'$\theta$, град')
     ax.set(ylabel=r'$\frac{d \sigma}{d \Omega}$, Å$^2$/ср')
     ax.autoscale(tight=True)
-    ax.text(10, 1e+2 * 0.4, r'a)')
+    # ax.text(10, 1e+2 * 0.4, r'a)')
+    ax.text(85, 1e+2 * 0.4, r'(a)')
 
     plt.xlim(0, 180)
     plt.ylim(1e-3, 1e+2)
 
     plt.show()
-    fig.savefig('review_figures/dcs_models_41X_new.jpg', dpi=600)
+    fig.savefig('review_figures/dcs_models_41X_FINAL.jpg', dpi=600)
 
 
