@@ -124,19 +124,20 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     xx_0 = xx_prec_um
     zz_0 = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=0) * 1e+6
 
-    ax.plot(xx_0, zz_0, 'k', linewidth=1.5, label='initial profile')
+    ax.plot(xx_0, zz_0 * 1000, 'k', linewidth=1.5, label='initial profile')
 
     for i in range(len(tt)):
         zz_t_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=tt[i]) * 1e+6
-        ax.plot(xx_prec_um, zz_t_um, label='time = ' + str(tt[i]) + ' s')
-        ax.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1], '--', label='scale = ' + str(scales[inds[i]]))
+        ax.plot(xx_prec_um, zz_t_um * 1000, label='time = ' + str(tt[i]) + ' s')
+        ax.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1] * 1000, '--', label='scale = ' + str(scales[inds[i]]))
 
     ax.legend(fontsize=7, loc='center right')
     ax.set(title=r'$\eta$ = ' + str(format(now_eta, '.1e')) + ' Pa$\cdot$s')
     ax.set(xlabel=r'x, $\mu$m')
     ax.set(ylabel=r'z, nm')
     plt.xlim(-1, 4)
-    plt.ylim(0.02, 0.06)
+    plt.ylim(20, 60)
 
-    plt.savefig('figures/grating_eta_' + str(int(now_eta)) + '.jpg', dpi=600)
+    # plt.savefig('figures/grating_eta_' + str(int(now_eta)) + '.jpg', dpi=600)
+    plt.savefig('grating_eta_' + str(int(now_eta)) + '.jpg', dpi=600)
     plt.show()

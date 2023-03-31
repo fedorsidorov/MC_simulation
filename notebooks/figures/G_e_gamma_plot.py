@@ -40,7 +40,7 @@ plt.yticks(np.array((0.6, 1, 2, 3, 4)), ('0.6', '1', '2', '3', '4'))
 
 # plt.xlabel(r'$\frac{100}{T}$, K$^{-1}$')
 plt.xlabel(r'$1/T$, K$^{-1}$')
-plt.ylabel('$G_S$')
+plt.ylabel(r'$G_\mathrm{s}$')
 
 plt.legend(fontsize=12, loc='upper right')
 plt.grid()
