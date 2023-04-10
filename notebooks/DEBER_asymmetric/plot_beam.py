@@ -53,7 +53,7 @@ plt.legend(fontsize=10, loc='upper right')
 
 plt.xlabel(r'$x$, мкм')
 # plt.ylabel(r'$\frac{j_{beam}}{j_0}$')
-plt.ylabel(r'$j_{beam} / j_0$')
+plt.ylabel(r'$j_\mathrm{beam} / j_0$')
 
 # plt.xlim(-4, 4)
 plt.xlim(-5, 5)

@@ -53,15 +53,15 @@ ww_theor_1 = mcf.lin_lin_interp(TT_theor_1, weights)(tt)
 
 plt.figure(dpi=600, figsize=[4, 3])
 
-plt.plot(tt, ww_1, label=r'моделирование $G_s$')
-plt.plot(tt, ww_theor_1, '--', label=r'теоретическое $G_s$')
+plt.plot(tt, ww_1, label=r'моделирование $G_\mathrm{s}$')
+plt.plot(tt, ww_theor_1, '--', label=r'теоретическое $G_\mathrm{s}$')
 # plt.plot(tt, ww_2)
 # plt.plot(tt, ww_3)
 # plt.plot(tt, ww_4)
 # plt.plot(tt, ww_5)
 
-plt.xlabel(r'$T$, $^\circ$C')
-plt.ylabel(r'$p_s$')
+plt.xlabel(r'$T$, °C')
+plt.ylabel(r'$p_\mathrm{s}$')
 
 plt.xlim(0, 200)
 plt.ylim(0.02, 0.12)
@@ -69,7 +69,7 @@ plt.ylim(0.02, 0.12)
 plt.legend(fontsize=10)
 plt.grid()
 
-plt.savefig('G_s.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('G_s.jpg', dpi=300, bbox_inches='tight')
 plt.show()
 
 

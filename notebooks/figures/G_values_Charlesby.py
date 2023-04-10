@@ -45,13 +45,13 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.plot(TT_C_test, np.exp(linear_func(TT_test_inv, *popt)), 'r', label='linear fit')
 
     ax.legend(fontsize=7)
-    ax.set(xlabel=r'T, C')
+    ax.set(xlabel=r'T, °C')
     ax.set(ylabel=r'G')
     plt.xlim(-100, 150)
     plt.ylim(0, 3)
 
     plt.show()
-    # fig.savefig('figures/G_lineat_fit.jpg', dpi=600)
+    fig.savefig('figures/G_lineat_fit.jpg', dpi=600)
 
 
 

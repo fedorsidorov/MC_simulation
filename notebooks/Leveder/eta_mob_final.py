@@ -26,7 +26,7 @@ yy = linear_func(xx, *popt)
 plt.figure(dpi=600, figsize=[4, 3])
 
 plt.loglog(etas_SI, alphas, '.', label=r'моделирование')
-plt.loglog(xx, yy, 'r', label=r'$\mu = C/\eta^\beta$')
+plt.loglog(xx, yy, 'r', label=r'$\alpha = C/\eta^\beta$ (СИ)')
 
 # plt.loglog([1], [1], 'w', label=r'$C$ = ' + str(format(popt[0], '.3e')))
 plt.loglog([1], [1], 'w', label=r'$C = 26.1416$')
@@ -34,14 +34,14 @@ plt.loglog([1], [1], 'w', label=r'$C = 26.1416$')
 plt.loglog([1], [1], 'w', label=r'$\beta = 0.9889$')
 
 plt.xlabel(r'$\eta$, Па$\cdot$с')
-plt.ylabel(r'$\mu = s/t$')
+plt.ylabel(r'$\alpha$, 1/с')
 plt.legend(fontsize=10, loc='upper right')
 
 plt.grid()
 plt.xlim(1e+1, 1e+7)
 plt.ylim(1e-5, 1e+1)
 
-plt.savefig('С_gamma_' + str(fontsize) + '.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('С_gamma_' + str(fontsize) + '_new.jpg', dpi=600, bbox_inches='tight')
 # plt.show()
 
 

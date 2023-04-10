@@ -77,6 +77,6 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.ylim(0.02, 0.12)
 
     plt.show()
-    fig.savefig('figures/sci_weight_T.jpg', dpi=600)
+    # fig.savefig('figures/sci_weight_T.jpg', dpi=600)
 
 

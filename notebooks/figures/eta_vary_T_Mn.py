@@ -15,7 +15,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     ax.semilogy(TT, rf.get_viscosity_experiment_Mn(TT, MN[1], 3.4, 1.4, Mn_edge=42000), '.-', label=r'$M_n = 10000$ g/mol')
     ax.semilogy(TT, rf.get_viscosity_experiment_Mn(TT, MN[2], 3.4, 1.4, Mn_edge=42000), '.-', label=r'$M_n = 100000$ g/mol')
 
-    ax.set(xlabel=r'$T$, $^\circ$C')
+    ax.set(xlabel=r'$T$, °C')
     ax.set(ylabel=r'$\eta$, Pa$\cdot$s')
 
     ax.legend(fontsize=7, loc='upper right')

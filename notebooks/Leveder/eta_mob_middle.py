@@ -79,22 +79,23 @@ xx = np.linspace(0, 40000, 1000)
 popt, pcov = curve_fit(linear_func, tt, now_scales)
 yy = linear_func(xx, *popt)
 
-
+# %%
 plt.figure(dpi=600, figsize=[4, 3])
 
 plt.plot(tt, now_scales, '.', label=r'моделирование')
 plt.plot(xx, yy, 'r', label=r'$s = \alpha \cdot t$')
-plt.plot([-1], [-1], 'w', label=r'$\alpha$ = 2.87$\cdot$10$^{-4}$')
+plt.plot([-1], [-1], 'w', label=r'$\alpha$ = 2.87$\cdot$10$^{-4}$ 1/c')
 
 # plt.title(r'$\eta$ = ' + str(format(now_eta, '.1e')) + r' Pa$\cdot$s')
 plt.title(r'$\eta = 10^5$ Па$\cdot$с', fontsize=14)
 plt.xlabel(r'$t$, с')
 plt.ylabel(r'$s$')
 plt.legend(fontsize=10, loc='lower right')
+# plt.legend(fontsize=10, loc='upper left')
 
 plt.grid()
 plt.xlim(0, 4000)
 plt.ylim(0, 1.25)
 
-plt.savefig('alpha_' + str(int(now_eta)) + '_14.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('alpha_' + str(int(now_eta)) + '_14_new_down.jpg', dpi=600, bbox_inches='tight')
 plt.show()
