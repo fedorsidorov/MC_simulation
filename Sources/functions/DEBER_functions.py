@@ -27,10 +27,10 @@ sf = importlib.reload(sf)
 rf = importlib.reload(rf)
 
 # %%
-tau_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/tau.npy')
-Mn_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/Mn_125.npy')\
+tau_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_Schulz_Zimm/arrays/tau.npy')
+Mn_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_Schulz_Zimm/arrays/Mn_125.npy')\
          * const.MMA_weight
-Mw_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_kinetic_curves/arrays/Mw_125.npy')\
+Mw_125 = np.load('/Users/fedor/PycharmProjects/MC_simulation/notebooks/Boyd_Schulz_Zimm/arrays/Mw_125.npy')\
          * const.MMA_weight
 
 y_0 = 3989

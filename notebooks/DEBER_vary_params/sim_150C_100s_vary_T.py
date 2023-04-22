@@ -212,8 +212,8 @@ power_high = 3.4
 # for T_C in [147, 148, 149, 151, 152, 153]:
 for T_C in [148, 149, 151, 152, 153]:
 
-    tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
-    Mn_T = np.load('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_' + str(T_C) + '_term.npy') * 100
+    tau = np.load('notebooks/Boyd_Schulz_Zimm/arrays/tau.npy')
+    Mn_T = np.load('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_' + str(T_C) + '_term.npy') * 100
 
     E_beam = 20e+3
     beam_sigma = 250
@@ -419,13 +419,13 @@ for T_C in [148, 149, 151, 152, 153]:
 
 
 # %%
-tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
-Mn_147 = np.load('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_147_term.npy')
-Mn_148 = np.load('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_148_term.npy')
-Mn_149 = np.load('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_149_term.npy')
-Mn_151 = np.load('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_151_term.npy')
-Mn_152 = np.load('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_152_term.npy')
-Mn_153 = np.load('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_153_term.npy')
+tau = np.load('notebooks/Boyd_Schulz_Zimm/arrays/tau.npy')
+Mn_147 = np.load('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_147_term.npy')
+Mn_148 = np.load('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_148_term.npy')
+Mn_149 = np.load('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_149_term.npy')
+Mn_151 = np.load('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_151_term.npy')
+Mn_152 = np.load('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_152_term.npy')
+Mn_153 = np.load('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_153_term.npy')
 
 plt.figure(dpi=300)
 plt.semilogy(tau, Mn_147)

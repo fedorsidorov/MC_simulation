@@ -66,10 +66,10 @@ formula: x1 = -0.5*step_l
 // vertices by "x y z [optional parameters]"
 vertices
 // for limitation of simulation area
-9   0.5*step_l  	 0.5*base_w 	0.0     	vmob 0 fixed   			/* for table top */
-10  0.5*step_l  	-0.5*base_w    	0.0     	vmob 0 fixed
-11 -0.5*step_l  	-0.5*base_w    	0.0     	vmob 0 fixed
-12 -0.5*step_l  	 0.5*base_w 	0.0     	vmob 0 fixed
+9   0.5*step_l  	 0.5*base_w*0.6 	0.0     	vmob 0 fixed   			/* for table top */
+10  0.5*step_l  	-0.5*base_w*0.25    	0.0     	vmob 0 fixed
+11 -0.5*step_l  	-0.5*base_w*0.25    	0.0     	vmob 0 fixed
+12 -0.5*step_l  	 0.5*base_w*0.6 	0.0     	vmob 0 fixed
 
 //vertices for steps
 //step 1
@@ -142,23 +142,23 @@ faces
 7  13  14 15  16  	color clear 	tension 0 	no_refine 	density 0 	fmob 0	fixed /* table top for display */
 
 //step 1
-1      1  	 10    -5    -9     	color lightred 	tension TENS_r  	fmob fmob_v1
+1      1  	 10    -5    -9     	color brown 	tension TENS_r  	fmob fmob_v1
 2    -10 	 2   	213   210  	-6	color brown   	tension TENS_w  	fmob fmob_v1
 4      9  	-8     -209  -214    4	color brown   	tension TENS_w  	fmob fmob_v1
-5      5   	 6      7     8     	color cyan  	tension TENS_r      fmob fmob_v1
-6     -4    -203   -2    -1  		color magenta 	tension TENS_s2     fmob fmob_v1
+5      5   	 6      7     8     	color brown  	tension TENS_r      fmob fmob_v1
+6     -4    -203   -2    -1  		color brown 	tension TENS_s2     fmob fmob_v1
 
 //step 2
-201     -7 -210 -205  209         			color lightgreen  		tension TENS_r	fmob fmob_v1
+201     -7 -210 -205  209         			color brown  		tension TENS_r	fmob fmob_v1
 202   -213  202  313  310 -206    			color yellow 		tension TENS_w	fmob fmob_v2
 204    214 -208 -309 -314  204    			color yellow		tension TENS_w	fmob fmob_v2
-205    205  206  207  208         			color green 		tension TENS_r	fmob fmob_v2
+205    205  206  207  208         			color yellow 		tension TENS_r	fmob fmob_v2
 206   -204 -303 -202  203  				    color yellow 		tension TENS_s2	fmob fmob_v2
 
-299	305 -313  303	 314                    color white		tension TENS_r	fmob fmob_v2 
+299	305 -313  303	 314                    color yellow		tension TENS_r	fmob fmob_v2 
 
 //step 3
-301   -207 -310 -305  309         			color red    	tension TENS_r	fmob fmob_v2
+301   -207 -310 -305  309         			color yellow    	tension TENS_r	fmob fmob_v2
 
 bodies  
 // body defined by its oriented faces

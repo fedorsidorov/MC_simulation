@@ -142,38 +142,38 @@ Mw_153_term = (z_153_term + 2) / (z_153_term + 1) * Mn_153_term
 
 
 # %%
-np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_147_term.npy', Mn_147_term)
-np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mw_147_term.npy', Mw_147_term)
+np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_147_term.npy', Mn_147_term)
+np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mw_147_term.npy', Mw_147_term)
 
-np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_148_term.npy', Mn_148_term)
-np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mw_148_term.npy', Mw_148_term)
+np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_148_term.npy', Mn_148_term)
+np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mw_148_term.npy', Mw_148_term)
 
-np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_149_term.npy', Mn_149_term)
-np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mw_149_term.npy', Mw_149_term)
+np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_149_term.npy', Mn_149_term)
+np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mw_149_term.npy', Mw_149_term)
 
-# np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_150_term.npy', Mn_150_term)
-# np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mw_150_term.npy', Mw_150_term)
+# np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_150_term.npy', Mn_150_term)
+# np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mw_150_term.npy', Mw_150_term)
 
-np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_151_term.npy', Mn_151_term)
-np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mw_151_term.npy', Mw_151_term)
+np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_151_term.npy', Mn_151_term)
+np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mw_151_term.npy', Mw_151_term)
 
-np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_152_term.npy', Mn_152_term)
-np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mw_152_term.npy', Mw_152_term)
+np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_152_term.npy', Mn_152_term)
+np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mw_152_term.npy', Mw_152_term)
 
-np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mn_153_term.npy', Mn_153_term)
-np.save('notebooks/Boyd_kinetic_curves/for_vary_T/Mw_153_term.npy', Mw_153_term)
+np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mn_153_term.npy', Mn_153_term)
+np.save('notebooks/Boyd_Schulz_Zimm/for_vary_T/Mw_153_term.npy', Mw_153_term)
 
 
 # %% plot curves for termination
-kin_curve_125 = np.loadtxt('notebooks/Boyd_kinetic_curves/kinetic_curves/3.txt')
+kin_curve_125 = np.loadtxt('notebooks/Boyd_Schulz_Zimm/kinetic_curves/3.txt')
 tt_125 = dose2time(kin_curve_125[:, 0] * 1e-6, 1e-9)
 L_norm_125 = kin_curve_125[:, 1]
 
-kin_curve_150 = np.loadtxt('notebooks/Boyd_kinetic_curves/kinetic_curves/2.txt')
+kin_curve_150 = np.loadtxt('notebooks/Boyd_Schulz_Zimm/kinetic_curves/2.txt')
 tt_150 = dose2time(kin_curve_150[:, 0] * 1e-6, 1e-9)
 L_norm_150 = kin_curve_150[:, 1]
 
-kin_curve_170 = np.loadtxt('notebooks/Boyd_kinetic_curves/kinetic_curves/1.txt')
+kin_curve_170 = np.loadtxt('notebooks/Boyd_Schulz_Zimm/kinetic_curves/1.txt')
 tt_170 = dose2time(kin_curve_170[:, 0] * 1e-6, 1e-9)
 L_norm_170 = kin_curve_170[:, 1]
 
@@ -253,8 +253,8 @@ plt.show()
 # plt.show()
 
 # %%
-tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
-Mw_125 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mw_125.npy')
+tau = np.load('notebooks/Boyd_Schulz_Zimm/arrays/tau.npy')
+Mw_125 = np.load('notebooks/Boyd_Schulz_Zimm/arrays/Mw_125.npy')
 
 plt.figure(dpi=300)
 # plt.figure(dpi=300, figsize=[4, 3])

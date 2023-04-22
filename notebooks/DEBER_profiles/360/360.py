@@ -56,8 +56,17 @@ ind_2 = 850
 ind_3 = 780
 ind_4 = 740
 
-xx = pr_2[:ind_2, 0] - 3000 - 920
-zz = pr_2[:ind_2, 1] - np.min(pr_2[:ind_2, 1])
+# xx = pr_1[:ind_1, 0] - 3000 - 920
+# zz = pr_1[:ind_1, 1] - np.min(pr_1[:ind_1, 1])
+
+# xx = pr_2[:ind_2, 0] - 3000 - 920
+# zz = pr_2[:ind_2, 1] - np.min(pr_2[:ind_2, 1])
+
+# xx = pr_3[:ind_3, 0] - 3000 - 920
+# zz = pr_3[:ind_3, 1] - np.min(pr_3[:ind_3, 1])
+
+xx = pr_4[:ind_4, 0] - 3000 - 920
+zz = pr_4[:ind_4, 1] - np.min(pr_4[:ind_4, 1])
 
 inds = np.where(np.logical_and(
     xx >= -2000, xx <= 2000
@@ -68,12 +77,12 @@ zz = zz[inds]
 
 plt.figure(dpi=300)
 
-# plt.plot(pr_1[:ind_1, 0], pr_1[:ind_1, 1] - np.min(pr_1[:ind_1, 1]))
-# plt.plot(pr_2[:ind_2, 0] + 2000, pr_2[:ind_2, 1] - np.min(pr_2[:ind_2, 1]))
-# plt.plot(pr_3[:ind_3, 0] + 4350, pr_3[:ind_3, 1] - np.min(pr_3[:ind_3, 1]))
-# plt.plot(pr_4[:ind_4, 0] + 5900, pr_4[:ind_4, 1] - np.min(pr_4[:ind_4, 1]))
+plt.plot(pr_1[:ind_1, 0], pr_1[:ind_1, 1] - np.min(pr_1[:ind_1, 1]))
+plt.plot(pr_2[:ind_2, 0] + 2000, pr_2[:ind_2, 1] - np.min(pr_2[:ind_2, 1]))
+plt.plot(pr_3[:ind_3, 0] + 4350, pr_3[:ind_3, 1] - np.min(pr_3[:ind_3, 1]))
+plt.plot(pr_4[:ind_4, 0] + 5900, pr_4[:ind_4, 1] - np.min(pr_4[:ind_4, 1]))
 
-plt.plot(xx, zz)
+# plt.plot(xx, zz)
 
 # plt.xlim(20e+3, 35e+3)
 

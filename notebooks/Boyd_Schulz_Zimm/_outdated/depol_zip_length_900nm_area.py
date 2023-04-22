@@ -2,7 +2,7 @@ import numpy as np
 import importlib
 import matplotlib.pyplot as plt
 from tqdm import tqdm
-from mapping._outdated import mapping_viscosity_80nm as mm
+from mapping._outdated import mapping_viscosity_900nm as mm
 from functions import mapping_functions as mf
 from functions import e_matrix_functions as emf
 from functions import array_functions as af
@@ -22,14 +22,15 @@ mf = importlib.reload(mf)
 xx = mm.x_centers_10nm
 zz_vac = np.zeros(len(xx))
 
-source = 'data/e_DATA_Pv_80nm/'
+source = 'data/e_DATA_Pv_900nm/'
 n_files_total = 500
 
+# 15now21 = 0.9e-6  # C / cm^2
 D = 20e-6  # C / cm^2
 Q = D * mm.area_cm2
 
-# T = 125 C
-weight = 0.275
+# T = 160 C
+weight = 0.31
 
 n_electrons_required = Q / const.e_SI
 n_files_required = int(n_electrons_required / 100)
@@ -37,8 +38,8 @@ n_files_required = int(n_electrons_required / 100)
 n_primaries_in_file = 100
 
 # %%
-resist_matrix = np.load('/Volumes/ELEMENTS/chains_viscosity_80nm/10nm/resist_matrix_1.npy')
-chain_lens = np.load('/Volumes/ELEMENTS/chains_viscosity_80nm/10nm/prepared_chains_1/chain_lens.npy')
+resist_matrix = np.load('/Volumes/ELEMENTS/chains_viscosity_900nm/10nm/resist_matrix_1.npy')
+chain_lens = np.load('/Volumes/ELEMENTS/chains_viscosity_900nm/10nm/prepared_chains_1/chain_lens.npy')
 n_chains = len(chain_lens)
 
 chain_tables = []
@@ -46,7 +47,7 @@ progress_bar = tqdm(total=n_chains, position=0)
 
 for n in range(n_chains):
     chain_tables.append(
-        np.load('/Volumes/ELEMENTS/chains_viscosity_80nm/10nm/chain_tables_1/chain_table_' + str(n) + '.npy'))
+        np.load('/Volumes/ELEMENTS/chains_viscosity_900nm/10nm/chain_tables_1/chain_table_' + str(n) + '.npy'))
     progress_bar.update()
 
 resist_shape = mapping.hist_10nm_shape
@@ -61,9 +62,7 @@ n_scissions_list = []
 scission_matrix_total = np.zeros(mm.hist_10nm_shape)
 n_monomers_detached_total = 0
 
-# progress_bar = tqdm(total=n_files_required, position=0)
 
-# for file_cnt in range(100):
 for file_cnt in range(n_files_required):
 
     print(file_cnt)
@@ -90,7 +89,9 @@ for file_cnt in range(n_files_required):
         weights=sf.get_scissions(now_e_DATA_Pv, weight=weight)
     )[0]
 
-    n_scissions_list. append(np.sum(scission_matrix))
+    now_n_scissions = np.sum(scission_matrix)
+
+    n_scissions_list.append(now_n_scissions)
     scission_matrix_total += scission_matrix
 
     # print('mapping ...')
@@ -98,11 +99,14 @@ for file_cnt in range(n_files_required):
 
     # print('depolymerization ...')
     n_monomers_detached = mf.process_depolymerization_NEW(resist_matrix, chain_tables)
+
+    print('now zip length =', n_monomers_detached / now_n_scissions)
+
     n_monomers_list.append(n_monomers_detached)
     n_monomers_detached_total += n_monomers_detached
 
     V_free = n_monomers_detached * const.V_mon_cm3
-    delta_z = V_free / (mm.lx * mm.ly * 1e-14) * 1e+7
+    delta_z = V_free / mm.area_cm2 * 1e+7
     now_z_vac += delta_z
     zz_vac_list.append(now_z_vac)
 
@@ -115,21 +119,41 @@ for i, ct in enumerate(chain_tables):
         n_chains_completed += 1
 
 # %%
-data = np.loadtxt('notebooks/Boyd_kinetic_curves/data/kin_curve_170C_80nm.txt')
+data = np.loadtxt('data/Boyd_Schulz_Zimm/kin_curve_160C_900nm.txt')
+
+dose_list = np.load('notebooks/Boyd_Schulz_Zimm/sim_data/dose_list_900nm_new.npy')
+L_norm = np.load('notebooks/Boyd_Schulz_Zimm/sim_data/L_norm_160C_5500_new.npy')
 
 plt.figure(dpi=300)
 # plt.plot(zip_lens_list)
 
 dose_list_depol = np.arange(n_files_required) * n_primaries_in_file * const.e_SI / mm.area_cm2 * 1e+6
-L_norm_depol = (80 - np.array(zz_vac_list)) / 80
+L_norm_depol = (mm.d_PMMA - np.array(zz_vac_list)) / mm.d_PMMA
 
-plt.plot(dose_list_depol, L_norm_depol)
-plt.plot(data[:, 0], data[:, 1], 'o-')
+L_norm_depol[0] = 1
 
+plt.plot(data[:, 0], data[:, 1], '*--', label='exp 160 °C')
+plt.plot(dose_list, L_norm, label='sim zil length = 5500')
+plt.plot(dose_list_depol, L_norm_depol, label='sim depolymerization')
+
+plt.title('900 nm PMMA, 160 °C')
+# plt.xlim(0, 20)
+plt.xlim(0, 1)
+plt.ylim(0, 1)
+plt.xlabel('15now21, $\mu$C/cm$^2$')
+plt.ylabel('L/L$_0$')
+plt.legend()
 plt.grid()
 
-plt.show()
+# plt.show()
+plt.savefig('kin_curve_900nm_160C.png', dpi=300)
 
-# %%
-scission_matrix_2d = np.sum(scission_matrix_total, axis=1)
+# %
+# scission_matrix_2d = np.sum(scission_matrix_total, axis=1)
+#
+# # %%
+# plt.figure(dpi=300)
+# plt.plot(zz_vac_list)
+# plt.show()
+
 

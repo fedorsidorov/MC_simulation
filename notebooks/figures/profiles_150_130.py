@@ -33,7 +33,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.xlim(-1500, 1500)
     plt.ylim(0, 600)
 
-    plt.savefig('figures/profile_150.jpg', dpi=600)
+    # plt.savefig('figures/profile_150.jpg', dpi=600)
     plt.show()
 
 
@@ -67,7 +67,7 @@ with plt.style.context(['science', 'grid', 'russian-font']):
     plt.xlim(-1500, 1500)
     plt.ylim(0, 800)
 
-    plt.savefig('figures/profile_130.jpg', dpi=600)
+    # plt.savefig('figures/profile_130.jpg', dpi=600)
     plt.show()
 
 

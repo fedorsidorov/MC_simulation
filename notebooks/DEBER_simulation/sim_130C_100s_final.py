@@ -56,8 +56,8 @@ E_beam = 20e+3
 
 time_step = 1
 
-tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
-Mn_130 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mn_130_trans.npy') * 100
+tau = np.load('notebooks/Boyd_Schulz_Zimm/arrays/tau.npy')
+Mn_130 = np.load('notebooks/Boyd_Schulz_Zimm/arrays/Mn_130_trans.npy') * 100
 
 # PMMA 950K
 PD = 2.47
@@ -217,7 +217,8 @@ bin_volume = x_step * mm.ly * z_step
 bin_n_monomers = bin_volume / const.V_mon_nm3
 
 # %%
-for n_try in range(1, 100, 1):
+# for n_try in range(1, 100, 1):
+for n_try in range(1):
 
     zz_vac_bins = np.zeros(len(xx_bins))
     zz_vac_centers = np.zeros(len(xx_centers))

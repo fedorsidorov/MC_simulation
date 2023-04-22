@@ -618,9 +618,9 @@ def save_ratio():
     plt.savefig(path + 'ratios/' + 'ratio_' + str(now_time) + '_s.jpg', dpi=300)
     plt.close('all')
 
-tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
-Mn_150 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mn_150.npy') * 100
-Mw_150 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mw_150.npy') * 100
+tau = np.load('notebooks/Boyd_Schulz_Zimm/arrays/tau.npy')
+Mn_150 = np.load('notebooks/Boyd_Schulz_Zimm/arrays/Mn_150.npy') * 100
+Mw_150 = np.load('notebooks/Boyd_Schulz_Zimm/arrays/Mw_150.npy') * 100
 
 # PMMA 950K
 PD = 2.47

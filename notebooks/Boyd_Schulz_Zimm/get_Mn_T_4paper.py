@@ -161,29 +161,29 @@ Mw_200_term = (z_200_term + 2) / (z_200_term + 1) * Mn_200_term
 
 
 # %%
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mn_100_term.npy', Mn_100_term)
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mw_100_term.npy', Mw_100_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mn_100_term.npy', Mn_100_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mw_100_term.npy', Mw_100_term)
 
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mw_120_term.npy', Mw_120_term)
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mw_120_term.npy', Mw_120_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mw_120_term.npy', Mw_120_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mw_120_term.npy', Mw_120_term)
 
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mn_140_term.npy', Mn_140_term)
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mw_140_term.npy', Mw_140_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mn_140_term.npy', Mn_140_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mw_140_term.npy', Mw_140_term)
 
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mn_150_term.npy', Mn_150_term)
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mw_150_term.npy', Mw_150_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mn_150_term.npy', Mn_150_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mw_150_term.npy', Mw_150_term)
 
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mn_160_term.npy', Mn_160_term)
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mw_160_term.npy', Mw_160_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mn_160_term.npy', Mn_160_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mw_160_term.npy', Mw_160_term)
 
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mn_180_term.npy', Mn_180_term)
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mw_180_term.npy', Mw_180_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mn_180_term.npy', Mn_180_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mw_180_term.npy', Mw_180_term)
 
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mn_200_term.npy', Mn_200_term)
-np.save('notebooks/Boyd_kinetic_curves/4paper/Mw_200_term.npy', Mw_200_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mn_200_term.npy', Mn_200_term)
+np.save('notebooks/Boyd_Schulz_Zimm/4paper/Mw_200_term.npy', Mw_200_term)
 
 # %%
-tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
+tau = np.load('notebooks/Boyd_Schulz_Zimm/arrays/tau.npy')
 
 with plt.style.context(['science', 'grid', 'russian-font']):
     fig, ax = plt.subplots(dpi=600)

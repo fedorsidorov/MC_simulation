@@ -48,7 +48,7 @@ plt.ylim(0, 800)
 plt.grid()
 
 # plt.savefig('150C_100s_14_dPMMA.jpg', dpi=600, bbox_inches='tight')
-plt.savefig('150C_100s_14_dPMMA_um_300dpi.jpg', dpi=300, bbox_inches='tight')
+# plt.savefig('150C_100s_14_dPMMA_um_300dpi.jpg', dpi=300, bbox_inches='tight')
 plt.show()
 
 

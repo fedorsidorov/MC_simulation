@@ -35,19 +35,19 @@ n_electrons_required = Q / const.e_SI
 n_files_required = int(n_electrons_required / 100)
 
 # 125 C
-# data = np.loadtxt('notebooks/Boyd_kinetic_curves/data/kin_curve_125C_80nm.txt')
+# data = np.loadtxt('notebooks/Boyd_Schulz_Zimm/data/kin_curve_125C_80nm.txt')
 weight = 0.275
 zip_length = 600  # from initial slope
 # zip_length = 300  # from end point
 
 # 150 C
-# data = np.loadtxt('notebooks/Boyd_kinetic_curves/data/kin_curve_150C_80nm.txt')
+# data = np.loadtxt('notebooks/Boyd_Schulz_Zimm/data/kin_curve_150C_80nm.txt')
 # weight = 0.305
 # zip_length = 1800  # from initial slope
 # zip_length = 500  # from end point
 
 # 170 C
-# data = np.loadtxt('notebooks/Boyd_kinetic_curves/data/kin_curve_170C_80nm.txt')
+# data = np.loadtxt('notebooks/Boyd_Schulz_Zimm/data/kin_curve_170C_80nm.txt')
 # weight = 0.315
 # zip_length = 4500  # from initial slope
 # zip_length = 1000  # from end point
@@ -123,4 +123,4 @@ plt.legend()
 plt.show()
 
 # %%
-np.save('notebooks/Boyd_kinetic_curves/sim_data/L_norm_170C_1000.npy', L_norm_list)
+np.save('notebooks/Boyd_Schulz_Zimm/sim_data/L_norm_170C_1000.npy', L_norm_list)

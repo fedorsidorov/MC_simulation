@@ -99,8 +99,8 @@ x_0 = 2714
 z_0 = (2 - PD)/(PD - 1)
 y_0 = x_0 / (z_0 + 1)
 
-tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
-Mn_130 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mn_130_term.npy') * 100
+tau = np.load('notebooks/Boyd_Schulz_Zimm/arrays/tau.npy')
+Mn_130 = np.load('notebooks/Boyd_Schulz_Zimm/arrays/Mn_130_term.npy') * 100
 
 scission_weight = 0.08  # 130 C - 0.082748
 
@@ -121,8 +121,8 @@ Mn_matrix = np.ones((len(xx_centers), len(zz_centers))) * Mn_130[0]
 
 # %
 # for time_cnt in range(1):
-# for time_cnt in range(5):
-for time_cnt in range(10):
+for time_cnt in range(5):
+# for time_cnt in range(10):
 # for time_cnt in range(50):
 
     print(time_cnt)
@@ -176,7 +176,7 @@ for i in range(len(xx_centers)):
 # scission_matrix = np.load('notebooks/diffusion/scission_matrix_50s.npy')
 
 # Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_10s.npy')
-Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_50s.npy')
+# Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_50s.npy')
 
 plt.figure(dpi=600)
 fig, ax = plt.subplots(dpi=600, figsize=[8, 6])
@@ -207,7 +207,7 @@ cbar.formatter.set_useMathText(True)
 # plt.savefig('sci_conc_50s.jpg', dpi=600, bbox_inches='tight')
 
 # plt.savefig('Mn_hist_10s.jpg', dpi=600, bbox_inches='tight')
-plt.savefig('Mn_hist_50s.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('Mn_hist_50s.jpg', dpi=600, bbox_inches='tight')
 
 plt.show()
 
@@ -266,9 +266,9 @@ CC = deepcopy(CC_0)
 Nx = len(xx)
 Ny = len(yy)
 
-# t_end = 1
-# t_end = 5
-t_end = 20
+t_end = 1
+# t_end = 10
+# t_end = 20
 tau = t_end / 100
 
 alphas_x = np.zeros(Nx)
@@ -340,8 +340,8 @@ cbar.formatter.set_powerlimits((0, 0))
 cbar.formatter.set_useMathText(True)
 
 # plt.savefig('n_mon_hist_9p7e-11_' + str(t_end) + 's_straight.jpg', dpi=600, bbox_inches='tight')
-plt.savefig('n_mon_hist_1e-9_' + str(t_end) + 's_straight.jpg', dpi=600, bbox_inches='tight')
-# plt.show()
+# plt.savefig('n_mon_hist_1e-9_' + str(t_end) + 's_straight.jpg', dpi=600, bbox_inches='tight')
+plt.show()
 
-plt.close('all')
+# plt.close('all')
 

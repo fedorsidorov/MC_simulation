@@ -90,8 +90,8 @@ E_beam = 20e+3
 
 time_step = 1
 
-tau = np.load('notebooks/Boyd_kinetic_curves/arrays/tau.npy')
-Mn_150 = np.load('notebooks/Boyd_kinetic_curves/arrays/Mn_150.npy') * 100
+tau = np.load('notebooks/Boyd_Schulz_Zimm/arrays/tau.npy')
+Mn_150 = np.load('notebooks/Boyd_Schulz_Zimm/arrays/Mn_150.npy') * 100
 
 # PMMA 950K
 PD = 2.47

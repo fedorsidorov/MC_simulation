@@ -17,9 +17,9 @@ def func_cos(x_arr, h, A):
 # %%
 # T_step, beam_sigma, t_exp = 2, 150, 10
 # T_step, beam_sigma, t_exp = 2, 200, 10
-# T_step, beam_sigma, t_exp = 2, 200, 14
+T_step, beam_sigma, t_exp = 2, 200, 14
 # T_step, beam_sigma, t_exp = 5, 150, 12
-T_step, beam_sigma, t_exp = 10, 150, 14
+# T_step, beam_sigma, t_exp = 10, 150, 14
 
 path = '/Volumes/Transcend/SIM_DEBER/150C_holo_0p6/' + str(T_step) + 'C_sec/sigma_' + str(beam_sigma) + '/' + str(t_exp) + '/'
 
@@ -43,18 +43,26 @@ zz_total = np.concatenate([zz_total_0, zz_total_0])
 popt, _ = curve_fit(func_cos, xx_bins, zz_bins)
 
 plt.plot((xx_total - 600) / 1000, np.ones(len(xx_total)) * 500, 'C3--')
-plt.plot((xx_total - 600) / 1000, zz_total, 'C0', label=r'поверхность для растекания')
-plt.plot((xx_bins - 600) / 1000, zz_bins, 'C3', label=r'поверхность ПММА')
+# plt.plot((xx_total - 600) / 1000, zz_total, 'C0', label=r'поверхность для растекания')
+plt.plot((xx_total - 600) / 1000, zz_total, 'C0', label=r'reflow surface')
+# plt.plot((xx_bins - 600) / 1000, zz_bins, 'C3', label=r'поверхность ПММА')
+plt.plot((xx_bins - 600) / 1000, zz_bins, 'C3', label=r'PMMA surface')
 plt.plot((xx_bins - 600) / 1000, func_cos(xx_bins, *popt), 'k--', label=r'$h_0 + A \cdot sin(2 \pi x / \lambda)$')
 
 plt.legend(fontsize=10, loc='upper right')
-plt.title(r'$\sigma$ = ' + str(beam_sigma) + ' нм, $t_{exp}$ = ' + str(t_exp) + ' c', fontsize=14)
-plt.xlabel(r'$x$, мкм')
-plt.ylabel(r'$z$, нм')
+# plt.title(r'$\sigma$ = ' + str(beam_sigma) + ' нм, $t_{exp}$ = ' + str(t_exp) + ' c', fontsize=14)
+plt.title(r'$\sigma$ = ' + str(beam_sigma) + ' nm, $t_{exp}$ = ' + str(t_exp) + ' s', fontsize=14)
+# plt.xlabel(r'$x$, мкм')
+plt.xlabel(r'$x$, $\mu$m')
+# plt.ylabel(r'$z$, нм')
+plt.ylabel(r'$z$, nm')
 
 plt.xlim(-1.5, 1.5)
 plt.ylim(0, 800)
 plt.grid()
 
-plt.savefig('holo_' + str(T_step) + 'C_s' + str(beam_sigma) + '_' + str(t_exp) + 's_um_300dpi.jpg', dpi=300, bbox_inches='tight')
+plt.savefig('holo_0p6_' + str(T_step) + 'C_s' + str(beam_sigma) + '_' + str(t_exp) + 's_um_ENG.jpg', dpi=300, bbox_inches='tight')
 plt.show()
+
+print(np.linalg.norm(zz_bins - func_cos(xx_bins, *popt)) / np.sqrt(len(xx_bins)))
+
