@@ -48,19 +48,26 @@ tt_5 = np.array(range(len(TT_cooling_5)))
 tt_10 = np.array(range(len(TT_cooling_10)))
 
 # %%
-plt.figure(dpi=300)
+# plt.figure(dpi=300, figsize=[4, 3])
 
-plt.plot(tt_our, TT_our, label=r'эксперимент')
+# plt.plot(tt_our, TT_our, label=r'эксперимент')
 # plt.plot(tt_0p1, TT_cooling_0p1)
-plt.plot(tt_0p2, TT_cooling_0p2)
+# plt.plot(tt_0p2, TT_cooling_0p2)
 # plt.plot(tt_0p5, TT_cooling_0p5)
 # plt.plot(tt_1, TT_cooling_1)
 # plt.plot(tt_2, TT_cooling_2)
 # plt.plot(tt_5, TT_cooling_5)
 # plt.plot(tt_10, TT_cooling_10)
 
-plt.grid()
-plt.show()
+# plt.xlim(0, 300)
+# plt.ylim(50, 200)
+
+# plt.xlabel('$t$, с')
+# plt.xlabel('$T$, °C')
+
+# plt.legend()
+# plt.grid()
+# plt.show()
 
 # %%
 xx_REF = np.load('notebooks/DEBER_cooling/130С_100s_REF_xx_bins.npy')
@@ -96,43 +103,43 @@ plt.plot(xx_REF / 1000, zz_REF, '--k', label=r'эксперимент')
 
 # plt.plot(xx_total / 1000, zz_total_0p05, 'C0', label=r'поверхность для растекания')
 # plt.plot(xx_bins / 1000, zz_bins_0p05, 'C3', label=r'поверхность ПММА')
-# plt.title(label=r'0.05$^\circ$C/c', fontsize=14)
+# plt.title(label=r'0.05 °C/c', fontsize=14)
 
-# plt.plot(xx_total / 1000, zz_total_0p1, 'C0', label=r'поверхность для растекания')
-# plt.plot(xx_bins / 1000, zz_bins_0p1, 'C3', label=r'поверхность ПММА')
-# plt.title(label=r'0.1$^\circ$C/c', fontsize=14)
+plt.plot(xx_total / 1000, zz_total_0p1, 'C0', label=r'поверхность для растекания')
+plt.plot(xx_bins / 1000, zz_bins_0p1, 'C3', label=r'поверхность ПММА')
+plt.title(label=r'0.1 °C/c', fontsize=14)
 
 # plt.plot(xx_total / 1000, zz_total_0p2, 'C0', label=r'поверхность для растекания')
 # plt.plot(xx_bins / 1000, zz_bins_0p2, 'C3', label=r'поверхность ПММА')
-# plt.title(label=r'0.2$^\circ$C/c', fontsize=14)
+# plt.title(label=r'0.2 °C/c', fontsize=14)
 
 # plt.plot(xx_total / 1000, zz_total_0p3, 'C0', label=r'поверхность для растекания')
 # plt.plot(xx_bins / 1000, zz_bins_0p3, 'C3', label=r'поверхность ПММА')
-# plt.title(label=r'0.3$^\circ$C/c', fontsize=14)
+# plt.title(label=r'0.3 °C/c', fontsize=14)
 
-plt.plot(xx_total / 1000, zz_total_0p4, 'C0', label=r'поверхность для растекания')
-plt.plot(xx_bins / 1000, zz_bins_0p4, 'C3', label=r'поверхность ПММА')
-plt.title(label=r'0.4$^\circ$C/c', fontsize=14)
+# plt.plot(xx_total / 1000, zz_total_0p4, 'C0', label=r'поверхность для растекания')
+# plt.plot(xx_bins / 1000, zz_bins_0p4, 'C3', label=r'поверхность ПММА')
+# plt.title(label=r'0.4 °C/c', fontsize=14)
 
 # plt.plot(xx_total / 1000, zz_total_0p5, 'C0', label=r'поверхность для растекания')
 # plt.plot(xx_bins / 1000, zz_bins_0p5, 'C3', label=r'поверхность ПММА')
-# plt.title(label=r'0.5$^\circ$C/c', fontsize=14)
+# plt.title(label=r'0.5 °C/c', fontsize=14)
 
 # plt.plot(xx_total / 1000, zz_total_1, 'C0', label=r'поверхность для растекания')
 # plt.plot(xx_bins / 1000, zz_bins_1, 'C3', label=r'поверхность ПММА')
-# plt.title(label=r'1$^\circ$C/c', fontsize=14)
+# plt.title(label=r'1 °C/c', fontsize=14)
 
 # plt.plot(xx_total / 1000, zz_total_2, 'C0', label=r'поверхность для растекания')
 # plt.plot(xx_bins / 1000, zz_bins_2, 'C3', label=r'поверхность ПММА')
-# plt.title(label=r'2$^\circ$C/c', fontsize=14)
+# plt.title(label=r'2 °C/c', fontsize=14)
 
 # plt.plot(xx_total / 1000, zz_total_5, 'C0', label=r'поверхность для растекания')
 # plt.plot(xx_bins / 1000, zz_bins_5, 'C3', label=r'поверхность ПММА')
-# plt.title(label=r'5$^\circ$C/c', fontsize=14)
+# plt.title(label=r'5 °C/c', fontsize=14)
 
 # plt.plot(xx_total / 1000, zz_total_10, 'C0', label=r'поверхность для растекания')
 # plt.plot(xx_bins / 1000, zz_bins_10, 'C3', label=r'поверхность ПММА')
-# plt.title(label=r'10$^\circ$C/c', fontsize=14)
+# plt.title(label=r'10 °C/c', fontsize=14)
 
 plt.legend(fontsize=10, loc='upper right')
 
@@ -143,5 +150,5 @@ plt.xlim(-1.5, 1.5)
 plt.ylim(0, 800)
 plt.grid()
 
-plt.savefig('cooling_0p4.jpg', dpi=300, bbox_inches='tight')
+plt.savefig('cooling_0p5.jpg', dpi=300, bbox_inches='tight')
 plt.show()

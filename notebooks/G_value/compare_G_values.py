@@ -14,8 +14,8 @@ const = importlib.reload(const)
 mcf = importlib.reload(mcf)
 Gf = importlib.reload(Gf)
 
-# font = {'size': 14}
-# matplotlib.rc('font', **font)
+font = {'size': 14}
+matplotlib.rc('font', **font)
 
 
 # %%
@@ -51,7 +51,7 @@ ww_5 = mcf.lin_lin_interp(TT_sim_5, weights)(tt)
 
 ww_theor_1 = mcf.lin_lin_interp(TT_theor_1, weights)(tt)
 
-plt.figure(dpi=600, figsize=[4, 3])
+plt.figure(dpi=300, figsize=[4, 3])
 
 plt.plot(tt, ww_1, label=r'моделирование $G_\mathrm{s}$')
 plt.plot(tt, ww_theor_1, '--', label=r'теоретическое $G_\mathrm{s}$')

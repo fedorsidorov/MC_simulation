@@ -80,14 +80,37 @@ plt.figure(dpi=300)
 plt.plot(pr_1[:ind_1, 0], pr_1[:ind_1, 1] - np.min(pr_1[:ind_1, 1]))
 plt.plot(pr_2[:ind_2, 0] + 2000, pr_2[:ind_2, 1] - np.min(pr_2[:ind_2, 1]))
 plt.plot(pr_3[:ind_3, 0] + 4350, pr_3[:ind_3, 1] - np.min(pr_3[:ind_3, 1]))
-plt.plot(pr_4[:ind_4, 0] + 5900, pr_4[:ind_4, 1] - np.min(pr_4[:ind_4, 1]))
+plt.plot(pr_4[:ind_4, 0] + 6100 - 31000, pr_4[:ind_4, 1] - np.min(pr_4[:ind_4, 1]))
 
 # plt.plot(xx, zz)
 
 # plt.xlim(20e+3, 35e+3)
 
+# plt.xlim(-1500, 1500)
 plt.grid()
 plt.show()
+
+# %%
+xx = pr_4[:ind_4, 0] + 6100 - 31000
+zz = pr_4[:ind_4, 1] - np.min(pr_4[:ind_4, 1])
+
+inds = np.where(
+    np.logical_and(
+        xx > -1600,
+        xx < 1600
+    )
+)
+
+xx_final = xx[inds]
+zz_final = zz[inds]
+
+plt.figure(dpi=300)
+plt.plot(xx_final, zz_final)
+plt.grid()
+plt.show()
+
+np.save('notebooks/DEBER_simulation/exp_profiles/360/xx_360_1.npy', xx_final)
+np.save('notebooks/DEBER_simulation/exp_profiles/360/zz_360_1.npy', zz_final)
 
 # %%
 # xx_test = np.load('notebooks/DEBER_simulation/exp_profiles/360/xx_360.npy')
@@ -97,18 +120,82 @@ plt.show()
 # plt.plot(xx_test, zz_test)
 # plt.show()
 
-# %% height
+# %% CD height
 pr_1 = np.loadtxt('notebooks/DEBER_profiles/360/360/CD_height/CD_1.csv', delimiter=',', skiprows=5)
 pr_2 = np.loadtxt('notebooks/DEBER_profiles/360/360/CD_height/CD_2.csv', delimiter=',', skiprows=5)
 pr_3 = np.loadtxt('notebooks/DEBER_profiles/360/360/CD_height/CD_3.csv', delimiter=',', skiprows=5)
 
 plt.figure(dpi=300)
-plt.plot(pr_1[:, 0], pr_1[:, 1] - np.min(pr_1[:, 1]))
+plt.plot(pr_1[:, 0], pr_1[:, 1] - np.min(pr_1[:, 1]) - 55)
 plt.plot(pr_2[:, 0], pr_2[:, 1] - np.min(pr_2[:, 1]))
-plt.plot(pr_3[:, 0], pr_3[:, 1] - np.min(pr_3[:, 1]))
+plt.plot(pr_3[:, 0], pr_3[:, 1] - np.min(pr_3[:, 1]) - 10)
 
 plt.grid()
 plt.show()
+
+# %% B slice
+pr_1 = np.loadtxt('notebooks/DEBER_profiles/360/360/B_slice/B1_1.csv', delimiter=',', skiprows=5)
+pr_2 = np.loadtxt('notebooks/DEBER_profiles/360/360/B_slice/B1_2.csv', delimiter=',', skiprows=5)
+pr_3 = np.loadtxt('notebooks/DEBER_profiles/360/360/B_slice/B1_2.csv', delimiter=',', skiprows=5)
+
+plt.figure(dpi=300)
+# plt.plot(pr_1[:, 0], pr_1[:, 1] - np.min(pr_1[:, 1]) - 50)
+# plt.plot(pr_2[:, 0], pr_2[:, 1] - np.min(pr_2[:, 1]) - 60)
+plt.plot(pr_3[:, 0], pr_3[:, 1] - np.min(pr_3[:, 1]) - 60)
+
+plt.grid()
+plt.show()
+
+# %% C slice
+pr_1 = np.loadtxt('notebooks/DEBER_profiles/360/360/C_slice/C1_1.csv', delimiter=',', skiprows=5)
+pr_2 = np.loadtxt('notebooks/DEBER_profiles/360/360/C_slice/C1_2.csv', delimiter=',', skiprows=5)
+pr_3 = np.loadtxt('notebooks/DEBER_profiles/360/360/C_slice/C1_2.csv', delimiter=',', skiprows=5)
+
+plt.figure(dpi=300)
+plt.plot(pr_1[:, 0] - 11400 + 200, pr_1[:, 1] - np.min(pr_1[:, 1]) - 110)
+# plt.plot(pr_2[:, 0], pr_2[:, 1] - np.min(pr_2[:, 1]))
+# plt.plot(pr_3[:, 0] - 10000, pr_3[:, 1] - np.min(pr_3[:, 1]) - 30)
+
+plt.xlim(-1500, 1500)
+
+plt.grid()
+plt.show()
+
+# %%
+xx = pr_1[:, 0] - 14400 + 200
+zz = pr_1[:, 1] - np.min(pr_1[:, 1]) - 110
+
+inds = np.where(
+    np.logical_and(
+        xx > -1600,
+        xx < 1600
+    )
+)
+
+xx_final = xx[inds]
+zz_final = zz[inds]
+
+plt.figure(dpi=300)
+plt.plot(xx_final, zz_final)
+plt.grid()
+plt.show()
+
+np.save('notebooks/DEBER_simulation/exp_profiles/360/xx_360_3.npy', xx_final)
+np.save('notebooks/DEBER_simulation/exp_profiles/360/zz_360_3.npy', zz_final)
+
+# %% D slice
+pr_1 = np.loadtxt('notebooks/DEBER_profiles/360/360/D_slice/D1_1.csv', delimiter=',', skiprows=5)
+pr_2 = np.loadtxt('notebooks/DEBER_profiles/360/360/D_slice/D1_2.csv', delimiter=',', skiprows=5)
+pr_3 = np.loadtxt('notebooks/DEBER_profiles/360/360/D_slice/D1_3.csv', delimiter=',', skiprows=5)
+
+plt.figure(dpi=300)
+# plt.plot(pr_1[:, 0], pr_1[:, 1] - np.min(pr_1[:, 1]))
+# plt.plot(pr_2[:, 0], pr_2[:, 1] - np.min(pr_2[:, 1]) - 90)
+plt.plot(pr_3[:, 0], pr_3[:, 1] - np.min(pr_3[:, 1]) - 70)
+
+plt.grid()
+plt.show()
+
 
 
 

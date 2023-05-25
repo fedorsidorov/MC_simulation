@@ -219,7 +219,8 @@ bin_n_monomers = bin_volume / const.V_mon_nm3
 # %%
 # T_step = 1
 # for T_step in [0.1, 0.2, 0.5, 1, 2, 5, 10]:
-for T_step in [0.4]:
+# for T_step in [0.4]:
+for T_step in [0.2]:
 
     zz_vac_bins = np.zeros(len(xx_bins))
     zz_vac_centers = np.zeros(len(xx_centers))

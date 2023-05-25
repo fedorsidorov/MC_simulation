@@ -34,16 +34,17 @@ for i in range(len(tt_sum)):
 
 
 plt.figure(dpi=600, figsize=[4, 3])
-plt.plot(tt_sum, TT)
+plt.plot(tt_sum, TT, label=r'эксперимент')
 plt.xlabel(r'$t$, с')
-plt.ylabel(r'$T$, $^{\circ}C$')
+plt.ylabel(r'$T$, °C')
 
 plt.xlim(0, 300)
 # plt.ylim(0, 175)
 plt.ylim(50, 200)
 plt.grid()
+plt.legend()
 
-plt.savefig('cooling.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('cooling_FINAL.jpg', dpi=600, bbox_inches='tight')
 plt.show()
 
 

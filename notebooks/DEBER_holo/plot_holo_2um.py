@@ -97,7 +97,7 @@ plt.xlim(-3, 3)
 plt.ylim(0, 800)
 plt.grid()
 
-plt.savefig('holo_1C_s450_40s_um_ENG.jpg', dpi=300, bbox_inches='tight')
+# plt.savefig('holo_1C_s450_40s_um_ENG.jpg', dpi=300, bbox_inches='tight')
 plt.show()
 
 
@@ -148,7 +148,7 @@ plt.grid()
 # plt.savefig('holo_1C_s450_48s_um_ENG.jpg', dpi=300, bbox_inches='tight')
 plt.show()
 
-print(np.linalg.norm(zz_bins - func_cos(xx_bins, *popt)) / np.sqrt(len(xx_bins)))
+print(np.linalg.norm(zz_bins - func_cos(xx_bins, *popt)) / np.sqrt(len(xx_bins)) / (np.max(zz_total) - np.min(zz_total)))
 
 
 # %% sigma = 500 nm, t_exp = 48 s
@@ -195,7 +195,7 @@ plt.xlim(-3, 3)
 plt.ylim(0, 800)
 plt.grid()
 
-plt.savefig('holo_1C_s500_48s_um_ENG.jpg', dpi=300, bbox_inches='tight')
+# plt.savefig('holo_1C_s500_48s_um_ENG.jpg', dpi=300, bbox_inches='tight')
 plt.show()
 
 
@@ -242,10 +242,10 @@ plt.xlim(-3, 3)
 plt.ylim(0, 800)
 plt.grid()
 
-plt.savefig('holo_1C_s600_40s_um_ENG.jpg', dpi=300, bbox_inches='tight')
+# plt.savefig('holo_1C_s600_40s_um_ENG.jpg', dpi=300, bbox_inches='tight')
 plt.show()
 
-print(np.linalg.norm(zz_bins - func_cos(xx_bins, *popt)) / np.sqrt(len(xx_bins)))
+print(np.linalg.norm(zz_bins - func_cos(xx_bins, *popt)) / np.sqrt(len(xx_bins)) / (np.max(zz_total) - np.min(zz_total)))
 
 
 # %% sigma = 600 nm, t_exp = 60 s
@@ -293,8 +293,10 @@ plt.ylim(0, 800)
 plt.grid()
 
 # plt.savefig('holo_1C_s600_60s_um_300dpi.jpg', dpi=300, bbox_inches='tight')
-plt.savefig('holo_1C_s600_60s_um_ENG.jpg', dpi=300, bbox_inches='tight')
+# plt.savefig('holo_1C_s600_60s_um_ENG.jpg', dpi=300, bbox_inches='tight')
 plt.show()
+
+print(np.linalg.norm(zz_bins - func_cos(xx_bins, *popt)) / np.sqrt(len(xx_bins)) / (np.max(zz_total) - np.min(zz_total)))
 
 
 # %% sigma = 600 nm, t_exp = 62 s
@@ -340,7 +342,7 @@ plt.xlim(-3, 3)
 plt.ylim(0, 800)
 plt.grid()
 
-plt.savefig('holo_1C_s600_62s_um_ENG.jpg', dpi=300, bbox_inches='tight')
+# plt.savefig('holo_1C_s600_62s_um_ENG.jpg', dpi=300, bbox_inches='tight')
 plt.show()
 
 
@@ -385,7 +387,7 @@ plt.grid()
 # plt.savefig('holo_10C_s250_100s_um_ENG.jpg', dpi=300, bbox_inches='tight')
 plt.show()
 
-print(np.linalg.norm(zz_bins - func_cos(xx_bins, *popt)) / np.sqrt(len(xx_bins)))
+print(np.linalg.norm(zz_bins - func_cos(xx_bins, *popt)) / np.sqrt(len(xx_bins)) / (np.max(zz_total) - np.min(zz_total)))
 
 
 

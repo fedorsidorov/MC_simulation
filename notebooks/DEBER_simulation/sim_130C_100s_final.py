@@ -27,6 +27,9 @@ rf = importlib.reload(rf)
 xx_360 = np.load('notebooks/DEBER_simulation/exp_profiles/360/xx_360.npy')
 zz_360 = np.load('notebooks/DEBER_simulation/exp_profiles/360/zz_360.npy')
 
+xx_360_1 = np.load('notebooks/DEBER_simulation/exp_profiles/360/xx_360_1.npy')
+zz_360_1 = np.load('notebooks/DEBER_simulation/exp_profiles/360/zz_360_1.npy')
+
 dose_factor = 3.8
 
 exposure_time = 100
@@ -91,7 +94,9 @@ def save_profiles(time, is_exposure):
     plt.plot(xx_centers, d_PMMA - zz_inner_centers, '.-', color='C4', ms=2, label='inner interp')
     plt.plot(xx_bins, d_PMMA - zz_vac_bins, 'r.-', color='C3', ms=2, label='PMMA interp')
 
-    plt.plot(xx_360, zz_360, '--', color='black', label='experiment')
+    # plt.plot(xx_360, zz_360, '--', color='black', label='experiment')
+    plt.plot(xx_360, zz_360, '--', color='black')
+    plt.plot(xx_360_1, zz_360_1, '--', color='black', label='experiment')
 
     if is_exposure:
         plt.plot(now_x0_array, d_PMMA - now_z0_array, 'm.')

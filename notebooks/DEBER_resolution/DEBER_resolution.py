@@ -203,10 +203,12 @@ bin_n_monomers = bin_volume / const.V_mon_nm3
 # %%
 # for T_step in [10, 5, 2, 1]:
 # for T_step in [10, 5]:
-for T_step in [10]:
+# for T_step in [10]:
+for T_step in [0.001]:
 
     # for exposure_time in range(20, 101, 10):
-    for exposure_time in [25, 30, 35, 40]:
+    # for exposure_time in [25, 30, 35, 40]:
+    for exposure_time in [40]:
 
         zz_vac_bins = np.zeros(len(xx_bins))
         zz_vac_centers = np.zeros(len(xx_centers))
@@ -224,7 +226,7 @@ for T_step in [10]:
 
         path = '/Volumes/Transcend/SIM_DEBER/150C_resolution/sigma_5nm/5_keV/' + str(T_step) + 'C_sec/' \
                + str(exposure_time) + '/'
-        # path = '/Volumes/Transcend/SIM_DEBER/150C_resolution/sigma_25nm/5_keV/' + str(T_step) + 'C_sec/'\
+        # path = '/Volumes/Transcend/SIM_DEBER/150C_resolution/sigma_5nm/25_keV/' + str(T_step) + 'C_sec/'\
         #        + str(exposure_time) + '/'
 
         if not os.path.exists(path):
@@ -371,6 +373,8 @@ for T_step in [10]:
         for n_cooling_step, time_cooling_step in enumerate(tt):
 
             print(now_time)
+            if now_time > 1000:
+                break
 
             mobs_centers = np.zeros(len(Mn_centers))
 

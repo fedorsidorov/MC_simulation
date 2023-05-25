@@ -63,7 +63,7 @@ plt.xlim(-2, 2)
 plt.ylim(0, 800)
 plt.grid()
 
-plt.savefig('holo_1_' + str(T_step) + 'C_s' + str(beam_sigma) + '_' + str(t_exp) + 's_um_ENG.jpg', dpi=300, bbox_inches='tight')
-# plt.show()
+# plt.savefig('holo_1_' + str(T_step) + 'C_s' + str(beam_sigma) + '_' + str(t_exp) + 's_um_ENG.jpg', dpi=300, bbox_inches='tight')
+plt.show()
 
 print(np.linalg.norm(zz_bins - func_cos(xx_bins, *popt)) / np.sqrt(len(xx_bins)))

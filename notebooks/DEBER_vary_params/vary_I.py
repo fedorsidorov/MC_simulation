@@ -53,6 +53,25 @@ zz_bins_1p25_avg = zz_bins_1p25_sum / n_tries
 # # plt.savefig('vary_I.jpg', dpi=600, bbox_inches='tight')
 # plt.show()
 
+# %%
+plt.figure(dpi=300, figsize=[4, 3])
+
+plt.plot(xx_bins / 1000, zz_bins_1p18_avg, label=r'4.48 нА')
+plt.plot(xx_bins / 1000, zz_REF - 2, 'k--', label=r'4.56 нА')
+plt.plot(xx_bins / 1000, zz_REF + 2, 'k--')
+plt.plot(xx_bins / 1000, zz_bins_1p25_avg, label=r'4.75 нА')
+# axs[0, 0].set_xlabel(r'$x$, нм')
+plt.xlabel(r'$x$, мкм')
+plt.ylabel(r'$z$, нм')
+# axs[0, 0].set_xlim(-1500, 1500)
+plt.xlim(-1.5, 1.5)
+plt.ylim(0, 400)
+plt.grid()
+# plt.legend(fontsize=14, loc='upper center')
+plt.legend(fontsize=10, loc='lower right')
+
+plt.savefig('vary_I_4_um_300dpi_SINGLE.jpg', dpi=300, bbox_inches='tight')
+plt.show()
 
 # %%
 fig, axs = plt.subplots(nrows=2, ncols=2, figsize=[10, 10])

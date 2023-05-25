@@ -21,46 +21,6 @@ font = {'size': 14}
 matplotlib.rc('font', **font)
 
 
-# %% get Karlsson D
-def get_Karlsson_D(T_C, wp):  # in cm^2 / s
-
-    T_g = 119
-    delta_T = T_C - T_g
-
-    if wp < 0.795:
-        coefs = -4.428, 1.842, 0, 8.12e-3
-    elif wp < 0.927:
-        coefs = 26.0, 37.0, 0.0797, 0
-    elif wp < 0.945:
-        # coefs = 159.0, 170.0, 0.3664, 0
-        coefs = 15.9, 17.0, 0.3664, 0
-    else:
-        coefs = -13.7, 0.5, 0, 0
-
-    C1, C2, C3, C4 = coefs
-    log_D = wp * delta_T * C4 + (C1 - wp * C2) + delta_T * C3
-
-    return 10**log_D
-
-
-WP = np.linspace(0.8, 1, 101)
-
-# T = 150
-T = 119
-DD = np.zeros(len(WP))
-
-for i, wp in enumerate(WP):
-    # print(wp)
-    DD[i] = get_Karlsson_D(T, wp)
-
-
-# plt.figure(dpi=300)
-# plt.plot(WP, np.log10(DD))
-# plt.ylim(-16, 0)
-# plt.grid()
-# plt.show()
-
-
 # %%
 def get_D_Mn_135(Mn):
     return 2e-10 * 10**(1.06e+4*(1/Mn - 1/30000))
@@ -115,6 +75,7 @@ time_step = 1
 bin_volume = 50 * 100 * 50
 bin_n_monomers = bin_volume / const.V_mon_nm3
 
+# %%
 scission_matrix = np.zeros((len(xx_centers), len(zz_centers)))
 tau_matrix = np.zeros((len(xx_centers), len(zz_centers)))
 Mn_matrix = np.ones((len(xx_centers), len(zz_centers))) * Mn_130[0]
@@ -172,10 +133,10 @@ for i in range(len(xx_centers)):
             Mn_matrix[i, j] = mcf.lin_log_interp(tau, Mn_130)(tau_matrix[i, j])
 
 # %%
-# scission_matrix = np.load('notebooks/diffusion/scission_matrix_10s.npy')
+scission_matrix = np.load('notebooks/diffusion/scission_matrix_10s.npy')
 # scission_matrix = np.load('notebooks/diffusion/scission_matrix_50s.npy')
 
-# Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_10s.npy')
+Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_10s.npy')
 # Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_50s.npy')
 
 plt.figure(dpi=600)
@@ -250,7 +211,7 @@ cbar = plt.colorbar(orientation='horizontal')
 cbar.formatter.set_powerlimits((0, 0))
 cbar.formatter.set_useMathText(True)
 
-plt.savefig('n_mon_hist_initial.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('n_mon_hist_initial.jpg', dpi=600, bbox_inches='tight')
 plt.show()
 
 # %%

@@ -42,3 +42,22 @@ plt.legend()
 plt.grid()
 plt.show()
 # plt.savefig('Mw_for_zip_lens_120.png', bbox_inches='tight')
+
+# %%
+phi = np.linspace(0, np.pi, 1000)
+xx = np.cos(phi)
+yy = np.sin(phi)
+
+xx_1 = -np.cos(3 * phi / 2)
+yy_1 = -np.sin(3 * phi / 2)
+
+plt.figure(dpi=300)
+# plt.plot(xx, yy)
+plt.plot(xx_1, yy_1)
+plt.xlim(-1.5, 1.5)
+plt.ylim(-1.5, 1.5)
+plt.show()
+
+
+
+
