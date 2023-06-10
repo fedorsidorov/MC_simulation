@@ -1,0 +1,161 @@
+\section{Моделирование термической деполимеризации резиста} \label{sec:depolymerization}
+Термическая деполимеризация полимеров включает в себя процессы возникновения активного центра деполимеризации, его распространения вдоль полимерной молекулы и последующего затухания или переноса на новую молекулу~\cite{Boyd_1}. Кинетические схемы этих процессов могут быть представлены в следующем виде ($P_n$ и $R_n$ -- число стабильных и радикализованных полимерных молекул степени полимеризации $n$ соответственно, $R_\mathrm{E}$ -- концевой радикал):
+
+\begin{center}
+	\textbf{Возникновение активного центра деполимеризации}
+	\begin{align*}
+		P_n \quad \rightarrow \quad & R_r + R_{n-r} \quad & \text{возникновение внутри молекулы} \\
+		P_n \quad \rightarrow \quad & R_n + R_\mathrm{E} \quad & \text{возникновение на конце молекулы}
+	\end{align*}
+	\textbf{Распространение активного центра деполимеризации}
+	\begin{align*}
+		R_n \quad \rightarrow \quad  R_{n-1} + P_1 \qquad\qquad\qquad\qquad\quad\; \text{$P_1$ -- летучий мономер}
+	\end{align*}
+	\textbf{Перенос активного центра деполимеризации}
+	\begin{align*}
+		P_n + R_s \quad \rightarrow \quad & P_r + R_{n-r} + P_s
+	\end{align*}
+	\textbf{Затухание активного центра деполимеризации}
+	\begin{align*}
+		R_n \quad \rightarrow \quad & P_n \quad & \text{случайное затухание} \\
+		R_r + R_s \quad \rightarrow \quad & P_r + P_s \quad & \text{диспропорционирование} \\
+		R_r + R_s \quad \rightarrow \quad & P_{r + s} \quad & \text{рекомбинация}
+	\end{align*}
+\end{center}
+На основе данных кинетические схем можно ввести константы вышеописанных процессов и выразить скорости изменения числа стабильных и радикализованных полимерных молекул за счет каждого из процессов:
+
+\newpage
+\begin{center}
+	\textbf{Скорость изменения числа стабильных полимерных молекул} \\
+	\textit{уменьшение $P_n$ за счет разрывов внутри молекулы:} \\
+	$k_\mathrm{S} (n-1) P_n$ \\
+	\textit{уменьшение $P_n$ за счет разрывов на концах молекулы:} \\
+	$k_\mathrm{E} P_n$ \\
+	\textit{уменьшение $P_n$ за счет переноса активного центра деполимеризации:} \\
+	$k_\mathrm{I}(R / V)(n-1) P_n$ \\
+	\textit{увеличение $P_n$ за счет переноса активного центра деполимеризации:} \\
+	{$\displaystyle k_\mathrm{I} \frac{R_n}{V} \sum_{n=2}^{\infty} n P_n + k_{\mathrm{R}} \frac{R}{V} \sum_{j=n+1}^{\infty} P_j$} \\
+	\textit{увеличение $P_n$ за счет уменьшения числа радикалов:} \\
+	$k_\mathrm{T} \alpha_n$, $\alpha_n = \left\{
+	\begin{array}{l}
+		R_n \quad\quad\quad\quad\quad\quad\quad\: \text{реакция 1 порядка} \\
+		R_n R / V \quad\quad\quad\quad\quad\: \text{диспропорционирование} \\
+		{\displaystyle \frac{1}{2} \sum_{i+j=n}^{\infty} R_i R_j / V} \quad\quad \text{рекомбинация}
+	\end{array}\right.$ \\
+	($R$ -- полное число радикалов: {$\displaystyle R = \sum_{i=1}^{\infty} R_i$}) \\
+	\textbf{Скорость изменения числа радикализованных полимерных молекул} \\
+	\textit{увеличение $R_n$ за счет разрывов внутри молекулы:} \\
+	$2 k_\mathrm{S} \sum_{j=n+1}^{\infty} P_j$ \\
+	\textit{увеличение $R_n$ за счет разрывов на концах молекулы:} \\
+	$k_\mathrm{E} P_n$ \\
+	\textit{увеличение $R_n$ за счет распространения активного центра деполимеризации:} \\
+	$k_\mathrm{P} R_{n+1}$ \\
+	\textit{уменьшение $R_n$ за счет распространения активного центра деполимеризации:} \\
+	$k_\mathrm{P} R_n$ \\
+	\textit{увеличение $R_n$ за счет переноса активного центра деполимеризации:} \\
+	${\displaystyle k_\mathrm{I} \frac{R}{V} \sum_{j=n+1}^{\infty} P_j}$ \\
+	\textit{уменьшение $R_n$ за счет переноса активного центра деполимеризации:} \\
+	${\displaystyle \frac{k_\mathrm{I} R_n}{V} \sum_{n=2}^{\infty} n P_n}$ \\
+	\textit{уменьшение $R_n$ за счет уменьшения числа радикалов:} \\
+	$k_\mathrm{T} \beta R_n$, $\beta = \left\{
+	\begin{array}{l}
+		1 \quad\quad\quad \text{реакция 1 порядка} \\
+		R / V \quad\;\: \text{диспропорционирование или рекомбинация}
+	\end{array}\right.$ \\
+\end{center}
+
+Учет всех процессов, приводящих к изменению $P_n$ и $R_n$, позволяет описать состояние полимера системой дифференциальных уравнений:
+\begin{equation} \label{eq:kinetic_system_original}
+	\left\{
+	\begin{aligned}
+		&\dots \\
+		&\frac{d P_n}{d t} = -(n-1)\left(k_\mathrm{S} + k_\mathrm{I} R / V\right) P_n - k_\mathrm{E} P_n + k_\mathrm{I} R / V \sum_{j=n+1}^{\infty} P_j + k_\mathrm{I} R_n \frac{d_0}{m_0} + k_\mathrm{T} \alpha_n, \\
+		&\dots \\
+		&\frac{d R_n}{d t} = \left(2 k_\mathrm{S} + k_\mathrm{I} R / V\right) \sum_{j=n+1}^{\infty} P_j + k_\mathrm{E} P_n - \left(\frac{k_\mathrm{I} d_0}{m_0} + k_\mathrm{P} + k_\mathrm{T} \beta\right) R_n + k_\mathrm{P} R_{n+1}, \\
+		&\dots \\
+		&\frac{d R_1}{d t} = \left(2 k_\mathrm{S} + k_\mathrm{I} R / V\right) \frac{W}{x m_0} + \frac{k_\mathrm{E}}{m_0} \frac{W}{x} - \left(\frac{k_\mathrm{I} d_0}{m_0} + k_\mathrm{T} \beta\right) R_1 + k_\mathrm{P} R_2,
+	\end{aligned}
+	\right.
+\end{equation}
+где $m_0$ -- масса мономера, $x$ -- среднечисловая степень полимеризации молекул полимера. 
+
+В исходном виде система \ref{eq:kinetic_system_original} включает в себя 2$N$ уравнений ($N$ -- максимальная степень полимеризации молекул полимера), и ее решение представляет собой трудоемкую задачу -- не в последнюю очередь за счет наличия слагаемых, описывающих эффект переноса активного центра деполимеризации. Явление переноса активного центра является важной частью процесса полимеризации (в этом случае происходит перенос центра полимеризации)~\cite{chain_transfer_polymerization}, однако его протекание в процессе деполимеризации до сих пор находится под вопросом~\cite{Mita_PMMA_zip_lengths_T}. Исключение из системы~\ref{eq:kinetic_system_original} слагаемых, отвечающих за перенос активного центра деполимеризации, а также предположение о постоянной концентрации радикализованных молекул существенно упрощают систему~\cite{Boyd_3}:
+
+\begin{equation} \label{eq:Boyd_system_3}
+	\left\{
+	\begin{aligned}
+		&\dots \\
+		&d P_n / d t=-(n-1) k_\mathrm{S} P_n + k_\mathrm{R} R_n \bar{R}, \\
+		&\dots \\
+		&d R_n / d t=2 k_\mathrm{S} \sum_{j=n+1}^{\infty} P_j + k_\mathrm{P}\left(R_{n+1} - R_n\right) - k_\mathrm{T} \bar{R} R_n=0 \quad(n \geq 2), \\
+		&\dots \\
+		&d R_1 / d t = 2 k_\mathrm{S} \left(W / x m_0\right) + k_\mathrm{P} R_2 - k_\mathrm{T} \bar{R} R_1=0,
+	\end{aligned}
+	\right.
+\end{equation}
+где $\bar{R} = R/V$. Здесь и далее учитывается только механизм возникновения центров деполимеризации за счет разрывов в произвольной точке внутри полимерной молекулы (без учета разрывов на концах молекулы).
+
+Система~\ref{eq:Boyd_system_3} также может быть упрощена. При условии, что распределение молекулярной массы полимера является известным, система~\ref{eq:Boyd_system_3} может быть приведена к системе уравнений вида~\cite{Boyd_3}
+\begin{equation} \label{eq:moment_equation}
+	\frac{d M_i}{d t} = k_\mathrm{S} \left(\frac{2}{i+1} - 1\right) M_{i+1} + \frac{d M_0}{d t} - k_\mathrm{S} M_1 - \frac{i}{\gamma}\left(k_\mathrm{S} M_i + \frac{d M_{i-1}}{dt}\right) \quad(i \geq 1),
+\end{equation}
+где $1/\gamma = k_\mathrm{P} / (k_\mathrm{T} \bar{R})$ -- средняя длина кинетической цепи при деполимеризации, $M_i$ -- момент функции распределения порядка $i$:
+\begin{equation}
+	M_i=\sum_{n=2}^{\infty} n^i P_n.
+\end{equation}
+
+В качестве распределения молекулярной массы полимера может использоваться распределение Шульца-Цимма~\cite{Boyd_3, Schulz-Zimm_distribution}, корректно описывающее полимеры, полученные методом радикальной полимеризации~\cite{Schulz-Zimm_distribution_proof}:
+\begin{equation} \label{eq:Schulz-Zimm_distribution}
+	P_n = C_0 n^z \exp (-n/y).
+\end{equation}
+Здесь $P_n$ -- число молекул степени полимеризации $n$, $C_0$ -- нормировочный множитель. Параметр $z$ характеризует ширину распределения:
+\begin{equation} \label{eq:Schulz-Zimm_1}
+	M_\mathrm{w} / M_\mathrm{n} = (z+2) /(z+1),
+\end{equation}
+где $M_\mathrm{n}$ и $M_\mathrm{w}$ -- среднечисловая и средневесовая молекулярная масса соответственно, а параметр $y$ определяется из выражения
+\begin{equation} \label{eq:Schulz-Zimm_2}
+	x = y(z+1),
+\end{equation}
+где $x$ -- среднечисловая степень полимеризации молекул резиста. При этом моменты функции распределения высших порядков могут быть выражены через параметры $y$ и $z$ и момент первого порядка $M_1$:
+\begin{equation}
+	M_i=M_1 \prod_{n=2}^i(z+n) y^{i-1}.
+\end{equation}
+
+Для решения системы~\ref{eq:moment_equation} удобно ввести следующие безразмерные переменные:
+\begin{equation} \label{eq:dim_less_MW}
+	\begin{aligned}
+		\tau & = y_0 k_\mathrm{S} t \\
+		\tilde{M}_1 & = M_1 / M_{1_0} \\
+		\tilde{y} & = y / y_0 \\
+		\tilde{\gamma} & = \gamma y_0 \\
+		\tilde{x} & = x / x_0 = \left[y(z+1) / y_0\left(z_0+1\right)\right],
+	\end{aligned}
+\end{equation}
+которые в дальнейшем будут использоваться в уравнениях вида~\ref{eq:moment_equation} для $i$, равного 1, 2 и 3 (величины с нижним индексом ``0'' соответствуют начальному состоянию резиста). В конечном счете система этих трех нелинейных дифференциальных уравнений первого порядка принимает вид:
+
+\begin{equation} \label{eq:scary_system}
+	\begin{aligned}
+		&\frac{\tilde{M_1}^{\prime}}{\tilde{M_1}}=\left[\frac{1}{\tilde{y}} \frac{d \tilde{y}}{d \tau}+\frac{1}{(z+1)} \frac{d z}{d \tau}-\tilde{y}(z+1)\right] /[1+\tilde{\gamma} \tilde{y}(z+1)], \\
+		&\tilde{y}^{\prime}=(B F-C E) /(A E-D B), \\
+		&z^{\prime}=(C D-A F) /(A E-D B),
+	\end{aligned}
+\end{equation}
+где
+\begin{equation}
+	\begin{aligned}
+		&A=-\left[\frac{1}{\tilde{y}[1+\tilde{\gamma} \tilde{y}(z+1)]}+\frac{(z+2) \tilde{\gamma}}{(z+2) \tilde{\gamma} \tilde{y}+2}\right], \\
+		&B=-\left[\frac{1}{(z+1)[1+\tilde{\gamma} \tilde{y}(z+1)]}+\frac{\tilde{\gamma} \tilde{y}}{(z+2) \tilde{\gamma} \tilde{y}+2}\right], \\
+		&C=\left[\frac{\tilde{y}(z+1)}{\tilde{\gamma} \tilde{y}(z+1)+1}-\frac{\frac{1}{3}(z+2)(z+3) \tilde{\gamma} \tilde{y}^2+2(z+2) \tilde{y}}{(z+2) \tilde{\gamma} \tilde{y}+2}\right], \\
+		&D=\left[\frac{(z+2) \tilde{\gamma}}{(z+2) \tilde{\gamma} \tilde{y}+2}-\frac{2(z+2)(z+3) \tilde{\gamma} \tilde{y}+3(z+2)}{(z+2)(z+3) \tilde{\gamma} \tilde{y}^2+3(z+2) \tilde{y}}\right], \\
+		&E=\left[\frac{\tilde{\gamma} \tilde{y}}{(z+2) \tilde{\gamma} y+2}-\frac{\tilde{\gamma} \tilde{y}(2 z+5)+3}{(z+2)(z+3) \tilde{\gamma} \tilde{y}+3(z+2)}\right], \\
+		&F=\left[\frac{\frac{1}{3}(z+2)(z+3) \tilde{\gamma} \tilde{y}^2+2(z+2) \tilde{y}}{(z+2) \tilde{\gamma} \tilde{y}+2}-\right. \\
+		&\left.-\frac{\frac{1}{2}(z+2)(z+3)(z+4)\left(\tilde{\gamma} \tilde{y}^2+3(z+2)(z+3) \tilde{y}\right.}{(z+2)(z+3) \tilde{\gamma} \tilde{y}+3(z+2)}\right].
+	\end{aligned}
+\end{equation}
+Производные в левой части системы~\ref{eq:scary_system} берутся по переменной $\tau$, а сама система решается с использованием численных методов.
+
+
+
+
+
+

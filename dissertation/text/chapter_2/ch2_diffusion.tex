@@ -1,0 +1,199 @@
+\section{Моделирование диффузии мономера в слое полимера}
+Ключевая величина, описывающая в процесс диффузии произвольной примеси в слое вещества -- коэффициент диффузии. В настоящее время существуют два основных подхода к определению коэффициента диффузии мономера ММА в слое ПММА. Первый из них основан на использовании теории свободного объема, которая позволяет непосредственно определить коэффициент диффузии на основе различных параметров вещества. Второй подход основан на косвенном определении коэффициента диффузии за счет моделирования выхода мономера из слоя ПММА и сравнения результатов моделирования с экспериментальными данными.
+
+\subsection{Теория свободного объема}
+Точный расчет коэффициента диффузии частиц примеси в слое полимера возможен на основе теории свободного объема~\cite{Vrentas_free_volume, Zielinski_free_volume}:
+\begin{equation}
+	\ln D=\ln \bar{D}_0-\frac{E^*}{\mathrm{R} T}-\left\{\frac{\left(1-\omega_2\right) \hat{V}_1^*+\xi \omega_2 \hat{V}_2^*}{\hat{V}_{\mathrm{FH}} / \gamma}\right\}.
+\end{equation}
+Здесь $E^*$ -- энергия, необходимая для преодоления сил притяжения в пересчете на моль примеси, $R$ -- универсальная газовая постоянная, $T$ -- температура, $\bar{D}_0$, $\xi$ и $\gamma$ -- параметры, $\hat{V}_1^*$ и $\hat{V}_2^*$ -- удельные объемы полимера и примеси, соответственно, $\hat{V}_{\mathrm{FH}}$ -- средний свободный объем полостей в смеси полимера и примеси, $\omega_2$ -- массовая доля полимера в смеси. Величина $\hat{V}_{\mathrm{FH}} / \gamma$ определяется выражением
+\begin{equation}
+	\hat{V}_{\mathrm{FH}} / \gamma=\left(1-\omega_2\right)\left(\frac{K_{11}}{\gamma_1}\right)\left(K_{21}+T-T_{\mathrm{g} 1}\right)+\omega_2 \hat{V}_{\mathrm{FH} 2} / \gamma_2,
+\end{equation}
+где $\left(K_{11} / \gamma_1\right)$ и $\left(K_{21}-T_\mathrm{g1} 1\right)$ -- параметры примеси, величина $\hat{V}_{\mathrm{FH} 2} / \gamma_2$ описывает вклад полимерной матрицы в средний свободный объем полостей. Эта величина зависит от того, выше или ниже температуры стеклования полимера ($T_\mathrm{g2}$) находится температура системы:
+\begin{equation}
+	\begin{aligned}
+		&\hat{V}_\mathrm{FH2} =
+		\hat{V}_2^0 (T_{g2}) \left[ f_{H2}^{G}+\alpha_2 (T-T_{g2}) \right], & T \geq T_\mathrm{g2} \\
+		&\hat{V}_\mathrm{FH2} =
+		\hat{V}_2^0 (T_{g2})\left[f_\mathrm{H2}^{G}+(\alpha_2-\alpha_{c2})(T-T_{g2})\right], \hspace{1em} & T<T_\mathrm{g2}
+	\end{aligned}
+\end{equation}
+В этом выражении $\hat{V}_2^0\left(T_{\mathrm{g} 2}\right)$ -- удельный объем полимера при температуре $T_\mathrm{g2}$, \linebreak $\alpha_2$ -- коэффициент температурного расширения полимера в состоянии равновесия, $f_{\mathrm{H} 2}^{\mathrm{G}}$ -- доля объема пустот в полимере при температуре $T_\mathrm{g2}$:
+\begin{equation}
+	f_{\mathrm{H} 2}^{\mathrm{G}}=\alpha_2 K_{22},
+\end{equation}
+\begin{equation}
+	\alpha_{\mathrm{c} 2}=\frac{1}{T_{\mathrm{g} 2}} \ln \left(\frac{\hat{V}_2^0\left(T_{\mathrm{g} 2}\right)\left(1-f_{\mathrm{H} 2}^{\mathrm{G}}\right)}{\hat{V}_2^0(0)}\right),
+\end{equation}
+\begin{equation}
+	\gamma_2=\frac{\hat{V}_2^0\left(T_{\mathrm{g} 2}\right) \alpha_2}{\left(K_{12} / \gamma_2\right)},
+\end{equation}
+\begin{equation}
+	\hat{V}_1^*=\hat{V}_1^0(0); \hspace{1em} \hat{V}_2^*=\hat{V}_2^0(0),
+\end{equation}
+где $K_{22}$ и $\left(K_{12} / \gamma_2\right)$ -- параметры модели свободного объема, $\hat{V}_1^0(0)$ и $\hat{V}_2^0(0)$ -- удельные объемы примеси и полимера в состоянии равновесия при $T=0$ K. Параметры модели свободного объема для диффузии ММА в слое ПММА приведены в таблице~\ref{table:D_free_volume}~\cite{Tonge_free_volume_parameters}.
+
+\begin{table}[h]
+	\centering
+	\caption{Параметры модели свободного объема для диффузии ММА в ПММА.}
+	\begin{tabular}{l c l}
+		\hline \hline \\ [-1em]
+		Параметр & \hspace{4em} & Значение
+		\\ \hline \\ [-1em]
+		$\hat{V}_1^0(0)$, см$^\text{-1}$ & \hspace{1em} & 0.871
+		\\ \\ [-1em]
+		$\tilde{V}_1^0(0)$, см$\ppp$ моль$^\text{-1}$ & \hspace{1em} & 86.9
+		\\ \\ [-1em]
+		$\hat{V}_2^0(0)$, см$\ppp$ г$^\text{-1}$ & \hspace{1em} & 0.762
+		\\ \\ [-1em]
+		$\tilde{V}_2^*$, см$\ppp$ моль$^\text{-1}$ & \hspace{1em} & 135
+		\\ \\ [-1em]
+		$f_\mathrm{H2}^\mathrm{G}$ & \hspace{1em} & 0.00456
+		\\ \\ [-1em]
+		$K_{22}$, К & \hspace{1em} & 80
+		\\ \\ [-1em]
+		$(K_{12} / \gamma_2)$, см$\ppp$ г$^{-1}$ К$^\text{-1}$ & \hspace{1em} & 1.28\:$\cdot$\,10$^\text{-4}$
+		\\ \\ [-1em]
+		$\gamma_2$ & \hspace{1em} & 3.88
+		\\ \\ [-1em]
+		$\alpha_\mathrm{c2}$, К$^\text{-1}$ & \hspace{1em} & 2.37\:$\cdot$\,10$^\text{-4}$
+		\\ \\ [-1em]
+		$\xi_\mathrm{L}$ & \hspace{1em} & 0.64
+		\\ \\ [-1em]
+		$\xi$ & \hspace{1em} & 0.58
+		\\ \\ [-1em]
+		$E^*$, Дж моль$^\text{-1}$ & \hspace{1em} & 0.58
+		\\ \\ [-1em]
+		$\bar{D}_0$, см$\pp$ с$^\text{-1}$ & \hspace{1em} & 1.27\:$\cdot$\,10$^\text{-3}$
+		\\ \\ [-1em]
+		$(K_{11} / \gamma_1)$, см$\ppp$ г$^\text{-1}$ К$^\text{-1}$ & \hspace{1em} & 6.91\:$\cdot$\,10$^\text{-4}$
+		\\ \\ [-1em]
+		$(K_{21}-T_\mathrm{g1})$, К & \hspace{1em} & 72.26
+		\\ \\ [-1em]
+		$\hat{V}_2^0(T_\mathrm{g2})$, см$\ppp$ г$^\text{-1}$ & \hspace{1em} & 0.8754
+		\\ \\ [-1em]
+		$\tilde{V}_\mathrm{c}$, см$\ppp$ моль$^\text{-1}$ & \hspace{1em} & 311 \\ \hline \hline
+	\end{tabular}
+	\label{table:D_free_volume}
+\end{table}
+
+Вычисление параметров теории свободного объема зачастую является затруднительным, и для определения коэффициента диффузии примеси в полимере может быть использован подход, основанный на масштабировании известных коэффициентов диффузии. Таким образом, в работе~\cite{Karlsson2001_diffusion} было выведено универсальное выражение для коэффициента диффузии малой примеси в полимере:
+\begin{equation} \label{eq:Karlsson_diffusion}
+	\log D (w_\mathrm{p}, \Delta T) = C_1 - w_p C_2 + \Delta T C_3 + w_p \Delta T C_4,
+\end{equation}
+значения параметров $C_1$, $C_2$, $C_3$ и $C_4$ которого для различных значений массовой доли полимера $w_\mathrm{p}$ приведены в таблице~\ref{table:Karlsson_diffusion}.
+
+\begin{table}[h]
+	\begin{center}
+		\caption{Значения параметров $C_1$, $C_2$, $C_3$ и $C_4$ функции~\ref{eq:Karlsson_diffusion} для различных областей значений $w_\mathrm{p}$.}
+		\begin{tabular}{lc rc rc rc r}
+			\hline \hline \\ [-1em]
+			Область $w_\mathrm{p}$ & \hspace{1em} & $C_1$ & \hspace{1em} & $C_2$ & \hspace{1em} & $C_3$ & \hspace{1em} & $C_4$
+			\\ \hline \\ [-1em]
+			$0 \leq w_\mathrm{p} \leq 0.795$ & \hspace{1em} & 24.428 & \hspace{1em} & 1.842 & \hspace{1em} & 0 & \hspace{1em} & 8.12\:$\cdot$\,10$^\text{-3}$
+			\\ \\ [-1em]
+			$0.795 \leq w_\mathrm{p} \leq 0.927$ & \hspace{1em} & 26.0 & \hspace{1em} & 37.0 & \hspace{1em} & 0.0797 & \hspace{1em} & 0
+			\\ \\ [-1em]
+			$0.927 \leq w_\mathrm{p} \leq 0.945$ & \hspace{1em} & 159.0 & \hspace{1em} & 170.0 & \hspace{1em} & 0.3664 & \hspace{1em} & 0
+			\\ \\ [-1em]
+			$0.945 \leq w_\mathrm{p} \leq 1$ & \hspace{1em} & 213.7 & \hspace{1em} & 0.5 & \hspace{1em} & 0 & \hspace{1em} & 0
+			\\ \hline \hline
+		\end{tabular}
+		\label{table:Karlsson_diffusion}
+	\end{center}
+\end{table}
+
+
+\subsection{Модель выхода мономера из слоя полимера}
+В работе~\cite{Fragala_3_diffusion} проводилось исследование выхода мономера из слоя \linebreak ПММА при его экспонировании ионным лучом. В модели процесса ионно-стимулированной деполимеризации ПММА учитывались процессы инициирования и роста кинетической цепи:
+
+\begin{equation}
+	\begin{aligned}
+		&{[\text { Полимер }]_N \stackrel{\text { Экспонирование }}{\longrightarrow}[\text { Полимер }]_{N-m}+[\text { Радикал }]_m,} \\
+		&{[\text { Радикал }]_m \stackrel{\text { Деполимеризация }}{\longrightarrow} \text { Мономер }+[\text { Радикал }]_{m-1} .}
+	\end{aligned}
+\end{equation}
+Концентрация активных центров деполимеризации ($c_\mathrm{I}$) описывалась уравнением
+\begin{equation}
+	\frac{\partial c_\mathrm{I}}{\partial t} = K_\mathrm{I} f(t) - K_\mathrm{P} c_\mathrm{I},
+\end{equation}
+где $K_\mathrm{I}$ и $K_\mathrm{P}$ -- константы скоростей инициирования и роста кинетической цепи соответственно, а функция $f(t)$ описывает режим работы ионного луча:
+\begin{equation}
+	f(t) = 1 - H(t - t_0),
+\end{equation}
+где $H(t)$ -- функция Хевисайда,  $t_0$ -- время работы ионного луча.
+
+Образование мономера предполагалось однородным по объему полимера, что позволило описать процесс выхода мономера одномерным уравнением диффузии:
+\begin{equation} \label{eq:raduino_diff_eq}
+	\frac{\partial c_\mathrm{M}}{\partial t} = D\left(\frac{\partial^2 c_\mathrm{M}}{\partial z^2}\right) + \beta K_\mathrm{P} c_\mathrm{I},
+\end{equation}
+где $c_\mathrm{M}$ -- концентрация мономера, $D$ -- коэффициент диффузии мономера в слое ПММА, считающийся постоянным по всему объему слоя, $\beta$ -- среднее число свободных мономеров, образующихся в результате появления одного активного центра деполимеризации. Уравнение~\ref{eq:raduino_diff_eq} дополнялось начальными и граничными условиями, описывающими беспрепятственный переход мономера через границу ПММА/вакуум, отражение мономера от подложки и его отсутствие до и по истечении большого времени после экспонирования:
+\begin{equation} \label{eq:diff_eq_conditions}
+	\begin{aligned}
+		&\left.c_\mathrm{M}\right|_{z=z_0} = 0, \\
+		&\left.\frac{\partial c_\mathrm{M}}{\partial z}\right|_{z=0} = 0, \\
+		&\left.c_\mathrm{M}\right|_{t=0} = 0, \\
+		&\lim _{t \rightarrow \infty} c_\mathrm{M} = 0, \\
+		&\lim _{t \rightarrow \infty} c_\mathrm{I} = 0,
+	\end{aligned}
+\end{equation}
+где $z=0$ и $z=z_0$ -- границы слоя ПММА.
+
+Решение уравнения~\ref{eq:raduino_diff_eq} с условиями~\ref{eq:diff_eq_conditions} позволило рассчитать поток мономера через границу полимер/вакуум во время экспонирования ($t < t_0$):
+\begin{equation}
+	\begin{aligned}
+		J_{+}(t)= & A \beta K_\mathrm{I} z_0
+		\left[
+		1 - \frac{8}{\pi^2} \sum_{n=1}^{\infty}
+		\frac{1}{(2n-1)^2} \frac{1}{(1 - \alpha_n / K_\mathrm{P})} \times \right. \\ & \left.
+		\times
+		\left(
+			\exp (-\alpha_n t)-\frac{\alpha_n}{K_\mathrm{P}} \exp (-K_\mathrm{P} t)
+		\right)
+		\right]
+	\end{aligned}
+\end{equation}
+и после экспонирования ($t > t_0$):
+\begin{equation}
+	\begin{aligned}
+		J_{-}(t)= A \beta K_i z_0 \left[
+			\frac{8}{\pi^2} \sum_{n=1}^{\infty} \frac{1}{(2 n-1)^2} \frac{1}{\left(1-\alpha_n / K_\mathrm{P}\right)}\right. \times \quad \quad \quad \quad \\
+	\times \left.
+	\left(
+	\exp (-\alpha_n t) (\exp (\alpha_n t_0)-1)- \frac{\alpha_n}{K_\mathrm{P}}
+	\exp (-K_\mathrm{P} t) (\exp (K_\mathrm{P} t_0)-1)
+	\right)
+	\right].
+	\end{aligned}
+\end{equation}
+
+Параметры модели $K_\mathrm{I}$, $K_\mathrm{P}$ и $\beta$ были подобраны за счет сравнения промоделированной зависимости потока мономера от времени с экспериментальной, что позволило определить коэффициент диффузии ММА в ПММА при температурах эксперимента~(таблица~\ref{table:Ki_Kp_D}).
+
+\begin{table}[h]
+	\begin{center}
+	\caption{Константы скоростей инициирования и роста кинетической цепи при ионно-стимулированной термической деполимеризации ПММА и коэффициенты диффузии ММА в ПММА, полученные в работе~\cite{Fragala_3_diffusion} для различных температур.}
+	\begin{tabular}{lc rc rc r}
+		\hline \hline \\ [-1em]
+		Температура, $^\circ$C & \hspace{4em} & $K_\mathrm{I} \beta$, с$^\text{-1}$ & \hspace{1em} & $K_\mathrm{P}$, с$^\text{-1}$ & \hspace{1em} & $D$, см$\pp$с$^\text{-1}$
+		\\ \hline \\ [-1em]
+		135 & \hspace{4em} & 7\:$\cdot$\,10$^\text{-4}$ & \hspace{1em} & 90 & \hspace{1em} & 2\:$\cdot$\,10$^\text{-10}$
+		\\ \\ [-1em]
+		150 & \hspace{4em} & 1.85\:$\cdot$\,10$^\text{-3}$ & \hspace{1em} & 100 & \hspace{1em} & 3.5\:$\cdot$\,10$^\text{-10}$
+		\\ \\ [-1em]
+		160 & \hspace{4em} & 1.6\:$\cdot$\,10$^\text{-3}$ & \hspace{1em} & 100 & \hspace{1em} & 1.1\:$\cdot$\,10$^\text{-9}$
+		\\ \\ [-1em]
+		170 & \hspace{4em} & 3.2\:$\cdot$\,10$^\text{-3}$ & \hspace{1em} & 120 & \hspace{1em} & 1.2\:$\cdot$\,10$^\text{-9}$
+		\\ \\ [-1em]
+		185 & \hspace{4em} & 3.1\:$\cdot$\,10$^\text{-3}$ & \hspace{1em} & 300 & \hspace{1em} & 2.1\:$\cdot$\,10$^\text{-9}$
+		\\ \hline \hline
+	\end{tabular}
+	\label{table:Ki_Kp_D}
+	\end{center}
+\end{table}
+
+Среднечисловая молекулярная масса ПММА, использовавшегося в проводимых экспериментах составляла около 30000, и для образцов ПММА с другой среднечисловой молекулярной массой коэффициенты диффузии могут отличаться. Для учета зависимости коэффициента диффузии мономера в полимере от молекулярной массы полимера может быть использовано эмпирическое соотношение, полученное в работе~\cite{Berens_diffusion_Mn} для полистирола:
+\begin{equation} \label{eq:diffusion_Mn}
+	\lg D = \lg D_\infty + k / M_\mathrm{n},
+\end{equation}
+где $D_\infty$ -- коэффициент диффузии, соответствующий условно бесконечной среднечисловой молекулярной массе полимера ($\Mn$), значение параметра $k$ составляет (1.06~$\pm$~0.46)\:$\cdot$\,10$^\text{4}$.
