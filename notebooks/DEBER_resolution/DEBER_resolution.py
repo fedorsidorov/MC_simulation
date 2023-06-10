@@ -39,7 +39,7 @@ zz = mm.d_PMMA * (1 - np.cos(2 * np.pi / pitch_nm * xx)) / 2
 
 # E_beam = 25e+3
 # E_beam = 20e+3
-E_beam = 5e+3
+# E_beam = 5e+3
 # E_beam = 1e+3
 
 time_step = 1
@@ -203,12 +203,12 @@ bin_n_monomers = bin_volume / const.V_mon_nm3
 # %%
 # for T_step in [10, 5, 2, 1]:
 # for T_step in [10, 5]:
-# for T_step in [10]:
-for T_step in [0.001]:
+for T_step in [10]:
+# for T_step in [0.001]:
 
     # for exposure_time in range(20, 101, 10):
     # for exposure_time in [25, 30, 35, 40]:
-    for exposure_time in [40]:
+    for exposure_time in [40, 45]:
 
         zz_vac_bins = np.zeros(len(xx_bins))
         zz_vac_centers = np.zeros(len(xx_centers))
@@ -224,10 +224,10 @@ for T_step in [0.001]:
 
         now_time = 0
 
-        path = '/Volumes/Transcend/SIM_DEBER/150C_resolution/sigma_5nm/5_keV/' + str(T_step) + 'C_sec/' \
-               + str(exposure_time) + '/'
-        # path = '/Volumes/Transcend/SIM_DEBER/150C_resolution/sigma_5nm/25_keV/' + str(T_step) + 'C_sec/'\
+        # path = '/Volumes/Transcend/SIM_DEBER/150C_resolution_CORR/sigma_5nm/5_keV/' + str(T_step) + 'C_sec/' \
         #        + str(exposure_time) + '/'
+        path = '/Volumes/Transcend/SIM_DEBER/150C_resolution_NO_CORR/sigma_5nm/25_keV/' + str(T_step) + 'C_sec/'\
+               + str(exposure_time) + '/'
 
         if not os.path.exists(path):
             os.makedirs(path)
@@ -282,8 +282,8 @@ for T_step in [0.001]:
                 now_z0_array[n] = pos_enter
 
                 now_e_DATA_Pv = np.load(
-                    '/Volumes/Transcend/e_DATA_500nm_point_5keV/' + str(pos_enter) + '/e_DATA_Pv_' +
-                    # '/Volumes/Transcend/e_DATA_500nm_point_25keV/' + str(pos_enter) + '/e_DATA_Pv_' +
+                    # '/Volumes/Transcend/e_DATA_500nm_point_5keV/' + str(pos_enter) + '/e_DATA_Pv_' +
+                    '/Volumes/Transcend/e_DATA_500nm_point_25keV/' + str(pos_enter) + '/e_DATA_Pv_' +
                     str(n_file) + '.npy'
                 )
 

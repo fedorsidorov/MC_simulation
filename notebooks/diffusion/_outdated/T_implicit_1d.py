@@ -55,5 +55,20 @@ plt.xlim(0, 100)
 plt.ylim(0, 300)
 plt.show()
 
+# %%
+# X = np.array((3.7, 4, 4.6))
+X = np.array((3.69, 4.02, 4.64))
+
+x_avg = np.average(X)
+
+sigma = np.sqrt(
+    np.sum((X - x_avg)**2) / 2
+)
+
+delta = 4.3 * sigma / np.sqrt(3)
+
+
+
+
 
 
