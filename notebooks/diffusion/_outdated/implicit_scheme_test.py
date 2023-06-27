@@ -74,9 +74,6 @@ while t < t_end:
     alphas[0] = 2 * a * tau / (h**2 + 2 * a * tau)
     betas[0] = h**2 * TT[0] / (h**2 + 2 * a * tau)
 
-    # alphas[0] = 0
-    # betas[0] = T_l
-
     for i in range(1, N-1):
         Ai = lamda / h**2
         Bi = 2 * lamda / h**2 + rho * C / tau
@@ -86,10 +83,10 @@ while t < t_end:
         alphas[i] = Ai / (Bi - Ci * alphas[i - 1])
         betas[i] = (Ci * betas[i - 1] - Fi) / (Bi - Ci * alphas[i - 1])
 
-    # TT[N-1] = (2 * a * tau * lamda * betas[N-2] + h**2 * lamda * TT[N-1]) /\
-    #           (lamda * h**2 + 2 * a * tau * lamda * (1 - alphas[N-2]))
+    TT[N-1] = (2 * a * tau * lamda * betas[N-2] + h**2 * lamda * TT[N-1]) /\
+              (lamda * h**2 + 2 * a * tau * lamda * (1 - alphas[N-2]))
 
-    TT[N - 1] = T_r
+    # TT[N - 1] = T_r
 
     for i in range(N-2, -1, -1):
         TT[i] = alphas[i] * TT[i + 1] + betas[i]

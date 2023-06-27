@@ -1,0 +1,318 @@
+"""
+Выражение производных для параметров функции распределения Шульца-Цимма
+из системы кинетических уравнений на моменты функции распределения
+молекулярной массы резиста при его деполимеризации
+"""
+
+
+# %% введение символических переменных, преобразование уравнений системы
+from sympy import *
+import matplotlib.pyplot as plt
+import numpy as np
+
+init_printing(use_latex='mathjax')
+tau, k_s, gamma = symbols('t k_s gamma')
+y_0, M1_0 = symbols('y_0, M_1^0')
+M_0 = Symbol('M_0')
+
+t = tau / (y_0 * k_s)
+M1w = Function(r'\tilde{M_1}')(tau)
+yw = Function(r'\tilde{y}')(tau)
+z = Function(r'z')(tau)
+
+M1 = M1w * M1_0
+y = yw * y_0
+
+M0 = M1 / (y * (z+1))
+M2 = M1 * (z+2) * y
+M3 = M1 * (z+2) * (z+3) * y**2
+M4 = M1 * (z+2) * (z+3) * (z+4) * y**3
+
+expr_1 = -M1.diff(tau) * y_0 - 1 / gamma * (M1 + M0.diff(tau) * y_0)
+expr_2 = -M2.diff(tau) * y_0 + (Rational(2, 3) - 1) * M3 - 2 / gamma * (M2 + M1.diff(tau) * y_0)
+expr_3 = -M3.diff(tau) * y_0 + (Rational(2, 4) - 1) * M4 - 3 / gamma * (M3 + M2.diff(tau) * y_0)
+
+
+#%%
+system_solution = solve([expr_1, expr_2, expr_3], [M1w.diff(tau), yw.diff(tau), z.diff(tau)])
+
+#%%
+simplify(system_solution[M1w.diff(tau)])
+
+#%%
+simplify(system_solution[yw.diff(tau)])
+
+#%%
+simplify(system_solution[z.diff(tau)])
+
+# %%
+"""
+Определение функций для вычисления производных параметров
+функции распределения молекулярной массы резиста при его деполимеризации
+"""
+
+
+def get_dM1w_dt(gw, M1w, yw, z):
+
+    derivative = -(
+            9 * gw ** 2 * yw ** 2 * z ** 3 + 41 * gw ** 2 * yw ** 2 * z ** 2 + 58 * gw ** 2 * yw ** 2 * z +
+            24 * gw ** 2 * yw ** 2 + 24 * gw * yw * z ** 2 + 96 * gw * yw * z + 96 * gw * yw + 36 * z + 72
+    ) * M1w * yw / (
+            6 * gw ** 3 * yw ** 3 * z ** 3 + 24 * gw ** 3 * yw ** 3 * z ** 2 + 30 * gw ** 3 * yw ** 3 * z +
+            12 * gw ** 3 * yw ** 3 + 18 * gw ** 2 * yw ** 2 * z ** 2 + 66 * gw ** 2 * yw ** 2 * z +
+            60 * gw ** 2 * yw ** 2 + 36 * gw * yw * z + 84 * gw * yw + 36
+            )
+
+    return derivative
+
+
+def get_dy_dt(gw, M1w, yw, z):
+
+    derivative = (
+            gw ** 3 * yw ** 3 * z ** 5 + 5 * gw ** 3 * yw ** 3 * z ** 4 + 3 * gw ** 3 * yw ** 3 * z ** 3 -
+            17 * gw ** 3 * yw ** 3 * z ** 2 - 28 * gw ** 3 * yw ** 3 * z - 12 * gw ** 3 * yw ** 3 +
+            6 * gw ** 2 * yw ** 2 * z ** 4 + 27 * gw ** 2 * yw ** 2 * z ** 3 + 19 * gw ** 2 * yw ** 2 * z ** 2 -
+            52 * gw ** 2 * yw ** 2 * z - 60 * gw ** 2 * yw ** 2 + 18 * gw * yw * z ** 3 + 42 * gw * yw * z ** 2 -
+            24 * gw * yw * z - 84 * gw * yw - 36
+            ) * yw ** 2 / (
+                6 * (
+                    gw ** 3 * yw ** 3 * z ** 3 + 4 * gw ** 3 * yw ** 3 * z ** 2 + 5 * gw ** 3 * yw ** 3 * z +
+                    2 * gw ** 3 * yw ** 3 + 3 * gw ** 2 * yw ** 2 * z ** 2 + 11 * gw ** 2 * yw ** 2 * z +
+                    10 * gw ** 2 * yw ** 2 + 6 * gw * yw * z + 14 * gw * yw + 6
+                )
+            )
+
+    return derivative
+
+
+def get_dz_dt(gw, M1w, yw, z):
+
+    derivative = -gw * (
+            gw ** 2 * yw ** 2 * z ** 5 + 9 * gw ** 2 * yw ** 2 * z ** 4 + 31 * gw ** 2 * yw ** 2 * z ** 3 +
+            51 * gw ** 2 * yw ** 2 * z ** 2 + 40 * gw ** 2 * yw ** 2 * z + 12 * gw ** 2 * yw ** 2 +
+            6 * gw * yw * z ** 4 + 48 * gw * yw * z ** 3 + 138 * gw * yw * z ** 2 + 168 * gw * yw * z +
+            72 * gw * yw + 18 * z ** 3 + 84 * z ** 2 + 126 * z + 60
+    ) * yw ** 2 * z / (
+            6 * gw ** 3 * yw ** 3 * z ** 3 + 24 * gw ** 3 * yw ** 3 * z ** 2 + 30 * gw ** 3 * yw ** 3 * z +
+            12 * gw ** 3 * yw ** 3 + 18 * gw ** 2 * yw ** 2 * z ** 2 + 66 * gw ** 2 * yw ** 2 * z +
+            60 * gw ** 2 * yw ** 2 + 36 * gw * yw * z + 84 * gw * yw + 36
+    )
+
+    return derivative
+
+
+def model_general(t, gw, M1w_yw_z):
+    M1w, yw, z, = M1w_yw_z[0], M1w_yw_z[1], M1w_yw_z[2]
+
+    dM1w_dt = get_dM1w_dt(gw, M1w, yw, z)
+    dyw_dt = get_dy_dt(gw, M1w, yw, z)
+    dz_dt = get_dz_dt(gw, M1w, yw, z)
+
+    return np.array([dM1w_dt, dyw_dt, dz_dt])
+
+
+def RK4_PCH(model, gw, y_0, tt):
+    y_i = y_0
+
+    h = tt[1] - tt[0]
+
+    y_sol = np.zeros((len(tt), 3))
+    y_sol[0, :] = y_i
+
+    for i, t in enumerate(tt[:-1]):
+
+        y_i = y_sol[i, :]
+
+        if i < 3:  # Runge-Kutta
+            K1 = model(t, gw, y_i)
+            K2 = model(t + h / 2, gw, y_i + h / 2 * K1)
+            K3 = model(t + h / 2, gw, y_i + h / 2 * K2)
+            K4 = model(t + h, gw, y_i + h * K3)
+
+            y_new = y_i + h / 6 * (K1 + 2 * K2 + 2 * K3 + K4)
+            y_sol[i + 1, :] = y_new
+
+        else:  # predictor-corrector
+            f_i = model(tt[i], gw, y_sol[i, :])
+            f_i_1 = model(tt[i - 1], gw, y_sol[i - 1, :])
+            f_i_2 = model(tt[i - 2], gw, y_sol[i - 2, :])
+
+            # Hamming
+            y_pred = y_sol[i - 3, :] + 4 * h / 3 * (2 * f_i - f_i_1 + 2 * f_i_2)
+            y_new = 1 / 8 * (9 * y_sol[i, :] - y_sol[i - 2, :]) + 3 / 8 * h * (
+                    -f_i_1 + 2 * f_i + model(tt[i + 1], gw, y_pred))
+
+            y_sol[i + 1, :] = y_new
+
+    return y_sol
+
+
+# %%
+"""
+Решение системы для определенных параметров экспонирования,
+верификация модели
+"""
+
+
+tau_total = 50
+tau_step = 0.001
+tau = np.arange(0, tau_total, tau_step)
+
+yw_0 = 1
+z_0 = 10
+M1w_0 = 1
+
+solution_0p1_m0p8 = RK4_PCH(model_general, 0.1 / (-0.8 + 1), np.array([M1w_0, yw_0, -0.8]), tau)
+solution_0p1_0 = RK4_PCH(model_general, 0.1 / (0 + 1), np.array([M1w_0, yw_0, 0]), tau)
+solution_0p1_10 = RK4_PCH(model_general, 0.1 / (10 + 1), np.array([M1w_0, yw_0, 10]), tau)
+x_0p1_m0p8 = solution_0p1_m0p8[:, 1] * (solution_0p1_m0p8[:, 2] + 1)
+x_0p1_0 = solution_0p1_0[:, 1] * (solution_0p1_0[:, 2] + 1)
+x_0p1_10 = solution_0p1_10[:, 1] * (solution_0p1_10[:, 2] + 1)
+
+solution_1_m0p8 = RK4_PCH(model_general, 1 / (-0.8 + 1), np.array([M1w_0, yw_0, -0.8]), tau)
+solution_1_0 = RK4_PCH(model_general, 1 / (0 + 1), np.array([M1w_0, yw_0, 0]), tau)
+solution_1_10 = RK4_PCH(model_general, 1 / (10 + 1), np.array([M1w_0, yw_0, 10]), tau)
+x_1_m0p8 = solution_1_m0p8[:, 1] * (solution_1_m0p8[:, 2] + 1)
+x_1_0 = solution_1_0[:, 1] * (solution_1_0[:, 2] + 1)
+x_1_10 = solution_1_10[:, 1] * (solution_1_10[:, 2] + 1)
+
+solution_2_m0p8 = RK4_PCH(model_general, 2 / (-0.8 + 1), np.array([M1w_0, yw_0, -0.8]), tau)
+solution_2_0 = RK4_PCH(model_general, 2 / (0 + 1), np.array([M1w_0, yw_0, 0]), tau)
+solution_2_10 = RK4_PCH(model_general, 2 / (10 + 1), np.array([M1w_0, yw_0, 10]), tau)
+x_2_m0p8 = solution_2_m0p8[:, 1] * (solution_2_m0p8[:, 2] + 1)
+x_2_0 = solution_2_0[:, 1] * (solution_2_0[:, 2] + 1)
+x_2_10 = solution_2_10[:, 1] * (solution_2_10[:, 2] + 1)
+
+solution_10_m0p8 = RK4_PCH(model_general, 10 / (-0.8 + 1), np.array([M1w_0, yw_0, -0.8]), tau)
+solution_10_0 = RK4_PCH(model_general, 10 / (0 + 1), np.array([M1w_0, yw_0, 0]), tau)
+solution_10_10 = RK4_PCH(model_general, 10 / (10 + 1), np.array([M1w_0, yw_0, 10]), tau)
+x_10_m0p8 = solution_10_m0p8[:, 1] * (solution_10_m0p8[:, 2] + 1)
+x_10_0 = solution_10_0[:, 1] * (solution_10_0[:, 2] + 1)
+x_10_10 = solution_10_10[:, 1] * (solution_10_10[:, 2] + 1)
+
+#%%
+gr_1_0p1_m0p8 = np.loadtxt('Boyd_1_0.1_-0.8.txt')
+gr_1_0p1_10 = np.loadtxt('Boyd_1_0.1_10.txt')
+
+gr_1_1_m0p8 = np.loadtxt('Boyd_1_1_-0.8.txt')
+gr_1_1_10 = np.loadtxt('Boyd_1_1_10.txt')
+
+gr_1_10_m0p8 = np.loadtxt('Boyd_1_10_-0.8.txt')
+gr_1_10_10 = np.loadtxt('Boyd_1_10_10.txt')
+
+str_1 = r'$x_0/ \gamma^{-1}_0=$'
+str_2 = r'$z_0=$'
+
+plt.figure(dpi=300)
+plt.plot(1 - solution_0p1_10[:, 0], solution_0p1_10[:, 2], label=str_1 + '0.1 my')
+plt.plot(gr_1_0p1_10[:, 0], gr_1_0p1_10[:, 1], '--', label=str_1 + '0.1 Boyd')
+
+plt.plot(1 - solution_1_10[:, 0], solution_1_10[:, 2], label=str_1 + '1 my')
+plt.plot(gr_1_1_10[:, 0], gr_1_1_10[:, 1], '--', label=str_1 + '1 Boyd')
+
+plt.plot(1 - solution_10_10[:, 0], solution_10_10[:, 2], label=str_1 + '10 my')
+plt.plot(gr_1_10_10[:, 0], gr_1_10_10[:, 1], '--', label=str_1 + '10 Boyd')
+
+plt.grid()
+plt.legend(loc='upper right')
+plt.xlabel('1 - $M_1/M_{1_0}$')
+plt.ylabel('z')
+plt.xlim(0, 1)
+plt.ylim(0, 10)
+plt.show()
+
+#%%
+plt.figure(dpi=300)
+
+plt.plot(1 - solution_0p1_m0p8[:, 0], solution_0p1_m0p8[:, 2], label=str_1 + '0.1')
+plt.plot(gr_1_0p1_m0p8[:, 0], gr_1_0p1_m0p8[:, 1], '--', label=str_1 + '0.1 Boyd')
+
+plt.plot(1 - solution_1_m0p8[:, 0], solution_1_m0p8[:, 2], label=str_1 + '1')
+plt.plot(gr_1_1_m0p8[:, 0], gr_1_1_m0p8[:, 1], '--', label=str_1 + '1 Boyd')
+
+plt.plot(1 - solution_10_m0p8[:, 0], solution_10_m0p8[:, 2], label=str_1 + '10')
+plt.plot(gr_1_10_m0p8[:, 0], gr_1_10_m0p8[:, 1], '--', label=str_1 + '10 Boyd')
+
+plt.grid()
+plt.legend(loc='upper right')
+plt.xlabel('1 - $M_1/M_{1_0}$')
+plt.ylabel('z')
+plt.xlim(0, 1)
+plt.ylim(-1, 0)
+plt.show()
+
+#%%
+
+gr_2_0p1_m0p8 = np.loadtxt('Boyd_2_0.1_-0.8.txt')
+gr_2_0p1_0 = np.loadtxt('Boyd_2_0.1_0.txt')
+gr_2_0p1_10 = np.loadtxt('Boyd_2_0.1_10.txt')
+
+gr_2_2_m0p8 = np.loadtxt('Boyd_2_2_-0.8.txt')
+gr_2_2_0 = np.loadtxt('Boyd_2_2_0.txt')
+gr_2_2_10 = np.loadtxt('Boyd_2_2_10.txt')
+
+gr_2_10_0 = np.loadtxt('Boyd_2_10_0.txt')
+gr_2_10_10 = np.loadtxt('Boyd_2_10_10.txt')
+
+plt.figure(dpi=300)
+
+plt.semilogy(tau * (solution_0p1_m0p8[0, 2] + 1), solution_0p1_m0p8[:, 0], label=str_1 + '0.1, ' + str_2 + '-0.8')
+plt.semilogy(gr_2_0p1_m0p8[:, 0], gr_2_0p1_m0p8[:, 1], '--', label=str_1 + '0.1, ' + str_2 + '-0.8 Boyd')
+
+plt.semilogy(tau * (solution_0p1_0[0, 2] + 1), solution_0p1_0[:, 0], label=str_1 + '0.1, ' + str_2 + '0')
+plt.semilogy(gr_2_0p1_0[:, 0], gr_2_0p1_0[:, 1], '--', label=str_1 + '0.1, ' + str_2 + '0 Boyd')
+
+plt.semilogy(tau * (solution_0p1_10[0, 2] + 1), solution_0p1_10[:, 0], label=str_1 + '0.1, ' + str_2 + '10')
+plt.semilogy(gr_2_0p1_10[:, 0], gr_2_0p1_10[:, 1], '--', label=str_1 + '0.1, ' + str_2 + '10 Boyd')
+
+plt.semilogy(tau * (solution_2_m0p8[0, 2] + 1), solution_2_m0p8[:, 0], label=str_1 + '2, ' + str_2 + '-0.8')
+plt.semilogy(gr_2_2_m0p8[:, 0], gr_2_2_m0p8[:, 1], '--', label=str_1 + '2, ' + str_2 + '-0.8 Boyd')
+
+plt.semilogy(tau * (solution_2_0[0, 2] + 1), solution_2_0[:, 0], label=str_1 + '2, ' + str_2 + '0')
+plt.semilogy(gr_2_2_0[:, 0], gr_2_2_0[:, 1], '--', label=str_1 + '2, ' + str_2 + '0 Boyd')
+
+plt.semilogy(tau * (solution_2_10[0, 2] + 1), solution_2_10[:, 0], label=str_1 + '2, ' + str_2 + '10')
+plt.semilogy(gr_2_2_10[:, 0], gr_2_2_10[:, 1], '--', label=str_1 + '2, ' + str_2 + '10 Boyd')
+
+plt.semilogy(tau * (solution_10_0[0, 2] + 1), solution_10_0[:, 0], label=str_1 + '10, ' + str_2 + '0')
+plt.semilogy(gr_2_10_0[:, 0], gr_2_10_0[:, 1], '--', label=str_1 + '10, ' + str_2 + '0 Boyd')
+
+plt.semilogy(tau * (solution_10_10[0, 2] + 1), solution_10_10[:, 0], label=str_1 + '10, ' + str_2 + '10')
+plt.semilogy(gr_2_10_10[:, 0], gr_2_10_10[:, 1], '--', label=str_1 + '10, ' + str_2 + '10 Boyd')
+
+plt.grid()
+plt.legend(loc='upper right')
+plt.xlabel('$x_0 k_s t$')
+plt.ylabel('$M_1/M_{1_0}$')
+plt.xlim(0, 10)
+plt.ylim(0.1, 1)
+plt.show()
+
+#%%
+
+gr_3_0p1_m0p8 = np.loadtxt('Boyd_3_0.1_-0.8.txt')
+gr_3_0p1_0 = np.loadtxt('Boyd_3_0.1_0.txt')
+gr_3_0p1_10 = np.loadtxt('Boyd_3_0.1_10.txt')
+gr_3_10_0 = np.loadtxt('Boyd_3_10_0.txt')
+
+plt.figure(dpi=300)
+
+plt.plot(1 - solution_0p1_m0p8[:, 0], x_0p1_m0p8 / x_0p1_m0p8[0], label=str_1 + '0.1, ' + str_2 + '-0.8')
+plt.plot(gr_3_0p1_m0p8[:, 0], gr_3_0p1_m0p8[:, 1], '--', label=str_1 + '0.1, ' + str_2 + '-0.8 Boyd')
+
+plt.plot(1 - solution_0p1_0[:, 0], x_0p1_0 / x_0p1_0[0], label=str_1 + '0.1, ' + str_2 + '0')
+plt.plot(gr_3_0p1_0[:, 0], gr_3_0p1_0[:, 1], '--', label=str_1 + '0.1, ' + str_2 + '0 Boyd')
+
+plt.plot(1 - solution_0p1_10[:, 0], x_0p1_10 / x_0p1_10[0], label=str_1 + '0.1, ' + str_2 + '10')
+plt.plot(gr_3_0p1_10[:, 0], gr_3_0p1_10[:, 1], '--', label=str_1 + '0.1, ' + str_2 + '10 Boyd')
+
+plt.plot(1 - solution_10_0[:, 0], x_10_0 / x_10_0[0], label=str_1 + '10, ' + str_2 + '0')
+plt.plot(gr_3_10_0[:, 0], gr_3_10_0[:, 1], '--', label=str_1 + '10, ' + str_2 + '0 Boyd')
+
+plt.grid()
+plt.legend(loc='upper right')
+plt.xlabel('$1 - M_1/M_{1_0}$')
+plt.ylabel('$x / x_0$')
+plt.xlim(0, 1.6)
+plt.ylim(0, 1)
+plt.show()

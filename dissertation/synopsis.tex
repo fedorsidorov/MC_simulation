@@ -8,17 +8,25 @@
 \input{biblio/bibliopreamble}
 \newcommand{\introname}{Общая характеристика работы}
 
+\newcommand{\Mn}{M_\mathrm{n}}
+\newcommand{\Mw}{M_\mathrm{w}}
+\newcommand{\Gs}{G_\mathrm{s}}
+\newcommand{\ps}{p_\mathrm{s}}
+\newcommand{\kB}{k_\mathrm{B}}
+\newcommand{\pp}{^\text{2}}
+\newcommand{\ppp}{^\text{3}}
+
 \DeclareCaptionFont{captionfont}{\fontsize{13.5pt}{16pt}\selectfont}
-\captionsetup[figure]{font={captionfont}}
+\captionsetup[figure]{font={captionfont}, name=Рисунок}
 \renewcommand*{\bibfont}{\captionfont}
 \setlength{\textfloatsep}{0.5em}
  
 \begin{document}
-\input{formatted_text/synopsis_title}
+\input{formatted_text/synopsis_title_new}
 \fontsize{13.5}{16}\selectfont
 \input{formatted_text/synopsis_intro_formatted}
 \renewcommand{\chapter}{\section}
 \input{text/synopsis_main}
-\input{text/synopsis_conclusion}
-\input{formatted_text/synopsis_references}
+\input{text/synopsis_conclusion_super_short}
+\input{formatted_text/synopsis_references_inv}
 \end{document}

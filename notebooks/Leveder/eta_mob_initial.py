@@ -152,4 +152,4 @@ plt.xlim(-1, 4)
 plt.ylim(20, 60)
 
 plt.savefig('grating_eta_' + str(int(now_eta)) + '_14_CORR.jpg', dpi=600, bbox_inches='tight')
-# plt.show()
+plt.show()
