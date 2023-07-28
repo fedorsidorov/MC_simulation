@@ -194,7 +194,7 @@ dose_factor = 1
 exposure_time = 100
 # It = 1.2e-9 * exposure_time  # C
 # It = 1.0e-9 * exposure_time  # C
-It = 2.0e-9 * exposure_time  # C
+It = 2.0e-9 * exposure_time * 0.76171875743865 * 2  # C
 n_lines = 625
 
 pitch = 3e-4  # cm
@@ -249,9 +249,9 @@ Mn_centers = np.zeros(len(xx_centers))
 mob_matrix = np.zeros((len(xx_centers), len(zz_centers)))
 mobs_array = np.zeros(len(xx_centers))
 
-T_step = 1
+T_step = 0.2
 
-path = '/Volumes/Transcend/SIM_DEBER/150C_100s_example/2_nA/' + str(T_step) + 'C_sec/'
+path = '/Volumes/Transcend/SIM_DEBER/150C_100s_example/20_pA_cm/' + str(T_step) + 'C_sec_1/'
 
 if not os.path.exists(path):
     os.makedirs(path)
@@ -305,14 +305,14 @@ while now_time < exposure_time:
 
         now_e_DATA_sci[:, ind.e_DATA_x_ind] += now_x0
 
-        af.snake_array(
-            array=now_e_DATA_sci,
-            x_ind=ind.e_DATA_x_ind,
-            y_ind=ind.e_DATA_y_ind,
-            z_ind=ind.e_DATA_z_ind,
-            xyz_min=[mm.x_min, mm.y_min, -np.inf],
-            xyz_max=[mm.x_max, mm.y_max, np.inf]
-        )
+        # af.snake_array(
+        #     array=now_e_DATA_sci,
+        #     x_ind=ind.e_DATA_x_ind,
+        #     y_ind=ind.e_DATA_y_ind,
+        #     z_ind=ind.e_DATA_z_ind,
+        #     xyz_min=[mm.x_min, mm.y_min, -np.inf],
+        #     xyz_max=[mm.x_max, mm.y_max, np.inf]
+        # )
 
         now_scission_matrix += np.histogramdd(
             sample=now_e_DATA_sci[:, [ind.e_DATA_x_ind, ind.e_DATA_z_ind]],

@@ -133,39 +133,39 @@ for i in range(len(xx_centers)):
             Mn_matrix[i, j] = mcf.lin_log_interp(tau, Mn_130)(tau_matrix[i, j])
 
 # %%
-scission_matrix = np.load('notebooks/diffusion/scission_matrix_10s.npy')
-# scission_matrix = np.load('notebooks/diffusion/scission_matrix_50s.npy')
+# scission_matrix = np.load('notebooks/diffusion/scission_matrix_10s.npy')
+scission_matrix = np.load('notebooks/diffusion/scission_matrix_50s.npy')
 
-Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_10s.npy')
+# Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_10s.npy')
 # Mn_matrix = np.load('notebooks/diffusion/Mn_matrix_50s.npy')
 
 plt.figure(dpi=600)
 fig, ax = plt.subplots(dpi=600, figsize=[8, 6])
 
-# plt.imshow(scission_matrix.transpose() / (0.05**2 * 0.1), extent=[-1500, 1500, 0, 500])
-plt.imshow(Mn_matrix.transpose(), extent=[-1500, 1500, 0, 500])
+plt.imshow(scission_matrix.transpose() / (0.05**2 * 0.1) * 5/8, extent=[-1500, 1500, 0, 500])
+# plt.imshow(Mn_matrix.transpose(), extent=[-1500, 1500, 0, 500])
 
 # plt.title(r'$n_\mathrm{sci}$ при $t$ = 10 c, 1/мкм$^3$', fontsize=14)
 # plt.title(r'$n_\mathrm{sci}$ при $t$ = 50 c, 1/мкм$^3$', fontsize=14)
 # plt.title(r'$n_{sci}$ at $t$ = 10 s, 1/$\mu$m$^3$', fontsize=14)
-# plt.title(r'$n_{sci}$ at $t$ = 50 s, 1/$\mu$m$^3$', fontsize=14)
+plt.title(r'$n_{sci}$ at $t$ = 50 s, 1/$\mu$m$^3$', fontsize=14)
 
 # plt.title(r'$M_\mathrm{n}$ при $t$ = 10 c, г/моль', fontsize=14)
-plt.title(r'$M_\mathrm{n}$ при $t$ = 50 c, г/моль', fontsize=14)
+# plt.title(r'$M_\mathrm{n}$ при $t$ = 50 c, г/моль', fontsize=14)
 # plt.title(r'$M_n$ at $t$ = 10 s, g/mol', fontsize=14)
 # plt.title(r'$M_n$ at $t$ = 50 s, g/mol', fontsize=14)
 
-plt.xlabel(r'$x$, нм')
-plt.ylabel(r'$z$, нм')
-# plt.xlabel(r'$x$, nm')
-# plt.ylabel(r'$z$, nm')
+# plt.xlabel(r'$x$, нм')
+# plt.ylabel(r'$z$, нм')
+plt.xlabel(r'$x$, nm')
+plt.ylabel(r'$z$, nm')
 
 cbar = plt.colorbar(orientation='horizontal')
 cbar.formatter.set_powerlimits((0, 0))
 cbar.formatter.set_useMathText(True)
 
-# plt.savefig('sci_conc_10s.jpg', dpi=600, bbox_inches='tight')
-# plt.savefig('sci_conc_50s.jpg', dpi=600, bbox_inches='tight')
+# plt.savefig('sci_conc_10s_room_eng.jpg', dpi=600, bbox_inches='tight')
+plt.savefig('sci_conc_50s_room_eng.jpg', dpi=600, bbox_inches='tight')
 
 # plt.savefig('Mn_hist_10s.jpg', dpi=600, bbox_inches='tight')
 # plt.savefig('Mn_hist_50s.jpg', dpi=600, bbox_inches='tight')
@@ -202,10 +202,14 @@ CC_0 = monomer_matrix / (mm.step_50nm * mm.ly * mm.step_50nm * 1e-21)
 plt.figure(dpi=600, figsize=[8, 6])
 
 plt.imshow(CC_0.transpose(), extent=[-1500, 1500, 0, 500])
+# plt.imshow(CC_0.transpose(), extent=[-1.5, 1.5, 0, 500])
 
 plt.title(r'$n_\mathrm{mon}$, 1/см$^3$ при $t$ = 0 с, 1/см$^3$', fontsize=14)
 plt.xlabel(r'$x$, нм')
 plt.ylabel(r'$z$, нм')
+
+# ax = plt.gca()
+# ax.set_xticks([-1.5, -1, -0.5, 0, 0.5, 1, 1.5])
 
 cbar = plt.colorbar(orientation='horizontal')
 cbar.formatter.set_powerlimits((0, 0))
@@ -215,8 +219,8 @@ cbar.formatter.set_useMathText(True)
 plt.show()
 
 # %%
-# D = 9.7e-11
-D = 1e-9
+D = 9.7e-11
+# D = 1e-9
 
 xx = xx_centers * 1e-7
 yy = zz_centers * 1e-7
@@ -227,9 +231,9 @@ CC = deepcopy(CC_0)
 Nx = len(xx)
 Ny = len(yy)
 
-t_end = 1
-# t_end = 10
-# t_end = 20
+# t_end = 1
+# t_end = 5
+t_end = 20
 tau = t_end / 100
 
 alphas_x = np.zeros(Nx)
@@ -292,7 +296,7 @@ plt.figure(dpi=600, figsize=[8, 6])
 plt.imshow(CC.transpose(), extent=[-1500, 1500, 0, 500])
 
 # plt.title(r'$n_\mathrm{mon}$, 1/см$^3$ при $t$ = ' + str(t_end) + r' c, $D = 9.7 \cdot 10^{-11}$ см$^2$/c', fontsize=14)
-plt.title(r'$n_\mathrm{mon}$, 1/см$^3$ при $t$ = ' + str(t_end) + r' c, $D = 1 \cdot 10^{-9}$ см$^2$/c', fontsize=14)
+# plt.title(r'$n_\mathrm{mon}$, 1/см$^3$ при $t$ = ' + str(t_end) + r' c, $D = 1 \cdot 10^{-9}$ см$^2$/c', fontsize=14)
 plt.xlabel(r'$x$, нм')
 plt.ylabel(r'$z$, нм')
 

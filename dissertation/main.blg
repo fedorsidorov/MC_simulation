@@ -1,0 +1,31 @@
+[0] Config.pm:304> INFO - This is Biber 2.14
+[0] Config.pm:307> INFO - Logfile is 'main.blg'
+[118] biber-darwin:322> INFO - === Mon Jul  3, 2023, 01:36:17
+[150] Biber.pm:415> INFO - Reading 'main.bcf'
+[433] Biber.pm:943> INFO - Found 125 citekeys in bib section 0
+[465] Biber.pm:4256> INFO - Processing section 0
+[466] Utils.pm:75> INFO - Globbing data source 'biblio/all_cites.bib'
+[466] Utils.pm:91> INFO - Globbed data source 'biblio/all_cites.bib' to biblio/all_cites.bib
+[466] Utils.pm:75> INFO - Globbing data source 'biblio/authorpapers.bib'
+[466] Utils.pm:91> INFO - Globbed data source 'biblio/authorpapers.bib' to biblio/authorpapers.bib
+[481] Biber.pm:4455> INFO - Looking for bibtex format file 'biblio/all_cites.bib' for section 0
+[490] bibtex.pm:1653> INFO - LaTeX decoding ...
+[810] bibtex.pm:1471> INFO - Found BibTeX data source 'biblio/all_cites.bib'
+[1921] Utils.pm:304> WARN - month field 'jun' in entry 'Bueche_3p4_1p4' is not an integer - this will probably not sort properly.
+[1988] Utils.pm:304> WARN - month field 'nov' in entry 'Harrison2004_sin_gratings' is not an integer - this will probably not sort properly.
+[1996] Utils.pm:304> WARN - month field 'jun' in entry 'Tishchenko2017_sin_gratings' is not an integer - this will probably not sort properly.
+[2004] Utils.pm:304> WARN - month field 'jan' in entry 'Harvey2020_diffraction_gratings' is not an integer - this will probably not sort properly.
+[2005] Biber.pm:4455> INFO - Looking for bibtex format file 'biblio/authorpapers.bib' for section 0
+[2007] bibtex.pm:1653> INFO - LaTeX decoding ...
+[2033] bibtex.pm:1471> INFO - Found BibTeX data source 'biblio/authorpapers.bib'
+[2472] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2472] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2472] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'ru-RU'
+[2472] Biber.pm:4090> INFO - No sort tailoring available for locale 'ru-RU'
+[2665] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2665] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2665] Biber.pm:4084> INFO - Sorting list 'none/global/7FC56270E7A70FA81A5935B72EACBE29/global/global' of type 'entry' with template 'none' and locale 'ru-RU'
+[2665] Biber.pm:4090> INFO - No sort tailoring available for locale 'ru-RU'
+[2965] bbl.pm:652> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[3315] bbl.pm:755> INFO - Output to main.bbl
+[3315] Biber.pm:128> INFO - WARNINGS: 4

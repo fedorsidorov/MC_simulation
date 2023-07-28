@@ -1,0 +1,2227 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global/7FC56270E7A70FA81A5935B72EACBE29/global/global}
+    \entry{Bruk_2013}{article}{useauthor=false}
+      \name{author}{5}{}{%
+        {{hash=d6952808e5aef4fd91e3e681b5ea886c}{%
+           family={Bruk},
+           familyi={B\bibinitperiod},
+           given={M\bibnamedelima A},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=719f9bd6a63321450fc828b04ddadb43}{%
+           family={Zhikharev},
+           familyi={Z\bibinitperiod},
+           given={E\bibnamedelima N},
+           giveni={E\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=a93b47bcb8961627d12531e7ea791435}{%
+           family={Kal'nov},
+           familyi={K\bibinitperiod},
+           given={V\bibnamedelima A},
+           giveni={V\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=84feac7afe974d07d9f6c6fee2b1bae5}{%
+           family={Spirin},
+           familyi={S\bibinitperiod},
+           given={A\bibnamedelima V},
+           giveni={A\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+        {{hash=7e05eb6a62145de1967448cb46babb8f}{%
+           family={Strel'tsov},
+           familyi={S\bibinitperiod},
+           given={D\bibnamedelima R},
+           giveni={D\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{9f3ec68801e073d28a2c6a72d48684e2}
+      \strng{authornamehash}{9f3ec68801e073d28a2c6a72d48684e2}
+      \strng{authorfullhash}{7dd3ed2ce0ef571e93f867a19e093e5c}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Russian Microelectronics}
+      \field{title}{{A new method of formation of the masking image (relief) directly during the electron-beam exposure of the resist}}
+      \field{year}{2013}
+      \field{number}{5}
+      \range{number}{1}
+      \field{pages}{261\bibrangedash 269}
+      \range{pages}{9}
+      \field{volume}{42}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1134/S106373971305003X
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1134/S106373971305003X http://link.springer.com/10.1134/S106373971305003X
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1134/S106373971305003X%20http://link.springer.com/10.1134/S106373971305003X
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Bruk_2016_mee}{article}{useauthor=false}
+      \name{author}{7}{}{%
+        {{hash=d6952808e5aef4fd91e3e681b5ea886c}{%
+           family={Bruk},
+           familyi={B\bibinitperiod},
+           given={M.A.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=719f9bd6a63321450fc828b04ddadb43}{%
+           family={Zhikharev},
+           familyi={Z\bibinitperiod},
+           given={E.N.},
+           giveni={E\bibinitperiod}}}%
+        {{hash=77aa701abbca659e6c59f01902afab07}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={A.E.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=5752e88fc58df8ebe27f360a50f0aa93}{%
+           family={Streltsov},
+           familyi={S\bibinitperiod},
+           given={D.R.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=e6a4e8f31c029f4e7cbbcfa9970a24b2}{%
+           family={Kalnov},
+           familyi={K\bibinitperiod},
+           given={V.A.},
+           giveni={V\bibinitperiod}}}%
+        {{hash=64932dc91cfe97f47cfcc4c01e93f107}{%
+           family={Averkin},
+           familyi={A\bibinitperiod},
+           given={S.N.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=84feac7afe974d07d9f6c6fee2b1bae5}{%
+           family={Spirin},
+           familyi={S\bibinitperiod},
+           given={A.V.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier B.V.}%
+      }
+      \strng{authorbibnamehash}{9f3ec68801e073d28a2c6a72d48684e2}
+      \strng{authornamehash}{9f3ec68801e073d28a2c6a72d48684e2}
+      \strng{authorfullhash}{68e686ece97eada5e36d868cfc96ceea}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Microelectronic Engineering}
+      \field{title}{{Formation of micro- and nanostructures with well-rounded profile by new e-beam lithography principle}}
+      \field{year}{2016}
+      \field{pages}{92\bibrangedash 96}
+      \range{pages}{5}
+      \field{volume}{155}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1016/j.mee.2016.03.017
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1016/j.mee.2016.03.017 https://linkinghub.elsevier.com/retrieve/pii/S0167931716301307
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1016/j.mee.2016.03.017%20https://linkinghub.elsevier.com/retrieve/pii/S0167931716301307
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Bruk_2000}{article}{useauthor=false}
+      \name{author}{5}{}{%
+        {{hash=f4721a42d6600ca4c3b393426b927587}{%
+           family={Брук},
+           familyi={Б\bibinitperiod},
+           given={М.\bibnamedelimi А.},
+           giveni={М\bibinitperiod\bibinitdelim А\bibinitperiod}}}%
+        {{hash=24afe9c34d1228e9f66d7ae8f226ada3}{%
+           family={Кондратьева},
+           familyi={К\bibinitperiod},
+           given={М.\bibnamedelimi В.},
+           giveni={М\bibinitperiod\bibinitdelim В\bibinitperiod}}}%
+        {{hash=d6ffabf075199024da59872950aa2107}{%
+           family={Баранов},
+           familyi={Б\bibinitperiod},
+           given={А.\bibnamedelimi А.},
+           giveni={А\bibinitperiod\bibinitdelim А\bibinitperiod}}}%
+        {{hash=fb5d87238e7b175e2f8b69573769b47e}{%
+           family={Пебалк},
+           familyi={П\bibinitperiod},
+           given={К.\bibnamedelimi В.},
+           giveni={К\bibinitperiod\bibinitdelim В\bibinitperiod}}}%
+        {{hash=f8bed7bff968cc49f2c9fd8211a41bf5}{%
+           family={Сергеев},
+           familyi={С\bibinitperiod},
+           given={Н.\bibnamedelimi В.},
+           giveni={Н\bibinitperiod\bibinitdelim В\bibinitperiod},
+           suffix={А.\bibnamedelimi М.and\bibnamedelima Козлова},
+           suffixi={А\bibinitperiod\bibinitdelim М\bibinitperiod\bibinitdelim К\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{714257df6cabc3f7e3272cb4e793f151}
+      \strng{authornamehash}{714257df6cabc3f7e3272cb4e793f151}
+      \strng{authorfullhash}{53f04b3d02e0fffba4423f7a1a01f8a7}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelprefix}{A}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Высокомолекулярные соединения, Серия А}
+      \field{title}{{Радиационная деполимеризация полиметилметакрилата, адсорбированного на силохроме}}
+      \field{year}{1999}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{256\bibrangedash 262}
+      \range{pages}{7}
+      \verb{urlraw}
+      \verb https://cyberleninka.ru/article/n/radiatsionnaya-depolimerizatsiya-polimetilmetakrilata-adsorbirovannogo-na-silohrome
+      \endverb
+      \verb{url}
+      \verb https://cyberleninka.ru/article/n/radiatsionnaya-depolimerizatsiya-polimetilmetakrilata-adsorbirovannogo-na-silohrome
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Bruk_2015_co}{article}{useauthor=false}
+      \name{author}{6}{}{%
+        {{hash=f4721a42d6600ca4c3b393426b927587}{%
+           family={Брук},
+           familyi={Б\bibinitperiod},
+           given={М.А.},
+           giveni={М\bibinitperiod}}}%
+        {{hash=8e7f9893fe7cbbb64f8d4f15540956e6}{%
+           family={Жихарев},
+           familyi={Ж\bibinitperiod},
+           given={Е.Н.},
+           giveni={Е\bibinitperiod}}}%
+        {{hash=12a6cdd7d2045a596db192d04590d7be}{%
+           family={Стрельцов},
+           familyi={С\bibinitperiod},
+           given={Д.Р.},
+           giveni={Д\bibinitperiod}}}%
+        {{hash=e83d38b499bec5951d6a4f97a546bd0a}{%
+           family={Кальнов},
+           familyi={К\bibinitperiod},
+           given={В.А.},
+           giveni={В\bibinitperiod}}}%
+        {{hash=f6de5ba833a52b91dacdb1ba3e1c2c53}{%
+           family={Спирин},
+           familyi={С\bibinitperiod},
+           given={А.В.},
+           giveni={А\bibinitperiod}}}%
+        {{hash=7e7cfc6d932d1a768e6ad3d3919a3655}{%
+           family={Рогожин},
+           familyi={Р\bibinitperiod},
+           given={А.Е.},
+           giveni={А\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{714257df6cabc3f7e3272cb4e793f151}
+      \strng{authornamehash}{714257df6cabc3f7e3272cb4e793f151}
+      \strng{authorfullhash}{a868df4251546aea3f24484300c3f43c}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labelprefix}{A}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Компьютерная оптика (Computer Optics)}
+      \field{title}{Некоторые особенности нового метода формирования микрорельефа путём прямого электронно-лучевого травления резиста}
+      \field{year}{2015}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{204\bibrangedash 210}
+      \range{pages}{7}
+      \field{volume}{39}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb http://journals.ssau.ru/index.php/computeroptics/article/view/2454
+      \endverb
+      \verb{url}
+      \verb http://journals.ssau.ru/index.php/computeroptics/article/view/2454
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{my_CO}{article}{useauthor=false}
+      \name{author}{4}{}{%
+        {{hash=031af42dcd71587638d0a53d8738e533}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={A},
+           giveni={A\bibinitperiod}}}%
+        {{hash=34ebdcb60e3f5d87a0ef7afdb566b56c}{%
+           family={Bruk},
+           familyi={B\bibinitperiod},
+           given={M},
+           giveni={M\bibinitperiod}}}%
+        {{hash=397ebb3db4bf643cd30242b45a1dc1d6}{%
+           family={Zhikharev},
+           familyi={Z\bibinitperiod},
+           given={E},
+           giveni={E\bibinitperiod}}}%
+        {{hash=c7e6174f564593a380ea796e792edc0f}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={F},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{6f3716bf3d020b56c8ee593fa3e4b94a}
+      \strng{authornamehash}{6f3716bf3d020b56c8ee593fa3e4b94a}
+      \strng{authorfullhash}{564da30d57ea2b9b809dcf6d6ff3ed14}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelprefix}{A}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computer Optics}
+      \field{title}{Nanophotonic structure formation by dry e-beam etching of the resist: resolution limitation origins}
+      \field{year}{2017}
+      \field{number}{4}
+      \range{number}{1}
+      \field{pages}{499\bibrangedash 503}
+      \range{pages}{5}
+      \field{volume}{41}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.18287/2412-6179-2017-41-4-499-503
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.18287/2412-6179-2017-41-4-499-503
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_microlenses}{article}{useauthor=false}
+      \name{author}{4}{}{%
+        {{hash=91ccd87b27a861db670c657c6b237df5}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={FA},
+           giveni={F\bibinitperiod}}}%
+        {{hash=d6952808e5aef4fd91e3e681b5ea886c}{%
+           family={Bruk},
+           familyi={B\bibinitperiod},
+           given={MA},
+           giveni={M\bibinitperiod}}}%
+        {{hash=719f9bd6a63321450fc828b04ddadb43}{%
+           family={Zhikharev},
+           familyi={Z\bibinitperiod},
+           given={EN},
+           giveni={E\bibinitperiod}}}%
+        {{hash=77aa701abbca659e6c59f01902afab07}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={AE},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{42a0fbd985f9268ad7461f9574de2ee3}
+      \strng{authornamehash}{42a0fbd985f9268ad7461f9574de2ee3}
+      \strng{authorfullhash}{276008c145aa0b48d03cff17ace1c1f8}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelprefix}{A}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Physics: Conference Series}
+      \field{title}{Fabrication of microlens arrays and planar photonic crystals using thermal amplification of resist}
+      \field{year}{2018}
+      \field{number}{1}
+      \range{number}{1}
+      \field{pages}{012018}
+      \range{pages}{1}
+      \field{volume}{1096}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1088/1742-6596/1096/1/012018
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1088/1742-6596/1096/1/012018
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_evidence}{article}{useauthor=false}
+      \name{author}{4}{}{%
+        {{hash=031af42dcd71587638d0a53d8738e533}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={A},
+           giveni={A\bibinitperiod}}}%
+        {{hash=c7e6174f564593a380ea796e792edc0f}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={F},
+           giveni={F\bibinitperiod}}}%
+        {{hash=34ebdcb60e3f5d87a0ef7afdb566b56c}{%
+           family={Bruk},
+           familyi={B\bibinitperiod},
+           given={M},
+           giveni={M\bibinitperiod}}}%
+        {{hash=397ebb3db4bf643cd30242b45a1dc1d6}{%
+           family={Zhikharev},
+           familyi={Z\bibinitperiod},
+           given={E},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{6f3716bf3d020b56c8ee593fa3e4b94a}
+      \strng{authornamehash}{6f3716bf3d020b56c8ee593fa3e4b94a}
+      \strng{authorfullhash}{ba2e07d3702f29ba2421da0e31e27d88}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelprefix}{A}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Conference on Micro-and Nano-Electronics 2018}
+      \field{title}{Simulation of dry e-beam etching of resist and experimental evidence}
+      \field{year}{2019}
+      \field{pages}{440\bibrangedash 444}
+      \range{pages}{5}
+      \field{volume}{11022}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1117/12.2522458
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1117/12.2522458
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_detailed}{article}{}
+      \name{author}{2}{}{%
+        {{hash=91ccd87b27a861db670c657c6b237df5}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={FA},
+           giveni={F\bibinitperiod}}}%
+        {{hash=77aa701abbca659e6c59f01902afab07}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={AE},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{fullhash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{bibnamehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{authorbibnamehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{authornamehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{authorfullhash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \field{extraname}{1}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Physics: Conference Series}
+      \field{title}{Detailed Monte-Carlo simulation of PMMA chain scissions in e-beam lithography}
+      \field{year}{2019}
+      \field{number}{1}
+      \range{number}{1}
+      \field{pages}{012243}
+      \range{pages}{1}
+      \field{volume}{1410}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1088/1742-6596/1410/1/012243
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1088/1742-6596/1410/1/012243
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_review_RU}{article}{}
+      \name{author}{2}{}{%
+        {{hash=7e7cfc6d932d1a768e6ad3d3919a3655}{%
+           family={Рогожин},
+           familyi={Р\bibinitperiod},
+           given={А.\bibnamedelimi Е.},
+           giveni={А\bibinitperiod\bibinitdelim Е\bibinitperiod}}}%
+        {{hash=5291dce4690052adfdbab5636db102f2}{%
+           family={Сидоров},
+           familyi={С\bibinitperiod},
+           given={Ф.\bibnamedelimi А.},
+           giveni={Ф\bibinitperiod\bibinitdelim А\bibinitperiod}}}%
+      }
+      \strng{namehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{fullhash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{bibnamehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{authorbibnamehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{authornamehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{authorfullhash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \field{extraname}{1}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Микроэлектроника}
+      \field{title}{Моделирование процессов электронно-лучевой литографии}
+      \field{year}{2020}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{116\bibrangedash 132}
+      \range{pages}{17}
+      \field{volume}{49}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.31857/S0544126920010093
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.31857/S0544126920010093
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_MEE}{article}{useauthor=false}
+      \name{author}{4}{}{%
+        {{hash=c7e6174f564593a380ea796e792edc0f}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={F},
+           giveni={F\bibinitperiod}}}%
+        {{hash=031af42dcd71587638d0a53d8738e533}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={A},
+           giveni={A\bibinitperiod}}}%
+        {{hash=34ebdcb60e3f5d87a0ef7afdb566b56c}{%
+           family={Bruk},
+           familyi={B\bibinitperiod},
+           given={M},
+           giveni={M\bibinitperiod}}}%
+        {{hash=397ebb3db4bf643cd30242b45a1dc1d6}{%
+           family={Zhikharev},
+           familyi={Z\bibinitperiod},
+           given={E},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{8de93bd1cbb30a2b3d41ed38a7ec7a3e}
+      \strng{authornamehash}{8de93bd1cbb30a2b3d41ed38a7ec7a3e}
+      \strng{authorfullhash}{2ce5e4e52dbb9b16e117c96acb19cc62}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelprefix}{A}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Microelectronic Engineering}
+      \field{title}{Direct Monte-Carlo simulation of dry e-beam etching of resist}
+      \field{year}{2020}
+      \field{pages}{111313}
+      \range{pages}{1}
+      \field{volume}{227}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1016/j.mee.2020.111313
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1016/j.mee.2020.111313
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_Gvalue}{article}{}
+      \name{author}{2}{}{%
+        {{hash=91ccd87b27a861db670c657c6b237df5}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={FA},
+           giveni={F\bibinitperiod}}}%
+        {{hash=77aa701abbca659e6c59f01902afab07}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={AE},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{fullhash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{bibnamehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{authorbibnamehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{authornamehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{authorfullhash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \field{extraname}{2}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Physics: Conference Series}
+      \field{title}{Microscopic simulation of e-beam induced PMMA chain scissions with temperature effect}
+      \field{year}{2020}
+      \field{number}{1}
+      \range{number}{1}
+      \field{pages}{012202}
+      \range{pages}{1}
+      \field{volume}{1695}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1088/1742-6596/1695/1/012202
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1088/1742-6596/1695/1/012202
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_microscopic}{article}{}
+      \name{author}{2}{}{%
+        {{hash=83c36ffb667288856da4f01b04d18a9f}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={Fedor},
+           giveni={F\bibinitperiod}}}%
+        {{hash=4a0180767130971995a9cd1e51e311a0}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{6e9d889c8b53e60a4bed5a3ca2f77c01}
+      \strng{fullhash}{6e9d889c8b53e60a4bed5a3ca2f77c01}
+      \strng{bibnamehash}{6e9d889c8b53e60a4bed5a3ca2f77c01}
+      \strng{authorbibnamehash}{6e9d889c8b53e60a4bed5a3ca2f77c01}
+      \strng{authornamehash}{6e9d889c8b53e60a4bed5a3ca2f77c01}
+      \strng{authorfullhash}{6e9d889c8b53e60a4bed5a3ca2f77c01}
+      \field{extraname}{3}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{2020 International Conference on Information Technology and Nanotechnology (ITNT)}
+      \field{title}{New microscopic approach to e-beam lithography simulation}
+      \field{year}{2020}
+      \field{pages}{1\bibrangedash 4}
+      \range{pages}{4}
+      \verb{urlraw}
+      \verb https://doi.org/10.1109/ITNT49337.2020.9253231
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1109/ITNT49337.2020.9253231
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_Isaev_RU}{article}{}
+      \name{author}{3}{}{%
+        {{hash=687e2a93695229a2059db8dbd9f217f2}{%
+           family={Исаев},
+           familyi={И\bibinitperiod},
+           given={А.\bibnamedelimi Г.},
+           giveni={А\bibinitperiod\bibinitdelim Г\bibinitperiod}}}%
+        {{hash=5291dce4690052adfdbab5636db102f2}{%
+           family={Сидоров},
+           familyi={С\bibinitperiod},
+           given={Ф.\bibnamedelimi А.},
+           giveni={Ф\bibinitperiod\bibinitdelim А\bibinitperiod}}}%
+        {{hash=7e7cfc6d932d1a768e6ad3d3919a3655}{%
+           family={Рогожин},
+           familyi={Р\bibinitperiod},
+           given={А.\bibnamedelimi Е.},
+           giveni={А\bibinitperiod\bibinitdelim Е\bibinitperiod}}}%
+      }
+      \strng{namehash}{8c4a9de027bf0dd0014a5b145993a6d2}
+      \strng{fullhash}{8c4a9de027bf0dd0014a5b145993a6d2}
+      \strng{bibnamehash}{8c4a9de027bf0dd0014a5b145993a6d2}
+      \strng{authorbibnamehash}{8c4a9de027bf0dd0014a5b145993a6d2}
+      \strng{authornamehash}{8c4a9de027bf0dd0014a5b145993a6d2}
+      \strng{authorfullhash}{8c4a9de027bf0dd0014a5b145993a6d2}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Микроэлектроника}
+      \field{title}{Влияние растекания резиста при его сухом электронно-лучевом травлении на латеральное разрешение}
+      \field{year}{2021}
+      \field{number}{1}
+      \range{number}{1}
+      \field{pages}{21\bibrangedash 26}
+      \range{pages}{6}
+      \field{volume}{50}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.31857/S0544126921010063
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.31857/S0544126921010063
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_review_2_RU}{article}{}
+      \name{author}{2}{}{%
+        {{hash=7e7cfc6d932d1a768e6ad3d3919a3655}{%
+           family={Рогожин},
+           familyi={Р\bibinitperiod},
+           given={А.\bibnamedelimi Е.},
+           giveni={А\bibinitperiod\bibinitdelim Е\bibinitperiod}}}%
+        {{hash=5291dce4690052adfdbab5636db102f2}{%
+           family={Сидоров},
+           familyi={С\bibinitperiod},
+           given={Ф.\bibnamedelimi А.},
+           giveni={Ф\bibinitperiod\bibinitdelim А\bibinitperiod}}}%
+      }
+      \strng{namehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{fullhash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{bibnamehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{authorbibnamehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{authornamehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{authorfullhash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \field{extraname}{2}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Микроэлектроника}
+      \field{title}{Сечения процессов рассеяния при электронно-лучевой литографии}
+      \field{year}{2023}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{110\bibrangedash 126}
+      \range{pages}{17}
+      \field{volume}{52}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.31857/S0544126923700266
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.31857/S0544126923700266
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{Greeneich1979_Mf_Mn}{article}{}
+      \name{author}{1}{}{%
+        {{hash=49c2a07188678d12e2813a5d19cdbac0}{%
+           family={Greeneich},
+           familyi={G\bibinitperiod},
+           given={James\bibnamedelima S.},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{49c2a07188678d12e2813a5d19cdbac0}
+      \strng{fullhash}{49c2a07188678d12e2813a5d19cdbac0}
+      \strng{bibnamehash}{49c2a07188678d12e2813a5d19cdbac0}
+      \strng{authorbibnamehash}{49c2a07188678d12e2813a5d19cdbac0}
+      \strng{authornamehash}{49c2a07188678d12e2813a5d19cdbac0}
+      \strng{authorfullhash}{49c2a07188678d12e2813a5d19cdbac0}
+      \field{sortinit}{8}
+      \field{sortinithash}{1b24cab5087933ef0826a7cd3b99e994}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Vacuum Science and Technology}
+      \field{title}{{Impact of electron scattering on linewidth control in electron‐beam lithography}}
+      \field{year}{1979}
+      \field{number}{6}
+      \range{number}{1}
+      \field{pages}{1749\bibrangedash 1753}
+      \range{pages}{5}
+      \field{volume}{16}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1116/1.570286
+      \endverb
+      \verb{urlraw}
+      \verb http://avs.scitation.org/doi/10.1116/1.570286
+      \endverb
+      \verb{url}
+      \verb http://avs.scitation.org/doi/10.1116/1.570286
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Boyd_3}{article}{}
+      \name{author}{2}{}{%
+        {{hash=8b9fc991f301462e9184dc02eb30720f}{%
+           family={Boyd},
+           familyi={B\bibinitperiod},
+           given={Richard\bibnamedelima H.},
+           giveni={R\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=973f443ab246e7931f72dd706c38ec78}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Tung‐Po},
+           giveni={T\bibinithyphendelim P\bibinitperiod}}}%
+      }
+      \strng{namehash}{032fc820036f67e6709d458e1ca086c5}
+      \strng{fullhash}{032fc820036f67e6709d458e1ca086c5}
+      \strng{bibnamehash}{032fc820036f67e6709d458e1ca086c5}
+      \strng{authorbibnamehash}{032fc820036f67e6709d458e1ca086c5}
+      \strng{authornamehash}{032fc820036f67e6709d458e1ca086c5}
+      \strng{authorfullhash}{032fc820036f67e6709d458e1ca086c5}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Chemical Physics}
+      \field{title}{{Theoretical Depolymerization Kinetics. III. The Effect of Molecular‐Weight Distribution in Degrading Polymers Undergoing Random‐Scission Initiation}}
+      \field{year}{1966}
+      \field{number}{3}
+      \range{number}{1}
+      \field{pages}{778\bibrangedash 781}
+      \range{pages}{4}
+      \field{volume}{45}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1063/1.1727680
+      \endverb
+      \verb{urlraw}
+      \verb http://aip.scitation.org/doi/10.1063/1.1727679 http://aip.scitation.org/doi/10.1063/1.1727680
+      \endverb
+      \verb{url}
+      \verb http://aip.scitation.org/doi/10.1063/1.1727679%20http://aip.scitation.org/doi/10.1063/1.1727680
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Mita_PMMA_zip_lengths_T}{article}{}
+      \name{author}{3}{}{%
+        {{hash=d94fd90a5903705495bcb89d0256b5af}{%
+           family={Mita},
+           familyi={M\bibinitperiod},
+           given={Itaru},
+           giveni={I\bibinitperiod}}}%
+        {{hash=e3475d9c6e53c840ab60d743b468de6b}{%
+           family={Obata},
+           familyi={O\bibinitperiod},
+           given={Kazuhito},
+           giveni={K\bibinitperiod}}}%
+        {{hash=49c4767d180033881bf3c893488566c2}{%
+           family={Horie},
+           familyi={H\bibinitperiod},
+           given={Kazuyuki},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{862c6440edde70ca287383ce1963cbaa}
+      \strng{fullhash}{862c6440edde70ca287383ce1963cbaa}
+      \strng{bibnamehash}{862c6440edde70ca287383ce1963cbaa}
+      \strng{authorbibnamehash}{862c6440edde70ca287383ce1963cbaa}
+      \strng{authornamehash}{862c6440edde70ca287383ce1963cbaa}
+      \strng{authorfullhash}{862c6440edde70ca287383ce1963cbaa}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Polymer Journal}
+      \field{title}{{Photoinitiated Thermal Degradation of Polymers II. Poly(methyl methacrylate)}}
+      \field{year}{1990}
+      \field{number}{5}
+      \range{number}{1}
+      \field{pages}{397\bibrangedash 410}
+      \range{pages}{14}
+      \field{volume}{22}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1295/polymj.22.397
+      \endverb
+      \verb{urlraw}
+      \verb http://www.nature.com/doifinder/10.1295/polymj.22.397
+      \endverb
+      \verb{url}
+      \verb http://www.nature.com/doifinder/10.1295/polymj.22.397
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Fragala_3_diffusion}{article}{useauthor=false}
+      \name{author}{4}{}{%
+        {{hash=16e18760528b2a5412c5d839a43a3d6b}{%
+           family={Raudino},
+           familyi={R\bibinitperiod},
+           given={A},
+           giveni={A\bibinitperiod}}}%
+        {{hash=bf9c18e6dd9cc29cf6f54c8afc1ef0b1}{%
+           family={Fragal{à}},
+           familyi={F\bibinitperiod},
+           given={M\bibnamedelima E},
+           giveni={M\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=90ede82d5a617cd6d31712fcaf7f77fe}{%
+           family={Compagnini},
+           familyi={C\bibinitperiod},
+           given={G},
+           giveni={G\bibinitperiod}}}%
+        {{hash=b20c620c21ac1b0b653c3d49b45f19ac}{%
+           family={Puglisi},
+           familyi={P\bibinitperiod},
+           given={O},
+           giveni={O\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{54fd73bc8a11b8f887fffb44c8ef6b33}
+      \strng{authornamehash}{54fd73bc8a11b8f887fffb44c8ef6b33}
+      \strng{authorfullhash}{38e87fd88d9a5a246dd261bc005a43d8}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Chemical Physics}
+      \field{title}{{Modeling of low-temperature depolymerization of poly (methyl methacrylate) promoted by ion beam}}
+      \field{year}{1999}
+      \field{number}{4}
+      \range{number}{1}
+      \field{pages}{1721\bibrangedash 1731}
+      \range{pages}{11}
+      \field{volume}{111}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1063/1.479432
+      \endverb
+      \verb{urlraw}
+      \verb http://aip.scitation.org/doi/10.1063/1.479432
+      \endverb
+      \verb{url}
+      \verb http://aip.scitation.org/doi/10.1063/1.479432
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Leveder_2010}{article}{useauthor=false}
+      \name{author}{4}{}{%
+        {{hash=30f8be98e751c3e5d4c7fa38f3856f76}{%
+           family={Leveder},
+           familyi={L\bibinitperiod},
+           given={Tanguy},
+           giveni={T\bibinitperiod}}}%
+        {{hash=242eca1f846e4d24d346782fb85498a7}{%
+           family={Landis},
+           familyi={L\bibinitperiod},
+           given={Stefan},
+           giveni={S\bibinitperiod}}}%
+        {{hash=272eb6b5d7b6bcc46c4160f72b14f2b1}{%
+           family={Chaix},
+           familyi={C\bibinitperiod},
+           given={Nicolas},
+           giveni={N\bibinitperiod}}}%
+        {{hash=848b9f908950a3924404e39db91756bb}{%
+           family={Davoust},
+           familyi={D\bibinitperiod},
+           given={Laurent},
+           giveni={L\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {American Vacuum Society}%
+      }
+      \strng{authorbibnamehash}{f63a5d1464dc59d2f9f385d2c755a005}
+      \strng{authornamehash}{f63a5d1464dc59d2f9f385d2c755a005}
+      \strng{authorfullhash}{634de17fe912b8cfdae68a7ea233b0b2}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Vacuum Science \& Technology B}
+      \field{title}{Thin polymer films viscosity measurements from nanopatterning method}
+      \field{year}{2010}
+      \field{number}{6}
+      \range{number}{1}
+      \field{pages}{1251\bibrangedash 1258}
+      \range{pages}{8}
+      \field{volume}{28}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1116/1.3504591
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1116/1.3504591
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Kirchner_reflow}{article}{}
+      \name{author}{2}{}{%
+        {{hash=28297795cae0ad9367fc451958dfd362}{%
+           family={Kirchner},
+           familyi={K\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+        {{hash=e6cf60f4a86080396b720e58fa18d95b}{%
+           family={Schift},
+           familyi={S\bibinitperiod},
+           given={Helmut},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{55116274e06a2d0946919436cf10cca1}
+      \strng{fullhash}{55116274e06a2d0946919436cf10cca1}
+      \strng{bibnamehash}{55116274e06a2d0946919436cf10cca1}
+      \strng{authorbibnamehash}{55116274e06a2d0946919436cf10cca1}
+      \strng{authornamehash}{55116274e06a2d0946919436cf10cca1}
+      \strng{authorfullhash}{55116274e06a2d0946919436cf10cca1}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Vacuum Science \& Technology B}
+      \field{title}{Mobility based 3D simulation of selective, viscoelastic polymer reflow using surface evolver Mobility based 3D simulation of selective, viscoelastic polymer reflow}
+      \field{year}{2014}
+      \field{number}{6}
+      \range{number}{1}
+      \field{pages}{06F701}
+      \range{pages}{-1}
+      \field{volume}{32}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1116/1.4896480
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1116/1.4896480
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Ciappa_2010}{article}{}
+      \name{author}{3}{}{%
+        {{hash=2206e50afe71eeb786d3c623fbb1e0ec}{%
+           family={Dapor},
+           familyi={D\bibinitperiod},
+           given={Maurizio},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8a35e53add11036835a5513bfe2dfad5}{%
+           family={Ciappa},
+           familyi={C\bibinitperiod},
+           given={Mauro},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8ca3caf70a7f02822d9c15d6a37bb77d}{%
+           family={Fichtner},
+           familyi={F\bibinitperiod},
+           given={Wolfgang},
+           giveni={W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {SPIE}%
+      }
+      \strng{namehash}{f0fcac25e879411045116959ad69c559}
+      \strng{fullhash}{f0fcac25e879411045116959ad69c559}
+      \strng{bibnamehash}{f0fcac25e879411045116959ad69c559}
+      \strng{authorbibnamehash}{f0fcac25e879411045116959ad69c559}
+      \strng{authornamehash}{f0fcac25e879411045116959ad69c559}
+      \strng{authorfullhash}{f0fcac25e879411045116959ad69c559}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Micro/Nanolithography, MEMS, and MOEMS}
+      \field{title}{Monte Carlo modeling in the low-energy domain of the secondary electron emission of polymethylmethacrylate for critical-dimension scanning electron microscopy}
+      \field{year}{2010}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{023001}
+      \range{pages}{1}
+      \field{volume}{9}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1117/1.3373517
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1117/1.3373517
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Charlesby_1964_Gs}{article}{}
+      \name{author}{2}{}{%
+        {{hash=eb0c7603f764f36c895d16748ac63243}{%
+           family={Charlesby},
+           familyi={C\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=73b405904b2b10be1fd3a928863ef04d}{%
+           family={Moore},
+           familyi={M\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{2f6145181e5f203970c8d65ca7bba6d9}
+      \strng{fullhash}{2f6145181e5f203970c8d65ca7bba6d9}
+      \strng{bibnamehash}{2f6145181e5f203970c8d65ca7bba6d9}
+      \strng{authorbibnamehash}{2f6145181e5f203970c8d65ca7bba6d9}
+      \strng{authornamehash}{2f6145181e5f203970c8d65ca7bba6d9}
+      \strng{authorfullhash}{2f6145181e5f203970c8d65ca7bba6d9}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The International Journal of Applied Radiation and Isotopes}
+      \field{title}{{Comparison of gamma and ultra-violet radiation effects in polymethyl methacrylate at higher temperatures}}
+      \field{year}{1964}
+      \field{number}{12}
+      \range{number}{1}
+      \field{pages}{703\bibrangedash 708}
+      \range{pages}{6}
+      \field{volume}{15}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1016/0020-708X(64)90018-3
+      \endverb
+      \verb{file}
+      \verb :Volumes/Transcend/Mendeley/Charlesby, Moore/Charlesby, Moore{\_}1964{\_}Comparison of gamma and ultra-violet radiation effects in polymethyl methacrylate at higher temperatures(2).pdf:pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/0020708X64900183
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/0020708X64900183
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Berens_diffusion_Mn}{article}{}
+      \name{author}{2}{}{%
+        {{hash=3b984103ab38f4473b3a6784fcbddedc}{%
+           family={Berens},
+           familyi={B\bibinitperiod},
+           given={A.R.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=f3115961a31be41e3ed836316982f523}{%
+           family={Hopfenberg},
+           familyi={H\bibinitperiod},
+           given={H.B.},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{148188b3ad8dfae81c10545cabb7f019}
+      \strng{fullhash}{148188b3ad8dfae81c10545cabb7f019}
+      \strng{bibnamehash}{148188b3ad8dfae81c10545cabb7f019}
+      \strng{authorbibnamehash}{148188b3ad8dfae81c10545cabb7f019}
+      \strng{authornamehash}{148188b3ad8dfae81c10545cabb7f019}
+      \strng{authorfullhash}{148188b3ad8dfae81c10545cabb7f019}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Membrane Science}
+      \field{title}{{Diffusion of organic vapors at low concentrations in glassy PVC, polystyrene, and PMMA}}
+      \field{year}{1982}
+      \field{number}{2\bibrangedash 3}
+      \range{number}{2}
+      \field{pages}{283\bibrangedash 303}
+      \range{pages}{21}
+      \field{volume}{10}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1016/S0376-7388(00)81415-5
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Brakke_SE}{article}{}
+      \name{author}{1}{}{%
+        {{hash=1f2cbef8f94627c4c46cd96f7ae5e578}{%
+           family={Brakke},
+           familyi={B\bibinitperiod},
+           given={Kenneth\bibnamedelima A.},
+           giveni={K\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{1f2cbef8f94627c4c46cd96f7ae5e578}
+      \strng{fullhash}{1f2cbef8f94627c4c46cd96f7ae5e578}
+      \strng{bibnamehash}{1f2cbef8f94627c4c46cd96f7ae5e578}
+      \strng{authorbibnamehash}{1f2cbef8f94627c4c46cd96f7ae5e578}
+      \strng{authornamehash}{1f2cbef8f94627c4c46cd96f7ae5e578}
+      \strng{authorfullhash}{1f2cbef8f94627c4c46cd96f7ae5e578}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelprefix}{A}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Experimental Mathematics}
+      \field{title}{{The Surface Evolver}}
+      \field{year}{1992}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{141\bibrangedash 165}
+      \range{pages}{25}
+      \field{volume}{1}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1080/10586458.1992.10504253
+      \endverb
+      \verb{urlraw}
+      \verb http://www.tandfonline.com/doi/abs/10.1080/10586458.1992.10504253
+      \endverb
+      \verb{url}
+      \verb http://www.tandfonline.com/doi/abs/10.1080/10586458.1992.10504253
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+  \enddatalist
+  \datalist[entry]{none/global//global/global}
+    \entry{Bruk_2013}{article}{useauthor=false}
+      \name{author}{5}{}{%
+        {{hash=d6952808e5aef4fd91e3e681b5ea886c}{%
+           family={Bruk},
+           familyi={B\bibinitperiod},
+           given={M\bibnamedelima A},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=719f9bd6a63321450fc828b04ddadb43}{%
+           family={Zhikharev},
+           familyi={Z\bibinitperiod},
+           given={E\bibnamedelima N},
+           giveni={E\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=a93b47bcb8961627d12531e7ea791435}{%
+           family={Kal'nov},
+           familyi={K\bibinitperiod},
+           given={V\bibnamedelima A},
+           giveni={V\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=84feac7afe974d07d9f6c6fee2b1bae5}{%
+           family={Spirin},
+           familyi={S\bibinitperiod},
+           given={A\bibnamedelima V},
+           giveni={A\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+        {{hash=7e05eb6a62145de1967448cb46babb8f}{%
+           family={Strel'tsov},
+           familyi={S\bibinitperiod},
+           given={D\bibnamedelima R},
+           giveni={D\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{9f3ec68801e073d28a2c6a72d48684e2}
+      \strng{authornamehash}{9f3ec68801e073d28a2c6a72d48684e2}
+      \strng{authorfullhash}{7dd3ed2ce0ef571e93f867a19e093e5c}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Russian Microelectronics}
+      \field{title}{{A new method of formation of the masking image (relief) directly during the electron-beam exposure of the resist}}
+      \field{year}{2013}
+      \field{number}{5}
+      \range{number}{1}
+      \field{pages}{261\bibrangedash 269}
+      \range{pages}{9}
+      \field{volume}{42}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1134/S106373971305003X
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1134/S106373971305003X http://link.springer.com/10.1134/S106373971305003X
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1134/S106373971305003X%20http://link.springer.com/10.1134/S106373971305003X
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Bruk_2016_mee}{article}{useauthor=false}
+      \name{author}{7}{}{%
+        {{hash=d6952808e5aef4fd91e3e681b5ea886c}{%
+           family={Bruk},
+           familyi={B\bibinitperiod},
+           given={M.A.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=719f9bd6a63321450fc828b04ddadb43}{%
+           family={Zhikharev},
+           familyi={Z\bibinitperiod},
+           given={E.N.},
+           giveni={E\bibinitperiod}}}%
+        {{hash=77aa701abbca659e6c59f01902afab07}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={A.E.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=5752e88fc58df8ebe27f360a50f0aa93}{%
+           family={Streltsov},
+           familyi={S\bibinitperiod},
+           given={D.R.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=e6a4e8f31c029f4e7cbbcfa9970a24b2}{%
+           family={Kalnov},
+           familyi={K\bibinitperiod},
+           given={V.A.},
+           giveni={V\bibinitperiod}}}%
+        {{hash=64932dc91cfe97f47cfcc4c01e93f107}{%
+           family={Averkin},
+           familyi={A\bibinitperiod},
+           given={S.N.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=84feac7afe974d07d9f6c6fee2b1bae5}{%
+           family={Spirin},
+           familyi={S\bibinitperiod},
+           given={A.V.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier B.V.}%
+      }
+      \strng{authorbibnamehash}{9f3ec68801e073d28a2c6a72d48684e2}
+      \strng{authornamehash}{9f3ec68801e073d28a2c6a72d48684e2}
+      \strng{authorfullhash}{68e686ece97eada5e36d868cfc96ceea}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Microelectronic Engineering}
+      \field{title}{{Formation of micro- and nanostructures with well-rounded profile by new e-beam lithography principle}}
+      \field{year}{2016}
+      \field{pages}{92\bibrangedash 96}
+      \range{pages}{5}
+      \field{volume}{155}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1016/j.mee.2016.03.017
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1016/j.mee.2016.03.017 https://linkinghub.elsevier.com/retrieve/pii/S0167931716301307
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1016/j.mee.2016.03.017%20https://linkinghub.elsevier.com/retrieve/pii/S0167931716301307
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Bruk_2000}{article}{useauthor=false}
+      \name{author}{5}{}{%
+        {{hash=f4721a42d6600ca4c3b393426b927587}{%
+           family={Брук},
+           familyi={Б\bibinitperiod},
+           given={М.\bibnamedelimi А.},
+           giveni={М\bibinitperiod\bibinitdelim А\bibinitperiod}}}%
+        {{hash=24afe9c34d1228e9f66d7ae8f226ada3}{%
+           family={Кондратьева},
+           familyi={К\bibinitperiod},
+           given={М.\bibnamedelimi В.},
+           giveni={М\bibinitperiod\bibinitdelim В\bibinitperiod}}}%
+        {{hash=d6ffabf075199024da59872950aa2107}{%
+           family={Баранов},
+           familyi={Б\bibinitperiod},
+           given={А.\bibnamedelimi А.},
+           giveni={А\bibinitperiod\bibinitdelim А\bibinitperiod}}}%
+        {{hash=fb5d87238e7b175e2f8b69573769b47e}{%
+           family={Пебалк},
+           familyi={П\bibinitperiod},
+           given={К.\bibnamedelimi В.},
+           giveni={К\bibinitperiod\bibinitdelim В\bibinitperiod}}}%
+        {{hash=f8bed7bff968cc49f2c9fd8211a41bf5}{%
+           family={Сергеев},
+           familyi={С\bibinitperiod},
+           given={Н.\bibnamedelimi В.},
+           giveni={Н\bibinitperiod\bibinitdelim В\bibinitperiod},
+           suffix={А.\bibnamedelimi М.and\bibnamedelima Козлова},
+           suffixi={А\bibinitperiod\bibinitdelim М\bibinitperiod\bibinitdelim К\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{714257df6cabc3f7e3272cb4e793f151}
+      \strng{authornamehash}{714257df6cabc3f7e3272cb4e793f151}
+      \strng{authorfullhash}{53f04b3d02e0fffba4423f7a1a01f8a7}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Высокомолекулярные соединения, Серия А}
+      \field{title}{{Радиационная деполимеризация полиметилметакрилата, адсорбированного на силохроме}}
+      \field{year}{1999}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{256\bibrangedash 262}
+      \range{pages}{7}
+      \verb{urlraw}
+      \verb https://cyberleninka.ru/article/n/radiatsionnaya-depolimerizatsiya-polimetilmetakrilata-adsorbirovannogo-na-silohrome
+      \endverb
+      \verb{url}
+      \verb https://cyberleninka.ru/article/n/radiatsionnaya-depolimerizatsiya-polimetilmetakrilata-adsorbirovannogo-na-silohrome
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Bruk_2015_co}{article}{useauthor=false}
+      \name{author}{6}{}{%
+        {{hash=f4721a42d6600ca4c3b393426b927587}{%
+           family={Брук},
+           familyi={Б\bibinitperiod},
+           given={М.А.},
+           giveni={М\bibinitperiod}}}%
+        {{hash=8e7f9893fe7cbbb64f8d4f15540956e6}{%
+           family={Жихарев},
+           familyi={Ж\bibinitperiod},
+           given={Е.Н.},
+           giveni={Е\bibinitperiod}}}%
+        {{hash=12a6cdd7d2045a596db192d04590d7be}{%
+           family={Стрельцов},
+           familyi={С\bibinitperiod},
+           given={Д.Р.},
+           giveni={Д\bibinitperiod}}}%
+        {{hash=e83d38b499bec5951d6a4f97a546bd0a}{%
+           family={Кальнов},
+           familyi={К\bibinitperiod},
+           given={В.А.},
+           giveni={В\bibinitperiod}}}%
+        {{hash=f6de5ba833a52b91dacdb1ba3e1c2c53}{%
+           family={Спирин},
+           familyi={С\bibinitperiod},
+           given={А.В.},
+           giveni={А\bibinitperiod}}}%
+        {{hash=7e7cfc6d932d1a768e6ad3d3919a3655}{%
+           family={Рогожин},
+           familyi={Р\bibinitperiod},
+           given={А.Е.},
+           giveni={А\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{714257df6cabc3f7e3272cb4e793f151}
+      \strng{authornamehash}{714257df6cabc3f7e3272cb4e793f151}
+      \strng{authorfullhash}{a868df4251546aea3f24484300c3f43c}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Компьютерная оптика (Computer Optics)}
+      \field{title}{Некоторые особенности нового метода формирования микрорельефа путём прямого электронно-лучевого травления резиста}
+      \field{year}{2015}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{204\bibrangedash 210}
+      \range{pages}{7}
+      \field{volume}{39}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb http://journals.ssau.ru/index.php/computeroptics/article/view/2454
+      \endverb
+      \verb{url}
+      \verb http://journals.ssau.ru/index.php/computeroptics/article/view/2454
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{my_CO}{article}{useauthor=false}
+      \name{author}{4}{}{%
+        {{hash=031af42dcd71587638d0a53d8738e533}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={A},
+           giveni={A\bibinitperiod}}}%
+        {{hash=34ebdcb60e3f5d87a0ef7afdb566b56c}{%
+           family={Bruk},
+           familyi={B\bibinitperiod},
+           given={M},
+           giveni={M\bibinitperiod}}}%
+        {{hash=397ebb3db4bf643cd30242b45a1dc1d6}{%
+           family={Zhikharev},
+           familyi={Z\bibinitperiod},
+           given={E},
+           giveni={E\bibinitperiod}}}%
+        {{hash=c7e6174f564593a380ea796e792edc0f}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={F},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{6f3716bf3d020b56c8ee593fa3e4b94a}
+      \strng{authornamehash}{6f3716bf3d020b56c8ee593fa3e4b94a}
+      \strng{authorfullhash}{564da30d57ea2b9b809dcf6d6ff3ed14}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computer Optics}
+      \field{title}{Nanophotonic structure formation by dry e-beam etching of the resist: resolution limitation origins}
+      \field{year}{2017}
+      \field{number}{4}
+      \range{number}{1}
+      \field{pages}{499\bibrangedash 503}
+      \range{pages}{5}
+      \field{volume}{41}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.18287/2412-6179-2017-41-4-499-503
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.18287/2412-6179-2017-41-4-499-503
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_microlenses}{article}{useauthor=false}
+      \name{author}{4}{}{%
+        {{hash=91ccd87b27a861db670c657c6b237df5}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={FA},
+           giveni={F\bibinitperiod}}}%
+        {{hash=d6952808e5aef4fd91e3e681b5ea886c}{%
+           family={Bruk},
+           familyi={B\bibinitperiod},
+           given={MA},
+           giveni={M\bibinitperiod}}}%
+        {{hash=719f9bd6a63321450fc828b04ddadb43}{%
+           family={Zhikharev},
+           familyi={Z\bibinitperiod},
+           given={EN},
+           giveni={E\bibinitperiod}}}%
+        {{hash=77aa701abbca659e6c59f01902afab07}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={AE},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{42a0fbd985f9268ad7461f9574de2ee3}
+      \strng{authornamehash}{42a0fbd985f9268ad7461f9574de2ee3}
+      \strng{authorfullhash}{276008c145aa0b48d03cff17ace1c1f8}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Physics: Conference Series}
+      \field{title}{Fabrication of microlens arrays and planar photonic crystals using thermal amplification of resist}
+      \field{year}{2018}
+      \field{number}{1}
+      \range{number}{1}
+      \field{pages}{012018}
+      \range{pages}{1}
+      \field{volume}{1096}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1088/1742-6596/1096/1/012018
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1088/1742-6596/1096/1/012018
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_evidence}{article}{useauthor=false}
+      \name{author}{4}{}{%
+        {{hash=031af42dcd71587638d0a53d8738e533}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={A},
+           giveni={A\bibinitperiod}}}%
+        {{hash=c7e6174f564593a380ea796e792edc0f}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={F},
+           giveni={F\bibinitperiod}}}%
+        {{hash=34ebdcb60e3f5d87a0ef7afdb566b56c}{%
+           family={Bruk},
+           familyi={B\bibinitperiod},
+           given={M},
+           giveni={M\bibinitperiod}}}%
+        {{hash=397ebb3db4bf643cd30242b45a1dc1d6}{%
+           family={Zhikharev},
+           familyi={Z\bibinitperiod},
+           given={E},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{6f3716bf3d020b56c8ee593fa3e4b94a}
+      \strng{authornamehash}{6f3716bf3d020b56c8ee593fa3e4b94a}
+      \strng{authorfullhash}{ba2e07d3702f29ba2421da0e31e27d88}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Conference on Micro-and Nano-Electronics 2018}
+      \field{title}{Simulation of dry e-beam etching of resist and experimental evidence}
+      \field{year}{2019}
+      \field{pages}{440\bibrangedash 444}
+      \range{pages}{5}
+      \field{volume}{11022}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1117/12.2522458
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1117/12.2522458
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_detailed}{article}{}
+      \name{author}{2}{}{%
+        {{hash=91ccd87b27a861db670c657c6b237df5}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={FA},
+           giveni={F\bibinitperiod}}}%
+        {{hash=77aa701abbca659e6c59f01902afab07}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={AE},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{fullhash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{bibnamehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{authorbibnamehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{authornamehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{authorfullhash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \field{extraname}{1}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Physics: Conference Series}
+      \field{title}{Detailed Monte-Carlo simulation of PMMA chain scissions in e-beam lithography}
+      \field{year}{2019}
+      \field{number}{1}
+      \range{number}{1}
+      \field{pages}{012243}
+      \range{pages}{1}
+      \field{volume}{1410}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1088/1742-6596/1410/1/012243
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1088/1742-6596/1410/1/012243
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_review_RU}{article}{}
+      \name{author}{2}{}{%
+        {{hash=7e7cfc6d932d1a768e6ad3d3919a3655}{%
+           family={Рогожин},
+           familyi={Р\bibinitperiod},
+           given={А.\bibnamedelimi Е.},
+           giveni={А\bibinitperiod\bibinitdelim Е\bibinitperiod}}}%
+        {{hash=5291dce4690052adfdbab5636db102f2}{%
+           family={Сидоров},
+           familyi={С\bibinitperiod},
+           given={Ф.\bibnamedelimi А.},
+           giveni={Ф\bibinitperiod\bibinitdelim А\bibinitperiod}}}%
+      }
+      \strng{namehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{fullhash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{bibnamehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{authorbibnamehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{authornamehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{authorfullhash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \field{extraname}{1}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Микроэлектроника}
+      \field{title}{Моделирование процессов электронно-лучевой литографии}
+      \field{year}{2020}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{116\bibrangedash 132}
+      \range{pages}{17}
+      \field{volume}{49}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.31857/S0544126920010093
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.31857/S0544126920010093
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_MEE}{article}{useauthor=false}
+      \name{author}{4}{}{%
+        {{hash=c7e6174f564593a380ea796e792edc0f}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={F},
+           giveni={F\bibinitperiod}}}%
+        {{hash=031af42dcd71587638d0a53d8738e533}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={A},
+           giveni={A\bibinitperiod}}}%
+        {{hash=34ebdcb60e3f5d87a0ef7afdb566b56c}{%
+           family={Bruk},
+           familyi={B\bibinitperiod},
+           given={M},
+           giveni={M\bibinitperiod}}}%
+        {{hash=397ebb3db4bf643cd30242b45a1dc1d6}{%
+           family={Zhikharev},
+           familyi={Z\bibinitperiod},
+           given={E},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{8de93bd1cbb30a2b3d41ed38a7ec7a3e}
+      \strng{authornamehash}{8de93bd1cbb30a2b3d41ed38a7ec7a3e}
+      \strng{authorfullhash}{2ce5e4e52dbb9b16e117c96acb19cc62}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Microelectronic Engineering}
+      \field{title}{Direct Monte-Carlo simulation of dry e-beam etching of resist}
+      \field{year}{2020}
+      \field{pages}{111313}
+      \range{pages}{1}
+      \field{volume}{227}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1016/j.mee.2020.111313
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1016/j.mee.2020.111313
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_Gvalue}{article}{}
+      \name{author}{2}{}{%
+        {{hash=91ccd87b27a861db670c657c6b237df5}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={FA},
+           giveni={F\bibinitperiod}}}%
+        {{hash=77aa701abbca659e6c59f01902afab07}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={AE},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{fullhash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{bibnamehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{authorbibnamehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{authornamehash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \strng{authorfullhash}{c69a9d4780be48d8ae12f8f9de314b09}
+      \field{extraname}{2}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Physics: Conference Series}
+      \field{title}{Microscopic simulation of e-beam induced PMMA chain scissions with temperature effect}
+      \field{year}{2020}
+      \field{number}{1}
+      \range{number}{1}
+      \field{pages}{012202}
+      \range{pages}{1}
+      \field{volume}{1695}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1088/1742-6596/1695/1/012202
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1088/1742-6596/1695/1/012202
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_microscopic}{article}{}
+      \name{author}{2}{}{%
+        {{hash=83c36ffb667288856da4f01b04d18a9f}{%
+           family={Sidorov},
+           familyi={S\bibinitperiod},
+           given={Fedor},
+           giveni={F\bibinitperiod}}}%
+        {{hash=4a0180767130971995a9cd1e51e311a0}{%
+           family={Rogozhin},
+           familyi={R\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{6e9d889c8b53e60a4bed5a3ca2f77c01}
+      \strng{fullhash}{6e9d889c8b53e60a4bed5a3ca2f77c01}
+      \strng{bibnamehash}{6e9d889c8b53e60a4bed5a3ca2f77c01}
+      \strng{authorbibnamehash}{6e9d889c8b53e60a4bed5a3ca2f77c01}
+      \strng{authornamehash}{6e9d889c8b53e60a4bed5a3ca2f77c01}
+      \strng{authorfullhash}{6e9d889c8b53e60a4bed5a3ca2f77c01}
+      \field{extraname}{3}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{2020 International Conference on Information Technology and Nanotechnology (ITNT)}
+      \field{title}{New microscopic approach to e-beam lithography simulation}
+      \field{year}{2020}
+      \field{pages}{1\bibrangedash 4}
+      \range{pages}{4}
+      \verb{urlraw}
+      \verb https://doi.org/10.1109/ITNT49337.2020.9253231
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1109/ITNT49337.2020.9253231
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_Isaev_RU}{article}{}
+      \name{author}{3}{}{%
+        {{hash=687e2a93695229a2059db8dbd9f217f2}{%
+           family={Исаев},
+           familyi={И\bibinitperiod},
+           given={А.\bibnamedelimi Г.},
+           giveni={А\bibinitperiod\bibinitdelim Г\bibinitperiod}}}%
+        {{hash=5291dce4690052adfdbab5636db102f2}{%
+           family={Сидоров},
+           familyi={С\bibinitperiod},
+           given={Ф.\bibnamedelimi А.},
+           giveni={Ф\bibinitperiod\bibinitdelim А\bibinitperiod}}}%
+        {{hash=7e7cfc6d932d1a768e6ad3d3919a3655}{%
+           family={Рогожин},
+           familyi={Р\bibinitperiod},
+           given={А.\bibnamedelimi Е.},
+           giveni={А\bibinitperiod\bibinitdelim Е\bibinitperiod}}}%
+      }
+      \strng{namehash}{8c4a9de027bf0dd0014a5b145993a6d2}
+      \strng{fullhash}{8c4a9de027bf0dd0014a5b145993a6d2}
+      \strng{bibnamehash}{8c4a9de027bf0dd0014a5b145993a6d2}
+      \strng{authorbibnamehash}{8c4a9de027bf0dd0014a5b145993a6d2}
+      \strng{authornamehash}{8c4a9de027bf0dd0014a5b145993a6d2}
+      \strng{authorfullhash}{8c4a9de027bf0dd0014a5b145993a6d2}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Микроэлектроника}
+      \field{title}{Влияние растекания резиста при его сухом электронно-лучевом травлении на латеральное разрешение}
+      \field{year}{2021}
+      \field{number}{1}
+      \range{number}{1}
+      \field{pages}{21\bibrangedash 26}
+      \range{pages}{6}
+      \field{volume}{50}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.31857/S0544126921010063
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.31857/S0544126921010063
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{my_review_2_RU}{article}{}
+      \name{author}{2}{}{%
+        {{hash=7e7cfc6d932d1a768e6ad3d3919a3655}{%
+           family={Рогожин},
+           familyi={Р\bibinitperiod},
+           given={А.\bibnamedelimi Е.},
+           giveni={А\bibinitperiod\bibinitdelim Е\bibinitperiod}}}%
+        {{hash=5291dce4690052adfdbab5636db102f2}{%
+           family={Сидоров},
+           familyi={С\bibinitperiod},
+           given={Ф.\bibnamedelimi А.},
+           giveni={Ф\bibinitperiod\bibinitdelim А\bibinitperiod}}}%
+      }
+      \strng{namehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{fullhash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{bibnamehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{authorbibnamehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{authornamehash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \strng{authorfullhash}{ae08d5f050cf699b430685f0e6ba7ad1}
+      \field{extraname}{2}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Микроэлектроника}
+      \field{title}{Сечения процессов рассеяния при электронно-лучевой литографии}
+      \field{year}{2023}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{110\bibrangedash 126}
+      \range{pages}{17}
+      \field{volume}{52}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.31857/S0544126923700266
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.31857/S0544126923700266
+      \endverb
+      \keyw{biblioauthornotvak,biblioauthor,bibliofull}
+    \endentry
+    \entry{Greeneich1979_Mf_Mn}{article}{}
+      \name{author}{1}{}{%
+        {{hash=49c2a07188678d12e2813a5d19cdbac0}{%
+           family={Greeneich},
+           familyi={G\bibinitperiod},
+           given={James\bibnamedelima S.},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{49c2a07188678d12e2813a5d19cdbac0}
+      \strng{fullhash}{49c2a07188678d12e2813a5d19cdbac0}
+      \strng{bibnamehash}{49c2a07188678d12e2813a5d19cdbac0}
+      \strng{authorbibnamehash}{49c2a07188678d12e2813a5d19cdbac0}
+      \strng{authornamehash}{49c2a07188678d12e2813a5d19cdbac0}
+      \strng{authorfullhash}{49c2a07188678d12e2813a5d19cdbac0}
+      \field{sortinit}{8}
+      \field{sortinithash}{1b24cab5087933ef0826a7cd3b99e994}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Vacuum Science and Technology}
+      \field{title}{{Impact of electron scattering on linewidth control in electron‐beam lithography}}
+      \field{year}{1979}
+      \field{number}{6}
+      \range{number}{1}
+      \field{pages}{1749\bibrangedash 1753}
+      \range{pages}{5}
+      \field{volume}{16}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1116/1.570286
+      \endverb
+      \verb{urlraw}
+      \verb http://avs.scitation.org/doi/10.1116/1.570286
+      \endverb
+      \verb{url}
+      \verb http://avs.scitation.org/doi/10.1116/1.570286
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Boyd_3}{article}{}
+      \name{author}{2}{}{%
+        {{hash=8b9fc991f301462e9184dc02eb30720f}{%
+           family={Boyd},
+           familyi={B\bibinitperiod},
+           given={Richard\bibnamedelima H.},
+           giveni={R\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=973f443ab246e7931f72dd706c38ec78}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Tung‐Po},
+           giveni={T\bibinithyphendelim P\bibinitperiod}}}%
+      }
+      \strng{namehash}{032fc820036f67e6709d458e1ca086c5}
+      \strng{fullhash}{032fc820036f67e6709d458e1ca086c5}
+      \strng{bibnamehash}{032fc820036f67e6709d458e1ca086c5}
+      \strng{authorbibnamehash}{032fc820036f67e6709d458e1ca086c5}
+      \strng{authornamehash}{032fc820036f67e6709d458e1ca086c5}
+      \strng{authorfullhash}{032fc820036f67e6709d458e1ca086c5}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Chemical Physics}
+      \field{title}{{Theoretical Depolymerization Kinetics. III. The Effect of Molecular‐Weight Distribution in Degrading Polymers Undergoing Random‐Scission Initiation}}
+      \field{year}{1966}
+      \field{number}{3}
+      \range{number}{1}
+      \field{pages}{778\bibrangedash 781}
+      \range{pages}{4}
+      \field{volume}{45}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1063/1.1727680
+      \endverb
+      \verb{urlraw}
+      \verb http://aip.scitation.org/doi/10.1063/1.1727679 http://aip.scitation.org/doi/10.1063/1.1727680
+      \endverb
+      \verb{url}
+      \verb http://aip.scitation.org/doi/10.1063/1.1727679%20http://aip.scitation.org/doi/10.1063/1.1727680
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Mita_PMMA_zip_lengths_T}{article}{}
+      \name{author}{3}{}{%
+        {{hash=d94fd90a5903705495bcb89d0256b5af}{%
+           family={Mita},
+           familyi={M\bibinitperiod},
+           given={Itaru},
+           giveni={I\bibinitperiod}}}%
+        {{hash=e3475d9c6e53c840ab60d743b468de6b}{%
+           family={Obata},
+           familyi={O\bibinitperiod},
+           given={Kazuhito},
+           giveni={K\bibinitperiod}}}%
+        {{hash=49c4767d180033881bf3c893488566c2}{%
+           family={Horie},
+           familyi={H\bibinitperiod},
+           given={Kazuyuki},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{862c6440edde70ca287383ce1963cbaa}
+      \strng{fullhash}{862c6440edde70ca287383ce1963cbaa}
+      \strng{bibnamehash}{862c6440edde70ca287383ce1963cbaa}
+      \strng{authorbibnamehash}{862c6440edde70ca287383ce1963cbaa}
+      \strng{authornamehash}{862c6440edde70ca287383ce1963cbaa}
+      \strng{authorfullhash}{862c6440edde70ca287383ce1963cbaa}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Polymer Journal}
+      \field{title}{{Photoinitiated Thermal Degradation of Polymers II. Poly(methyl methacrylate)}}
+      \field{year}{1990}
+      \field{number}{5}
+      \range{number}{1}
+      \field{pages}{397\bibrangedash 410}
+      \range{pages}{14}
+      \field{volume}{22}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1295/polymj.22.397
+      \endverb
+      \verb{urlraw}
+      \verb http://www.nature.com/doifinder/10.1295/polymj.22.397
+      \endverb
+      \verb{url}
+      \verb http://www.nature.com/doifinder/10.1295/polymj.22.397
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Fragala_3_diffusion}{article}{useauthor=false}
+      \name{author}{4}{}{%
+        {{hash=16e18760528b2a5412c5d839a43a3d6b}{%
+           family={Raudino},
+           familyi={R\bibinitperiod},
+           given={A},
+           giveni={A\bibinitperiod}}}%
+        {{hash=bf9c18e6dd9cc29cf6f54c8afc1ef0b1}{%
+           family={Fragal{à}},
+           familyi={F\bibinitperiod},
+           given={M\bibnamedelima E},
+           giveni={M\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=90ede82d5a617cd6d31712fcaf7f77fe}{%
+           family={Compagnini},
+           familyi={C\bibinitperiod},
+           given={G},
+           giveni={G\bibinitperiod}}}%
+        {{hash=b20c620c21ac1b0b653c3d49b45f19ac}{%
+           family={Puglisi},
+           familyi={P\bibinitperiod},
+           given={O},
+           giveni={O\bibinitperiod}}}%
+      }
+      \strng{authorbibnamehash}{54fd73bc8a11b8f887fffb44c8ef6b33}
+      \strng{authornamehash}{54fd73bc8a11b8f887fffb44c8ef6b33}
+      \strng{authorfullhash}{38e87fd88d9a5a246dd261bc005a43d8}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Chemical Physics}
+      \field{title}{{Modeling of low-temperature depolymerization of poly (methyl methacrylate) promoted by ion beam}}
+      \field{year}{1999}
+      \field{number}{4}
+      \range{number}{1}
+      \field{pages}{1721\bibrangedash 1731}
+      \range{pages}{11}
+      \field{volume}{111}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1063/1.479432
+      \endverb
+      \verb{urlraw}
+      \verb http://aip.scitation.org/doi/10.1063/1.479432
+      \endverb
+      \verb{url}
+      \verb http://aip.scitation.org/doi/10.1063/1.479432
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Leveder_2010}{article}{useauthor=false}
+      \name{author}{4}{}{%
+        {{hash=30f8be98e751c3e5d4c7fa38f3856f76}{%
+           family={Leveder},
+           familyi={L\bibinitperiod},
+           given={Tanguy},
+           giveni={T\bibinitperiod}}}%
+        {{hash=242eca1f846e4d24d346782fb85498a7}{%
+           family={Landis},
+           familyi={L\bibinitperiod},
+           given={Stefan},
+           giveni={S\bibinitperiod}}}%
+        {{hash=272eb6b5d7b6bcc46c4160f72b14f2b1}{%
+           family={Chaix},
+           familyi={C\bibinitperiod},
+           given={Nicolas},
+           giveni={N\bibinitperiod}}}%
+        {{hash=848b9f908950a3924404e39db91756bb}{%
+           family={Davoust},
+           familyi={D\bibinitperiod},
+           given={Laurent},
+           giveni={L\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {American Vacuum Society}%
+      }
+      \strng{authorbibnamehash}{f63a5d1464dc59d2f9f385d2c755a005}
+      \strng{authornamehash}{f63a5d1464dc59d2f9f385d2c755a005}
+      \strng{authorfullhash}{634de17fe912b8cfdae68a7ea233b0b2}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Vacuum Science \& Technology B}
+      \field{title}{Thin polymer films viscosity measurements from nanopatterning method}
+      \field{year}{2010}
+      \field{number}{6}
+      \range{number}{1}
+      \field{pages}{1251\bibrangedash 1258}
+      \range{pages}{8}
+      \field{volume}{28}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1116/1.3504591
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1116/1.3504591
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Kirchner_reflow}{article}{}
+      \name{author}{2}{}{%
+        {{hash=28297795cae0ad9367fc451958dfd362}{%
+           family={Kirchner},
+           familyi={K\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+        {{hash=e6cf60f4a86080396b720e58fa18d95b}{%
+           family={Schift},
+           familyi={S\bibinitperiod},
+           given={Helmut},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{55116274e06a2d0946919436cf10cca1}
+      \strng{fullhash}{55116274e06a2d0946919436cf10cca1}
+      \strng{bibnamehash}{55116274e06a2d0946919436cf10cca1}
+      \strng{authorbibnamehash}{55116274e06a2d0946919436cf10cca1}
+      \strng{authornamehash}{55116274e06a2d0946919436cf10cca1}
+      \strng{authorfullhash}{55116274e06a2d0946919436cf10cca1}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Vacuum Science \& Technology B}
+      \field{title}{Mobility based 3D simulation of selective, viscoelastic polymer reflow using surface evolver Mobility based 3D simulation of selective, viscoelastic polymer reflow}
+      \field{year}{2014}
+      \field{number}{6}
+      \range{number}{1}
+      \field{pages}{06F701}
+      \range{pages}{-1}
+      \field{volume}{32}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1116/1.4896480
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1116/1.4896480
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Ciappa_2010}{article}{}
+      \name{author}{3}{}{%
+        {{hash=2206e50afe71eeb786d3c623fbb1e0ec}{%
+           family={Dapor},
+           familyi={D\bibinitperiod},
+           given={Maurizio},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8a35e53add11036835a5513bfe2dfad5}{%
+           family={Ciappa},
+           familyi={C\bibinitperiod},
+           given={Mauro},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8ca3caf70a7f02822d9c15d6a37bb77d}{%
+           family={Fichtner},
+           familyi={F\bibinitperiod},
+           given={Wolfgang},
+           giveni={W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {SPIE}%
+      }
+      \strng{namehash}{f0fcac25e879411045116959ad69c559}
+      \strng{fullhash}{f0fcac25e879411045116959ad69c559}
+      \strng{bibnamehash}{f0fcac25e879411045116959ad69c559}
+      \strng{authorbibnamehash}{f0fcac25e879411045116959ad69c559}
+      \strng{authornamehash}{f0fcac25e879411045116959ad69c559}
+      \strng{authorfullhash}{f0fcac25e879411045116959ad69c559}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Micro/Nanolithography, MEMS, and MOEMS}
+      \field{title}{Monte Carlo modeling in the low-energy domain of the secondary electron emission of polymethylmethacrylate for critical-dimension scanning electron microscopy}
+      \field{year}{2010}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{023001}
+      \range{pages}{1}
+      \field{volume}{9}
+      \range{volume}{1}
+      \verb{urlraw}
+      \verb https://doi.org/10.1117/1.3373517
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1117/1.3373517
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Charlesby_1964_Gs}{article}{}
+      \name{author}{2}{}{%
+        {{hash=eb0c7603f764f36c895d16748ac63243}{%
+           family={Charlesby},
+           familyi={C\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=73b405904b2b10be1fd3a928863ef04d}{%
+           family={Moore},
+           familyi={M\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{2f6145181e5f203970c8d65ca7bba6d9}
+      \strng{fullhash}{2f6145181e5f203970c8d65ca7bba6d9}
+      \strng{bibnamehash}{2f6145181e5f203970c8d65ca7bba6d9}
+      \strng{authorbibnamehash}{2f6145181e5f203970c8d65ca7bba6d9}
+      \strng{authornamehash}{2f6145181e5f203970c8d65ca7bba6d9}
+      \strng{authorfullhash}{2f6145181e5f203970c8d65ca7bba6d9}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The International Journal of Applied Radiation and Isotopes}
+      \field{title}{{Comparison of gamma and ultra-violet radiation effects in polymethyl methacrylate at higher temperatures}}
+      \field{year}{1964}
+      \field{number}{12}
+      \range{number}{1}
+      \field{pages}{703\bibrangedash 708}
+      \range{pages}{6}
+      \field{volume}{15}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1016/0020-708X(64)90018-3
+      \endverb
+      \verb{file}
+      \verb :Volumes/Transcend/Mendeley/Charlesby, Moore/Charlesby, Moore{\_}1964{\_}Comparison of gamma and ultra-violet radiation effects in polymethyl methacrylate at higher temperatures(2).pdf:pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/0020708X64900183
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/0020708X64900183
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Berens_diffusion_Mn}{article}{}
+      \name{author}{2}{}{%
+        {{hash=3b984103ab38f4473b3a6784fcbddedc}{%
+           family={Berens},
+           familyi={B\bibinitperiod},
+           given={A.R.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=f3115961a31be41e3ed836316982f523}{%
+           family={Hopfenberg},
+           familyi={H\bibinitperiod},
+           given={H.B.},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{148188b3ad8dfae81c10545cabb7f019}
+      \strng{fullhash}{148188b3ad8dfae81c10545cabb7f019}
+      \strng{bibnamehash}{148188b3ad8dfae81c10545cabb7f019}
+      \strng{authorbibnamehash}{148188b3ad8dfae81c10545cabb7f019}
+      \strng{authornamehash}{148188b3ad8dfae81c10545cabb7f019}
+      \strng{authorfullhash}{148188b3ad8dfae81c10545cabb7f019}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Membrane Science}
+      \field{title}{{Diffusion of organic vapors at low concentrations in glassy PVC, polystyrene, and PMMA}}
+      \field{year}{1982}
+      \field{number}{2\bibrangedash 3}
+      \range{number}{2}
+      \field{pages}{283\bibrangedash 303}
+      \range{pages}{21}
+      \field{volume}{10}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1016/S0376-7388(00)81415-5
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+    \entry{Brakke_SE}{article}{}
+      \name{author}{1}{}{%
+        {{hash=1f2cbef8f94627c4c46cd96f7ae5e578}{%
+           family={Brakke},
+           familyi={B\bibinitperiod},
+           given={Kenneth\bibnamedelima A.},
+           giveni={K\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{1f2cbef8f94627c4c46cd96f7ae5e578}
+      \strng{fullhash}{1f2cbef8f94627c4c46cd96f7ae5e578}
+      \strng{bibnamehash}{1f2cbef8f94627c4c46cd96f7ae5e578}
+      \strng{authorbibnamehash}{1f2cbef8f94627c4c46cd96f7ae5e578}
+      \strng{authornamehash}{1f2cbef8f94627c4c46cd96f7ae5e578}
+      \strng{authorfullhash}{1f2cbef8f94627c4c46cd96f7ae5e578}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Experimental Mathematics}
+      \field{title}{{The Surface Evolver}}
+      \field{year}{1992}
+      \field{number}{2}
+      \range{number}{1}
+      \field{pages}{141\bibrangedash 165}
+      \range{pages}{25}
+      \field{volume}{1}
+      \range{volume}{1}
+      \verb{doi}
+      \verb 10.1080/10586458.1992.10504253
+      \endverb
+      \verb{urlraw}
+      \verb http://www.tandfonline.com/doi/abs/10.1080/10586458.1992.10504253
+      \endverb
+      \verb{url}
+      \verb http://www.tandfonline.com/doi/abs/10.1080/10586458.1992.10504253
+      \endverb
+      \keyw{biblioother,bibliofull}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

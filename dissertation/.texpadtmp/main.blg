@@ -1,0 +1,21 @@
+[0] Config.pm:304> INFO - This is Biber 2.14
+[0] Config.pm:307> INFO - Logfile is '/Users/fedor/PycharmProjects/MC_simulation/dissertation/.texpadtmp/main.blg'
+[116] biber-darwin:322> INFO - === Tue Nov 22, 2022, 19:40:35
+[146] Biber.pm:415> INFO - Reading '/Users/fedor/PycharmProjects/MC_simulation/dissertation/.texpadtmp/main.bcf'
+[434] Biber.pm:943> INFO - Found 107 citekeys in bib section 0
+[468] Biber.pm:4256> INFO - Processing section 0
+[469] Utils.pm:75> INFO - Globbing data source ''/Users/fedor/PycharmProjects/MC_simulation/dissertation/biblio/all_cites.bib''
+[469] Utils.pm:91> INFO - Globbed data source ''/Users/fedor/PycharmProjects/MC_simulation/dissertation/biblio/all_cites.bib'' to /Users/fedor/PycharmProjects/MC_simulation/dissertation/biblio/all_cites.bib
+[484] Biber.pm:4455> INFO - Looking for bibtex format file '/Users/fedor/PycharmProjects/MC_simulation/dissertation/biblio/all_cites.bib' for section 0
+[495] bibtex.pm:1653> INFO - LaTeX decoding ...
+[761] bibtex.pm:1471> INFO - Found BibTeX data source '/Users/fedor/PycharmProjects/MC_simulation/dissertation/biblio/all_cites.bib'
+[2093] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2094] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2094] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'ru-RU'
+[2094] Biber.pm:4090> INFO - No sort tailoring available for locale 'ru-RU'
+[2213] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2213] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2213] Biber.pm:4084> INFO - Sorting list 'none/global/7FC56270E7A70FA81A5935B72EACBE29/global/global' of type 'entry' with template 'none' and locale 'ru-RU'
+[2213] Biber.pm:4090> INFO - No sort tailoring available for locale 'ru-RU'
+[2341] bbl.pm:652> INFO - Writing '/Users/fedor/PycharmProjects/MC_simulation/dissertation/.texpadtmp/main.bbl' with encoding 'UTF-8'
+[2554] bbl.pm:755> INFO - Output to /Users/fedor/PycharmProjects/MC_simulation/dissertation/.texpadtmp/main.bbl

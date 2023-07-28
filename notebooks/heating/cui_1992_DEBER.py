@@ -142,9 +142,11 @@ err_total = np.zeros(len(tt))
 
 progress_bar = tqdm(total=len(tt), position=0)
 
-for i, now_t in enumerate(tt):
+# for i, now_t in enumerate(tt):
+for i, now_t in enumerate(tt[:40]):
 
-    x_f, y_f, z_f, t_f = 0, 0, 0, now_t
+    # x_f, y_f, z_f, t_f = 0, 0, 0, now_t
+    x_f, y_f, z_f, t_f = 0, 0, d/2, now_t
     domainsize = a * b * d * t_f
 
     def integrand(xx):
@@ -164,7 +166,8 @@ for i, now_t in enumerate(tt):
 
     # T_total[i] = mcint.integrate(integrand, sampler(), measure=domainsize, n=nmc)[0]
 
-    nmc = 100000
+    # nmc = 100000
+    nmc = 10000
     integral, err = mcint.integrate(integrand, sampler(), measure=domainsize, n=nmc)
     T_total[i], err_total[i] = integral, err
 
@@ -177,9 +180,9 @@ plt.plot(tt, T_total + err_total)
 plt.plot(tt, T_total - err_total)
 plt.show()
 
-np.save('notebooks/heating/tt.npy', tt)
-np.save('notebooks/heating/T_total.npy', T_total)
-np.save('notebooks/heating/err_total.npy', err_total)
+# np.save('notebooks/heating/tt.npy', tt)
+# np.save('notebooks/heating/T_total.npy', T_total)
+# np.save('notebooks/heating/err_total.npy', err_total)
 
 # plt.semilogy(tt * 1e+6, T_total, 'o-', label='MC integral')
 # plt.semilogy(tt * 1e+6, T_total + err_total, 'v-', label='upper limit')
