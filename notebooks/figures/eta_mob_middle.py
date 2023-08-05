@@ -1,8 +1,11 @@
 import importlib
 import numpy as np
 import matplotlib.pyplot as plt
-
 from scipy.optimize import curve_fit
+import matplotlib
+
+font = {'size': 14}
+matplotlib.rc('font', **font)
 
 
 # %%
@@ -76,48 +79,96 @@ popt, pcov = curve_fit(linear_func, tt, now_scales)
 yy = linear_func(xx, *popt)
 
 
-with plt.style.context(['science', 'grid', 'russian-font']):
-    fig, ax = plt.subplots(dpi=600)
+fig, ax = plt.subplots(dpi=600)
+fig.set_size_inches(4, 3)
 
-    # ax.plot(now_scales, tt, 'o', label=r'simulation')
-    # ax.plot(xx, yy, 'r', label=r'time = $\alpha$$\cdot$scale fit')
+# ax.plot(now_scales, tt, 'o', label=r'simulation')
+# ax.plot(xx, yy, 'r', label=r'time = $\alpha$$\cdot$scale fit')
 
-    ax.plot(tt, now_scales, '.', label=r'simulation')
-    ax.plot(xx, yy, 'r', label=r'scale = $\alpha$$\cdot$time fit')
+ax.plot(tt, now_scales, 'o', label=r'simulation')
+ax.plot(xx, yy, 'r', label=r'$scale = \alpha \cdot t$ fit')
 
-    ax.plot([-1], [-1], 'w', label=r'$\alpha$=' + str(format(popt[0], '.2e')))
+ax.plot([-1], [-1], 'w', label=r'$\alpha$=' + str(format(popt[0], '.2e')))
 
-    ax.set(title=r'$\eta$ = ' + str(format(now_eta, '.1e')) + ' Pa$\cdot$s')
-    ax.set(xlabel=r'time, s')
-    ax.set(ylabel=r'scale')
-    ax.legend(fontsize=7, loc='lower right')
+ax.set(title=r'$\eta$ = ' + str(format(now_eta, '.1e')) + ' Pa$\cdot$s')
+ax.set(xlabel=r'$t$, s')
+ax.set(ylabel=r'$scale$')
+ax.legend(fontsize=12, loc='lower right')
 
-    # plt.xlim(0, 1)
-    # plt.xlim(0, 1.25)
-    # plt.xlim(0, 1.5)
+# plt.xlim(0, 1)
+# plt.xlim(0, 1.25)
+# plt.xlim(0, 1.5)
 
-    # plt.ylim(0, 4)
-    # plt.ylim(0, 12)
-    # plt.ylim(0, 40)
-    # plt.ylim(0, 120)
-    # plt.ylim(0, 500)
-    # plt.ylim(0, 1500)
-    # plt.ylim(0, 5000)
-    # plt.ylim(0, 12000)
-    # plt.ylim(0, 40000)
+# plt.ylim(0, 4)
+# plt.ylim(0, 12)
+# plt.ylim(0, 40)
+# plt.ylim(0, 120)
+# plt.ylim(0, 500)
+# plt.ylim(0, 1500)
+# plt.ylim(0, 5000)
+# plt.ylim(0, 12000)
+# plt.ylim(0, 40000)
 
-    # plt.xlim(0, 4)
-    # plt.xlim(0, 12)
-    # plt.xlim(0, 40)
-    # plt.xlim(0, 120)
-    # plt.xlim(0, 500)
-    # plt.xlim(0, 1500)
-    # plt.xlim(0, 5000)
-    # plt.xlim(0, 12000)
-    plt.xlim(0, 40000)
+# plt.xlim(0, 4)
+# plt.xlim(0, 12)
+# plt.xlim(0, 40)
+# plt.xlim(0, 120)
+# plt.xlim(0, 500)
+# plt.xlim(0, 1500)
+# plt.xlim(0, 4000)
+# plt.xlim(0, 12000)
+plt.xlim(0, 40000)
 
-    plt.ylim(0, 1)
-    # plt.ylim(0, 1.2)
+# plt.ylim(0, 1)
+plt.ylim(0, 1.2)
 
-    plt.savefig('figures/alpha_' + str(int(now_eta)) + '.jpg', dpi=600)
-    # plt.show()
+plt.grid()
+plt.savefig('alpha_' + str(int(now_eta)) + '.jpg', dpi=600, bbox_inches='tight')
+plt.show()
+
+
+# with plt.style.context(['science', 'grid', 'russian-font']):
+#     fig, ax = plt.subplots(dpi=600)
+#
+#     # ax.plot(now_scales, tt, 'o', label=r'simulation')
+#     # ax.plot(xx, yy, 'r', label=r'time = $\alpha$$\cdot$scale fit')
+#
+#     ax.plot(tt, now_scales, '.', label=r'simulation')
+#     ax.plot(xx, yy, 'r', label=r'scale = $\alpha$$\cdot$time fit')
+#
+#     ax.plot([-1], [-1], 'w', label=r'$\alpha$=' + str(format(popt[0], '.2e')))
+#
+#     ax.set(title=r'$\eta$ = ' + str(format(now_eta, '.1e')) + ' Pa$\cdot$s')
+#     ax.set(xlabel=r'time, s')
+#     ax.set(ylabel=r'scale')
+#     ax.legend(fontsize=7, loc='lower right')
+#
+#     # plt.xlim(0, 1)
+#     # plt.xlim(0, 1.25)
+#     # plt.xlim(0, 1.5)
+#
+#     # plt.ylim(0, 4)
+#     # plt.ylim(0, 12)
+#     # plt.ylim(0, 40)
+#     # plt.ylim(0, 120)
+#     # plt.ylim(0, 500)
+#     # plt.ylim(0, 1500)
+#     # plt.ylim(0, 5000)
+#     # plt.ylim(0, 12000)
+#     # plt.ylim(0, 40000)
+#
+#     # plt.xlim(0, 4)
+#     # plt.xlim(0, 12)
+#     # plt.xlim(0, 40)
+#     # plt.xlim(0, 120)
+#     # plt.xlim(0, 500)
+#     # plt.xlim(0, 1500)
+#     # plt.xlim(0, 5000)
+#     # plt.xlim(0, 12000)
+#     plt.xlim(0, 40000)
+#
+#     plt.ylim(0, 1)
+#     # plt.ylim(0, 1.2)
+#
+#     plt.savefig('figures/alpha_' + str(int(now_eta)) + '.jpg', dpi=600)
+#     # plt.show()

@@ -14,12 +14,13 @@ x_step, z_step = mm.step_1nm, mm.step_1nm
 x_bins, z_bins = mm.x_bins_1nm, mm.z_bins_1nm
 x_centers, z_centers = mm.x_centers_1nm, mm.z_centers_1nm
 
-scission_weight = 0.09  # 150 C - 0.088568
+scission_weight = 0.05  # room
+# scission_weight = 0.09  # 150 C - 0.088568
 
-exposure_time = 100
+exposure_time = 10
 time_step = 1
 
-n_files = 750
+n_files = 40
 
 now_time = 0
 
@@ -32,7 +33,7 @@ while now_time < exposure_time:
     for n in range(10):
 
         now_e_DATA_Pv = np.load(
-            'notebooks/DEBER_simulation/e_DATA_Pv_snaked_sigma_300nm/e_DATA_Pv_' +
+            '/Volumes/Transcend/e_DATA_Pv_snaked_sigma_300nm/e_DATA_Pv_' +
             # str((now_time * 10 * n) % n_files) + '.npy'
             str((now_time * 10 + n) % n_files) + '.npy'
         )

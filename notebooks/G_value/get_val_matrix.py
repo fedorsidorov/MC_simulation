@@ -95,8 +95,8 @@ print(np.sum(e_matrix_val) / np.sum(e_matrix_E_dep) * 100)
 
 sample = '6'
 
-np.save('data/e_matrix_val_sample_' + sample + '.npy', e_matrix_val)
-np.save('data/e_matrix_E_dep_sample_' + sample + '.npy', e_matrix_E_dep)
+# np.save('data/e_matrix_val_sample_' + sample + '.npy', e_matrix_val)
+# np.save('data/e_matrix_E_dep_sample_' + sample + '.npy', e_matrix_E_dep)
 
 # %%
 # e_matrix_val = np.load('data/e_matrix_val_TRUE.npy')

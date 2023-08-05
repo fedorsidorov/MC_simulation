@@ -1,0 +1,40 @@
+\documentclass[12pt]{iopart}
+\newcommand{\gguide}{{\it Preparing graphics for IOP Publishing journals}}
+\usepackage{graphicx}
+\graphicspath{{./figures/}}
+\usepackage{setstack}
+\bibliographystyle{iopart-num}
+\usepackage{citesort}
+
+\begin{document}
+	
+\title{Thermal reflow simulation of PMMA structures with non-uniform viscosity profile}
+\author{F A Sidorov, A E Rogozhin}
+\address{Valiev Institute of Physics and Technology, Russian Academy of Sciences, Moscow, 117218 Russia}
+\ead{sidorov@ftian.ru}
+
+\vspace{10pt}
+
+\begin{abstract}
+This paper presents a new approach to simulation of thermal viscoelastic reflow of e-beam exposed polymethyl methacrylate (PMMA) taking into account its non-uniform viscosity profile.
+This approach is based on numerical ``soapfilm'' modeling of surface evolution, processed by free software ``Surface Evolver'' in area normalization mode.
+PMMA viscosity profile is calculated by simulation of exposed PMMA number average molecular weight distribution using Monte-Carlo method and empirical formulas.
+The relation between PMMA viscosity and mobility of PMMA surface vertices was determined by thermal reflow simulation of uniform PMMA gratings using both analytical and numerical approaches in wide viscosity range.
+The agreement between reflowed profiles simulated by these two approaches emphasizes the applicability of ``soapfilm'' modeling to simulation of polymer thermal reflow. 
+The inverse mobility of PMMA surface vertices appeared to be proportional to PMMA viscosity with high accuracy.
+The developed approach enables thermal reflow simulation of complex non-uniform structures, which allows the usage of predictable reflow as a stage of 3D microfabrication.
+\end{abstract}
+
+\vspace{2pc}
+
+\noindent{\it Keywords}: grayscale e-beam lithography, non-uniform viscosity profile, thermal reflow
+
+\input{introduction}
+\input{viscosity_profile}
+\input{vertex_mobilities}
+\input{discussion_conclusion_ack}
+
+\section*{References}
+\bibliography{cite_papers}
+	
+\end{document}

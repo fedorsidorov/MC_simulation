@@ -52,3 +52,6 @@ def get_T(G_value):
 # plt.plot(TT, get_T(GG), 'o-')
 # plt.grid()
 # plt.show()
+
+# %%
+get_G(30)

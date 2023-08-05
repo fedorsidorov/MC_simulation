@@ -1,8 +1,11 @@
 import importlib
 import numpy as np
 import matplotlib.pyplot as plt
-
+import matplotlib
 from scipy.optimize import curve_fit
+
+font = {'size': 14}
+matplotlib.rc('font', **font)
 
 
 # %%
@@ -18,23 +21,42 @@ popt, pcov = curve_fit(linear_func, etas_SI, alphas)
 xx = np.linspace(1e+1, 1e+7, 1000)
 yy = linear_func(xx, *popt)
 
+fig, ax = plt.subplots(dpi=600)
+fig.set_size_inches(4, 3)
 
-with plt.style.context(['science', 'grid', 'russian-font']):
-    fig, ax = plt.subplots(dpi=600)
+ax.loglog(etas_SI, alphas, 'o', label=r'simulation')
+ax.loglog(xx, yy, 'r', label=r'$\alpha$ = $C/\eta^\beta$ fit')
 
-    ax.loglog(etas_SI, alphas, '.', label=r'simulation')
-    ax.loglog(xx, yy, 'r', label=r'mobility = $C/\eta^\beta$ fit')
+ax.loglog([1], [1], 'w', label=r'C = 26.142')
+ax.loglog([1], [1], 'w', label=r'$\beta$ = 0.989')
 
-    ax.loglog([1], [1], 'w', label=r'C=' + str(format(popt[0], '.3e')))
-    ax.loglog([1], [1], 'w', label=r'$\beta$=' + str(format(popt[1], '.3')))
+# ax.set(title=r'$\eta$ = ' + str(format(now_eta, '.1e')) + ' Pa$\cdot$s')
+ax.set(xlabel=r'$\eta$, Pa$\cdot$s')
+ax.set(ylabel=r'$\alpha = scale/t$')
+ax.legend(fontsize=12, loc='upper right')
 
-    # ax.set(title=r'$\eta$ = ' + str(format(now_eta, '.1e')) + ' Pa$\cdot$s')
-    ax.set(xlabel=r'$\eta$, Pa$\cdot$s')
-    ax.set(ylabel=r'mobility = scale/time')
-    ax.legend(fontsize=7, loc='upper right')
+plt.xlim(1e+1, 1e+7)
+plt.ylim(1e-5, 1e+1)
+plt.grid()
+plt.savefig('С_gamma.jpg', dpi=600, bbox_inches='tight')
+plt.show()
 
-    plt.xlim(1e+1, 1e+7)
-    plt.ylim(1e-5, 1e+1)
-
-    plt.savefig('figures/С_gamma.jpg', dpi=600)
-    # plt.show()
+# with plt.style.context(['science', 'grid', 'russian-font']):
+    # fig, ax = plt.subplots(dpi=600)
+    #
+    # ax.loglog(etas_SI, alphas, '.', label=r'simulation')
+    # ax.loglog(xx, yy, 'r', label=r'mobility = $C/\eta^\beta$ fit')
+    #
+    # ax.loglog([1], [1], 'w', label=r'C=' + str(format(popt[0], '.3e')))
+    # ax.loglog([1], [1], 'w', label=r'$\beta$=' + str(format(popt[1], '.3')))
+    #
+    # # ax.set(title=r'$\eta$ = ' + str(format(now_eta, '.1e')) + ' Pa$\cdot$s')
+    # ax.set(xlabel=r'$\eta$, Pa$\cdot$s')
+    # ax.set(ylabel=r'mobility = scale/time')
+    # ax.legend(fontsize=7, loc='upper right')
+    #
+    # plt.xlim(1e+1, 1e+7)
+    # plt.ylim(1e-5, 1e+1)
+    #
+    # plt.savefig('figures/С_gamma.jpg', dpi=600)
+    # # plt.show()

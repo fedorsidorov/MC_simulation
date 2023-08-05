@@ -95,6 +95,7 @@ for time_cnt in range(5):
         n_file = np.random.choice(n_e_DATA_files)
 
         now_x0 = np.random.normal(loc=0, scale=300)
+        # now_e_DATA_Pv = np.load('/Volumes/Transcend/e_DATA_500nm_point/0/e_DATA_Pv_' + str(n_file) + '.npy')
         now_e_DATA_Pv = np.load('/Volumes/Transcend/e_DATA_500nm_point/0/e_DATA_Pv_' + str(n_file) + '.npy')
 
         scission_inds = np.where(np.random.random(len(now_e_DATA_Pv)) < scission_weight)[0]
@@ -309,4 +310,12 @@ cbar.formatter.set_useMathText(True)
 plt.show()
 
 # plt.close('all')
+
+# %% simulate room T Mn
+scission_matrix = np.load('notebooks/diffusion/scission_matrix_10s.npy') * 5/8
+# scission_matrix = np.load('notebooks/diffusion/scission_matrix_50s.npy') * 5/8
+
+# Gs = 1.66
+Gs = (Mn / Mf - 1) * const.rho_PMMA * const.Na / (total_E_loss / mapping.volume_cm3 * Mn) * 100
+
 

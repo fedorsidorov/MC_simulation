@@ -18,23 +18,24 @@ x_step, z_step = mm.step_1nm, mm.step_1nm
 x_bins, z_bins = mm.x_bins_1nm, mm.z_bins_1nm
 x_centers, z_centers = mm.x_centers_1nm, mm.z_centers_1nm
 
-scission_weight = 0.08  # 130 C - 0.082748
+scission_weight = 0.05  # room
+# scission_weight = 0.08  # 130 C - 0.082748
 # scission_weight = 0.09  # 150 C - 0.088568
 
 n_electrons_required_s = 1870  # I = 1.2 nA
 n_electrons_in_file = 31
 n_files_s = int(n_electrons_required_s / 2 / n_electrons_in_file)
 
-exposure_time = 100
+exposure_time = 10
 time_step = 1
 
 # z0 = 100
-z0 = 200
+# z0 = 200
 
-beam_sigma = 300
+# beam_sigma = 300
 
-# n_files = 800
-n_files = 250
+n_files = 41
+# n_files = 250
 file_cnt = 0
 
 now_time = 0
@@ -46,17 +47,24 @@ while now_time < 1:
 
     now_val_matrix = np.zeros((len(x_centers), len(z_centers)))
 
-    # for n in range(n_files_s):
-    for n in range(100):
+    # for n in range(100):
+    for n in range(n_files_s):
 
-        now_e_DATA_Pv = np.load(
-            'notebooks/DEBER_simulation/e_DATA_500nm_point/' + str(z0) + '/e_DATA_Pv_' +
+        now_e_DATA_Pn = np.load(
+            # 'notebooks/DEBER_simulation/e_DATA_500nm_point/' + str(z0) + '/e_DATA_Pv_' +
+            '/Volumes/Transcend/e_DATA_500nm_point/e_DATA_Pn_' +
             str(file_cnt % n_files) + '.npy'
         )
 
+        now_e_DATA_Pv = now_e_DATA_Pn[
+            np.where(
+                now_e_DATA_Pn[:, ind.e_DATA_process_id_ind] == ind.sim_PMMA_ee_val_ind
+            )
+        ]
+
         file_cnt += 1
         emf.rotate_DATA(now_e_DATA_Pv)
-        emf.add_gaussian_x_shift_to_e_DATA(now_e_DATA_Pv, beam_sigma)
+        # emf.add_gaussian_x_shift_to_e_DATA(now_e_DATA_Pv, beam_sigma)
 
         af.snake_array(
             array=now_e_DATA_Pv,

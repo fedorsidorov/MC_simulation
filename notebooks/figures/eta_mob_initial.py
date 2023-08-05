@@ -3,9 +3,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from functions import fourier_functions as ff
 from functions import MC_functions as mf
+import matplotlib
 
 mf = importlib.reload(mf)
 ff = importlib.reload(ff)
+
+font = {'size': 14}
+matplotlib.rc('font', **font)
+
 
 # %% original profile in 2011' paper
 xx_um_0 = np.array((0, 0.464, 0.513, 1.5, 1.55, 2)) - 1
@@ -118,26 +123,51 @@ inds = [7, 19, 34, 55, 86]
 
 tau_n_array = ff.get_tau_n_easy_array(eta=now_eta, gamma=gamma_SI, h0=An_array[0], l0=l0_m, N=N)
 
-with plt.style.context(['science', 'grid', 'russian-font']):
-    fig, ax = plt.subplots(dpi=600)
+fig, ax = plt.subplots(dpi=600)
+fig.set_size_inches(4, 3)
 
-    xx_0 = xx_prec_um
-    zz_0 = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=0) * 1e+6
+xx_0 = xx_prec_um
+zz_0 = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=0) * 1e+6
 
-    ax.plot(xx_0, zz_0 * 1000, 'k', linewidth=1.5, label='initial profile')
+ax.plot(xx_0, zz_0 * 1000, 'k', linewidth=1.5, label='initial profile')
 
-    for i in range(len(tt)):
-        zz_t_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=tt[i]) * 1e+6
-        ax.plot(xx_prec_um, zz_t_um * 1000, label='time = ' + str(tt[i]) + ' s')
-        ax.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1] * 1000, '--', label='scale = ' + str(scales[inds[i]]))
+for i in range(len(tt)):
+    zz_t_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=tt[i]) * 1e+6
+    ax.plot(xx_prec_um, zz_t_um * 1000, label='$t$ = ' + str(tt[i]) + ' s')
+    ax.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1] * 1000, '--', label='scale = ' + str(scales[inds[i]]))
 
-    ax.legend(fontsize=7, loc='center right')
-    ax.set(title=r'$\eta$ = ' + str(format(now_eta, '.1e')) + ' Pa$\cdot$s')
-    ax.set(xlabel=r'x, $\mu$m')
-    ax.set(ylabel=r'z, nm')
-    plt.xlim(-1, 4)
-    plt.ylim(20, 60)
+ax.legend(fontsize=10, loc='center right')
+ax.set(title=r'$\eta$ = ' + str(format(now_eta, '.1e')) + ' Pa$\cdot$s')
+ax.set(xlabel=r'x, $\mu$m')
+ax.set(ylabel=r'z, nm')
+plt.xlim(-1, 4)
+plt.ylim(20, 60)
+plt.grid()
 
-    # plt.savefig('figures/grating_eta_' + str(int(now_eta)) + '.jpg', dpi=600)
-    plt.savefig('grating_eta_' + str(int(now_eta)) + '.jpg', dpi=600)
-    plt.show()
+# plt.savefig('figures/grating_eta_' + str(int(now_eta)) + '.jpg', dpi=600)
+plt.savefig('grating_eta_' + str(int(now_eta)) + '.jpg', dpi=600, bbox_inches='tight')
+plt.show()
+
+# with plt.style.context(['science', 'grid', 'russian-font']):
+#     fig, ax = plt.subplots(dpi=600)
+#
+#     xx_0 = xx_prec_um
+#     zz_0 = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=0) * 1e+6
+#
+#     ax.plot(xx_0, zz_0 * 1000, 'k', linewidth=1.5, label='initial profile')
+#
+#     for i in range(len(tt)):
+#         zz_t_um = ff.get_h_at_t(xx_prec_m, An_array, Bn_array, tau_n_array, l0_m, t=tt[i]) * 1e+6
+#         ax.plot(xx_prec_um, zz_t_um * 1000, label='time = ' + str(tt[i]) + ' s')
+#         ax.plot(profiles[inds[i]][:, 0], profiles[inds[i]][:, 1] * 1000, '--', label='scale = ' + str(scales[inds[i]]))
+#
+#     ax.legend(fontsize=7, loc='center right')
+#     ax.set(title=r'$\eta$ = ' + str(format(now_eta, '.1e')) + ' Pa$\cdot$s')
+#     ax.set(xlabel=r'x, $\mu$m')
+#     ax.set(ylabel=r'z, nm')
+#     plt.xlim(-1, 4)
+#     plt.ylim(20, 60)
+#
+#     # plt.savefig('figures/grating_eta_' + str(int(now_eta)) + '.jpg', dpi=600)
+#     plt.savefig('grating_eta_' + str(int(now_eta)) + '.jpg', dpi=600)
+#     plt.show()

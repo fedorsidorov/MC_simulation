@@ -1,0 +1,95 @@
+\providecommand{\newblock}{}
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{{\tt #1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\providecommand{\eprint}[2][]{\url{#2}}
+% Bibliography created with iopart-num v2.1
+% /biblio/bibtex/contrib/iopart-num
+
+\bibitem{Kirchner_GL_review}
+Kirchner R and Schift H 2019 {\em Materials Science in Semiconductor
+  Processing\/} {\bf 92} 58--72 ISSN 13698001
+
+\bibitem{NIL_reflow}
+Schleunitz A, Spreu C, Vogler M, Atasoy H and Schift H 2011 {\em Journal of
+  Vacuum Science \& Technology B\/} {\bf 29} 06FC01
+
+\bibitem{Leveder_2010}
+Leveder T, Landis S, Chaix N and Davoust L 2010 {\em Journal of Vacuum Science
+  \& Technology B\/} {\bf 28} 1251--1258
+  \urlprefix\url{https://doi.org/10.1116/1.3504591}
+
+\bibitem{Leveder_2011}
+Leveder T, Rognin E, Landis S and Davoust L 2011 {\em Microelectronic
+  Engineering\/} {\bf 88} 1867--1870 ISSN 01679317
+  \urlprefix\url{http://dx.doi.org/10.1016/j.mee.2011.01.078
+  https://linkinghub.elsevier.com/retrieve/pii/S0167931711001560}
+
+\bibitem{Bird_WLF}
+Bird R~B, Armstrong R~C and Hassager O 1987 {\em Dynamics of polymeric liquids.
+  Vol. 1: Fluid mechanics\/} (John Wiley and Sons Inc., New York, NY)
+
+\bibitem{Aho_WLF}
+Aho J and Syrj{\"a}l{\"a} S 2008 {\em Polymer Testing\/} {\bf 27} 35--40
+
+\bibitem{Bueche_3p4_1p4}
+Bueche F 1955 {\em Journal of Applied Physics\/} {\bf 26} 738--749 ISSN
+  0021-8979 \urlprefix\url{http://aip.scitation.org/doi/10.1063/1.1722082}
+
+\bibitem{Brakke_SE}
+Brakke K~A 1992 {\em Experimental Mathematics\/} {\bf 1} 141--165 ISSN
+  1058-6458
+  \urlprefix\url{http://www.tandfonline.com/doi/abs/10.1080/10586458.1992.10504253}
+
+\bibitem{SE_example_1}
+Phelan R, Weaire D and Brakke K 1995 {\em Experimental Mathematics\/} {\bf 4}
+  181--192 \urlprefix\url{https://doi.org/10.1080/10586458.1995.10504320}
+
+\bibitem{SE_example_2}
+Jamali M and Tafreshi H~V 2021 {\em Colloids and Surfaces A: Physicochemical
+  and Engineering Aspects\/} {\bf 629} 127418 ISSN 0927-7757
+  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0927775721012875}
+
+\bibitem{Kirchner_SE_1}
+Kirchner R and Schift H 2014 {\em Journal of Vacuum Science \& Technology B\/}
+  {\bf 32} 06F701 \urlprefix\url{https://doi.org/10.1116/1.4896480}
+
+\bibitem{Kirchner_SE_2}
+Kirchner R, Schleunitz A and Schift H 2014 {\em Journal of Micromechanics and
+  Microengineering\/} {\bf 24} 055010 (7pp)
+
+\bibitem{ELSEPA}
+Salvat F, Jablonski A and Powell C~J 2005 {\em Computer Physics
+  Communications\/} {\bf 165} 157--190 ISSN 00104655
+  \urlprefix\url{https://linkinghub.elsevier.com/retrieve/pii/S0010465504004795}
+
+\bibitem{Dapor}
+Dapor M 2017 {\em Applied Surface Science\/} {\bf 391} 3--11
+
+\bibitem{Valentin}
+Valentin A, Raine M, Sauvestre J~E, Gaillardin M and Paillet P 2012 {\em
+  Nuclear Instruments and Methods in Physics Research Section B: Beam
+  Interactions with Materials and Atoms\/} {\bf 288} 66--73
+
+\bibitem{Aktary}
+Aktary M, Stepanova M and Dew S 2006 {\em Journal of Vacuum Science \&
+  Technology B: Microelectronics and Nanometer Structures Processing,
+  Measurement, and Phenomena\/} {\bf 24} 768--779
+
+\bibitem{my_MEE}
+Sidorov F, Rogozhin A, Bruk M and Zhikharev E 2020 {\em Microelectronic
+  Engineering\/} {\bf 227} 111313
+  \urlprefix\url{https://doi.org/10.1016/j.mee.2020.111313}
+
+\bibitem{Ku1969}
+Ku H and Scala L 1969 {\em Journal of The Electrochemical Society\/} {\bf 116}
+  980
+
+\bibitem{Kirchner_2017}
+Kirchner R, Chidambaram N, Altana M and Schift H 2017 How post-processing by
+  selective thermal reflow can reduce the roughness of 3d lithography in
+  micro-optical lenses {\em Laser 3D Manufacturing IV\/} vol 10095 (SPIE) pp
+  8--16
+
+\end{thebibliography}

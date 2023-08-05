@@ -515,11 +515,11 @@ z0 = 0
 
 beam_sigma = 0
 
-# n = 0
-n = 1699
+n = 0
+# n = 1699
 
-# while True:
-while n == 1699:
+while True:
+# while n == 1699:
 
     now_e_DATA = track_all_electrons(
         xx_vac=xx_vacuum,
@@ -556,7 +556,7 @@ while n == 1699:
     # )
 
     np.save(
-        '/Volumes/Transcend/e_DATA_500nm_point_NEW/e_DATA_Pn_' + str(n) + '.npy',
+        '/Volumes/Transcend/e_DATA_500nm_point/e_DATA_Pn_' + str(n) + '.npy',
         now_e_DATA_Pn
     )
 

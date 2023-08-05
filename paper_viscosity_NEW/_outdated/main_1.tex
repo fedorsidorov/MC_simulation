@@ -1,0 +1,396 @@
+\documentclass[12pt, letterpaper]{article}
+\title{Viscosity paper}
+\usepackage[T2A]{fontenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{{./figures/}}
+
+\usepackage[
+backend=biber, bibencoding=utf8, sorting=none, style=gost-numeric, language=autobib, autolang=other,
+clearlang=true, defernumbers=true, sortcites=true, doi=false, isbn=false, url=false, eprint=false, date=year
+]{biblatex}
+\addbibresource{cites.bib}
+
+
+\begin{document}
+
+\section{Introduction}
+
+Three-dimensional manufacturing is crucial for future devices in a broad size range for the fields of fluidics and photonics. Polymer materials are promising for these areas of application due to a broad spectrum of available polymers and emerging patterning technologies as well as the potential for efﬁcient tuning of material properties. Reﬂowing lithographically prepatterned, binary polymer structures is an established method for microlens fabrication,
+The surface dynamics of viscous polymer films have been widely studied for fundamental purposes, as well as for applications. Several experimental approaches, mainly based on scattering correlation methods onto isodense patterns, have been carried out. No studies have dealt simultaneously with both detailed theoretical aspects and corresponding nanoscale experiments.
+
+By now, two different approaches to simulation of resist reflow exist. The first one, analytical, bases on 2D Navier-Stokes equation coupled to continuity equation with the assumption of no slip length and no Marangoni effect but considering Laplace pressure and Hamaker energy~\cite{Leveder_2010}. In this approach polymer surface is Fourier transformed and reflow process is simulated by decay of profile harmonics:
+\begin{align} \label{eq:Fourier}
+	h(x, t) &= h_0 + \tilde{h}(x, t),\\
+	\tilde{h}(x, t) &= \sum_{-\infty}^{+\infty} a_n(0) \exp \left(-\frac{t}{\tau_n}+i n \frac{2 \pi}{\lambda} x \right),\\
+	\tau_n &= \frac{3 \eta}{\gamma h_0^3} \times \left( \frac{\lambda}{2 \pi n} \right)^4.
+\end{align}
+where $\lambda$ -- profile period, $\eta$, $\gamma$ -- polymer viscosity and surface tension, respectively, $a_n(0)$ -- Fourier coefficients of initial polymer profile, $h_0$ -- polymer layer thickness. Polymer viscosity depends both on temperature and polymer molecular weight, which should be taken into account in simulation. Temperature dependence of viscosity could be described by Williams–Landel–Ferry (WLF) equation~\cite{bird1987dynamics_WLF}:
+\begin{equation} \label{eq:WLF}
+	\log \left( \frac{\eta(T)}{\eta(T_0)} \right) = -\frac{C_1(T-T_0)}{C_2+(T-T_0)},
+\end{equation}
+which parameters $\eta(T_0)$, $C_1$, $C_2$ и $T_0$ for three different resists could be found in Table~\ref{table:WLF}~\cite{aho2008measurement_WLF}.
+
+\begin{table}[h]
+	\centering
+	\caption{Parameters of equation~\ref{eq:WLF}, obtained for polystyrene (PS), polymethylmethacrylate (ПММА) and polycarbonate (PC)~\cite{aho2008measurement_WLF}.}
+	\begin{tabular}{l c c c}
+		\hline
+		Parameter \hspace{1em} & PS \hspace{1em} & PMMA \hspace{1em} & PC \\ \hline
+		$\eta(T_0)$, Pa $\cdot$ s \hspace{1em} & 7310.4 \hspace{1em} & 13450 \hspace{1em} & 2763 \\
+		$C_1$ \hspace{1em} & 10.768 \hspace{1em} & 7.6682 \hspace{1em} & 4.7501 \\
+		$C_2$, $^\circ$C \hspace{1em} & 289.21 \hspace{1em} & 210.76 \hspace{1em} & 110.12 \\
+		$T_0$, $^\circ$C \hspace{1em} & 190 \hspace{1em} & 200 \hspace{1em} & 200 \\
+		\hline
+	\end{tabular}
+	\label{table:WLF}
+\end{table}
+
+
+The dependence of polymer viscosity on its molecular weight could be described by empirical formula:
+\begin{equation} \label{eq:3p4_3p1}
+	\eta \propto M_n^\alpha,
+\end{equation}
+where $M_n$ -- number average polymer molecular weight. For PMMA $\alpha$ comprises 3.4 at $M_n \geq 48 000$ and 1.4 at $M_n < 48 000$~\cite{Leveder_2010, Bueche_3p4_1p4}. Equations~(\ref{eq:WLF}, \ref{eq:3p4_3p1}) allows one to calculate polymer viscosity for different temperatures and molecular weights (Fig.~\ref{fig:eta_vary_T_Mn}).
+
+The precision of this analytic approach is quite high for the simulation of polymer reflow when $a_n(t) \ll h_0$, however, it couldn't be applied in case of non-uniform polymer viscosity profile.
+
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=0.6\linewidth]{eta_vary_T_Mn}
+	\end{center}
+	\vspace{-2em}
+	\caption{Temperature PMMA viscosity dependencies in case of various number average molecular weight values, obtained by equations~(\ref{eq:WLF}, \ref{eq:3p4_3p1}).}
+	\label{fig:eta_vary_T_Mn}
+\end{figure}
+
+
+The second approach, numerical one, is based on search of minimal surface by finite elements method. It is processed by software ``Surface Evolver'' (SE) -- program for the modelling of liquid surfaces shaped by various forces and constraints. In this approach polymer surface is divided into triangle facets defined by vertices $v_0$, $v_1$ and $v_2$ and oriented edges $\vec{e_0}$, $\vec{e_1}$ and $\vec{e_2}$, and the polymer reflow is simulated by moving of facet vertices. The force on vertex $v_0$ (beginning of oriented edge $\vec{e_0}$) is
+\begin{equation}
+	\vec{F}_{V_0}=\frac{\gamma_i}{2} \cdot \frac{\vec{e}_1 \times\left(\vec{e}_0 \times \vec{e}_1\right)}{\left\|\vec{e}_0 \times \vec{e}_1\right\|},
+\end{equation}
+where $\gamma_i$ -- is surface tension of $i$-th facet~\ref{fig:SE_basic}. For the most realistic simulation SE could be operated in the area normalization mode to approximate a vertex motion by mean curvature. In this mode, the velocity of a vertex is proportional to force and indirectly proportional to the area of the facets surrounding this vertex. The $i$-th facet has three vertices associated with it, therefore the relative area contribution to the force of one vertex is 1/3 the area of the surrounding facets $A$. The vertex velocity in the area normalization mode is
+\begin{equation}
+	\vec{v} = \frac{\vec{F}}{A/3} \cdot \mu,
+\end{equation}
+where $\mu$ is vertex mobility. The vector of vertex movement $\vec{\delta}$ is then calculated as product of vertex velocity and \textit{scale} factor $s$, the physical representation of time:
+\begin{equation} \label{eq:SE_delta}
+	\vec{\delta} = \vec{v} \cdot s.
+\end{equation}
+
+
+
+However, both approaches couldn't be applied in case of non-uniform polymer viscosity profile in general. This conditions could be achieved, for example, in case of e-beam exposed polymer reflow, which is used as a smoothing process for structures obtained by grayscale e-beam lithography. Despite Kirhner demonstrated the capability of Surface Evolver for the simulation of ``step structure'', it consisted in only two regions with different polymer molecular weight. Thus, existing methods seem to need modification for applicability to simulation on non-uniform resist reflow.
+
+
+\section{Simulation of polymer viscosity distribution}
+Simulation of polymer viscosity distribution during exposure was based on Monte-Carlo simulation of e-beam scattering in PMMA. The algorithm described in \cite{my_MEE} was used to simulate polymer main-chain scissions (Fig.~\ref{fig:sci_hist}).
+
+\begin{figure}[t]
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{sci_conc_10s_14} \\
+		\vspace{-3.7em} \text{\hspace{-26em} a)} \vspace{2em} \\
+		\includegraphics[width=0.7\linewidth]{sci_conc_50s_14} \\
+		\vspace{-3.7em} \text{\hspace{-26em} b)} \vspace{2em} \\
+	\end{center}
+	\vspace{-1.5em}
+	\caption{Simulation of radiation induced PMMA main-chain scissions during exposure in series of parallel lines. Line dose is around 3 nA/cm, e-beam energy is 20 keV, PMMA layer thickness -- 500 nm, exposure time is 10 s (a) и 50 s (b).}
+	\label{fig:sci_hist}
+\end{figure}
+
+Dividing line volume into 5nm cells allowed to simulate depolymerization chain initiation constant in each cell (the number of scissions per monomer per 1 s). This constant was used for simulation of PMMA local molecular weight using approach described in~\cite{Boyd_1, Boyd_2, Boyd_3}. It bases in the assumption of Schulz-Zimm polymer weight distribution~\cite{Schulz-Zimm_distribution}:
+\begin{equation} \label{eq:Schulz-Zimm_distribution}
+	P_n = C_0 n^z \exp (-n/y)
+\end{equation}
+where $P_n$ -- number of molecules with degree of polymerization equal to $n$, $C_0$ -- normalization factor. Parameter $z$ describes the width of distribution:
+\begin{equation} \label{eq:Schulz-Zimm_1}
+	M_w / M_N=(z+2) /(z+1),
+\end{equation}
+where $M_n$ and $M_w$ -- number average and weight average molecular weight, respectively, parameter $y$ is related to number average polymerization degree $x$:
+\begin{equation} \label{eq:Schulz-Zimm_2}
+	x=y(z+1).
+\end{equation}
+
+\noindent In this case polymer degradation could be described by equation on polymer molecular weight moments:
+\begin{equation} \label{eq:moment_equation}
+	\frac{d M_i}{d t}=k_s(\frac{2}{i+1}-1) M_{i+1}+\frac{d M_0}{d t}-k_s M_1 - \frac{i}{\gamma}(k_s M_i+\frac{d M_{i-1}}{d t}) \quad(i \geq 1),
+\end{equation}
+where $1/\gamma$ -- average depolymerization zip length, $M_i$ -- moment of molecular weight distribution on $i$-th order:
+\begin{equation}
+	M_i=\sum_{n=2}^{\infty} n^i P_n,
+\end{equation}
+$k_s$ -- depolymerization chain initiation constant. The result of PMMA molecular weight simulation for different exposure moments is shown in Fig.~\ref{fig:Mn_hist}
+
+Average depolymerization zip length could be obtained by exponential fit of values provided by Mita~\cite{Mita_PMMA_zip_lengths_T} for PMMA in case of depolymerization termination or of chain transfer at the end of molecule (Fig.~\ref{fig:zip_lengths}).
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.6\linewidth]{zip_len_term_trans}
+	\end{center}
+	\vspace{-2em}
+	\caption{Average depolymerization zip lengths for PMMA in case of depolymerization termination or of chain transfer at the end of molecule~\cite{Mita_PMMA_zip_lengths_T}.}
+	\label{fig:zip_lengths}
+\end{figure}
+
+\noindent Using the relation between $M_i$, $M_1$, $y$ and $z$:
+\begin{equation}
+	M_i=M_1 \prod_{n=2}^i(z+n) y^{i-1},
+\end{equation}
+one could describe Shulz-Zimm distribution parameter ($C_0$, $z$ and $y$) changes by three equations of the form of~(\ref{eq:moment_equation}) (see Appendix). This results in local $M_n$ and $M_w$ dependence on exposure time (Fig.~\ref{fig:Mn_Mw_tau}), which allow to calculate local polymer viscosity (Fig.~\ref{fig:Mn_hist}).
+
+
+\begin{figure}\label{fig:Mn_Mw_tau}
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{Mn_tau_100_150_200} \\
+		\vspace{-13em} \\ \text{\hspace{0em} a}) \\ \vspace{13em}
+	\end{minipage}
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{Mw_tau_100_150_200} \\
+		\vspace{-13em} \\ \text{\hspace{-0.1em} b}) \\ \vspace{13em}
+	\end{minipage}
+	\vspace{-4em}
+	\caption{$M_n$ and $M_w$ dependence on $\tau$ obtained by approach provided in~\cite{Boyd_3}.}
+\end{figure}
+
+
+\begin{figure}[h]\label{fig:Mn_hist}
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{Mn_hist_10s_14} \\
+		\vspace{-3.7em} \text{\hspace{-26em} a)} \vspace{2.7em} \\
+		\includegraphics[width=0.7\linewidth]{Mn_hist_50s_14} \\
+		\vspace{-3.7em} \text{\hspace{-26em} b)} \vspace{3.7em} \\
+	\end{center}
+	\vspace{-2.5em}
+	\caption{Simulation of PMMA molecular weight distribution during exposure in series of parallel lines. Line dose is around 3 nA/cm, e-beam energy is 20 keV, PMMA layer thickness -- 500 nm, exposure time is 10 s (a) и 50 s (b).}
+\end{figure}
+
+
+\section{Determination of polymer vertex mobility}
+Obtained polymer local viscosity distribution still could not be utilized for reflow simulation -- the approach based on Fourier transform of profile requires uniform resist viscosity. On the other hand, the numerical approach bases on vertex mobilities, not viscosity. Therefore, one should introduce the correlation between polymer viscosity and vertex mobilities of its surface.
+
+For this purpose, we simulated the reflow of rectangular PMMA gratings by both approaches. Grating parameters correspond to realistic values for NIL -- 2 $\mu$m pitch and 280 nm depth. The viscosity of PMMA varied in range 10$^2$-10$^6$ Pa$\cdot$s and for each viscosity value reflow process was simulated until grating depth decrease to values 1-2 nm by nearly same steps. Then the grating surface was reconstructed in Surface Evolver program and surface evolution during grating reflow was simulated. During the surface evolution the \textit{scale} values, giving the same surface shape as one from Fourier-based approach, were determined (Fig.~\ref{fig:gratings}). It was found that in the beginning of reflow there is slight discrepancy between profiles simulated by both approaches, but then both approaches lead to almost sinusoidal shape with decay time, describing by formula~\ref{eq:Fourier}.
+
+
+\begin{figure}[h!]
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{grating_eta_310} \\
+		\vspace{-13em} \\ \text{\hspace{0em} a}) \\ \vspace{13em}
+	\end{minipage}
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{grating_eta_1000} \\
+		\vspace{-13em} \\ \text{\hspace{-0.1em} b}) \\ \vspace{13em}
+	\end{minipage}
+
+	\vspace{-3em}
+	
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{grating_eta_3100} \\
+		\vspace{-13em} \\ \text{\hspace{0em} c}) \\ \vspace{13em}
+	\end{minipage}
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{grating_eta_10000} \\
+		\vspace{-13em} \\ \text{\hspace{-0.1em} d}) \\ \vspace{13em}
+	\end{minipage}
+	
+	\vspace{-3em}
+	
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{grating_eta_31000} \\
+		\vspace{-13em} \\ \text{\hspace{0em} c}) \\ \vspace{13em}
+	\end{minipage}
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{grating_eta_100000} \\
+		\vspace{-13em} \\ \text{\hspace{-0.1em} d}) \\ \vspace{13em}
+	\end{minipage}
+
+	\vspace{-4em}
+	
+	\caption{Reflow of rectangular grating simulated by analytical and numerical approaches for different viscosity values.}
+	\label{fig:gratings}
+\end{figure}
+
+
+Time-\textit{scale} data obtained for each viscosity value showed almost linear dependence between \textit{scale} and time:
+\begin{equation}
+	scale \approx \alpha \cdot \text{time}.
+\end{equation}
+Each time-\textit{scale} data was fitted by linear function (Fig~\ref{fig:alphas}) which result in almost linear dependence between ln(\textit{$\alpha$}) and ln($\eta$) (Fig.~\ref{fig:final_fit}). Taking into account the fact that $\alpha$ is being multiplied by scale and this results in time, one could get the needed relation between polymer viscosity and mobility of its vertices:
+\begin{equation}
+	\mu = C / \eta^\beta,
+\end{equation}
+where C $\approx$ 26.16 and $\beta$ $\approx$ 0.989, which leads to almost inverse proportionality between polymer viscosity and mobility of its vertices. Therefore, one could convert nonuniform polymer viscosity distribution into distribution of polymer vertex mobilities, which could be taken into account in Surface Evolver simulation. Noteworthy, this approach seems to be reasonable in 1D and 2D cases, when resist viscosity doesn't changes along vertical direction. In case of 3D resist viscosity distribution polymer viscosity along vertical direction seem to have been averaged.
+
+
+\begin{figure}[h!]
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{alpha_310} \\
+		\vspace{-13em} \\ \text{\hspace{0em} a}) \\ \vspace{13em}
+	\end{minipage}
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{alpha_1000} \\
+		\vspace{-13em} \\ \text{\hspace{-0.1em} b}) \\ \vspace{13em}
+	\end{minipage}
+	
+	\vspace{-3em}
+	
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{alpha_3100} \\
+		\vspace{-13em} \\ \text{\hspace{0em} c}) \\ \vspace{13em}
+	\end{minipage}
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{alpha_10000} \\
+		\vspace{-13em} \\ \text{\hspace{-0.1em} d}) \\ \vspace{13em}
+	\end{minipage}
+	
+	\vspace{-3em}
+	
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{alpha_31000} \\
+		\vspace{-13em} \\ \text{\hspace{0em} e}) \\ \vspace{13em}
+	\end{minipage}
+	\begin{minipage}{0.48\textwidth}
+		\includegraphics[width=\linewidth]{alpha_100000} \\
+		\vspace{-13em} \\ \text{\hspace{-0.1em} f}) \\ \vspace{13em}
+	\end{minipage}
+	
+	\vspace{-4em}
+	
+	\caption{Time-\textit{scale} dependencies for different viscosity values fitted with linear function.}
+	\label{fig:alphas}
+\end{figure}
+
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.6\linewidth]{final_fit}
+	\end{center}
+	
+	\vspace{-2em}
+	
+	\caption{Linear fit of obtained dependence of }
+	\label{fig:final_fit}
+\end{figure}
+
+
+\section{Conclusion}
+In this paper the approach for simulation of non-uniform resist reflow is proposed. It bases on numerical computation software Surface Evolver with certain values of vertex mobilities. The mobility values are taken from simulation of rectangular polymer gratings reflow, being carried out by both numerical and analytical techniques. The obtained algorithm could be used for simulation the resist profile obtained by dry e-beam etching of resist (DEBER), using the simulated distribution of resist main-chain scissions by Monte-Carlo simulation and scission probability based approach.
+
+
+
+
+
+\clearpage
+\section{Appendix - Solution of moment equations}
+Moment equations
+\begin{equation}
+	\frac{d M_i}{d t}=k_s(\frac{2}{i+1}-1) M_{i+1}+\frac{d M_0}{d t}-k_s M_1 - \frac{i}{\gamma}(k_s M_i+\frac{d M_{i-1}}{d t}) \quad(i \geq 1),
+\end{equation}
+ could be simplified by introduction of dimensionless variables (index ``0'' corresponds to initial value):
+\begin{equation} \label{eq:dim_less_MW}
+	\begin{aligned}
+		\tau & = y_0 k_s t \\
+		\tilde{M}_1 & = M_1 / M_1^0 \\
+		\tilde{y} & = y / y_0 \\
+		\tilde{\gamma} & = \gamma y_0 \\
+		\tilde{x} & = x / x_0 = \left[y(z+1) / y_0(z_0+1)\right],
+	\end{aligned}
+\end{equation}
+
+\noindent Equations in form of~(\ref{eq:moment_equation}) for $i$ = 1, 2 and 3 are then could be written as (here and further SymPy module was used for algebraic calculations):
+\begin{equation}
+\begin{aligned}
+\frac{M^{0}_{1}}{\gamma (z(t) + 1)^{2} \tilde{y}^{2}(t)}
+\left[ - \gamma y_{0} (z(t) + 1)^{2} \tilde{y}^{2}(t) \frac{d}{d t} \tilde{M_1}(t) \right. (z(t) + 1)^{2} \tilde{M_1}(t) \tilde{y}^{2}(t) & - \\
+ + (z(t) + 1) \tilde{M_1}(t) \frac{d}{d t} \tilde{y}(t) -
+\left. (z(t) + 1) \tilde{y}(t) \frac{d}{d t} \tilde{M_1}(t) + \tilde{M_1}(t) \tilde{y}(t) \frac{d}{d t} z(t) \right] & = 0,
+\end{aligned}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+- \frac{M^{0}_{1} y_{0}}{3 \gamma}
+\left[\gamma y_{0} \left(\left(z{\left(t \right)} + 2\right) \left(z{\left(t \right)} + 3\right) \tilde{M_1}{\left(t \right)} \tilde{y}^{2}{\left(t \right)} + 3 \left(z{\left(t \right)} + 2\right) \tilde{M_1}{\left(t \right)} \frac{d}{d t} \tilde{y}{\left(t \right)} \right. \right. & + \\
+\left. \left. 3 \left(z{\left(t \right)} + 2\right) \tilde{y}{\left(t \right)} \frac{d}{d t} \tilde{M_1}{\left(t \right)} + 3 \tilde{M_1}{\left(t \right)} \tilde{y}{\left(t \right)} \frac{d}{d t} z{\left(t \right)}\right) + 6 \left(z{\left(t \right)} + 2\right) \tilde{M_1}{\left(t \right)} \tilde{y}{\left(t \right)} + 6 \frac{d}{d t} \tilde{M_1}{\left(t \right)}\right] & = 0
+\end{aligned}
+\end{equation}
+and
+\begin{equation}
+\begin{aligned}
+- \frac{M^{0}_{1} y_{0}^{2}}{2 \gamma} \left[\gamma y_{0} \left(\left(z{\left(t \right)} + 2\right) \left(z{\left(t \right)} + 3\right) \left(z{\left(t \right)} + 4\right) \tilde{M_1}{\left(t \right)} \tilde{y}^{2}{\left(t \right)} \right. \right. & + \\
+\left. \left.  4 \left(z{\left(t \right)} + 2\right) \left(z{\left(t \right)} + 3\right) \tilde{M_1}{\left(t \right)} \frac{d}{d t} \tilde{y}{\left(t \right)} \right. \right. & + \\
+\left. \left. 2 \left(z{\left(t \right)} + 2\right) \left(z{\left(t \right)} + 3\right) \tilde{y}{\left(t \right)} \frac{d}{d t} \tilde{M_1}{\left(t \right)} + 2 \left(z{\left(t \right)} + 2\right) \tilde{M_1}{\left(t \right)} \tilde{y}{\left(t \right)} \frac{d}{d t} z{\left(t \right)} \right. \right. & + \\
+\left. \left. 2 \left(z{\left(t \right)} + 3\right) \tilde{M_1}{\left(t \right)} \tilde{y}{\left(t \right)} \frac{d}{d t} z{\left(t \right)}\right) \tilde{y}{\left(t \right)} \right. & + \\
+\left. 6 \left(z{\left(t \right)} + 2\right) \left(z{\left(t \right)} + 3\right) \tilde{M_1}{\left(t \right)} \tilde{y}^{2}{\left(t \right)} + 6 \left(z{\left(t \right)} + 2\right) \tilde{M_1}{\left(t \right)} \frac{d}{d t} \tilde{y}{\left(t \right)} \right. & + \\
+\left. 6 \left(z{\left(t \right)} + 2\right) \tilde{y}{\left(t \right)} \frac{d}{d t} \tilde{M_1}{\left(t \right)} + 6 \tilde{M_1}{\left(t \right)} \tilde{y}{\left(t \right)} \frac{d}{d t} z{\left(t \right)}\right] & = 0
+\end{aligned}
+\end{equation}
+
+\noindent The extracted expressions for derivations $\tilde{M_1}$, $\tilde{y}$ and $\tilde{y}$ are
+\begin{equation} \label{eq:final_system}
+	\begin{aligned}
+\frac{d \tilde{M_1}(t)}{d \tau} &= - \tilde{M_1}(t) \tilde{y}(t) \frac{A}{B}, \\
+\frac{d \tilde{y}(t)}{d \tau} &= \tilde{y}^{2}{\left(t \right)} \frac{C}{6 D}, \\
+\frac{d \tilde{y}(t)}{d \tau} &= - \gamma y^{0} \tilde{y}^{2}(t) z(t) \frac{E}{F},
+	\end{aligned}
+\end{equation}
+where
+\begin{equation}
+	\begin{aligned}
+		A = 9 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z^{3}{\left(t \right)} + 41 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z^{2}{\left(t \right)} + 58 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z{\left(t \right)} + \\
+		24 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} + 24 \gamma y^{0} \tilde{y}{\left(t \right)} z^{2}{\left(t \right)} + 96 \gamma y^{0} \tilde{y}{\left(t \right)} z{\left(t \right)} + 96 \gamma y^{0} \tilde{y}{\left(t \right)} + 36 z{\left(t \right)} + 72 \\
+	\end{aligned}
+\end{equation}
+
+\begin{equation}
+	\begin{aligned}
+		B = 6 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z^{3}{\left(t \right)} + 24 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z^{2}{\left(t \right)} + 30 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z{\left(t \right)} + \\
+		12 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} + 18 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z^{2}{\left(t \right)} + \\
+		66 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z{\left(t \right)} + 60 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} + 36 \gamma y^{0} \tilde{y}{\left(t \right)} z{\left(t \right)} + 84 \gamma y^{0} \tilde{y}{\left(t \right)} + 36
+	\end{aligned}
+\end{equation}
+
+
+\begin{equation}
+	\begin{aligned}
+		C = \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z^{5}{\left(t \right)} + 5 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z^{4}{\left(t \right)} + 3 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z^{3}{\left(t \right)} - \\
+		17 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z^{2}{\left(t \right)} - 28 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z{\left(t \right)} - 12 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} + \\
+		6 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z^{4}{\left(t \right)} + 27 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z^{3}{\left(t \right)} + 19 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z^{2}{\left(t \right)} - \\
+		52 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z{\left(t \right)} - 60 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} + 18 \gamma y^{0} \tilde{y}{\left(t \right)} z^{3}{\left(t \right)} + 42 \gamma y^{0} \tilde{y}{\left(t \right)} z^{2}{\left(t \right)} - \\
+		24 \gamma y^{0} \tilde{y}{\left(t \right)} z{\left(t \right)} - 84 \gamma y^{0} \tilde{y}{\left(t \right)} - 36
+	\end{aligned}
+\end{equation}
+
+\begin{equation}
+	\begin{aligned}
+		D = \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z^{3}{\left(t \right)} + 4 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z^{2}{\left(t \right)} + 5 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z{\left(t \right)} + \\
+		2 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} + 3 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z^{2}{\left(t \right)} + 11 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z{\left(t \right)} + \\
+		10 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} + 6 \gamma y^{0} \tilde{y}{\left(t \right)} z{\left(t \right)} + 14 \gamma y^{0} \tilde{y}{\left(t \right)} + 6
+	\end{aligned}
+\end{equation}
+
+
+\begin{equation}
+	\begin{aligned}
+		E = \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z^{5}{\left(t \right)} + 9 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z^{4}{\left(t \right)} + \\
+		31 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z^{3}{\left(t \right)} + 51 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z^{2}{\left(t \right)} + \\
+		40 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z{\left(t \right)} + 12 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} + \\
+		6 \gamma y^{0} \tilde{y}{\left(t \right)} z^{4}{\left(t \right)} + 48 \gamma y^{0} \tilde{y}{\left(t \right)} z^{3}{\left(t \right)} + \\
+		138 \gamma y^{0} \tilde{y}{\left(t \right)} z^{2}{\left(t \right)} + 168 \gamma y^{0} \tilde{y}{\left(t \right)} z{\left(t \right)} + \\
+		72 \gamma y^{0} \tilde{y}{\left(t \right)} + 18 z^{3}{\left(t \right)} + 84 z^{2}{\left(t \right)} + 126 z{\left(t \right)} + 60
+	\end{aligned}
+\end{equation}
+
+\begin{equation}
+	\begin{aligned}
+		F = 6 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z^{3}{\left(t \right)} + 24 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z^{2}{\left(t \right)} + \\
+		30 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} z{\left(t \right)} + 12 \gamma^{3} \left(y^{0}\right)^{3} \tilde{y}^{3}{\left(t \right)} + \\
+		18 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z^{2}{\left(t \right)} + 66 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} z{\left(t \right)} + \\
+		60 \gamma^{2} \left(y^{0}\right)^{2} \tilde{y}^{2}{\left(t \right)} + 36 \gamma y^{0} \tilde{y}{\left(t \right)} z{\left(t \right)} + 84 \gamma y^{0} \tilde{y}{\left(t \right)} + 36
+	\end{aligned}
+\end{equation}
+
+According original study~\cite{Boyd_3} the solution to the equations~(\ref{eq:final_system}) was started by the Runge-Kutta method and continued by Hamming's predictor-corrector method.
+
+
+\printbibliography
+\end{document}

@@ -1,0 +1,34 @@
+\section{Discussion}
+
+The developed method of PMMA vertex mobility determination has several remarkable features.
+First, it demonstrates the agreement between reflowed profiles, simulated by analytical spectral method and ones obtained by numerical SE simulation in area normalization mode.
+This emphasizes the applicability of soapfilm modeling for the simulation of polymer reflow and confirms the linear relation between $scale$ and time, proposed by Kirchner~\cite{Kirchner_SE_1}.
+Moreover, the relation of inverse mobility of PMMA surface vertices and PMMA viscosity turns out to be linear too.
+It is also noteworthy that developed method brings clarity into SE reflow simulation process -- in case of setting the mobilities obtained by equation~\ref{eq:mu_eta} the $scale$ factor denotes exactly the actual reflow time.
+
+Second, this method could be applied for reflow simulation of any structure obtained in PMMA by lithographic methods.
+In case profile, obtained in PMMA by grayscale e-beam lithography, simulation of PMMA main-chain scission distribution could be directly converted to PMMA viscosity profile and, finally, to PMMA vertex mobility profile.
+In case of structures obtained by nanoimprint lithography the PMMA viscosity dependence on temperature and molecular weight only should be taken into account.
+If sample size is much greater than structure period one can neglect the edge effects (contact angle etc.) for the reflow simulation far from sample edges.
+Then structure geometry and vertex mobility distribution become the only parameters required for simulation.
+
+Third, the described algorithm allows to expand the boundaries of thermal reflow application. At present, thermal reflow is used predominantly for profile smoothing, which not causes dramatic profile transformation~\cite{Kirchner_GL_review,Kirchner_2017}.
+This results in a need for sophisticated grayscale e-beam lithography process for achievement of staircase profile close enough to required one.
+The complex but predictable thermal reflow process in turn could simplify the whole fabrication method provided that greater part of profile is being formed by reflow.
+
+\section{Conclusion} \label{conclusion}
+This paper presents simulation technique for viscoelastic thermal reflow of PMMA with non-uniform viscosity profile caused by e-beam exposure with dose modulation.
+Thermal reflow simulation bases on numerical search of minimal surface by finite elements method, processed by free software ``Surface Evolver'' (SE).
+PMMA non-uniform viscosity profile is described by specific mobilities of PMMA surface vertices, which are embedded in surface model in SE simulation processed in area normalization mode.
+PMMA surface vertex mobilities determination bases on PMMA viscosity profile which is calculated in three steps.
+First, Monte-Carlo algorithm is used for the simulation e-beam induced PMMA main-chain scissions.
+Then, statistical model is used to convert PMMA main-chain scission distribution to PMMA number-average molecular weight distribution.
+Finally, empirical equations are used for determination of PMMA viscosity profile relying in simulated PMMA number-average molecular weight distribution
+The relation between PMMA viscosity and vertex mobility of its surface was determined by simulation of rectangular grating reflow by two approaches -- analytical, based on decay simulation of profile spatial harmonics, and numerical one, processed by SE.
+The obtained agreement between reflowed profiles reveal direct proportionality between SE scale factor and reflow time.
+Reflow simulation in wide viscosity range resulted in turn in almost inverse proportionality between PMMA surface vertex mobility and PMMA viscosity.
+Using this relation, one can calculate proper vertex mobility of PMMA structure surface vertices and process clear SE reflow simulation with scale factor denoting exactly the actual reflow time.
+The developed approach could simplify complex 3D structure fabrication by deeper insight into thermal reflow processes.
+
+\ack
+The investigation was supported by the Program no. FFNN-2022-0021 of the Ministry of Science and Higher Education of Russia for Valiev Institute of Physics and Technology of RAS.

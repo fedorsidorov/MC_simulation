@@ -58,11 +58,11 @@ def move_Mn_to_mobs(Mn, T_C, power_high, power_low, Mn_edge=42000):
 
 
 # %%
-eta_arr = np.logspace(2, 6, 100)
-mobs_arr = get_SE_mobility(eta_arr)
-
-plt.figure(dpi=300)
-plt.loglog(eta_arr, mobs_arr)
-plt.show()
+# eta_arr = np.logspace(2, 6, 100)
+# mobs_arr = get_SE_mobility(eta_arr)
+#
+# plt.figure(dpi=300)
+# plt.loglog(eta_arr, mobs_arr)
+# plt.show()
 
 

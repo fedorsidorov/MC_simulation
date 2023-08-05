@@ -86,3 +86,24 @@ with plt.style.context(['science', 'grid']):
 
     plt.show()
     fig.savefig('p_s_T.jpg', dpi=300)
+
+# %%
+fig, ax = plt.subplots(dpi=600)
+fig.set_size_inches(4, 3)
+
+# ax.plot(TT_theor, weights, '.--', label='theory')
+# ax.plot(TT_sim, weights, 'r.--', label='$G_s$ simulation')
+ax.plot(TT_sim, weights, label=r'$G_\mathrm{s}$ simulation')
+
+# ax.legend(fontsize=7)
+ax.legend()
+ax.set(xlabel=r'$T$, °C')
+# ax.set(ylabel=r'scission weight')
+ax.set(ylabel=r'$p_\mathrm{s}$')
+
+plt.xlim(0, 200)
+plt.ylim(0.02, 0.12)
+plt.grid()
+
+plt.show()
+fig.savefig('p_s_T.jpg', dpi=600)
